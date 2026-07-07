@@ -1,55 +1,60 @@
 # Pipeline
 
-Top live matches ranked by fit score (wage x skill match x commute x competition).
-Refreshed on every "scout" run per CLAUDE.md sections 8, 8b, 9.
+Scout run completed 2026-07-07. 104 postings found across 14 source lanes, 56 after dedupe and exclusions, 24 top candidates double-checked from independent angles: 18 corroborated live, 2 weak, 4 dead. Verification is search-corroboration (two independent sources), not page-fetch (blocked in this environment). ALWAYS open the posting URL before sending.
 
-**Scout run 2026-07-07 (partial, corroboration wave in progress).** Discovery is WebSearch-based; this environment's network policy blocks direct posting-page fetches, so status below is SEARCH-EVIDENCE, not page-verified. Never send an application without opening the posting URL first.
+## Deadline flags
+- **City of White Rock BSA: posting expires Friday, July 31, 2026** (open until filled; apply well before).
+- Lesson from this run: Metro Vancouver's IT Systems Analyst ($110-130K) closed July 3, four days before we verified it. Same-day applications on Tier A from now on.
 
-## TODAY flags
-(none confirmed; deadlines being extracted in the corroboration wave)
+## Ranked pipeline (corroborated live)
 
-## Ranked entries (provisional, pending corroboration verdicts)
+| # | Tier | Role | Employer | Wage | Location | Apply | Notes |
+|---|------|------|----------|------|----------|-------|-------|
+| 1 | A | Business Systems Analyst (IT), Comp 2026-37 | City of White Rock | $49.35-58.32/hr | White Rock | Portal: whiterockcity.ca/careers | PRIORITY TARGET CONFIRMED LIVE. Temp FT. Wants diploma + 5 yrs OR "equivalent combination": bridge with systems portfolio. Expires Jul 31 |
+| 2 | A | E-Commerce & Website Operations Coordinator | Tommyco Kneepads | $55-65K | Vancouver | Email: jobs@kneepads.com | Fit 9/10, small employer, email apply = fastest dossier. No phone calls per posting |
+| 3 | A | Dynamics 365 ERP Administrator | Trail Appliances | TBD (Glassdoor $40-45K est. unreliable; their Sr SysAdmin pays $77-90K) | Richmond | Portal: jobs.lever.co/trailappliances | His exact stack. Confirm wage early in process |
+| 4 | A | Analyst, Business Systems | Fraser Health | $35.36-50.83/hr | Surrey | Portal: jobs.fraserhealth.ca/jobs/124442 | Home turf, health authority union scale |
+| 5 | A | E-Commerce Specialist | Robinson Lighting & Bath | $57-75K | Vancouver | Portal: Dayforce (jobs.dayforcehcm.com/en-US/barobinson) | Shopify retail site ownership, reports to Director of Ecommerce |
+| 6 | A | Ecommerce Specialist | Best Access Doors | $60K base+commission | Remote Canada | Portal: bestaccessdoors.ca/career-portal | 100% remote |
+| 7 | A | Junior Business Analyst, ERP rollout (contract-to-hire) | Robert Half client | $30-40/hr | Vancouver | Portal: roberthalf.com Vancouver BA listings | Also register with Robert Half generally; end employer unnamed, screen industry at interview |
+| 8 | A | Analyst, Business Systems (Health Informatics) | Fraser Health | $33.66-48.38/hr | Surrey hybrid | Portal: jobs.fraserhealth.ca/jobs/105763 | Posted mid-June 2026 |
+| 9 | A | Configuration Analyst, IT Business Solutions | Westland Insurance | $65.6-82K | Surrey hybrid | Portal: westlandinsurance.ca/join-our-team | ON HOLD pending Hamza's insurance ruling |
+| 10 | A | IT Systems Analyst | Allteck LP | $55-70K | Surrey | Portal: allteck.com/about-us/careers | Small collaborative IT team, scripting/integration duties |
+| 11 | A | Network System Administrator | United Floral | $37/hr | Burnaby | Job Bank 49406448 / Indeed company page | PRIORITY TARGET, active on Indeed. Verify Job Bank page |
+| 12 | A | Customer Support Representative | Jane App | $65K flat | Remote Canada | jane.app/careers | From avenues lane; ladder into Technical Escalations. Cohort windows |
+| 13 | B | Shopify DTC Operations Manager | Hadley Designs | unknown | Remote Canada | Portal: apply.workable.com/hadley-designs/j/BB3801C9C5 | Manager title reach; also has Head of DTC Ops posting |
+| 14 | A | Shopify Developer (entry-level) | Summit Tools | $50-60K | Surrey/Burnaby | Indeed/Glassdoor + summittools.com | Bottom of range below floor; negotiate up with portfolio |
+| 15 | B | IT Business Systems Administrator | Houle Electric | $85-90K | Burnaby | Portal: houle.ca/current-career-opportunities | Open until filled. Reach: bridge with real systems built |
+| 16 | B | Business Analyst 2 (Infor Technical Analyst) | City of Burnaby | $95-113K | Burnaby | Portal: burnaby.ca careers | Competition EXTENDED (they cannot fill it): good odds for a reach |
+| 17 | B | Business Support Analyst, Testing/QA/Release | PHSA | $76-109K | Vancouver | Portal: jobs.phsa.ca | Temp FT until Dec 2027 |
+| 18 | B | Linux Systems Administrator | Global Relay | $85-120K | Vancouver | Portal: globalrelay.com/company/careers | Active (LinkedIn 2 days ago). Compliance SaaS, clean industry |
+| 19 | B | IT Systems Administrator | Lordco Parts | $80-100K | Port Coquitlam | Portal: lordco.com/careers/corporate | Commute hard until Aug; updated ~Jun 22 |
+| 20 | B | Junior D365 Business Central Consultant | Enavate | unknown | Remote Canada | Verify at enavate.com/careers | Dynamics thesis lane; UNVERIFIED, check before building |
 
-| # | Tier | Role | Employer | Wage | Location | Fit | Notes |
-|---|------|------|----------|------|----------|-----|-------|
-| 1 | A | Dynamics 365 ERP Administrator | Trail Appliances | unknown | Richmond BC | 9 | His exact ERP stack; Lever ATS |
-| 2 | A | E-Commerce & Website Operations Coordinator | Tommyco Kneepads | $55-65K | Vancouver BC | 9 | Near-perfect duty match |
-| 3 | A | Shopify Developer (entry-level) | Summit Tools | unknown | Surrey BC | 8 | Home turf, entry-level explicit |
-| 4 | A | E-Commerce Specialist | Robinson Lighting & Bath | unknown | Vancouver BC | 8 | Direct match |
-| 5 | A | Shopify Store Operator | (employer unnamed in listing) | unknown | Vancouver BC | 8 | CA+US storefronts; identify employer during corroboration |
-| 6 | A | Configuration Analyst, IT Business Solutions | Westland Insurance | $65.6-82K | Surrey BC | 8 | Insurance employer: Hamza judgment call |
-| 7 | B | IT Systems Analyst (Analytics Development) | Metro Vancouver Regional District | ~$110-130K | Burnaby BC | 8 | Senior pay band; possible degree gate; also flagged as civic Hot Job May 2026 |
-| 8 | A | Junior Business Analyst (ERP rollout, temp-to-hire) | Robert Half client | $30-40/hr | Vancouver BC | 7 | Staffing route; register with Robert Half regardless |
-| 9 | A | Analyst, Business Systems (Health Informatics) | Fraser Health | $33.66-48.38/hr | Surrey BC | 7 | Home turf, hybrid/remote |
-| 10 | A/B | Junior D365 Business Central Consultant | Enavate | unknown | Remote Canada | 7 | Dynamics lane; pairs with MB-800 plan |
-| 11 | B | IT Business Systems Administrator | Houle Electric | $85-90K | Burnaby BC | 7 | Reach on title, strong pay |
-| 12 | A | IT Systems Analyst | Allteck LP | $55-70K | Surrey BC | 7 | Utility services, Surrey |
-| 13 | A | IT Service Desk Analyst | ICBC | $67-72.4K | North Vancouver BC | 7 | Live May 2026; wants diploma/cert: pair with fast cert; insurance judgment call |
-| 14 | A | Systems Analyst, Clinical Solutions IMITS | PHSA | $46.22/hr | Vancouver BC | 6 | Union scale |
-| 15 | B | Business Analyst 2 (Infor Technical Analyst) | City of Burnaby | $95-113K | Burnaby BC | 6.5 | Municipal; check degree gate |
-| 16 | B | Business Systems Analyst (Jira Platform) | BC Hydro | unknown | Burnaby BC | 6.5 | NOT Powerex (excluded trading arm) |
-| 17 | A | Systems Support Representative | Millennium Pacific Greenhouses | unknown | Delta BC | 6 | Job Bank; verify wage |
-| 18 | A | Systems Administrator | ServiceMaster Restore Fraser Valley | unknown | Abbotsford BC | 6 | Commute flag until Aug |
-| 19 | C | Merchandising Coordinator | Vessi | unknown | Vancouver BC | 6 | DTC wildcard |
-| 20 | B | Functional Analyst | Engineers & Geoscientists BC | unknown | Burnaby BC | 6 | Professional body |
+## Weak (verify manually before any effort)
+- **Business Systems Analyst, Pacific Coast Distribution, Langley, $43.27/hr** (priority target): no live trace; company is hiring other roles. Open jobbank.gc.ca/jobsearch/jobposting/49426736 directly.
+- **Network System Administrator, ED Tech Solutions, Surrey, $38/hr** (priority target): employer real, posting likely stale (May-June ID block).
+- **E-commerce Manager, Wellness Extract, Abbotsford, $53/hr** (priority target): likely gone. BUT their careers page currently lists a Shopify Developer role: hr@wellnessextract.com, rolling applications.
+- IT Systems Administrator via Robert Half, Burnaby, $90-110K claimed: no fresh date evidence.
+- Shopify Store Operator, Vancouver: untraceable, employer unknown.
 
-**Excluded this run:** First West Credit Union (AI Business Analyst and Business Analyst, Langley): credit union, interest-based lending exclusion.
-**Backlog (found, unranked):** ~35 more postings incl. Global Relay Linux SA ($85-120K), Lordco IT SA ($80-100K), City of Vancouver Systems Analyst II ($100-125K), D-Wave IT Support, TransLink Service Desk, Gatekeeper Systems (Abbotsford), FNHA Network Admin, City of Mission Network Analyst ($46.01/hr), 4 Job Bank user-support roles. Full list in scout results.
+## Dead this run
+- Systems Analyst II, City of Vancouver ($99-125K): closed Mar 18, 2026.
+- Network Analyst, City of Mission ($46.01/hr): closed Jun 7, 2026.
+- IT Systems Analyst (Analytics), Metro Vancouver RD ($110-130K): closed Jul 3, 2026.
+- Data Analyst, Westland ($62-78K): expired May 25, 2026.
 
-## Priority targets (from CLAUDE.md s.11, verification in progress)
+## Excluded (hard rules)
+- First West Credit Union, AI Business Analyst + Business Analyst, Langley: interest-based lending.
+- Odlum Brown BSA, Vancouver: investment brokerage (trading).
+- PHSA Systems Analyst Clinical Solutions ($46.22/hr): verifier reports completed degree as HARD requirement (degree gate). Revisit only if equivalency clause confirmed on the posting page.
 
-| Role | Employer | Wage | Job Bank ID | Status |
-|------|----------|------|-------------|--------|
-| IT Business Analyst | City of White Rock | $49.35/hr | 49790681 | verifying |
-| Business Systems Analyst | Pacific Coast Distribution | $43.27/hr | 49426736 | verifying |
-| Network System Administrator | ED Tech Solutions | $38/hr | 49356230 | verifying |
-| Network SysAdmin | United Floral | $37/hr | 49406448 | verifying |
-| E-commerce Manager | Wellness Extract | $53/hr | 49695894 | verifying |
+## Backlog (found, not yet verified, next scout pass)
+~30 postings incl. Surrey Police Systems Analyst 3, TransLink Service Desk, BC Hydro BSA (Jira), D-Wave IT Support, EGBC Functional Analyst, Vessi Merchandising Coordinator, Gatekeeper Systems, FNHA Network Admin, 4 Job Bank user-support roles, Arc'teryx Sr Ecommerce Mgr (too senior). Full data in scout results.
 
-## Standing watch list (weekly)
-- surreypolice.ca careers, City of Surrey, CFSEU-BC, RCMP E-Division civilian, E-Comm 911
-- GC Digital Talent IT-01/IT-02 pools; BC RMS "ISL 18R"; ICBC Information Services; TransLink careers
-- Catapult ERP / Encore / Endeavour / BDO Dynamics BC junior openings
-
-## Dead / expired
-(none confirmed yet this run)
+## Standing watch (weekly)
+- surreypolice.ca, City of Surrey, CFSEU-BC, RCMP E-Division civilian, E-Comm 911
+- GC Digital Talent IT-01/IT-02 pools; BC RMS "ISL 18R" (filter OUT Liquor Distribution Branch); ICBC Information Services (pending insurance ruling); TransLink
+- Dynamics partners: Catapult, Encore, Endeavour, BDO, Long View (their $122-160K D365 Solution Architect posting proves the local practice hires; outreach target, not application)
+- companies.txt ATS boards, incl. new remote monitors (GitLab, 1Password, Jane, Auvik)
+- Calgary/Edmonton/Winnipeg logistics+systems postings (relocation lane)
