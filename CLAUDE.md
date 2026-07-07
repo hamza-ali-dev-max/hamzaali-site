@@ -6,6 +6,8 @@ You are running inside Claude Code on Hamza's PC. Your job: turn job postings in
 - hamzahassanali0799@gmail.com | 236-877-8664 | github.com/hamza-ali-dev-max
 - Address for forms: 14252 71A Avenue, Surrey, BC V3W 2L7
 - Transit only until ~Aug 2026 (road test booked); prefer Surrey/Langley/White Rock/Burnaby/Richmond or remote. Do not filter out Vancouver, just note commute.
+- WILLING TO RELOCATE anywhere in Canada for the right role (July 2026 update). Local Metro Van stays priority for speed; relocation roles need stronger wage or career upside to rank above local equivalents.
+- Strategy: apply while building. Parallel build track (certs, weekend projects, stepping-stone roles that upgrade later) runs alongside applications. Months of runway available.
 
 ## 2. WORK HISTORY (truth, never inflate)
 **HPP Tolling Facility Canada Ltd., Delta BC — Aug 2025 to Jul 13, 2026**
