@@ -33,3 +33,49 @@ Source: 6 of 13 research lanes completed (federal, BC provincial, crown corps, s
 - Exclusion collisions found: BCLC (gambling), BC Liquor Distribution Branch (alcohol), Powerex (BC Hydro's energy-trading arm), First West Credit Union and other credit unions/banks (interest-based lending). Consulting partners may staff on casino/brewery/lender clients: ask about client-assignment flexibility in interviews.
 - Beware proxy-exam "pay after you pass" services: certification fraud, lifetime Microsoft ban.
 - PL-200 retires Aug 31, 2026; ISL 11/13 grids no longer exist; several search-surfaced postings are stale archives. Verify closing dates before applying.
+
+---
+
+# Round 2 findings (added 2026-07-07 evening)
+
+## Relocation verdict: Calgary, executed remote-first
+
+- Calgary is Canada's top-ranked 2026 labour market with a purpose-built e-commerce/distribution cluster (Prairie Economic Gateway, ~$7B inland port) and ~$1,733 1BR rent. It matches the ops+ERP story better than any other city.
+- Tactic: do NOT move speculatively. Add Calgary (plus Edmonton as fallback and Winnipeg CentrePort logistics companies) to every scout pass, apply from Surrey with a standing cover-letter line: "Willing to relocate to Calgary at my own expense, available within 3 weeks." Relocate only on a signed $65K+ offer.
+- Skip for relocation: Victoria, Kelowna (too small), Halifax (affordability eroded), Saskatoon (no systems cluster), Toronto (worst competition-to-cost; mine its remote-eligible postings only). Ottawa: apply to federal pools remotely instead of moving.
+- New exclusion traps: Manitoba Liquor & Lotteries (major Winnipeg IT employer) and AGLC (Alberta gaming/liquor) are both excluded industries.
+
+## Remote-in-Canada shortlist
+
+1. **Jane App, Customer Support Representative**: $65,000 flat start (~$31/hr), fully remote Canada, BC-born company, explicit ladder into Technical Escalations. Apply immediately; cohort windows.
+2. **Shopify, Merchant Support Advisor (Western Canada)**: ~$26.8/hr total, BELOW floor; brand-name stepping stone only. Critic note: Shopify cut support staff Nov 2025 and pushes AI-first; verify cohorts are actually open before investing time.
+3. **Auvik Networks, Technical Support Specialist**: $53-68.5K remote. Verify live on auvik.com first (aggregator-sourced; and it is PE-owned, not Tucows as one source claimed).
+4. **NTT DATA, NetSuite Administrator (remote, Vancouver)**: Tier B reach; cover letter bridges NetSuite gap with the real Dynamics BC integration.
+5. **Automattic Happiness Engineer**: Tier C wildcard, degree-blind, paid trial, weeks-long process.
+6. Monitors for companies.txt: GitLab (Greenhouse), 1Password (Ashby), Clio junior support roles.
+
+## The 5 weekend projects (committed order)
+
+1. **Retroactive BSA case-study pack** of the $1.2M operation: three case studies (invoice-to-ERP pipeline, StockPulse, 738-SKU verification), each with a one-page BRD, BPMN process map, and before/after metrics. Zero new code; converts the "Production Worker" title into documented BSA evidence. Do this FIRST.
+2. **Power BI + SQL dashboard** on anonymized sales data ($86-94K/mo, Dec peak): revenue trend, SKU velocity, channel mix, stockout risk. SQL appears in ~69% of BA postings, Power BI ~25% (vendor data, directional).
+3. **Port one n8n flow to Power Automate + SharePoint + Power Apps** (free M365 dev sandbox). Unlocks truthful "Power Automate, Power Apps, SharePoint Online" keywords that dominate municipal BSA postings (City of Vancouver Systems Analyst II wants exactly this stack).
+4. **Public Business Central sandbox OData v4 demo**: sanitized rebuild of the invoice pipeline against the free Cronus demo company, with API docs and a 3-minute video. Makes the private work publicly verifiable.
+5. **Agentic AI ops assistant** (Claude API, tool-calling over mock order/inventory DB, RAG over supplier docs, eval write-up). Matches the dominant 2026 take-home patterns.
+
+## Direct outreach sprint (highest conversion lane)
+
+- Cold email template: under 100 words. Line 1 names something specific about the firm. Line 2: "I built an invoice-to-ERP pipeline into Dynamics 365 Business Central (OData v4) for a live $1.2M operation." Line 3: "MB-800 scheduled for [date]." Ask for 15 minutes.
+- Targets this week: Catapult ERP practice lead (verify the entry-level posting is live first; the page is undated), Encore Vancouver (also apply to their Support Solution Specialist posting), HR@endeavoursolutions.ca.
+- Second wave: Graphically Speaking (Vancouver Magento agency; pitch the $1.2M Magento B2B experience), 6-8 Vancouver Shopify boutiques (ONBOX, Makro, Good Commerce, Bryt), Vessi ops lead.
+- Register with Nigel Frank (dedicated Dynamics recruiting desk, Canada) and watch d365.careers weekly.
+- The "5x better than portal applications" stat is vendor marketing; directionally right, numerically unreliable.
+
+## Critic corrections and open items
+
+- **Catapult posting is undated**: verify before it anchors the week's plan.
+- **ICBC and insurance employers need Hamza's explicit yes/no** (conventional insurance is a known gray area; it is not on his stated exclusion list, his call).
+- **BC RMS alerts will sweep in Liquor Distribution Branch ISL postings**: filter by employer on every alert.
+- **Missed avenues to add**: WorkBC Wage Subsidy ($3,600-12,000 to employers, live April 2026 handbook) as a cover-letter closer for small firms; Surrey Schools SD36 CUPE IT classifications (home turf); Amazon Delta/Tsawwassen FC IT support (no degree gate); part-time degree completion via BCIT/TRU-OL/Athabasca transfer credit (would dissolve the degree gate permanently); D365 user-group community (D365UG, Vancouver Microsoft meetups) as the highest-density networking channel for the Dynamics thesis.
+- **Still missing** (lanes re-running): staffing agencies, wage subsidies detail, volume-application/ATS tactics.
+- **Sequencing gap flagged**: seven lanes each demand "this week" action; the operating plan must serialize (see strategy summary when final lanes land).
+- **Odlum Brown BSA** (Vancouver, $80-100K, strong skill match): EXCLUDED, investment brokerage.

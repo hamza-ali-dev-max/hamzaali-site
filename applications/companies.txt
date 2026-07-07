@@ -27,3 +27,16 @@ Best Buy Canada | unknown | bestbuy-jobs.com | Burnaby HQ
 # Logistics / distribution
 Cymax Group | unknown | cymaxgroup.com/careers | Burnaby, e-commerce logistics tech
 RB Global (Ritchie Bros) | unknown | rbglobal.com/careers | Burnaby
+
+# Added 2026-07-07: remote-Canada and Dynamics ecosystem monitors
+GitLab | greenhouse | gitlab | remote Canada support/ops roles
+1Password | ashby | 1password | remote Canada, watch for support reopening
+Jane App | unknown | jane.app/careers | remote Canada, $65K flat CS rep
+Auvik Networks | unknown | auvik.com/careers | remote Canada tech support
+Automattic | unknown | automattic.com/work-with-us | remote, degree-blind, paid trial
+Shopify | unknown | shopify.com/careers | merchant support cohorts, verify open
+Catapult ERP | unknown | catapulterp.com | Vancouver D365 partner, careers@catapulterp.com
+Encore Business Solutions | unknown | encorebusiness.com | D365 partner, Vancouver office
+Endeavour Solutions | unknown | endeavoursolutions.ca | HR@endeavoursolutions.ca open call
+Nigel Frank | recruiter | nigelfrank.com | Dynamics-specialist recruiter, register
+d365.careers | job-board | d365.careers | weekly check
