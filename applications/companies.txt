@@ -1,0 +1,29 @@
+# ATS boards to poll on every scout run (CLAUDE.md section 8b).
+# Format: company | ats | endpoint-or-board | notes
+# All slugs below are STARTER GUESSES and must be confirmed on first poll;
+# replace with the verified endpoint or delete the line if none exists.
+# Greenhouse: https://boards-api.greenhouse.io/v1/boards/[slug]/jobs
+# Lever:      https://api.lever.co/v0/postings/[slug]
+# Ashby:      https://jobs.ashbyhq.com/[slug]
+
+# Vancouver-area tech
+Clio | greenhouse | clio | Burnaby, legal SaaS, ops/BSA roles
+Trulioo | greenhouse | trulioo | Vancouver, identity verification
+Visier | greenhouse | visier | Vancouver, people analytics
+Global Relay | unknown | globalrelay.com/careers | Vancouver, own portal
+Klue | lever | klue | Vancouver, competitive intel
+Later | greenhouse | later | Vancouver, social media SaaS
+
+# DTC / e-commerce / retail
+Article | unknown | article.com/careers | Vancouver, furniture DTC
+Vessi | unknown | vessi.com/pages/careers | Vancouver, footwear DTC
+Kits Eyewear | unknown | kits.ca/careers | Vancouver, eyewear DTC
+Saje Natural Wellness | unknown | saje.com/pages/careers | Vancouver DTC
+Herschel Supply | unknown | herschel.ca/careers | Vancouver
+Aritzia | unknown | aritzia.com/en/careers | Vancouver, has own ATS
+Lululemon | unknown | careers.lululemon.com | Vancouver
+Best Buy Canada | unknown | bestbuy-jobs.com | Burnaby HQ
+
+# Logistics / distribution
+Cymax Group | unknown | cymaxgroup.com/careers | Burnaby, e-commerce logistics tech
+RB Global (Ritchie Bros) | unknown | rbglobal.com/careers | Burnaby
