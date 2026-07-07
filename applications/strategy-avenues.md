@@ -79,3 +79,52 @@ Source: 6 of 13 research lanes completed (federal, BC provincial, crown corps, s
 - **Still missing** (lanes re-running): staffing agencies, wage subsidies detail, volume-application/ATS tactics.
 - **Sequencing gap flagged**: seven lanes each demand "this week" action; the operating plan must serialize (see strategy summary when final lanes land).
 - **Odlum Brown BSA** (Vancouver, $80-100K, strong skill match): EXCLUDED, investment brokerage.
+
+---
+
+# Round 3 findings (final, 2026-07-07 night): volume tactics, agencies, subsidies, critic pass 2
+
+## Volume verdict (REVISES the earlier two-lane 15-20/day idea)
+
+- Optimal volume is 2-3 deeply tailored applications per day (40-60/month). Data: candidates at 21-80 total applications per cycle showed ~31% offer rates; past ~80 it drops to ~20% because customization collapses. The CLAUDE.md 40+/month target is exactly the optimal band; do NOT inflate to 20/day.
+- Channel priority: employer email > company ATS portal > Job Bank direct > LinkedIn Easy Apply. Direct applications get 2-4x the callbacks of Easy Apply. Easy Apply only as a capped supplement, 10-15/day max (hard cap ~50/day, restriction risk near 80).
+- Never use auto-apply bots (70-85% ban rates, and they mis-answer degree/salary fields, violating the truth rule). Claude-drafted, human-clicked stays safe.
+- ATS keyword auto-rejection is mostly myth; the REAL filter is knockout questions. Check every portal for a required bachelor's yes/no before building a dossier; a required degree question he cannot truthfully answer means skip (degree gate).
+- Workday recruiter search is literal: mirror the posting's exact phrases ("ERP integration", not "Business Central pipeline").
+- Max 1-2 concurrent applications per employer; log rejection dates; 90-day to 6-month reapply cooling-off.
+- 2026 AI-flood context: ~78% of applications carry AI content, so verifiable proof-of-work wins. GitHub links (StockPulse, secscan) go in the resume header.
+
+## Staffing agencies
+
+- Register this week: Robert Half Vancouver (their junior BA ERP posting is dated April 13, likely filled: verify, apply anyway to be in their system), Ignite Technical (local boutique, transparent rates), S.i. Systems (Canada's largest, wants intermediate analysts), Procom, and Horizon Recruitment for the supply-chain/ops lane (container logistics story).
+- Nigel Frank + microsoftcontractors.com for the Dynamics niche.
+- Quote $32-36/hr for BA/ERP-support contracts. Refuse sub-$28 helpdesk pushes.
+- Agencies are the biggest exclusion-conflict vector: they staff banks, credit unions, BCLC, LDB, casinos. Ask the end-client name before accepting any placement.
+- Scam hygiene: agencies never charge candidates; no SIN before a signed package; no WhatsApp/Telegram recruiters.
+
+## Wage subsidies and the JULY 13 TIME-CRITICAL SEQUENCE
+
+- **Before July 13 (while still employed at HPP):** get the employer reference letter describing the real systems/e-commerce duties (after separation this gets harder); confirm how the separation is papered (employer-initiated end vs quit determines EI eligibility, which gates training funding).
+- **Week of July 13:** file the EI claim; register at the Surrey-Newton WorkBC Centre as an unemployed case-managed client. Warning: taking any stopgap part-time work first can disqualify him ("underemployed" is NOT eligible).
+- Once registered, every application to a BC SMB can carry one line: hiring him can qualify the employer for a WorkBC Wage Subsidy of $3,600-$12,000, plus up to $10,000 in B.C. Employer Training Grant funds.
+- StrongerBC Future Skills Grant: up to $3,500 of candidate-side training money for BC residents 19+ (critic-found; verify eligible course list; could cover MB-800-adjacent training).
+- NPower Canada: free tech training + certs + placement network of 300+ employers, $4M BC funding; apply to the next BC cohort after July 13.
+- Closed/gated: Innovate BC ISI (closed between intakes), ICTC WIL/Mitacs (require enrollment), CICan/DS4Y (require completed credential), Canada Summer Jobs (ends Aug 29, stopgap only).
+
+## Critic pass 2 corrections
+
+- **Catapult ERP entry-level posting: careers page CONFIRMED LIVE** (catapulterp.com/our-career-opportunities/entry-level-dynamics-365-finance-consultant). The outreach sprint anchor stands.
+- ICBC Service Desk posting (May 2026) is likely closed or closing; also gate reads diploma/cert AND 2 years, both needed. Deprioritize.
+- FIN newcomer program: poor fit (targets foreign work experience; his flagship experience is Canadian).
+- **Order an ICES/WES evaluation of the IIE Varsity College transcripts NOW**: federal and BC education claims need a Canadian equivalency assessment of foreign credentials, and it takes weeks.
+- Missed avenues added to rotation: T-Net (bctechnology.com, 1000+ BC tech jobs), NetSuite admin/partner parallel track, Xero/cloud-accounting hybrid roles (his real bookkeeping year + automation = accounting-tech niche).
+- Clean on exclusions: Jane App, Shopify, Automattic, Auvik, Clio, Herschel, TransLink, E-Comm.
+
+## Master sequence (resolves all "apply this week" collisions)
+
+1. NOW, before July 13: HPP reference letter; separation/EI paperwork clarity; order IIE transcripts + ICES evaluation.
+2. Applications start immediately at 2-3/day deep: Day 1 White Rock (expires Jul 31) + Tommyco (email). Day 2 Trail Appliances + Fraser Health 124442. Day 3 Robinson + Best Access Doors. Day 4 Jane App + Allteck. Day 5 Fraser Health 105763 + City of Burnaby.
+3. Midweek: outreach emails to Catapult, Encore, Endeavour; register Robert Half, Ignite, S.i. Systems, Horizon, Nigel Frank.
+4. Weekend 1: BSA case-study pack (project 1); create GC Digital Talent + BC RMS profiles; book MB-800 ~8 weeks out.
+5. Week of July 13: EI claim + WorkBC registration; add the wage-subsidy line to SMB applications from then on.
+6. Weekends 2-5: projects 2-5. Weeks 8-14: PL-300.

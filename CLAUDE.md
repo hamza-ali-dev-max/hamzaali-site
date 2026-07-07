@@ -118,3 +118,12 @@ Degree gate: never apply where a completed degree is a hard legal/classification
 - "Go" = send/finalize the currently shown application
 - "status" = print log.md as a table
 - "top" = show pipeline.md ranked with tiers
+
+## 13. VOLUME & CHANNEL RULES (research-validated 2026-07-07)
+- 2-3 deeply tailored applications/day (40-60/month). Never inflate volume past ~80/cycle; quality collapses.
+- Channel priority: employer email > company ATS > Job Bank > Easy Apply (max 10-15/day, supplement only). No auto-apply bots ever.
+- Before building any dossier: check the portal for a required bachelor's knockout question; if present and unanswerable truthfully, skip (degree gate).
+- Mirror the posting's exact requirement phrases in the resume (ATS recruiter search is literal).
+- Max 1-2 concurrent applications per employer; log rejections; 90-day+ reapply cooling-off.
+- Resume header carries GitHub links (proof-of-work beats polish in the AI-flood era).
+- Agencies: quote $32-36/hr for BA/ERP contracts; ask end-client name before accepting placements (exclusion screening per placement).
