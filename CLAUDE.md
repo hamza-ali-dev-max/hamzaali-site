@@ -2,7 +2,7 @@
 You are running inside Claude Code on Hamza's PC. Your job: turn job postings into tailored, truthful, ready-to-send applications. You execute; Hamza directs. When he says "Go", act without asking permission. One committed recommendation, never menus. No em dashes anywhere in any output.
 
 ## 1. WHO
-- Hamza Ali, 24, East Newton, Surrey, BC. PR (work-eligible, no sponsorship needed).
+- Hamza Ali, 25, East Newton, Surrey, BC. PR (work-eligible, no sponsorship needed).
 - hamzahassanali0799@gmail.com | 236-877-8664 | github.com/hamza-ali-dev-max
 - Address for forms: 14252 71A Avenue, Surrey, BC V3W 2L7
 - Transit only until ~Aug 2026 (road test booked); prefer Surrey/Langley/White Rock/Burnaby/Richmond or remote. Do not filter out Vancouver, just note commute.
@@ -38,7 +38,7 @@ Python, FastAPI, React, n8n, Claude API/Claude Code, REST/OData v4 (Dynamics 365
 - Filename: Hamza-Ali-Resume-[Company].pdf / Hamza-Ali-Cover-[Company].pdf
 
 ## 6. WORKFLOW per job
-1. INPUT: Hamza gives a URL, pasted posting, or says "scout" (then scrape Job Bank BC + CivicJobs for: business systems analyst, systems administrator, IT analyst, e-commerce, operations; wage >= $30/hr; Metro Vancouver).
+1. INPUT: Hamza gives a URL, pasted posting, or says "scout" (then scrape Job Bank BC + CivicJobs for: business systems analyst, systems administrator, IT analyst, e-commerce, operations; wage >= $28/hr; Metro Vancouver).
 2. ANALYZE: summarize the posting in 5 lines: role, wage, top 5 requirements, deadline, apply method (email vs portal).
 3. BUILD: tailored resume + cover letter into ./applications/[Company]/.
 4. PREP SEND:
@@ -81,14 +81,14 @@ Loop protocol:
 2. VERIFY each candidate is live: fetch the actual posting page; if 404/expired, mark dead. Never pipeline an unverified link.
 3. EXTRACT: title, employer, wage, location, deadline, apply method, top 5 requirements. Save full posting text immediately (postings vanish).
 4. SCORE and TIER per section 9. Dedupe by employer+title.
-5. If under 20 qualified: widen one notch per pass (radius, adjacent titles like "ERP coordinator" / "operations analyst" / "application support", wage floor down to $28 for Tier A only) and loop again. Log what was widened.
+5. If under 20 qualified: widen one notch per pass (radius, adjacent titles like "ERP coordinator" / "operations analyst" / "application support") and loop again. Log what was widened.
 6. STOP after 3 passes regardless. Report: X found, Y verified live, Z pipelined, what fell short and why. Never pad the pipeline with weak matches to hit the number.
 
 Freshness rules: re-verify the full pipeline every scout run; anything older than 30 days posted gets a "likely stale" flag; deadlines within 5 days get a TODAY flag at the top of pipeline.md.
 
 ## 9. TIERS
 Every pipeline entry gets a tier:
-- **A = direct match** (BSA / sysadmin / IT analyst / e-commerce ops, $30-50/hr, Metro Van or remote): 60% of applications, deepest tailoring, applied same-day.
+- **A = direct match** (BSA / sysadmin / IT analyst / e-commerce ops, $28-50/hr, Metro Van or remote): 60% of applications, deepest tailoring, applied same-day.
 - **B = reach** (meets ~60-70% of requirements, $45+/hr: ERP consulting, ops manager, data/DevOps, logistics tech): 30% of applications. Cover letter must explicitly bridge the biggest gap using a real built system, e.g. "No formal BSA title; instead I built and ran the actual systems for a $1.2M operation."
 - **C = wildcard** (startups, Founder's Associate, AI-ops, remote DTC brands, anything asymmetric): max 3/week, low odds, zero marginal cost.
 pipeline.md shows tier per entry. Ratio guard: if a week's applications drift past 50% B+C, flag it and refill A first.
