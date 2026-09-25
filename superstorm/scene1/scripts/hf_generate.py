@@ -3,7 +3,8 @@
   python3 hf_generate.py plan                  -> clip list, prices, total (no network)
   python3 hf_generate.py run C1 [C2 ...] --go  -> upload the start image, submit, poll, download,
                                                   log every request to production_log.csv
-  python3 hf_generate.py status REQUEST_ID     -> poll one request (free)
+  python3 hf_generate.py status REQUEST_ID     -> one status check (free)
+  python3 hf_generate.py poll X1=REQUEST_ID    -> wait for an already-submitted request, download, log
 
 API (api.higgsfield.ai): POST /bytedance/seedance-2.5/{text-to-video|image-to-video} ->
 {request_id, status_url}; poll status_url until completed/failed/nsfw/canceled; result at
@@ -98,12 +99,17 @@ def last_frame(mp4, out_png):
     return out_png
 
 
-def poll(s, status_url, every=10, limit=1800):
+def poll(s, rid, every=10, limit=1800):
+    """Poll through api.higgsfield.ai (the status_url the API returns points at
+    platform.higgsfield.ai, which this environment's network policy blocks)."""
     t0 = time.time()
     while True:
-        r = s.get(status_url, timeout=60)
-        r.raise_for_status()
-        d = r.json()
+        try:
+            r = s.get(f"{API}/requests/{rid}/status", timeout=60)
+            r.raise_for_status()
+            d = r.json()
+        except (requests.RequestException, ValueError) as e:
+            d = {"status": f"poll error ({type(e).__name__})"}
         st = d.get("status")
         if st in ("completed", "failed", "nsfw", "canceled"):
             return d
@@ -112,13 +118,35 @@ def poll(s, status_url, every=10, limit=1800):
         time.sleep(every)
 
 
+def finish(s, cid, rid, c):
+    """Wait for a submitted request, try to download it, log the outcome; returns $ spent."""
+    d = poll(s, rid)
+    st = d.get("status")
+    url = (d.get("video") or {}).get("url", "")
+    note = url or str(d)[:300]
+    if st == "completed" and url:
+        try:
+            v = requests.get(url, timeout=600)
+            v.raise_for_status()
+            (CLIPS_DIR / f"{cid}.mp4").write_bytes(v.content)
+            note = f"saved build/clips/{cid}.mp4 ({url})"
+        except requests.RequestException as e:
+            note = f"download blocked/failed ({type(e).__name__}); result at {url}"
+    spent = cost(c) if st == "completed" else 0.0
+    log_row(timestamp_utc=now(), service="higgsfield", model=f"{MODEL}/{c['kind']}", request_id=rid, asset=cid,
+            prompt_or_text=c["prompt"], duration_s=c["duration"], resolution=c["resolution"],
+            generate_audio=c["audio"], credit_cost=f"${spent:.2f}", status=st, notes=note)
+    print(cid, st, note, flush=True)
+    return spent
+
+
 def run(ids, go):
     if not go:
         sys.exit("refusing to spend credits without --go (owner approval at checkpoint 3)")
     s = session()
     CLIPS_DIR.mkdir(parents=True, exist_ok=True)
-    total = 0.0
-    for cid in ids:
+    submitted = []
+    for cid in ids:                                    # submit everything first (they render in parallel)
         c = CLIPS[cid]
         body = {"prompt": c["prompt"], "duration": c["duration"], "resolution": c["resolution"],
                 "generate_audio": c["audio"]}
@@ -136,27 +164,13 @@ def run(ids, go):
                     generate_audio=c["audio"], credit_cost=0, status=f"rejected {r.status_code}", notes=r.text[:300])
             print(cid, "rejected", r.status_code, r.text[:300])
             continue
-        sub = r.json()
-        rid = sub.get("request_id")
-        print(cid, "submitted", rid, flush=True)
-        d = poll(s, sub.get("status_url") or f"{API}/requests/{rid}/status")
-        st = d.get("status")
-        url = (d.get("video") or {}).get("url", "")
-        note = url
-        if st == "completed" and url:
-            try:
-                v = requests.get(url, timeout=600)
-                v.raise_for_status()
-                (CLIPS_DIR / f"{cid}.mp4").write_bytes(v.content)
-                note = f"saved build/clips/{cid}.mp4"
-            except requests.RequestException as e:
-                note = f"download failed ({type(e).__name__}): {url}"
-        spent = cost(c) if st == "completed" else 0.0
-        total += spent
+        rid = r.json().get("request_id")
         log_row(timestamp_utc=now(), service="higgsfield", model=f"{MODEL}/{c['kind']}", request_id=rid, asset=cid,
                 prompt_or_text=c["prompt"], duration_s=c["duration"], resolution=c["resolution"],
-                generate_audio=c["audio"], credit_cost=f"${spent:.2f}", status=st, notes=note)
-        print(cid, st, note, flush=True)
+                generate_audio=c["audio"], credit_cost=f"(est ${cost(c):.2f})", status="submitted")
+        print(cid, "submitted", rid, flush=True)
+        submitted.append((cid, rid))
+    total = sum(finish(s, cid, rid, CLIPS[cid]) for cid, rid in submitted)
     print(f"spent this run: ${total:.2f}")
 
 
@@ -175,7 +189,7 @@ def plan():
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["plan", "run", "status"])
+    ap.add_argument("cmd", choices=["plan", "run", "status", "poll"])
     ap.add_argument("ids", nargs="*")
     ap.add_argument("--go", action="store_true", help="owner approved the spend")
     a = ap.parse_args()
@@ -183,5 +197,9 @@ if __name__ == "__main__":
         plan()
     elif a.cmd == "status":
         print(json.dumps(session().get(f"{API}/requests/{a.ids[0]}/status", timeout=60).json(), indent=2))
+    elif a.cmd == "poll":                             # poll ASSET=REQUEST_ID ... already submitted, log the outcome
+        CLIPS_DIR.mkdir(parents=True, exist_ok=True)
+        s = session()
+        print(f"spent: ${sum(finish(s, *p.split('='), CLIPS[p.split('=')[0]]) for p in a.ids):.2f}")
     else:
         run(a.ids, a.go)
