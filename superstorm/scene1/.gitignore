@@ -11,3 +11,4 @@ deliverables/
 *.osm
 *.osm.pbf
 __pycache__/
+review/_*.png
