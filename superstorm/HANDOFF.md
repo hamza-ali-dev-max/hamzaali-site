@@ -19,11 +19,11 @@ everything"), keep one consistent look, and make it engaging.
   for DaVinci Resolve, total credits used, and time per part (`scene1/timing_log.csv`).
 
 ## Decisions made
-- TTS: **ElevenLabs** (owner's choice; Creator plan, 131k credits). Needs env var
-  `ELEVENLABS_API_KEY` and `api.elevenlabs.io` allowed. Look up model IDs via the API
+- TTS: **ElevenLabs** (owner's choice; Creator plan, 131k credits). Key injected by the
+  proxy (see Environment). Look up model IDs via the API
   (`GET /v1/models`); prefer Eleven v3 for expressive lines. Radio FX chain in ffmpeg.
 - Video clips: **Seedance 2.5 via the Higgsfield API** (owner has $21 there; the Higgsfield
-  connector account has 0 credits). Exact API price (token-metered, $0.0214 per 1k video tokens): $0.206/s at 480p, $0.462/s at 720p. Env var `HF_KEY`,
+  connector account has 0 credits). Exact API price (token-metered, $0.0214 per 1k video tokens): $0.206/s at 480p, $0.462/s at 720p. Key injected by the proxy,
   host `api.higgsfield.ai`. PiP boxes can use 480p.
 - Close-up city footage: owner wants **Seedance image-to-video** starting from the zoom's last frame (aerials of famous places, cars, people). Blender is the backup.
 - 3D (optional): Blender via `bpy==5.0.1` (Python 3.11 here), OSM from Overpass (`overpass-api.de`).
@@ -44,7 +44,11 @@ everything"), keep one consistent look, and make it engaging.
 | `mapcam.py` | continuous camera AI map → regional layers (km space centred on Montreal) |
 | `shots.py` | scene-1 plates A (push-in), B (zoom), F (pull-back) → `build/plates/` |
 | `panels.py` | labels, reticle, PiP box + leader arrow, radio panel, lower third, headline card |
-| `compose.py` | plates + grid/labels/HUD/effects → `build/preview/*.mp4` |
+| `compose.py` | plates + grid/labels/HUD/effects → `build/preview/*.mp4`; `compose.py city [t0 t1]` = the Blender segment |
+| `osm_fetch.py` | Overpass → `build/osm/montreal.json` (tiled, retried) |
+| `blender_city.py` | 3D Montreal: `build` → `build/blender/montreal_city.blend`, `render t0 t1`, `cams` |
+| `hf_generate.py` | Seedance 2.5 clips: `plan` (free) / `run C1 … --go` (spends, logs) |
+| `sound.py`, `radio_fx.py` | procedural sound design stems; ffmpeg radio chain |
 
 `build/` is regenerable and git-ignored (public repo): run `setup_env.sh`, then
 `python3 regional.py && python3 shots.py && python3 compose.py preview`.
@@ -58,6 +62,17 @@ everything"), keep one consistent look, and make it engaging.
 - Next: sound design + radio chain · Blender city (needs Overpass) · voices (needs
   ElevenLabs) · clips (needs Higgsfield, after owner approval) · full script for the hour.
 
-## Environment needed (owner sets this; Claude cannot)
-Allowed domains: `api.elevenlabs.io`, `api.higgsfield.ai`, `overpass-api.de`.
-Env vars: `ELEVENLABS_API_KEY`, `HF_KEY`. New session after changing env vars.
+## Environment (as of session 3)
+- Allowed: `api.elevenlabs.io`, `api.higgsfield.ai`, `overpass-api.de` + package managers.
+- Keys are **not** env vars: they are saved as API credentials and the agent proxy injects
+  them (`xi-api-key` for ElevenLabs, `Authorization: Key …` for Higgsfield). Scripts must not
+  require `ELEVENLABS_API_KEY`/`HF_KEY`; `hf_generate.py` uses `HF_KEY` only if present.
+- Verified (non-billable): Higgsfield auth works (free `POST /files/generate-upload-url`).
+- **Blocked 1 — ElevenLabs:** the stored credential is the key *ID*; the API answers
+  `api_key_id_used_as_api_key`. The owner must store the secret key (starts with `sk_`).
+  Non-billable check: `curl https://api.elevenlabs.io/v1/user/subscription`.
+- **Blocked 2 — Higgsfield downloads:** results are served from `*.cloudfront.net`
+  (e.g. `d8j0ntlcm91z4.cloudfront.net`) and `cdn.higgsfield.ai`, both denied. Allow
+  `cloudfront.net` before generating, or finished clips can't be pulled into the VM.
+- Overpass works but resets ~2 of 3 connections: `osm_fetch.py` fetches 16 tiles with
+  retries into `build/osm/tiles/` (cached), ~25 min.

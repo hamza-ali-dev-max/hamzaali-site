@@ -17,6 +17,21 @@ Upscale to 1080p in the edit. Every generation is logged to `production_log.csv`
 If C1/C2 disappoint, the Blender city (district-exact blackout, already scripted) is the
 fallback at $0.
 
+## API check (non-billable, this session)
+
+- Auth works: the environment's proxy injects the key; a free `POST /files/generate-upload-url`
+  returned an upload slot for the account. No generation has been submitted.
+- Endpoints: `POST /bytedance/seedance-2.5/image-to-video` (needs `image_url`) and
+  `.../text-to-video` (needs `prompt`); body `duration`, `resolution` (480p/720p),
+  `generate_audio`, `aspect_ratio` (t2v only). Start images upload to S3 (reachable).
+- **Blocker for downloading results:** the Higgsfield CDNs (`*.cloudfront.net`, e.g.
+  `d8j0ntlcm91z4.cloudfront.net`, and `cdn.higgsfield.ai`) are denied by the network
+  policy, so a finished clip could not be pulled into the VM. Add `cloudfront.net` (or those
+  hosts) to the allowed domains before "go".
+- Script: `scripts/hf_generate.py plan` (prices) / `run C1 C2 ... --go` (spends; logs every
+  request to `production_log.csv`). C1's start image is the clean zoom plate at 0:19.5
+  (`build/plates/B/00225.png`).
+
 ## Prompts
 
 **C1** — Continuous aerial descent from very high altitude straight down toward a large city

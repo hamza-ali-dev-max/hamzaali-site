@@ -19,10 +19,12 @@ from PIL import Image
 import look
 import mapcam
 import panels
+import timeline
 from geo import ROOT
 from look import AMBER, CYAN, RED, HUD, Overlay, W, H, fmt_int
 
 PLATES = ROOT / "build" / "plates"
+CITY = ROOT / "build" / "blender" / "frames"
 PREVIEW = ROOT / "build" / "preview"
 FPS = 30
 IMPACT, BLACKOUT_START, BLACKOUT_END = 4.0, 31.0, 40.0
@@ -64,6 +66,9 @@ def hud_columns(t, cam=None):
     dst = ramp(t, IMPACT, IMPACT + 6, -58, -1180) + (8 * math.sin(t * 3.1) if t > IMPACT + 6 else 0)
     clock = ("MISSION CLOCK", "T+17:00 — IMPACT " + ("●" if blink else " "), RED, 34, 540)
     storm = ("GEOMAGNETIC STORM", "G5+ EXTREME", RED, 34, 430)
+    if BLACKOUT_START - 0.3 <= t < 60:
+        n = timeline.people_without_power(t)
+        return [clock, storm, ("PEOPLE WITHOUT POWER", fmt_int(n), RED if n > 0 else AMBER, 34, 470), view]
     if t < 60:
         return [clock, storm,
                 ("KP INDEX", f"{kp:.1f}", RED if kp >= 8 else AMBER, 34, 190),
@@ -110,6 +115,69 @@ def compose_frame(args):
     return look.to_u8(G["ov"].finish(img, i))
 
 
+# ---- Blender city segment (0:19.5-0:50) --------------------------------------------------
+
+RADIO_SUBS = [(42.2, "Grid Control to all stations..."), (44.0, "we've lost the northern lines."),
+              (45.6, "Multiple transformer trips... Montreal is down."),
+              (47.3, "I repeat, we are losing the network... we are losing the—")]
+
+
+def radio_bars(t, n=40):
+    """Waveform bars from the radio take if it exists, else a placeholder envelope."""
+    wav = ROOT / "build" / "audio" / "grid_radio.wav"
+    if wav.exists():
+        if "radio" not in G:
+            from scipy.io import wavfile
+            sr, x = wavfile.read(wav)
+            x = x.astype(np.float32)
+            x = (x.mean(1) if x.ndim > 1 else x) / (np.abs(x).max() + 1e-9)
+            G["radio"] = (sr, x)
+        sr, x = G["radio"]
+        k = int((t - timeline.RADIO[0]) * sr)
+        seg = np.abs(x[max(0, k):k + int(0.3 * sr)])
+        step = max(1, len(seg) // n)
+        return [float(np.clip(seg[j * step:(j + 1) * step].max() if len(seg) >= (j + 1) * step else 0.03, 0.03, 1))
+                for j in range(n)]
+    rng = np.random.default_rng(int(t * 30))
+    speak = 0.6 + 0.4 * math.sin(t * 7.3) * math.sin(t * 2.1)
+    return list(np.clip(rng.random(n) * speak, 0.03, 1))
+
+
+def compose_city_frame(args):
+    import blender_city as BC
+    f, t = args
+    img = np.asarray(Image.open(CITY / f"{f:05d}.png").convert("RGB")).astype(np.float32) / 255
+    if t < timeline.HANDOFF[1]:                     # crossfade from the 2D zoom plate
+        a = float(mapcam.smoothstep(timeline.HANDOFF[0], timeline.HANDOFF[1], t))
+        bi = f - int(round(G_start("B") * FPS))
+        plate = np.asarray(Image.open(PLATES / "B" / f"{bi:05d}.png")).astype(np.float32) / 255
+        img = plate * (1 - a) + img * a
+    w, ov = G["world"], G["ov"]
+    img = ov.glow(img)
+    tgt, D, pitch, heading, hfov = BC.cam_state(t)
+    cam2d = (np.asarray(tgt) / 1000.0, BC.view_width_km(t), 1.0)   # equals the Blender view while top-down
+    gfade = 1.0 - float(mapcam.smoothstep(0.0, 5.0, pitch))
+    if gfade > 0.01:
+        img, labels = look.draw_grid(img, mapcam.grid_projector(w, cam2d), mapcam.view_lonlat_box(w, cam2d),
+                                     mapcam.px_per_degree_lat(w, cam2d), opacity=0.2 * gfade, label_opacity=0.5 * gfade)
+        look.over(img, labels)
+        for lay in overlays(t, cam2d):
+            look.over(img, np.asarray(lay))
+    if timeline.RADIO[0] <= t < timeline.RADIO[1]:
+        sub = [txt for t0, txt in RADIO_SUBS if t >= t0][-1]
+        k = min(1.0, (timeline.RADIO[1] - t) / 0.3)
+        rp = panels.radio_panel((W, H), t - timeline.RADIO[0], "GRID CONTROL — CH 4", radio_bars(t), sub, alpha=k)
+        look.over(img, np.asarray(rp))
+    img[:HUD.HEIGHT] = look.over(img[:HUD.HEIGHT], G["hud"].render(hud_columns(t, cam2d)))
+    return look.to_u8(ov.finish(img, f))
+
+
+def run_city(t0, t1, out, workers=4):
+    jobs = [(f, f / FPS) for f in range(int(round(t0 * FPS)), int(round(t1 * FPS)))]
+    with Pool(workers, initializer=init) as p:
+        encode(p.imap(compose_city_frame, jobs, chunksize=2), out, len(jobs))
+
+
 def encode(frames_iter, out, n):
     out.parent.mkdir(parents=True, exist_ok=True)
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
@@ -147,3 +215,6 @@ if __name__ == "__main__":
     if what == "preview":
         run([("A", 0, 12), ("B", 12, 20.5)], PREVIEW / "scene1_open.mp4")
         run([("F", 65, 75)], PREVIEW / "scene1_pullback.mp4")
+    elif what == "city":                          # python3 compose.py city [t0 t1]
+        t0, t1 = (float(sys.argv[2]), float(sys.argv[3])) if len(sys.argv) > 3 else (timeline.HANDOFF[0], timeline.RADIO[1])
+        run_city(t0, t1, PREVIEW / f"scene1_city_{t0:g}-{t1:g}.mp4")

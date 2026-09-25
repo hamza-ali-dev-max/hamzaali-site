@@ -36,14 +36,47 @@ QUERY = """[out:json][timeout:300][bbox:{s:.5f},{w:.5f},{n:.5f},{e:.5f}];
 out geom;""".format(s=BBOX[0], w=BBOX[1], n=BBOX[2], e=BBOX[3])
 
 
-def fetch():
+def tile_query(s, w, n, e):
+    head, body = QUERY.split("\n", 1)
+    return head.split("[bbox:")[0] + "[bbox:{:.5f},{:.5f},{:.5f},{:.5f}];\n".format(s, w, n, e) + body
+
+
+def fetch(nx=4, ny=4, tries=60):
+    """The link to overpass-api.de resets often, so the box is fetched as nx*ny tiles, each
+    retried with backoff and cached in build/osm/tiles/; elements are de-duplicated by id."""
+    import random
+    import time
     import requests
-    r = requests.post("https://overpass-api.de/api/interpreter", data={"data": QUERY}, timeout=600)
-    r.raise_for_status()
-    data = r.json()
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(data))
-    print(OUT, len(data.get("elements", [])), "elements")
+    tiles = OUT.parent / "tiles"
+    tiles.mkdir(parents=True, exist_ok=True)
+    s0, w0, n0, e0 = BBOX
+    seen, elements = set(), []
+    for j in range(ny):
+        for i in range(nx):
+            p = tiles / f"t{j}{i}.json"
+            if not p.exists():
+                q = tile_query(s0 + (n0 - s0) * j / ny, w0 + (e0 - w0) * i / nx,
+                               s0 + (n0 - s0) * (j + 1) / ny, w0 + (e0 - w0) * (i + 1) / nx)
+                for k in range(tries):
+                    try:
+                        r = requests.post("https://overpass-api.de/api/interpreter", data={"data": q},
+                                          headers={"User-Agent": "superstorm-scene1-render/1.0"}, timeout=600)
+                        r.raise_for_status()
+                        p.write_text(json.dumps(r.json()))
+                        break
+                    except (requests.RequestException, ValueError) as ex:
+                        print(f"tile {j}{i} try {k + 1}: {type(ex).__name__}")
+                        time.sleep(min(45, 4 * 2 ** k) + random.uniform(0, 10))
+                else:
+                    raise SystemExit(f"tile {j}{i} failed {tries} times")
+            for el in json.loads(p.read_text())["elements"]:
+                key = (el["type"], el["id"])
+                if key not in seen:
+                    seen.add(key)
+                    elements.append(el)
+            print(f"tile {j}{i}: {len(elements)} elements so far")
+    OUT.write_text(json.dumps({"elements": elements}))
+    print(OUT, len(elements), "elements")
 
 
 def convert(path):
