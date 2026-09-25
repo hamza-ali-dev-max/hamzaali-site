@@ -5,3 +5,5 @@ full_video_plan,2026-09-25T21:10:00Z,2026-09-25T21:16:00Z,6,"~62 min chapter pla
 api_verification,2026-09-25T22:27:00Z,2026-09-25T22:36:00Z,9,"non-billable checks: ElevenLabs rejects the stored credential (key ID, not the sk_ key); Higgsfield auth OK via a free upload-URL request; Higgsfield CDNs (*.cloudfront.net) denied; Overpass reachable but resets ~2 of 3 connections"
 env_rebuild,2026-09-25T22:30:00Z,2026-09-25T22:42:00Z,12,"setup_env.sh ~2 min, regional layers 5.8 min (4 cores), plates A/B/F ~3 min; ran in parallel with other work"
 osm_fetch,2026-09-25T22:30:00Z,2026-09-25T22:51:00Z,21,"Overpass, 16 tiles with retries (~60% of connections reset); 123,210 elements -> 94,006 buildings, 27,362 roads; unattended"
+blender_city,2026-09-25T22:38:00Z,2026-09-25T23:15:00Z,37,"blender_city.py written + 6 look iterations on half-res stills (~13 s/frame at 540p); real-OSM build 52 s; compose city segment; full-res 3 s test started 23:10 (~54 s/frame at 1080p)"
+voice_prep,2026-09-25T23:12:00Z,2026-09-25T23:16:00Z,4,"tts.py (lines, logging, radio chain hook); blocked by the stored ElevenLabs credential"

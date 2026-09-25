@@ -59,8 +59,22 @@ everything"), keep one consistent look, and make it engaging.
   `shots.descent_V(t)` runs from V=3000 km at 16.0 s to V=9 km at 23.0 s, centred on
   Montreal (km origin = 45.5017 N, 73.5673 W). The Blender camera must follow it from
   19.5 s (crossfade 19.5–20.0 s) and use `build/regional/R3/R4_aurora.png` as ground texture.
-- Next: sound design + radio chain · Blender city (needs Overpass) · voices (needs
-  ElevenLabs) · clips (needs Higgsfield, after owner approval) · full script for the hour.
+- **Blender city (session 3):** `blender_city.py build` makes the scene from real OSM
+  (94,006 buildings, 27,362 roads, water/parks; 52 s). Top-down it matches the 2D plate
+  at 0:19.5 (mean pixel diff 0.9/255), tilts 21.3–31 s to a river-side oblique
+  (pitch 82°, looking NW over downtown to Mount Royal), 10 districts die north→south
+  31–40 s with flickers, hospital campuses come back on generators 1.2–2.6 s later,
+  traffic keeps moving, aurora sky, snowy roofs catch the green. `compose.py city` adds
+  the plate crossfade, grid while top-down, PEOPLE WITHOUT POWER, Grid Control radio.
+- Render cost (4-core VM, Cycles CPU, 16 spp + OIDN): ~54 s/frame at 1080p, 13–18 s at
+  540p. The full Blender segment (0:19.5–0:50, 915 frames) ≈ 14 h here; on a desktop
+  GPU (OptiX) it should be well under a minute per frame. Options: 720p + upscale, 8 spp.
+- Known look issues: a flat dark band between the city edge and the horizon (the OSM box
+  ends ~5 km north; extend the fetch or add far lights); aurora lower border can read as
+  hills.
+- Next: owner "go" on the clip plan (A or B in `CLIP_PLAN.md`) → `hf_generate.py`;
+  voices via `tts.py` once the ElevenLabs key is fixed; then checkpoint 4, the full
+  Blender render, the mix and `scene1_v1.mp4`.
 
 ## Environment (as of session 3)
 - Allowed: `api.elevenlabs.io`, `api.higgsfield.ai`, `overpass-api.de` + package managers.
