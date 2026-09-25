@@ -7,3 +7,4 @@ env_rebuild,2026-09-25T22:30:00Z,2026-09-25T22:42:00Z,12,"setup_env.sh ~2 min, r
 osm_fetch,2026-09-25T22:30:00Z,2026-09-25T22:51:00Z,21,"Overpass, 16 tiles with retries (~60% of connections reset); 123,210 elements -> 94,006 buildings, 27,362 roads; unattended"
 blender_city,2026-09-25T22:38:00Z,2026-09-25T23:15:00Z,37,"blender_city.py written + 6 look iterations on half-res stills (~13 s/frame at 540p); real-OSM build 52 s; compose city segment; full-res 3 s test started 23:10 (~54 s/frame at 1080p)"
 voice_prep,2026-09-25T23:12:00Z,2026-09-25T23:16:00Z,4,"tts.py (lines, logging, radio chain hook); blocked by the stored ElevenLabs credential"
+direction_change,2026-09-25T23:14:00Z,2026-09-25T23:39:00Z,25,"owner: global incidents, Blender top view only, Seedance for cities/people, $21 total; incidents.py + plan v2; top-view camera (720p 28 s/frame); any-city zoom: calibration for 17 cities (3 iterations), London layers 5.6 min, London zoom 51 s"

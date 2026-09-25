@@ -13,9 +13,9 @@ reproducible from `scripts/`; heavy renders are not committed (see `.gitignore`)
 |---|------------|--------|
 | 1 | Setup: image ID, cleaned base map, network check | done |
 | 2 | Voice lines (+ radio FX) | **blocked**: the ElevenLabs credential saved in the environment is the key ID, not the secret key (`sk_…`) |
-| 3 | Higgsfield clip plan + credit estimate | ready for "go" (`CLIP_PLAN.md`, $15.11 + $5.54); no credits spent; downloads need `cloudfront.net` allowed |
+| 3 | Higgsfield clip plan + credit estimate | v2 for a $21 total: first batch X1/M1/M2 = $2.88 ready for "go" (`CLIP_PLAN.md`); no credits spent; downloads need `cloudfront.net` allowed |
 | 4 | Reporter lip-sync vs voice-over tests | waits on 2 + 3 |
-| 5 | Blender 3 s test + render-time estimate | test rendered from real OSM (`scripts/blender_city.py`), see HANDOFF |
+| 5 | Blender test + render-time estimate | real-OSM Montreal, now a top view only: ~28 s/frame at 720p (see HANDOFF) |
 | 6 | scene1_v1.mp4 | not started |
 
 ## Map sources (identified visually)

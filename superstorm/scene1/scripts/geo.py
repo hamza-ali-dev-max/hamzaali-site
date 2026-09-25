@@ -11,6 +11,35 @@ ROOT = Path(__file__).resolve().parents[1]
 CALIBRATION = ROOT / "assets" / "maps" / "calibration.json"
 
 MONTREAL = (45.5017, -73.5673)        # lat, lon (downtown)
+CITY_CAL = ROOT / "assets" / "maps" / "calibration_cities.json"
+
+# Zoom targets for the incident blocks (lat, lon). The map pipeline (regional layers, camera)
+# centres on the city named by $SUPERSTORM_CITY (default Montreal, the scene-1 pilot).
+CITIES = {
+    "montreal": MONTREAL, "london": (51.5072, -0.1276), "new_york": (40.7580, -73.9855),
+    "tokyo": (35.6812, 139.7671), "stockholm": (59.3293, 18.0686), "paris": (48.8566, 2.3522),
+    "toronto": (43.6532, -79.3832), "chicago": (41.8781, -87.6298), "lagos": (6.5244, 3.3792),
+    "mumbai": (19.0760, 72.8777), "sydney": (-33.8688, 151.2093), "singapore": (1.2903, 103.8520),
+    "shanghai": (31.2304, 121.4737), "sao_paulo": (-23.5505, -46.6333), "dunedin": (-45.8788, 170.5028),
+    "johannesburg": (-26.2041, 28.0473), "rotterdam": (51.9244, 4.4777), "ulsan": (35.5384, 129.3114),
+}
+CITY = os.environ.get("SUPERSTORM_CITY", "montreal").lower()
+CENTER = CITIES[CITY]
+
+
+def city_build_dir(name):
+    """build/<name> for Montreal (unchanged paths), build/<name>_<city> for every other city."""
+    return ROOT / "build" / (name if CITY == "montreal" else f"{name}_{CITY}")
+
+
+def city_calibration(cal=None):
+    """(affine_x, affine_y, zoom_target_px) placing the active city on the AI world maps:
+    Montreal = the 3-landmark fit + its light cluster; others = calibrate_city.py."""
+    cal = cal or load_calibration()
+    if CITY == "montreal":
+        return cal["local"]["affine_x"], cal["local"]["affine_y"], cal["montreal"]["zoom_target_px"]
+    c = json.loads(CITY_CAL.read_text())[CITY]
+    return c["affine_x"], c["affine_y"], c["zoom_target_px"]
 
 
 def _basemap_dir(res):

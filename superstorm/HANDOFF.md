@@ -1,9 +1,13 @@
 # Handoff — Solar Superstorm video (read this first in a new session)
 
-**Goal:** "I Simulated a Hyper Realistic Solar Superstorm, Day by Day" — ~62 min YouTube video
-(see `FULL_VIDEO_PLAN.md`). Scene 1 "The First City Goes Dark" (75 s, `scene1/`) is the pilot
-that tests the whole pipeline. Owner wants Claude to make the creative calls ("you do
-everything"), keep one consistent look, and make it engaging.
+**Goal:** "I Simulated a Hyper Realistic Solar Superstorm, Day by Day" — ~60 min YouTube video.
+**Direction (owner, session 3):** the hour is **many short incidents all over the world**
+(map zoom → real city → people, each with text + audio), not a Montreal-only build; don't
+over-invest in 3D. **Seedance 2.5** shows the real cities (zoom hand-offs: cars moving) and
+people; **Blender only for top views**. **Seedance budget: $21 total for the hour.**
+Plan: `FULL_VIDEO_PLAN.md`, generated from `incidents.py` (47 incidents, 29 places, 20
+countries; `FUNDED` = the 22 clips the $21 buys). Scene 1 (Montreal impact, `scene1/`) is the
+pilot of the incident format. Owner wants Claude to make the creative calls and keep one look.
 
 ## Owner's rules (from the brief)
 - 1920x1080, 30 fps, MP4. Map look: navy oceans, blue-grey land, gold lights, cyan coasts,
@@ -59,22 +63,21 @@ everything"), keep one consistent look, and make it engaging.
   `shots.descent_V(t)` runs from V=3000 km at 16.0 s to V=9 km at 23.0 s, centred on
   Montreal (km origin = 45.5017 N, 73.5673 W). The Blender camera must follow it from
   19.5 s (crossfade 19.5–20.0 s) and use `build/regional/R3/R4_aurora.png` as ground texture.
-- **Blender city (session 3):** `blender_city.py build` makes the scene from real OSM
-  (94,006 buildings, 27,362 roads, water/parks; 52 s). Top-down it matches the 2D plate
-  at 0:19.5 (mean pixel diff 0.9/255), tilts 21.3–31 s to a river-side oblique
-  (pitch 82°, looking NW over downtown to Mount Royal), 10 districts die north→south
-  31–40 s with flickers, hospital campuses come back on generators 1.2–2.6 s later,
-  traffic keeps moving, aurora sky, snowy roofs catch the green. `compose.py city` adds
-  the plate crossfade, grid while top-down, PEOPLE WITHOUT POWER, Grid Control radio.
-- Render cost (4-core VM, Cycles CPU, 16 spp + OIDN): ~54 s/frame at 1080p, 13–18 s at
-  540p. The full Blender segment (0:19.5–0:50, 915 frames) ≈ 14 h here; on a desktop
-  GPU (OptiX) it should be well under a minute per frame. Options: 720p + upscale, 8 spp.
-- Known look issues: a flat dark band between the city edge and the horizon (the OSM box
-  ends ~5 km north; extend the fetch or add far lights); aurora lower border can read as
-  hills.
-- Next: owner "go" on the clip plan (A or B in `CLIP_PLAN.md`) → `hf_generate.py`;
-  voices via `tts.py` once the ElevenLabs key is fixed; then checkpoint 4, the full
-  Blender render, the mix and `scene1_v1.mp4`.
+- **Blender city (session 3):** `blender_city.py build` makes Montreal from real OSM
+  (94,006 buildings, 27,362 roads; 52 s). Now a **top view only**: continues the 2D zoom
+  straight down, north up (matches the plate at 0:19.5, mean diff 0.9/255), eases to 6.2 km
+  across by 0:31 then pushes in; 10 districts die north→south 31–40 s with flickers,
+  hospitals back on generators, traffic keeps moving, snow catches the aurora. `compose.py
+  city` keeps the map grid, adds PEOPLE WITHOUT POWER and the radio panel. ~28 s/frame at
+  720p/12 spp (0:19.5–0:50 ≈ 7 h here). The oblique/skyline version was dropped (owner).
+- **Any-city zooms (session 3):** `geo.CITIES` + `$SUPERSTORM_CITY`; `calibrate_city.py`
+  places each city on the AI map (coast fit + city-lights pattern match; review sheets in
+  `review/cities/`; Chicago worth a manual check); `SUPERSTORM_CITY=x python3 regional.py`
+  (~6 min/city → `build/regional_x/`); `city_zoom.py` renders the zoom (9,000 → 160 km) and
+  saves `build/zooms/x/seedance_start.png`, the image-to-video start frame. London done.
+- Next: owner "go" on the first batch (X1 London hand-off, M1 reporter lip-sync, M2 crowd,
+  $2.88) once `cloudfront.net` is allowed → then chapter by chapter; voices via `tts.py`
+  once the ElevenLabs key is fixed; incident text/graphics templates; chapter assembly.
 
 ## Environment (as of session 3)
 - Allowed: `api.elevenlabs.io`, `api.higgsfield.ai`, `overpass-api.de` + package managers.

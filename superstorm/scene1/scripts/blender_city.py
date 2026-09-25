@@ -1,6 +1,7 @@
-"""Blender 3D Montreal for scene 1 (0:19.5-0:50 on the scene clock): the camera continues
-the 2D zoom straight down onto the real OSM city at night, tilts up over the river, and the
-city dies district by district (the blackout wave), hospitals coming back on generators.
+"""Blender 3D Montreal for scene 1 (0:19.5-0:50 on the scene clock), used as a TOP VIEW only
+(owner's call: Blender = the view from above, Seedance = street level): the camera continues
+the 2D zoom straight down onto the real OSM city at night, north up (the map grid and labels
+stay valid), and the city dies district by district, hospitals coming back on generators.
 
   python3 blender_city.py build [--osm montreal|synthetic]  -> build/blender/montreal_city.blend
   python3 blender_city.py render 30.5 33.5 [--scale 100] [--samples 16] [--out DIR]
@@ -60,14 +61,17 @@ LAND_NIGHT = (19, 22, 26)           # sRGB 0-255, darker than the map land: it i
 PARK_NIGHT = (12, 17, 16)
 WATER_NIGHT = (2, 9, 17)
 
-# camera: phase 1 follows the 2D log zoom top-down; then eases into the river-side oblique
-HFOV0, HFOV1 = 40.0, 55.0           # horizontal field of view (deg)
-TILT_START, TILT_END = 21.3, 31.0
-TARGET1 = np.array([-700.0, 350.0])  # between downtown and Mount Royal
-DIST1 = 5200.0                       # m from the target
-PITCH1 = 82.0                        # deg from nadir
-HEADING1 = -48.0                     # deg (negative = west of north): looking NW from the river
-DRIFT = dict(dist=0.88, heading=7.0, pitch=1.5)   # slow push/orbit over 31..50 s
+# camera: a top view throughout (owner's call: Blender = the view from above, Seedance =
+# street level). It continues the 2D log zoom straight down, north up, so the map grid and
+# labels stay valid, then keeps easing in over downtown while the city goes dark.
+HFOV0 = HFOV1 = 40.0                # horizontal field of view (deg)
+TILT_START, TILT_END = 21.3, 31.0   # (name kept: the ease from the zoom into the hold)
+TARGET1 = np.array([-500.0, 250.0])  # downtown + Mount Royal in frame
+V_HOLD = 6.2                         # km across at 0:31
+DIST1 = V_HOLD * 1000.0 / (2 * math.tan(math.radians(HFOV0) / 2))
+PITCH1 = 0.0
+HEADING1 = 0.0
+DRIFT = dict(dist=0.86, heading=0.0, pitch=0.0)   # slow push-in over 31..50 s
 
 
 # ---------------------------------------------------------------- geometry helpers

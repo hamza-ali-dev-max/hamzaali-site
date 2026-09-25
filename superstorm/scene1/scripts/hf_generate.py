@@ -32,48 +32,28 @@ LOG = ROOT / "production_log.csv"
 CLIPS_DIR = ROOT / "build" / "clips"
 NO_TEXT = "no text, no captions, no labels, no logos, no watermarks"
 
-CLIPS = {
-    "C1": dict(kind="image-to-video", duration=8, resolution="720p", audio=False,
-               start=ROOT / "build" / "plates" / "B" / "00225.png",           # clean zoom frame at 19.5 s
-               use="0:19.5-0:27 map -> real aerial of Montreal at night",
-               prompt="Continuous aerial descent from very high altitude straight down toward a large city on an "
-                      "island in a wide dark river, at night, north up. The map-like view slowly becomes a real "
-                      "photographic city: warm gold streetlights in street grids, dark river, bridges with car "
-                      "headlights moving, faint green aurora glow in the air. Smooth steady drone descent, "
+CLIPS = {   # first batch of the $21 plan (see CLIP_PLAN.md); the rest is added chapter by chapter
+    "X1": dict(kind="image-to-video", duration=5, resolution="480p", audio=False,
+               start=ROOT / "build" / "zooms" / "london" / "seedance_start.png",
+               use="London incident: the map zoom hands over to the real city",
+               prompt="The glowing night map of city lights seen from high above becomes a real photographic aerial "
+                      "view of London at night as the camera keeps descending: the River Thames with its bridges, "
+                      "streets of warm orange streetlights, car headlights moving, a faint red aurora glow in the "
+                      "sky, then whole neighbourhoods of lights go out one after another. Smooth steady descent, "
                       "realistic, cinematic, " + NO_TEXT + "."),
-    "C2": dict(kind="image-to-video", duration=10, resolution="720p", audio=False, start="last:C1",
-               use="0:27-0:40 blackout from above",
-               prompt="Top-down aerial view of a dense North American city at night in winter, warm gold "
-                      "streetlights and lit windows, then the lights go out neighbourhood by neighbourhood in a "
-                      "sweeping wave across the city, each area flickers two or three times before going dark, a "
-                      "few large hospital buildings stay brightly lit, the dark city is washed in faint green "
-                      "aurora light from above, cars' headlights still moving on dark streets, realistic, "
-                      "cinematic, " + NO_TEXT + "."),
-    "T1": dict(kind="text-to-video", duration=12, resolution="480p", audio=True,
-               use="checkpoint 4 test (a): the reporter speaks the line herself",
-               prompt="Night on a downtown street in a large North American city during a total blackout, the "
-                      "only light comes from phone flashlights and car headlights, crowds spilling onto the "
-                      "sidewalks looking up at the sky, vivid green and magenta aurora filling the sky above the "
-                      "buildings, a female TV news reporter in a dark jacket holds a plain microphone and speaks "
-                      "urgently to the camera: \"I'm in downtown Montreal, where just a minute ago every light in "
-                      "the city went out at once. People are pouring into the streets... and above us, you can see "
-                      "it, the whole sky is green. We're hearing the entire province may be without power.\" "
-                      "Handheld news camera, realistic, cinematic lighting, 16:9, " + NO_TEXT + "."),
-    "T2": dict(kind="text-to-video", duration=12, resolution="480p", audio=False,
-               use="checkpoint 4 test (b): silent, the ElevenLabs voice laid over",
-               prompt="Night on a downtown street in a large North American city during a total blackout, the "
-                      "only light comes from phone flashlights and car headlights, crowds spilling onto the "
-                      "sidewalks looking up at the sky, vivid green and magenta aurora filling the sky above the "
-                      "buildings, a female TV news reporter in a dark jacket holds a plain microphone and speaks "
-                      "urgently to the camera. Handheld news camera, realistic, cinematic lighting, 16:9, "
-                      + NO_TEXT + "."),
-    "C4": dict(kind="text-to-video", duration=4, resolution="720p", audio=False,
-               use="0:57-1:01 crowd insert cut into the reporter clip",
-               prompt="Night, a crowd of people standing in a dark city street looking up in awe at a vivid green "
-                      "and magenta aurora above the skyline, phone screens glowing in their hands, no electric "
-                      "lights anywhere, realistic, handheld, cinematic, " + NO_TEXT + "."),
+    "M1": dict(kind="text-to-video", duration=5, resolution="480p", audio=True,
+               use="Montreal reporter, lip-sync test (checkpoint 4)",
+               prompt="Night on a downtown street in a large North American city during a total blackout, only phone "
+                      "flashlights and car headlights, people in winter coats on the sidewalks looking up, vivid green "
+                      "and magenta aurora above the buildings. A female TV news reporter in a dark winter jacket holds "
+                      "a plain microphone and speaks urgently to the camera: \"I'm in downtown Montreal. A minute ago, "
+                      "every light in the city went out.\" Handheld news camera, realistic, 16:9, " + NO_TEXT + "."),
+    "M2": dict(kind="text-to-video", duration=4, resolution="480p", audio=False,
+               use="Montreal crowd insert",
+               prompt="Night, a crowd of people in winter coats standing in a dark city street looking up in awe at a "
+                      "vivid green and magenta aurora above the skyline, phone screens glowing in their hands, no "
+                      "electric lights anywhere, realistic, handheld, cinematic, " + NO_TEXT + "."),
 }
-# C3 (reporter final, 720p 12 s, $5.54) is defined after checkpoint 4 picks lip-sync or voice-over.
 
 
 def cost(c):
@@ -190,7 +170,7 @@ def plan():
         tot += cost(c)
         print(f"{cid:3} {c['kind']:15} {c['resolution']} {c['duration']:>3} s audio={'on ' if c['audio'] else 'off'} "
               f"${cost(c):5.2f}  {c['use']}")
-    print(f"total ${tot:.2f} (+ C3 reporter final $5.54 after checkpoint 4 = ${tot + 5.54:.2f})")
+    print(f"batch total ${tot:.2f} of the $21 budget")
 
 
 if __name__ == "__main__":

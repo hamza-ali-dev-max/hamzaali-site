@@ -18,13 +18,13 @@ import numpy as np
 from PIL import Image
 
 import look
-from geo import MONTREAL, ROOT, load_calibration
+from geo import CENTER, CITY, ROOT, city_build_dir, city_calibration, load_calibration
 
 MAPS = ROOT / "assets" / "maps"
-REG = ROOT / "build" / "regional"
+REG = city_build_dir("regional")
 W, H = look.W, look.H
 C = np.array([W / 2, H / 2])
-LAT0, LON0 = MONTREAL
+LAT0, LON0 = CENTER
 
 # layer crossfades by view width V (km): (start fading in, fully in)
 LAYER_IN = {"R1": (7000, 5000), "R2": (1900, 1400), "R3": (480, 360), "R4": (120, 95)}
@@ -51,11 +51,12 @@ class World:
         cal = load_calibration()
         meta = json.loads((REG / "meta.json").read_text())
         self.kx, self.ky = meta["km_per_deg_lon"], meta["km_per_deg_lat"]
-        ax, ay = np.array(cal["local"]["affine_x"]), np.array(cal["local"]["affine_y"])
+        cax, cay, anchor = city_calibration(cal)
+        ax, ay = np.array(cax), np.array(cay)
         # km -> AI px linear part (lon = LON0 + x/KX, lat = LAT0 + y/KY)
         self.B = np.array([[ax[0] / self.kx, ax[1] / self.ky], [ay[0] / self.kx, ay[1] / self.ky]])
         self.Binv = np.linalg.inv(self.B)
-        self.anchor = np.array(cal["montreal"]["zoom_target_px"], dtype=np.float64)
+        self.anchor = np.array(anchor, dtype=np.float64)
         self.g = cal["global"]
         self.sh0 = self.B / math.sqrt(abs(np.linalg.det(self.B)))
         self.sh1 = np.array([[1.0, 0.0], [0.0, -1.0]])

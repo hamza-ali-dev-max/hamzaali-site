@@ -25,11 +25,11 @@ import numpy as np
 from PIL import Image
 
 import look
-from geo import MONTREAL, ROOT, boundaries, load_calibration, towns
+from geo import CENTER, CITY, ROOT, boundaries, city_build_dir, city_calibration, load_calibration, towns
 
-OUT = ROOT / "build" / "regional"
+OUT = city_build_dir("regional")
 MAPS = ROOT / "assets" / "maps"
-LAT0, LON0 = MONTREAL
+LAT0, LON0 = CENTER
 KX = 6371.0 * math.cos(math.radians(LAT0)) * math.pi / 180     # km per degree of longitude
 KY = 6371.0 * math.pi / 180                                    # km per degree of latitude
 PX_W, PX_H = 5400, 3038
@@ -210,9 +210,8 @@ def lit_roads(g, x, y, pop, keep, k_nn=2, max_km=45.0):
 # ------------------------------------------------------------------ aurora from the AI map
 
 def ai_sampler(cal):
-    """Map (lon, lat) -> AI-map pixel, anchored so Montreal lands on its visible light cluster."""
-    ax, ay = np.array(cal["local"]["affine_x"]), np.array(cal["local"]["affine_y"])
-    cx, cy = cal["montreal"]["zoom_target_px"]
+    """Map (lon, lat) -> AI-map pixel, anchored so the city lands on its visible light cluster."""
+    ax, ay, (cx, cy) = *map(np.array, city_calibration(cal)[:2]), city_calibration(cal)[2]
     ox = cx - (ax[0] * LON0 + ax[1] * LAT0 + ax[2])
     oy = cy - (ay[0] * LON0 + ay[1] * LAT0 + ay[2])
 
@@ -246,10 +245,13 @@ def light_retention(sampler):
 
     def f(lon, lat):
         x, y = sampler(lon, lat)
-        x = np.clip(x, 0, base.shape[1] - 1).astype(np.float32)
-        y = np.clip(y, 0, base.shape[0] - 1).astype(np.float32)
-        b = cv2.remap(base, x[None, :], y[None, :], cv2.INTER_LINEAR)[0]
-        k = cv2.remap(blk, x[None, :], y[None, :], cv2.INTER_LINEAR)[0]
+        x = np.clip(x, 0, base.shape[1] - 1).astype(np.float32).ravel()
+        y = np.clip(y, 0, base.shape[0] - 1).astype(np.float32).ravel()
+        b, k = np.empty_like(x), np.empty_like(x)
+        for i in range(0, len(x), 30000):             # cv2.remap rows must stay < 32767 px
+            sl = slice(i, i + 30000)
+            b[sl] = cv2.remap(base, x[None, sl], y[None, sl], cv2.INTER_LINEAR)[0]
+            k[sl] = cv2.remap(blk, x[None, sl], y[None, sl], cv2.INTER_LINEAR)[0]
         return (k - 20) / np.maximum(b - 20, 8)
     return f
 
@@ -260,7 +262,10 @@ def red_outline_polylines(sampler):
     R, G, B = img[..., 0], img[..., 1], img[..., 2]
     red = ((R > 120) & (R - np.maximum(G, B) > 60)).astype(np.uint8)
     roi = np.zeros_like(red)
-    roi[40:290, 170:430] = 1
+    if CITY == "montreal":
+        roi[40:290, 170:430] = 1                      # the NE North America outline only
+    else:
+        roi[:] = 1                                    # every red outline (UK, Scandinavia, ...)
     red = cv2.morphologyEx(red * roi, cv2.MORPH_CLOSE, np.ones((3, 3), np.uint8))
     skel = cv2.ximgproc.thinning(red * 255) if hasattr(cv2, "ximgproc") else red * 255
     cnts, _ = cv2.findContours((skel > 0).astype(np.uint8), cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
@@ -357,7 +362,7 @@ def main():
     retention = light_retention(sampler)
     outline_lines = red_outline_polylines(sampler)
     meta = {"lat0": LAT0, "lon0": LON0, "km_per_deg_lon": KX, "km_per_deg_lat": KY,
-            "px": [PX_W, PX_H], "ai_anchor_px": cal["montreal"]["zoom_target_px"], "layers": {}}
+            "px": [PX_W, PX_H], "ai_anchor_px": city_calibration(cal)[2], "city": CITY, "layers": {}}
     import time
     import sys
     only = [a for a in sys.argv[1:] if a in LAYERS]

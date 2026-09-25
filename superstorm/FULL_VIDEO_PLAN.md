@@ -1,49 +1,145 @@
-# "I Simulated a Hyper Realistic Solar Superstorm, Day by Day" — full video plan (~62 min)
+# "I Simulated a Hyper Realistic Solar Superstorm, Day by Day" — full video plan (~60 min)
 
-Built on the scene-1 pipeline: one world map + one look (navy oceans, blue-grey land, gold
-lights, cyan coasts, grid + CRT overlay, top HUD). Every chapter reuses the same machinery:
-map moves, zooms into sharp regional layers, Blender 3D cities, picture-in-picture (PiP)
-clip boxes with arrows, radio panels, news-headline cards, HUD counters.
+**v2 (session 3, owner's direction):** the hour is built from **many short incidents all
+over the world** (47 incidents, 29 places, 20 countries), each with its own text and audio,
+not one long Montreal build. Zooms into the key cities hand over to **Seedance 2.5** (real
+city, cars moving); **Seedance** also does the people at street level — within a **$21 total**
+Seedance budget, so most incidents are map + text + audio. **Blender** is kept only for
+**top views** (Montreal's blackout from above, and the lights coming back in chapter 8).
+Source of truth: `incidents.py` (this file's tables are generated from it).
 
 ## Premise (kept physically plausible)
 
-- **Setting:** mid-March (equinox season, when big storms cluster — the 1989 Quebec blackout
-  was 13 March). Montreal nights around −10 °C, so losing power is dangerous.
-- **T+0 = 06:12 EST:** a Carrington-class flare (off the X-scale) and a fast CME (~2,900 km/s).
-  X-rays arrive in 8 minutes: HF radio blackout on the sunlit side of Earth.
-- **T+17:00 = 23:12 EST:** CME impact. Night in the Americas, pre-dawn in Europe, afternoon
-  in Japan. Kp 9, G5+, Dst below −1,100 nT. Auroras down to the tropics.
-- Failures follow real mechanisms: geomagnetically induced currents saturate transformers on
-  long lines over resistive rock (Quebec, Scandinavia, UK, NE US first), satellites and GPS
-  degrade, undersea-cable repeaters fail, then the slow cascade: water pumps, fuel, telecom
-  batteries, hospitals on generators, food, heating, security.
-- All brands, networks, agencies and utilities are fictional (GNN, Grid Control, …).
-  Real cities and countries are used; no real people.
+- 13 March (before North American daylight saving): mid-March storms cluster near the
+  equinox (the 1989 Quebec blackout was 13 March).
+- **T+0 = 11:12 UTC:** a Carrington-class flare (off the X-scale), a CME at ~2,900 km/s.
+  X-rays arrive in 8 minutes and black out HF radio on the day side (Europe, Africa, India).
+- **T+17:00 = 04:12 UTC, 14 March:** impact. Night in the Americas and Europe, afternoon in
+  Asia and Australia. Kp 9, G5+, Dst below −1,100 nT, auroras to the tropics.
+- Failures follow real mechanisms: induced currents saturate transformers on long lines over
+  resistive rock (Quebec, NE US, UK, Scandinavia first), GPS/satellites degrade, undersea-cable
+  repeaters fail, then the slow cascade (water pumps, fuel, telecom batteries, hospitals on
+  diesel, food, heating), delayed transformer deaths (South Africa 2003, New Zealand 2001), and
+  a global scramble for large power transformers (18-month lead times).
+- All brands, outlets, agencies and utilities are fictional (GNN, Grid Control, Northern
+  Ledger). Real cities and countries; no real people.
 
-## Chapters
+## One incident = one small block (~40–80 s)
 
-| # | Time | Chapter | What's on screen | Voices / audio |
-|---|------|---------|------------------|----------------|
-| 0 | 0:00–1:30 | **Bonjour Montréal** | Dawn over the world map → zoom into Montreal → 3D city at dawn (lights still on). HUD clock T−00:10. | French morning-radio host, English subtitles ("Bonjour Montréal! Il est six heures…"): weather −9 °C, traffic, "aurores boréales possibles ce soir". |
-| — | 1:30–1:45 | Title card | "I SIMULATED A HYPER REALISTIC SOLAR SUPERSTORM — DAY BY DAY" in the HUD style. | Low drone hit. |
-| 1 | 1:45–6:00 | **T+0 — The Flare** | Split view: world map + PiP "solar imager" box (AI sun clip, no text). Sunlit hemisphere turns red for the HF radio blackout. HUD: X-RAY FLUX off-scale, CME SPEED, ETA 17:00:00 countdown. | Narrator. PiP: a forecaster at a (fictional) space-weather centre: "Are you seeing this? …That's not an X10. That's off the scale." Radio: pilots losing HF contact over the Pacific. |
-| 2 | 6:00–14:00 | **The Warning** | News spreads city by city: PiP boxes with arrows pinned to cities. ~5:00 **Tokyo** (Japanese reporter, subtitles). Airlines reroute polar flights (animated flight arcs slide south). Satellite icons go "SAFE MODE". Headline cards (fictional outlets). | GNN anchor (EN), Montreal reporter (FR), Tokyo reporter (JA), London (EN). Grid Control briefing on the radio panel. |
-| 3 | 14:00–20:00 | **The Waiting** | Montreal street PiPs: queues for generators, empty battery shelves, skeptics, aurora-party posts. Hospitals test generators. Evening falls across the map (terminator sweep). HUD countdown under 1 h turns red. | Vox-pops (FR/EN), forecaster update ("Bz just turned south…"), narrator. |
-| 4 | 20:00–26:00 | **T+17 — Impact** (scene 1, extended) | Auroras flare worldwide → zoom to Quebec → 3D Montreal blackout in 9 s → Grid Control radio → GNN reporter live → pull-back: the cascade spreads (NE US, UK, Scandinavia). HUD: PEOPLE WITHOUT POWER starts climbing. | Narrator, radio dispatcher, GNN reporter. |
-| 5 | 26:00–33:00 | **The First Night** | Montreal −12 °C: metro stops, traffic lights dark (crash PiP), elevators, phone networks die as tower batteries run out (network map fades). Undersea-cable repeaters fail: cable lines on the map go red, the internet fragments. Japan (afternoon) keeps power — Japanese reporter watching the West go dark. | Radio chatter (911 overload), reporters, narrator. |
-| 6 | 33:00–42:00 | **Day 2–3 — The Long Dark** | Water pressure fails, fuel pumps can't pump, cash-only, food spoils. First looting PiPs. CO poisoning from indoor generators; fires from candles. Hospitals: fuel for 48 h. **ESTIMATED DEATHS** counter appears. Europe PiPs (London, Stockholm). | Hospital radio ("we have 18 hours of diesel"), reporters, narrator. |
-| 7 | 42:00–52:00 | **Week 1–2 — Breakdown** | Fuel convoys under guard, generator thefts, fights at depots, curfews, troops deployed. Global scramble for large power transformers (1–2-year lead times): export bans, a naval standoff over a transformer shipment — "the war over materials". Map: resource-flow arrows, contested routes, dark regions spreading. Deaths climb. | Narrator, news cards, military/civil radio. |
-| 8 | 52:00–60:00 | **Month 1–6 — Aftermath** | Lights come back region by region (the satisfying reverse of chapter 4). Final tallies (people affected, deaths, trillions in damage). Last shot: the Sun, still active. | Narrator close: "The last one hit in 1859. The next one isn't a question of if." |
-| — | 60:00–62:00 | Outro | Sources/method card, synthetic-content note, credits (© OpenStreetMap contributors, GeoNames, GSHHG). | |
+1. **Map move** to the region on the world map; HUD counters update (2–4 s).
+2. **Zoom** into the real city with the 2D map pipeline (regional layers built per city,
+   same look everywhere) (4–6 s).
+3. **Seedance 2.5 image-to-video from the zoom's last frame:** the map becomes the real city
+   at the right time of day, cars moving, the incident starting (5 s, 720p).
+4. **Seedance 2.5 people clip:** street level, full screen for heroes or a PiP box with an
+   arrow pinned to the map (4 s 480p, heroes 5 s 720p).
+5. **Text:** location tag (CITY, COUNTRY · local time · T+), one caption line, sometimes a
+   fictional headline card or a HUD counter.
+6. **Audio:** one line (narrator, reporter, radio, phone, vox pop; local language with
+   subtitles), ambience, a sting.
+7. **Pull back:** a small red marker with a two-word label stays on the world map, so the
+   map fills up with incidents as the hour goes on.
 
-Pacing rule: switch location or format every 45–90 s; a counter, arrow, PiP or headline in
-every map shot; each chapter ends on a hook.
+Pacing: a new place every 40–80 s; the narrator links blocks; each chapter ends on a hook.
+
+## Incidents by chapter
+
+### 0 · Cold open (0:00-1:30)
+
+World map at T+17:02, red spreading, six 2 s flashes reused from later incidents, narrator hook → title card.
+
+### 1 · T+0 The Flare (1:30-7:00)
+
+| Place | Local time | Incident | Seedance ($21 plan) | On-screen text | Audio |
+|---|---|---|---|---|---|
+| Boulder, USA | 04:12 | Space-weather forecasters see X-ray flux go off the scale | people 4 s | SPACE WEATHER CENTER · BOULDER, USA · 04:12 / X-RAY FLUX: OFF SCALE | FORECASTER: “Are you seeing this? That's not an X10. That's off the scale.” |
+| North Atlantic, at sea | -- | A transatlantic flight loses HF radio (sunlit side) | people 4 s | NORTH ATLANTIC · FLIGHT 212 / HF RADIO: NO CONTACT | PILOT: “Gander, Speedbird two-one-two... Gander, do you read? ...Nothing on any frequency.” |
+| Lagos, Nigeria | 12:25 | Shortwave and maritime radio die across West Africa at midday | — (map, text, audio) | LAGOS, NIGERIA · 12:25 / HF RADIO BLACKOUT ACROSS THE DAY SIDE | NARR: “Eight minutes after the flare, its X-rays hit the day side of the planet. Every shortwave radio from Lagos to Delhi goes silent.” |
+| Low Earth orbit, orbit | -- | Station crew ordered into the shielded module (radiation storm) | people 4 s | ORBITAL STATION · 410 KM / PROTON FLUX RISING | FLIGHT: “Station, Houston... get everyone into the shielded module. Now, please.” |
+| Boulder, USA | 05:30 | Coronagraph shows the CME: 2,900 km/s, Earth-directed | people 4 s | CME SPEED 2,900 KM/S / ETA T+17:00 | NARR: “Then the coronagraph images arrive. A billion-ton cloud, heading straight for us. Seventeen hours.” |
+
+### 2 · The Warning (7:00-14:00)
+
+| Place | Local time | Incident | Seedance ($21 plan) | On-screen text | Audio |
+|---|---|---|---|---|---|
+| Tokyo, Japan | 21:00 | Giant screens at a crossing carry the warning; crowds stop | zoom hand-off 5 s + people 4 s | TOKYO, JAPAN · 21:00 · T+00:48 / SOLAR STORM WARNING ISSUED | TOKYO: “巨大な太陽嵐が地球に向かっています。到達は明日の午後の予想です。” |
+| London, United Kingdom | 13:00 | Grid Control emergency briefing; pubs turn up the TV | — (map, text, audio) | LONDON, UK · 13:00 · T+01:48 / GRID CONTROL: 'PREPARE FOR LOSS OF SUPPLY' | GRID_UK: “We are preparing for the possibility of widespread loss of supply tonight. Please don't panic-buy.” |
+| Mumbai, India | 18:00 | Evening rush hour; phones buzz with the alert | — (map, text, audio) | MUMBAI, INDIA · 18:00 / EMERGENCY ALERT ON 400 M PHONES | NARR: “In Mumbai, four hundred million phones buzz at once. Most people swipe it away.” |
+| Anchorage, USA | 05:00 | Polar flights reroute south (flight arcs slide on the map) | — (map, text, audio) | POLAR ROUTES CLOSED / 312 FLIGHTS REROUTED | NARR: “Airlines pull every flight off the polar routes. Radiation up there is now a real dose.” |
+| Orbit, global | -- | Satellite operators put fleets into safe mode (icons turn amber) | — (map, text, audio) | SATELLITES IN SAFE MODE: 1,840 | NARR: “Satellite operators turn thousands of spacecraft edge-on to the storm, and wait.” |
+| New York, USA | 07:40 | Morning commute; hardware stores open early; queues | people 4 s | NEW YORK, USA · 07:40 · T+01:28 / GENERATORS SOLD OUT BY 10 A.M. | VOX_NY: “Batteries, flashlights, whatever they got. My building's forty floors, man.” |
+| Montreal, Canada | 09:00 | Queues for generators and propane; −9 °C | — (map, text, audio) | MONTRÉAL, CANADA · 09:00 · −9 °C / PROPANE: SOLD OUT | VOX_MTL: “Il reste plus rien. Plus de propane, plus de piles. Rien.” |
+
+### 3 · The Waiting (14:00-19:00)
+
+| Place | Local time | Incident | Seedance ($21 plan) | On-screen text | Audio |
+|---|---|---|---|---|---|
+| Stockholm, Sweden | 19:00 | Families in the snow waiting for the aurora | — (map, text, audio) | STOCKHOLM, SWEDEN · 19:00 / AURORA ALERT: WHOLE COUNTRY | VOX_SE: “Vi har väntat hela dagen. Barnen får vara uppe i natt.” |
+| Toronto, Canada | 15:00 | Hospitals test generators; diesel drums arrive | — (map, text, audio) | TORONTO, CANADA · 15:00 / HOSPITALS: 72 H OF DIESEL | FACILITIES: “All three units run. Seventy-two hours of diesel on site.” |
+| Sydney, Australia | 09:00 +1 | Morning in Sydney: markets open nervous | — (map, text, audio) | SYDNEY, AUSTRALIA · 09:00 / MARKETS OPEN −4.1 % | NARR: “Sydney wakes up to the news first. Its stock market opens four percent down and keeps falling.” |
+| Boulder, USA | 20:30 | Bz turns hard south, 40 minutes out | — (map, text, audio) | UPSTREAM MONITOR: BZ −48 nT / T−00:40 | FORECASTER: “Bz just turned south. Hard south.” |
+
+### 4 · T+17 Impact (19:00-28:00)
+
+| Place | Local time | Incident | Seedance ($21 plan) | On-screen text | Audio |
+|---|---|---|---|---|---|
+| Montreal, Canada | 23:12 | Quebec grid collapses in 9 s (scene 1, Blender top view) | people 5 s + people 4 s | MONTRÉAL, CANADA · 23:12 · T+17:00 / PEOPLE WITHOUT POWER: 9,000,000 | GRID: “Grid Control to all stations... we've lost the northern lines... Montreal is down.” |
+| New York, USA | 23:16 | Manhattan goes dark from the top down | zoom hand-off 5 s | NEW YORK, USA · 23:16 · T+17:04 / NORTHEAST GRID: COLLAPSE | NARR: “Four minutes later, the American Northeast. Protection relays do exactly what they're built to do. They let go.” |
+| London, United Kingdom | 04:21 | Pre-dawn blackout across Britain | zoom hand-off 5 s + people 4 s | LONDON, UK · 04:21 · T+17:09 / UK: 61 % WITHOUT POWER | LONDON: “The lights went out at about twenty past four. What you can hear is... nothing. No traffic.” |
+| Stockholm, Sweden | 05:24 | Aurora overhead; trams stop; rail signals go red | zoom hand-off 5 s | STOCKHOLM, SWEDEN · 05:24 / RAIL SIGNALS: ALL RED | VOX_SE: “Det är grönt överallt... och sen släcktes allt.” |
+| Dunedin, New Zealand | 17:30 | A transformer fails in the afternoon (like 2001) | — (map, text, audio) | DUNEDIN, NEW ZEALAND · 17:30 / TRANSFORMER FAILURE | NARR: “In daylight, in New Zealand, a transformer overheats and dies. It happened here once before, in 2001.” |
+| Tokyo, Japan | 13:12 | Office lights flicker; Hokkaido goes dark; Kanto holds | — (map, text, audio) | TOKYO, JAPAN · 13:12 / HOKKAIDO: BLACKOUT · KANTO: HOLDING | TOKYO: “北海道と東北の一部で停電が発生しています。関東の電力網は今のところ持ちこたえています。” |
+| Singapore, Singapore | 12:40 | GPS off by tens of metres; port cranes pause | — (map, text, audio) | SINGAPORE · 12:40 / GPS ERROR: 60 M | NARR: “In Singapore, the world's busiest port, the automated cranes stop and wait for GPS to make sense.” |
+| Orbit, global | -- | Satellites lose contact; 40 drop from orbit (map icons turn red) | — (map, text, audio) | CONTACT LOST: 214 SATELLITES | NARR: “The upper atmosphere swells with heat. For low satellites it's like driving into a wall of air.” |
+
+### 5 · The First Night (28:00-36:00)
+
+| Place | Local time | Incident | Seedance ($21 plan) | On-screen text | Audio |
+|---|---|---|---|---|---|
+| New York, USA | 00:10 | Subway trains stuck in tunnels; people walk the tracks | people 4 s | NEW YORK, USA · 00:10 · T+18:00 / 480 TRAINS STOPPED | VOX_NY: “Stay together, stay together, watch the third rail— it's dead, it's dead, just walk.” |
+| Chicago, USA | 23:30 | 911 overloaded; traffic lights dark; a crash at a junction | — (map, text, audio) | CHICAGO, USA · 23:30 / 911: 6,000 CALLS WAITING | DISPATCH: “All units, we are holding six thousand calls. Priority one only. Priority one only.” |
+| Atlantic Ocean, undersea | -- | Undersea cable repeaters fail; the internet splits | — (map, text, audio) | TRANSATLANTIC CAPACITY: −78 % | NARR: “Undersea cables are powered from the shore. The storm pushes current into them too. One by one, the lines across the Atlantic go quiet.” |
+| Paris, France | 07:30 | Morning with no Métro; a million people walking | people 4 s | PARIS, FRANCE · 07:30 / MÉTRO: FERMÉ | VOX_FR: “Pas de métro, pas de lumière, pas de réseau. On marche.” |
+| São Paulo, Brazil | 02:00 | Partial blackout; helicopters over the dark city | — (map, text, audio) | SÃO PAULO, BRAZIL · 02:00 / PARTIAL BLACKOUT | VOX_BR: “Metade da cidade apagou. A outra metade tá rezando.” |
+| Shanghai, China | 13:30 | Factories stop in the north; Shanghai keeps power | — (map, text, audio) | SHANGHAI, CHINA · 13:30 / NORTHERN GRID: 38 % LOST | NARR: “China's grid bends. Long lines in the north trip; the coast holds. Factories go quiet across three provinces.” |
+| Montreal, Canada | 04:00 | −14 °C: the first warming centre fills | — (map, text, audio) | MONTRÉAL · 04:00 · −14 °C / WARMING CENTRES: 40 | NARR: “Four in the morning in Montreal, minus fourteen. The first warming centres fill up.” |
+
+### 6 · Day 2-3 The Long Dark (36:00-44:00)
+
+| Place | Local time | Incident | Seedance ($21 plan) | On-screen text | Audio |
+|---|---|---|---|---|---|
+| New York, USA | day 2 | Water stops above the 6th floor; lines at hydrants | people 4 s | NEW YORK · DAY 2 / NO WATER ABOVE FLOOR 6 | VOX_NY: “Forty floors, no elevator, no water. My mother's on nineteen.” |
+| London, United Kingdom | day 2 | Hospitals on diesel; fuel resupply late | people 4 s | LONDON · DAY 2 / HOSPITAL DIESEL: 18 H LEFT | FACILITIES_UK: “We have eighteen hours of diesel. The tanker was due this morning. It hasn't come.” |
+| Lagos, Nigeria | day 2 | Generator city: businesses carry on (contrast) | people 4 s | LAGOS, NIGERIA · DAY 2 / BUSINESS AS USUAL | VOX_NG: “Light no dey? We don use generator since. E no be new thing for us.” |
+| Mumbai, India | day 3 | Water pumps fail in the heat; tanker queues | — (map, text, audio) | MUMBAI · DAY 3 · 34 °C / WATER TANKERS: 9 H WAIT | NARR: “The storm didn't hit India hardest. The cables and the markets did. And water needs pumps.” |
+| Toronto, Canada | day 3 | Cash only; ATMs dark; grocery shelves spoil | — (map, text, audio) | TORONTO · DAY 3 / CARD PAYMENTS: DOWN | VOX_TO: “Cash only. Cash only. If you don't have cash I can't help you, I'm sorry.” |
+| Montreal, Canada | day 3 | Carbon-monoxide poisonings from indoor generators | — (map, text, audio) | MONTRÉAL · DAY 3 / CO POISONINGS: 212 | NARR: “The deadliest thing in Montreal on day three isn't the cold. It's the generator in the garage.” |
+
+### 7 · Week 1-2 Breakdown (44:00-52:00)
+
+| Place | Local time | Incident | Seedance ($21 plan) | On-screen text | Audio |
+|---|---|---|---|---|---|
+| Pennsylvania, USA | week 1 | Fuel convoys under guard on the interstate | people 4 s | INTERSTATE 81, USA · WEEK 1 / FUEL CONVOYS: ARMED ESCORT | RADIO_CONVOY: “Convoy three, hold at mile one-twelve. Crowd at the exit. Do not stop.” |
+| Johannesburg, South Africa | week 1 | Transformers keep failing days later (like 2003) | — (map, text, audio) | JOHANNESBURG · WEEK 1 / 14 TRANSFORMERS FAILED SINCE IMPACT | NARR: “Some damage takes days to show. Transformers that survived the storm start dying a week later, like they did here in 2003.” |
+| Rotterdam, Netherlands | week 2 | The race for spare transformers; export bans | people 4 s | ROTTERDAM · WEEK 2 / TRANSFORMER LEAD TIME: 18 MONTHS | NARR: “A large transformer weighs as much as a jumbo jet and takes a year and a half to build. Everyone needs hundreds. Now.” |
+| Strait of Hormuz, at sea | week 2 | A transformer ship escorted by warships (standoff) | — (map, text, audio) | STRAIT OF HORMUZ · WEEK 2 / CARGO: 6 TRANSFORMERS | NARR: “Six transformers on one ship, and three countries that say they're theirs.” |
+| Lake Ontario, Canada | week 1 | Nuclear plant cooling on diesel for 9 days | — (map, text, audio) | NUCLEAR PLANT · WEEK 1 / COOLING ON BACKUP DIESEL: DAY 9 | OPERATOR: “Backup diesel, day nine. We are fine as long as the trucks come.” |
+| Wisconsin, USA | week 1 | Dairy farms dump milk; food chain breaks | people 4 s | WISCONSIN · WEEK 1 / MILK DUMPED: 30,000 T | VOX_FARM: “Cows don't care about solar storms. They need milking twice a day. And the truck isn't coming.” |
+
+### 8 · Month 1-6 Aftermath (52:00-59:00)
+
+| Place | Local time | Incident | Seedance ($21 plan) | On-screen text | Audio |
+|---|---|---|---|---|---|
+| Montreal, Canada | day 26 | Lights come back district by district (Blender top view) | people 4 s | MONTRÉAL · DAY 26 / POWER RESTORED: 94 % | NARR: “Twenty-six days. The lights come back the way they left: one district at a time.” |
+| London, United Kingdom | week 7 | Rolling blackouts become normal | — (map, text, audio) | LONDON · WEEK 7 / ROLLING BLACKOUTS: 4 H ON / 4 H OFF | NARR: “In Britain, the power comes back in shifts. Four hours on, four off. People learn the schedule like a train timetable.” |
+| Ulsan, South Korea | month 3 | Transformer factories run 24/7 | — (map, text, audio) | ULSAN, SOUTH KOREA · MONTH 3 / ORDERS: 1,100 TRANSFORMERS | NARR: “The factories that build transformers are booked for four years. They run around the clock.” |
+| World, global | month 6 | Final tally on the world map; the Sun is still active | — (map, text, audio) | PEOPLE AFFECTED: 1.2 BILLION / DAMAGE: $4.1 TRILLION | NARR: “The last one hit in 1859. The next one isn't a question of if.” |
 
 ## Visual system (same look everywhere)
 
-- **World map** (the cleaned AI maps) → **regional layers** (real coastlines, rivers, borders,
-  towns as gold lights; same palette) → **Blender 3D cities** (OSM buildings, same gold/dark
-  tones). Zooms are one continuous move with no style change.
+- **World map** (the cleaned AI maps) → **regional layers per city** (real coastlines,
+  rivers, borders, towns as gold lights; same palette) → **Seedance aerial** (image-to-video
+  from the zoom's last frame). Blender top views only for Montreal (ch. 4 and 8).
 - **PiP boxes:** 480×270 video box with a thin cyan frame, a label bar ("GNN · LIVE · TOKYO"),
   and an animated arrow/leader line to the map location. The map keeps moving behind it.
 - **Radio panel:** bottom-left, channel name, animated waveform, subtitles.
@@ -51,40 +147,27 @@ every map shot; each chapter ends on a hook.
 - **HUD** (top): mission clock, storm stats, PEOPLE WITHOUT POWER, ESTIMATED DEATHS,
   GRID/INTERNET status. Cyan labels, amber numbers, red when critical.
 
-## Asset list and budget
+## Budget: $21 of Seedance for the whole hour (`python3 incidents.py cost`)
 
-| Item | Count / size | Cost estimate |
-|------|--------------|---------------|
-| Narration + dialogue (ElevenLabs, FR/EN/JA) | ~45,000 characters | Owner's Creator plan: 131,000 credits available — covered. |
-| Seedance 2.5 PiP clips (480p is plenty for a small box) | ~36 × 5 s = 180 s | $0.206/s → ~$37 |
-| Seedance 2.5 full-screen clips (720p), incl. the zoom hand-offs into aerial city shots | ~9 × 8 s = 72 s | $0.462/s → ~$33 |
-| Retries / tests (~30%) | | ~$21 |
-| **AI video total** | | **~$90** vs $21 available. Options: top up; 4 s PiPs and reuse; 480p for some full-screen shots; Seedance 2.0 Mini for crowd/B-roll PiPs |
-| Close-up city footage | Seedance image-to-video from the zoom's last frame (owner's call) — Blender city is optional/backup | in the clip budget above |
-| Map/HUD/regional shots | ~50 min of the runtime | ~1–2 h CPU total |
+| Item | Count | Cost |
+|------|-------|------|
+| Zoom → real-city hand-offs (image-to-video from the zoom's last frame, 5 s, 480p) | 4 (Tokyo, New York, London, Stockholm) | $4.12 |
+| People clips (4 s 480p; the Montreal reporter 5 s with audio = the lip-sync test) | 18 | $15.04 |
+| **Total** | **22 clips, ~93 s of footage** | **$19.16** (reserve $1.84 ≈ 2 retries) |
+| Every other incident | map zoom + text + audio + graphics (headline cards, radio panels, HUD counters) | $0 |
+| Blender top views (Montreal blackout ch. 4, lights back ch. 8) | ~25 s | CPU only (~28 s/frame at 720p) |
+| Voices (ElevenLabs, FR/EN/JA/SV/PT/pidgin…) | ~45,000 characters | Creator plan (131k) |
+| Map zooms (layers per city) | 29 places | CPU only, ~6 min per city |
 
-## Script status
-
-Draft v1 in `script/` (3 parts, all 9 chapters, every beat with visuals, lines, FR/JA with
-English subtitles). Measured: ~15,500 spoken characters (~17 min of speech), 36 PiP clips,
-9 full-screen clips. For a 62-minute cut the narration needs ~2.5x more density
-(target ~45,000 characters): expand each chapter with more locations and systems
-(NYC/Chicago/Toronto, nursing homes, farms and food chains, water treatment, nuclear
-plants on backup cooling, stranded flights, Antarctic stations, the orbital station).
+480p is native for the 480×270 PiP boxes; the four full-screen hand-offs are upscaled under
+the CRT/grain look. With more money later, the wish list (every incident with footage, 720p
+hand-offs) costs ~$143; it stays in `incidents.py` (`aerial`/`people` fields).
+Nothing is generated before the owner's "go".
 
 ## Production order
 
-1. Finish the scene-1 pilot (pipeline test) — in progress.
-2. Lock this outline → full script with timings (narration word counts per chapter).
-3. Voices (ElevenLabs) for all chapters → gives exact timing.
-4. PiP/hero clip list + Higgsfield spend approval → generate.
-5. Map/regional/HUD chapters (automated from the script timings).
-6. Blender cities (OSM) → renders.
-7. Sound design, mix, assembly per chapter → full cut → review → export.
-
-## Needed to continue (environment settings, one time)
-
-- Allowed domains: `api.elevenlabs.io`, `api.higgsfield.ai`, `overpass-api.de`
-- Environment variables: `ELEVENLABS_API_KEY` (a **new** key — revoke the one pasted in chat),
-  `HF_KEY` (Higgsfield `KEY_ID:KEY_SECRET`)
-- Then start a new session on this branch; everything is picked up from `superstorm/`.
+1. Scene 1 (Montreal impact) as the pilot of the incident format — in progress.
+2. Generic city zoom (any lat/lon) + the Seedance hand-off from the zoom's last frame.
+3. Owner approves the clip list/budget per chapter → generate chapter by chapter.
+4. Voices (ElevenLabs) per chapter → exact timings.
+5. Assemble each chapter (map, zooms, clips, text, audio) → full cut → review → export.
