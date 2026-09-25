@@ -17,6 +17,17 @@ Upscale to 1080p in the edit. Every generation is logged to `production_log.csv`
 If C1/C2 disappoint, the Blender city (district-exact blackout, already scripted) is the
 fallback at $0.
 
+## Option since the Blender city works (owner's call)
+
+The 3D city (real OSM Montreal, district-exact blackout, continuous with the map zoom) now
+covers 0:19.5–0:50 at $0. Two ways to spend the $21:
+
+- **A — as planned:** C1 + C2 Seedance aerials ($8.32) + reporter tests/final + crowd
+  ($12.33) = $20.65, no retries.
+- **B — Blender for the aerials:** skip C1/C2, keep T1/T2/C3/C4 ($12.33) and leave ~$8.60
+  for retries or two 4 s Seedance street-level inserts (cars stopping at dead traffic lights,
+  a lit hospital entrance) cut into the Blender shot.
+
 ## API check (non-billable, this session)
 
 - Auth works: the environment's proxy injects the key; a free `POST /files/generate-upload-url`
