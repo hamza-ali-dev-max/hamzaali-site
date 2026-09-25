@@ -63,6 +63,15 @@ every map shot; each chapter ends on a hook.
 | 3D cities (Blender, OSM) | Montreal dawn, Montreal blackout, Tokyo, New York (~20 s each) | CPU here: ~3–4 h each (Cycles, low samples + denoise). Your PC's GPU with EEVEE: minutes each. |
 | Map/HUD/regional shots | ~50 min of the runtime | ~1–2 h CPU total |
 
+## Script status
+
+Draft v1 in `script/` (3 parts, all 9 chapters, every beat with visuals, lines, FR/JA with
+English subtitles). Measured: ~15,500 spoken characters (~17 min of speech), 36 PiP clips,
+9 full-screen clips. For a 62-minute cut the narration needs ~2.5x more density
+(target ~45,000 characters): expand each chapter with more locations and systems
+(NYC/Chicago/Toronto, nursing homes, farms and food chains, water treatment, nuclear
+plants on backup cooling, stranded flights, Antarctic stations, the orbital station).
+
 ## Production order
 
 1. Finish the scene-1 pilot (pipeline test) — in progress.
