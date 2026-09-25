@@ -65,7 +65,7 @@ HFOV0, HFOV1 = 40.0, 55.0           # horizontal field of view (deg)
 TILT_START, TILT_END = 21.3, 31.0
 TARGET1 = np.array([-700.0, 350.0])  # between downtown and Mount Royal
 DIST1 = 5200.0                       # m from the target
-PITCH1 = 79.0                        # deg from nadir
+PITCH1 = 82.0                        # deg from nadir
 HEADING1 = -48.0                     # deg (negative = west of north): looking NW from the river
 DRIFT = dict(dist=0.88, heading=7.0, pitch=1.5)   # slow push/orbit over 31..50 s
 
@@ -544,7 +544,8 @@ def clock_values(t):
         "r4_fade": log_fade(120, 95, V),
         "city_fade": log_fade(40, 14, V),
         "haze": float(ease((t - TILT_START - 1.0) / 5.0)),
-        "map_dim": 1.0 - 0.6 * float(ease((t - TILT_START) / (TILT_END - TILT_START))),
+        "map_dim": 1.0 - 0.8 * float(ease((t - TILT_START) / (TILT_END - TILT_START))),
+        "lit": 1.0 - T.people_without_power(t) / T.PEOPLE_WITHOUT_POWER,
     }
     for k in range(T.N_DISTRICTS):
         vals[f"P{k}"] = T.light_level(t, SCHED[k])
@@ -552,7 +553,7 @@ def clock_values(t):
     return vals
 
 
-CLOCK_KEYS = ["time", "r4_fade", "city_fade", "haze", "map_dim"] + [f"P{k}" for k in range(10)] + [f"H{k}" for k in range(10)]
+CLOCK_KEYS = ["time", "r4_fade", "city_fade", "haze", "map_dim", "lit"] + [f"P{k}" for k in range(10)] + [f"H{k}" for k in range(10)]
 
 
 def set_fcurve(owner, data_path, frames, values, index=0):
@@ -731,11 +732,12 @@ def build_scene(osm_name):
     def haze_mix(kit, clk, color_vec, strength=1.0):
         """Aerial perspective on camera rays: fade to the horizon colour with distance."""
         lp = kit.n.new("ShaderNodeLightPath")
-        dist = kit.math("MULTIPLY", lp.outputs["Ray Length"], -1.0 / 14000.0)
+        dist = kit.math("MULTIPLY", lp.outputs["Ray Length"], -1.0 / 9000.0)
         fog = kit.math("SUBTRACT", 1.0, kit.math("EXPONENT", dist))
         fog = kit.math("MULTIPLY", fog, clk["haze"])
         fog = kit.math("MULTIPLY", fog, strength)
-        return kit.mix_rgb(fog, color_vec, srgb((12, 30, 34)) + (1,))
+        tone = kit.mix_rgb(clk["lit"], srgb((10, 26, 30)) + (1,), srgb((36, 28, 22)) + (1,))   # sodium glow -> aurora dark
+        return kit.mix_rgb(fog, color_vec, tone)
 
     def emission_out(kit, mat, color, alpha=None):
         em = kit.node("ShaderNodeEmission", Color=color, Strength=1.0)
@@ -979,33 +981,40 @@ def build_scene(osm_name):
     elev = kit.math("MAXIMUM", dz, 0.0)
     az = kit.math("ARCTAN2", dy, dx)
     tt = kit.math("MULTIPLY", clk["time"], 0.035)
-    rays = kit.node("ShaderNodeTexNoise", Scale=1.0, Detail=3.0, Roughness=0.55)
-    rays.noise_dimensions = "2D"
-    kit.set(rays.inputs["Vector"], kit.combine(kit.math("MULTIPLY", az, 95.0), kit.math("MULTIPLY", tt, 3.0)))
-    folds = kit.node("ShaderNodeTexNoise", Scale=1.0, Detail=2.0, Roughness=0.5)
-    folds.noise_dimensions = "2D"
-    kit.set(folds.inputs["Vector"], kit.combine(kit.math("MULTIPLY", az, 2.2), kit.math("MULTIPLY", tt, 0.6)))
-    fold = kit.math("POWER", kit.math("MAXIMUM", kit.math("SUBTRACT", folds.outputs["Fac"], 0.42), 0.0), 1.3)
-    ray = kit.math("POWER", rays.outputs["Fac"], 4.0)
-    ray = kit.math("MULTIPLY", ray, 2.2)
-    wig = kit.node("ShaderNodeTexNoise", Scale=1.0, Detail=2.0, Roughness=0.5)
-    wig.noise_dimensions = "2D"
-    kit.set(wig.inputs["Vector"], kit.combine(kit.math("MULTIPLY", az, 14.0), kit.math("MULTIPLY", tt, 1.7)))
-    base_h = kit.math("ADD", kit.math("ADD", 0.004, kit.math("MULTIPLY", folds.outputs["Fac"], 0.05)),
-                      kit.math("MULTIPLY", wig.outputs["Fac"], 0.03))
-    lower = kit.math("SUBTRACT", elev, base_h)
-    band = kit.math("MULTIPLY", kit.math("GREATER_THAN", lower, -0.01),
-                    kit.math("EXPONENT", kit.math("MULTIPLY", kit.math("MAXIMUM", lower, 0.0), -3.2)))
-    band = kit.math("MULTIPLY", band, kit.math("MINIMUM", kit.math("MULTIPLY", kit.math("MAXIMUM", kit.math("ADD", lower, 0.01), 0.0), 40.0), 1.0))
-    curtain = kit.math("MULTIPLY", kit.math("MULTIPLY", band, kit.math("ADD", 0.25, ray)), kit.math("MULTIPLY", fold, 9.0))
-    top = kit.math("MULTIPLY", kit.math("SUBTRACT", elev, base_h), 5.0, clamp=True)
+    def noise2(u, v, detail=2.0, rough=0.5):
+        nd = kit.node("ShaderNodeTexNoise", Scale=1.0, Detail=detail, Roughness=rough)
+        nd.noise_dimensions = "2D"
+        kit.set(nd.inputs["Vector"], kit.combine(u, v))
+        return nd.outputs["Fac"]
+
+    def smooth01(x, a, b):
+        e = kit.math("MULTIPLY", kit.math("SUBTRACT", x, a), 1.0 / (b - a), clamp=True)
+        return kit.math("MULTIPLY", kit.math("MULTIPLY", e, e), kit.math("SUBTRACT", 3.0, kit.math("MULTIPLY", e, 2.0)))
+
+    def curtain(seed, fold_k, base0, base_amp, decay, gain):
+        """One aurora curtain: folds (where it is), fine rays, a bright wavy lower border, fading up."""
+        f = noise2(kit.math("ADD", kit.math("MULTIPLY", az, fold_k), seed), kit.math("MULTIPLY", tt, 0.6))
+        env = smooth01(f, 0.40, 0.62)
+        ray = kit.math("POWER", noise2(kit.math("ADD", kit.math("MULTIPLY", az, 110.0), seed * 7), kit.math("MULTIPLY", tt, 3.0), 3.0, 0.55), 3.0)
+        wig = noise2(kit.math("ADD", kit.math("MULTIPLY", az, 16.0), seed * 3), kit.math("MULTIPLY", tt, 1.7))
+        base = kit.math("ADD", kit.math("ADD", base0, kit.math("MULTIPLY", f, base_amp)), kit.math("MULTIPLY", wig, 0.014))
+        lower = kit.math("SUBTRACT", elev, base)
+        edge = kit.math("MULTIPLY", kit.math("ADD", lower, 0.004), 180.0, clamp=True)          # soft lower border
+        prof = kit.math("EXPONENT", kit.math("MULTIPLY", kit.math("MAXIMUM", lower, 0.0), -decay))
+        c = kit.math("MULTIPLY", kit.math("MULTIPLY", edge, prof), kit.math("ADD", 0.35, kit.math("MULTIPLY", ray, 2.4)))
+        return kit.math("MULTIPLY", kit.math("MULTIPLY", c, env), gain), lower
+
+    c1, low1 = curtain(0.0, 2.4, 0.006, 0.055, 9.0, 1.7)
+    c2, _ = curtain(41.0, 1.7, 0.05, 0.08, 4.5, 0.75)
+    top = kit.math("MULTIPLY", kit.math("SUBTRACT", low1, 0.09), 3.5, clamp=True)
     green, magenta = srgb((60, 255, 140)), srgb((225, 60, 175))
     ccol = kit.mix_rgb(top, green + (1,), magenta + (1,))
     sky_c = kit.vmath("SCALE", ccol)
-    sky_c.node.inputs["Scale"].default_value = 1.0
-    kit.set(sky_c.node.inputs["Scale"], kit.math("MULTIPLY", curtain, 1.5))
-    wash = kit.rgb(kit.math("ADD", 0.03, kit.math("MULTIPLY", elev, 0.09)), srgb((40, 170, 110)))
-    horizon = kit.rgb(kit.math("EXPONENT", kit.math("MULTIPLY", elev, -14.0)), srgb((12, 30, 34)))
+    kit.set(sky_c.node.inputs["Scale"], kit.math("ADD", c1, c2))
+    wash = kit.rgb(kit.math("ADD", 0.05, kit.math("MULTIPLY", elev, 0.14)), srgb((40, 170, 110)))
+    tone = kit.mix_rgb(clk["lit"], srgb((10, 26, 30)) + (1,), srgb((36, 28, 22)) + (1,))       # same as the ground haze
+    horizon = kit.vmath("SCALE", tone)
+    kit.set(horizon.node.inputs["Scale"], kit.math("EXPONENT", kit.math("MULTIPLY", elev, -18.0)))
     sky = kit.vmath("ADD", kit.vmath("ADD", sky_c, wash), horizon)
     bg = kit.node("ShaderNodeBackground", Color=sky, Strength=1.0)
     wo = kit.node("ShaderNodeOutputWorld")

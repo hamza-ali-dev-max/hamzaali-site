@@ -11,11 +11,11 @@ reproducible from `scripts/`; heavy renders are not committed (see `.gitignore`)
 
 | # | Checkpoint | Status |
 |---|------------|--------|
-| 1 | Setup: image ID, cleaned base map, network check | done — waiting on environment changes (below) |
-| 2 | Voice lines (+ radio FX) | blocked: needs a TTS decision + network access |
-| 3 | Higgsfield clip plan + credit estimate | not started (no credits spent) |
-| 4 | Reporter lip-sync vs voice-over tests | not started |
-| 5 | Blender 3 s test + render-time estimate | blocked: Overpass (OSM data) |
+| 1 | Setup: image ID, cleaned base map, network check | done |
+| 2 | Voice lines (+ radio FX) | **blocked**: the ElevenLabs credential saved in the environment is the key ID, not the secret key (`sk_…`) |
+| 3 | Higgsfield clip plan + credit estimate | ready for "go" (`CLIP_PLAN.md`, $15.11 + $5.54); no credits spent; downloads need `cloudfront.net` allowed |
+| 4 | Reporter lip-sync vs voice-over tests | waits on 2 + 3 |
+| 5 | Blender 3 s test + render-time estimate | test rendered from real OSM (`scripts/blender_city.py`), see HANDOFF |
 | 6 | scene1_v1.mp4 | not started |
 
 ## Map sources (identified visually)
@@ -47,22 +47,15 @@ Originals of the four used images are in `assets/maps/originals/`.
 
 Run: `python3 scripts/01_prepare_maps.py` (needs `pillow numpy opencv-python-headless`).
 
-## Environment check (2026-09-25)
+## Environment check (session 3, 2026-09-25)
 
 | Host / item | Result |
 |---|---|
-| generativelanguage.googleapis.com | reachable (Google answered 403 "no API key") |
-| api.higgsfield.ai | **blocked** by network policy |
-| overpass-api.de | **blocked** by network policy |
-| pypi.org / files.pythonhosted.org | reachable |
-| ai.google.dev (Gemini docs) | **blocked** (also for web fetch) |
-| huggingface.co, cas-bridge.xethub.hf.co, cdn-lfs.huggingface.co | **blocked** (open-source TTS model weights) |
-| download.pytorch.org | blocked (not required: torch installs from PyPI) |
-| archive.ubuntu.com | reachable → `apt-get install ffmpeg` will work (ffmpeg is not preinstalled) |
-| `GEMINI_API_KEY`, `HF_KEY`, `HF_CREDENTIALS` | **not set** in this session |
-| Higgsfield connector | connected; account shows **0 credits** (free plan). Seedance 2.5 is listed (`seedance_2_5`, t2v, 4–30 s, 480p/720p/1080p). |
-| Python / bpy | Python 3.11 → use `bpy==5.0.1` (newest wheel for 3.11; 5.2 needs Python 3.13). The .blend opens in Blender 5.0+. |
-| Machine | 4 CPU cores, 15 GB RAM, ~30 GB free disk, no GPU |
+| api.higgsfield.ai | reachable, key injected by the proxy, auth verified (free upload-URL request) |
+| Higgsfield CDNs (`*.cloudfront.net`, `cdn.higgsfield.ai`) | **blocked**: generated clips can't be downloaded yet |
+| api.elevenlabs.io | reachable; stored credential rejected (`api_key_id_used_as_api_key`) |
+| overpass-api.de | reachable but resets ~2 of 3 connections (tiled fetch with retries works) |
+| Machine | 4 CPU cores, 15 GB RAM, no GPU; Python 3.11, `bpy` 5.0.1 |
 
 ## Logs
 
