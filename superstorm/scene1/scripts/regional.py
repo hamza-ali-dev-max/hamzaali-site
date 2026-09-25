@@ -1,6 +1,6 @@
 """Regional detail layers for continuous zooms from the AI world map down to ~100 km.
 
-Four nested layers, each 3600 x 2025 px, in a local equirectangular projection centred
+Four nested layers, each 5400 x 3038 px, in a local equirectangular projection centred
 on Montreal (x = east km, y = north km, true proportions at 45.5 N):
 
     R1  8000 km wide   2.22 km/px   GSHHG 'i'
@@ -32,7 +32,7 @@ MAPS = ROOT / "assets" / "maps"
 LAT0, LON0 = MONTREAL
 KX = 6371.0 * math.cos(math.radians(LAT0)) * math.pi / 180     # km per degree of longitude
 KY = 6371.0 * math.pi / 180                                    # km per degree of latitude
-PX_W, PX_H = 3600, 2025
+PX_W, PX_H = 5400, 3038
 LAYERS = {"R1": (8000.0, "i"), "R2": (2000.0, "h"), "R3": (500.0, "f"), "R4": (125.0, "f")}
 AURORA_GAIN = {"R1": 1.0, "R2": 0.55, "R3": 0.35, "R4": 0.25}
 MIN_LAKE_PX = 900        # skip lakes smaller than ~30x30 layer px (they appear as you zoom in)

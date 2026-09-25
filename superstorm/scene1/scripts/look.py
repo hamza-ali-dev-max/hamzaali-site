@@ -57,7 +57,7 @@ class Overlay:
         g = cv2.resize(g, (self.w, self.h), interpolation=cv2.INTER_LINEAR)
         return cv2.scaleAdd(g, strength, img)
 
-    def finish(self, img, frame=0, grain=0.006):
+    def finish(self, img, frame=0, grain=0.004):
         out = cv2.multiply(img, self.sv)
         if grain:
             out = cv2.scaleAdd(self.grains[frame % len(self.grains)], grain, out)

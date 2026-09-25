@@ -61,9 +61,12 @@ class World:
         self.sh1 = np.array([[1.0, 0.0], [0.0, -1.0]])
         self.layers = meta["layers"]
         self.ai = {}
+        self.ai2 = {}
         for k in ("base_night", "aurora_impact", "blackout"):
             self.ai[k] = np.asarray(Image.open(MAPS / f"{k}.png").convert("RGB"))
+            self.ai2[k] = sharpen_2x(self.ai[k])
         self.ai_px_size = self.ai["base_night"].shape[1::-1]
+        self.layer_px = tuple(meta["px"])
         self._pyr = {}
         self.ne_outline = self._ne_outline_mask()
 
@@ -165,7 +168,7 @@ class World:
 
     @lru_cache(maxsize=1)
     def alpha_template(self):
-        w, h = 3600 // PX_SCALE, 2025 // PX_SCALE
+        w, h = self.layer_px[0] // PX_SCALE, self.layer_px[1] // PX_SCALE
         yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
         d = np.minimum.reduce([xx, yy, w - 1 - xx, h - 1 - yy]) / (0.06 * w)
         return np.clip(d, 0, 1) ** 1.5
@@ -190,11 +193,13 @@ class World:
         qc, V, w = cam
         M = self.M_ai(cam)
         frame = None
+        M2 = M.copy()
+        M2[:, :2] *= 0.5                       # sample the sharpened 2x copy
         for k, wt in ai_mix.items():
             if wt <= 0:
                 continue
-            src = self.ai[k]
-            im = cv2.warpAffine(src, M, (W, H), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_CONSTANT, borderValue=look.OCEAN).astype(np.float32) * (wt / 255.0)
+            src = self.ai2[k]
+            im = cv2.warpAffine(src, M2, (W, H), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_CONSTANT, borderValue=look.OCEAN).astype(np.float32) * (wt / 255.0)
             frame = im if frame is None else frame + im
         if outline_pulse and ai_mix.get("blackout", 0) > 0:
             m = cv2.warpAffine(self.ne_outline, M, (W, H), flags=cv2.INTER_LINEAR)
@@ -219,6 +224,13 @@ class World:
 
 
 PX_SCALE = 10            # alpha template is 1/10 of the layer resolution
+
+
+def sharpen_2x(img):
+    """2x Lanczos upscale + gentle unsharp mask: crisper coastlines and lights when zoomed."""
+    up = cv2.resize(img, None, fx=2, fy=2, interpolation=cv2.INTER_LANCZOS4).astype(np.float32)
+    blur = cv2.GaussianBlur(up, (0, 0), 1.6)
+    return np.clip(up + 0.75 * (up - blur), 0, 255).astype(np.uint8)
 
 
 def grid_projector(world, cam):

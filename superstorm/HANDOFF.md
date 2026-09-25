@@ -19,13 +19,14 @@ everything"), keep one consistent look, and make it engaging.
   for DaVinci Resolve, total credits used, and time per part (`scene1/timing_log.csv`).
 
 ## Decisions made
-- TTS: **ElevenLabs** (owner's choice; account has ~131k credits). Needs env var
+- TTS: **ElevenLabs** (owner's choice; Creator plan, 131k credits). Needs env var
   `ELEVENLABS_API_KEY` and `api.elevenlabs.io` allowed. Look up model IDs via the API
   (`GET /v1/models`); prefer Eleven v3 for expressive lines. Radio FX chain in ffmpeg.
 - Video clips: **Seedance 2.5 via the Higgsfield API** (owner has $21 there; the Higgsfield
-  connector account has 0 credits). ~$0.23/s at 720p, ~$0.11/s at 480p. Env var `HF_KEY`,
+  connector account has 0 credits). Exact API price (token-metered, $0.0214 per 1k video tokens): $0.206/s at 480p, $0.462/s at 720p. Env var `HF_KEY`,
   host `api.higgsfield.ai`. PiP boxes can use 480p.
-- 3D: Blender via `bpy==5.0.1` (Python 3.11 here), OSM from Overpass (`overpass-api.de`).
+- Close-up city footage: owner wants **Seedance image-to-video** starting from the zoom's last frame (aerials of famous places, cars, people). Blender is the backup.
+- 3D (optional): Blender via `bpy==5.0.1` (Python 3.11 here), OSM from Overpass (`overpass-api.de`).
   Cycles CPU, low samples + denoise. Save the .blend for the owner.
 - Novaya Zemlya (the "white arc") was removed from the maps as the owner asked.
 - The owner's "use 3.8" is still unexplained — best guess: a $3.80 Higgsfield budget for

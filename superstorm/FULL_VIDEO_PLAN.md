@@ -55,12 +55,12 @@ every map shot; each chapter ends on a hook.
 
 | Item | Count / size | Cost estimate |
 |------|--------------|---------------|
-| Narration + dialogue (ElevenLabs, FR/EN/JA) | ~48,000 characters | Creator plan $22/mo (100k chars). Starter (30k) is not enough. |
-| Seedance 2.5 PiP clips (480p is plenty for a small box) | ~30 × 5 s = 150 s | ~$0.11/s → ~$17 |
-| Seedance 2.5 full-screen hero clips (720p) | 2–3 × 8–12 s ≈ 30 s | ~$0.23/s → ~$7 |
-| Retries / tests (~30%) | | ~$7 |
-| **AI video total** | | **~$30** (you have $21 → either top up ~$10 or cut to ~20 PiP clips) |
-| 3D cities (Blender, OSM) | Montreal dawn, Montreal blackout, Tokyo, New York (~20 s each) | CPU here: ~3–4 h each (Cycles, low samples + denoise). Your PC's GPU with EEVEE: minutes each. |
+| Narration + dialogue (ElevenLabs, FR/EN/JA) | ~45,000 characters | Owner's Creator plan: 131,000 credits available — covered. |
+| Seedance 2.5 PiP clips (480p is plenty for a small box) | ~36 × 5 s = 180 s | $0.206/s → ~$37 |
+| Seedance 2.5 full-screen clips (720p), incl. the zoom hand-offs into aerial city shots | ~9 × 8 s = 72 s | $0.462/s → ~$33 |
+| Retries / tests (~30%) | | ~$21 |
+| **AI video total** | | **~$90** vs $21 available. Options: top up; 4 s PiPs and reuse; 480p for some full-screen shots; Seedance 2.0 Mini for crowd/B-roll PiPs |
+| Close-up city footage | Seedance image-to-video from the zoom's last frame (owner's call) — Blender city is optional/backup | in the clip budget above |
 | Map/HUD/regional shots | ~50 min of the runtime | ~1–2 h CPU total |
 
 ## Script status
