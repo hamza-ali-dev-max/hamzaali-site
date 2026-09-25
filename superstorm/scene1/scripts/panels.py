@@ -115,13 +115,18 @@ def radio_panel(size, t_on, channel, waveform, subtitle, alpha=1.0):
     d.rectangle([x, y, x + w, y + 34], fill=(8, 30, 44, int(230 * k)))
     d.ellipse([x + 12, y + 12, x + 22, y + 22], fill=RED + (a,) if int(t_on * 2) % 2 == 0 else AMBER + (a,))
     d.text((x + 32, y + 6), channel, font=font(18, "Bold"), fill=CYAN + (a,))
-    d.text((x + w - 120, y + 7), "RX ▮▮▮▯", font=font(16, "Medium"), fill=AMBER + (a,))
+    d.text((x + w - 118, y + 7), "RX", font=font(16, "Medium"), fill=AMBER + (a,))
+    for j in range(4):                                  # signal-strength bars
+        bh = 6 + 4 * j
+        on = j < 3 or int(t_on * 3) % 2 == 0
+        d.rectangle([x + w - 88 + j * 12, y + 25 - bh, x + w - 81 + j * 12, y + 25],
+                    fill=(AMBER + (a,)) if on else (AMBER + (int(a * 0.25),)))
     # waveform bars
     n = len(waveform)
     bw = (w - 40) / n
-    mid = y + 34 + 58
+    mid = y + 34 + 46
     for i, v in enumerate(waveform):
-        bh = max(2, v * 52)
+        bh = max(2, v * 38)
         bx = x + 20 + i * bw
         d.rectangle([bx, mid - bh, bx + bw * 0.6, mid + bh], fill=AMBER + (int(a * 0.9),))
     if subtitle:
@@ -146,15 +151,14 @@ def lower_third(size, t_on, network, tag, place, alpha=1.0):
     return lay
 
 
-def headline_card(size, t_on, outlet, headline, dek, stamp, alpha=1.0):
-    """Fictional news headline card that slides in from the right."""
+def headline_card(size, t_on, outlet, headline, dek, stamp, alpha=1.0, side="right", y=170):
+    """Fictional news headline card that slides in from the screen edge on `side`."""
     lay = Image.new("RGBA", size, (0, 0, 0, 0))
     d = ImageDraw.Draw(lay)
     W_, H_ = size
     k = 1 - (1 - min(1.0, max(0.0, t_on / 0.5))) ** 3
     w, h = 620, 250
-    x = W_ - 60 - int(w * k)
-    y = 170
+    x = W_ - 60 - int(w * k) if side == "right" else 60 - w + int(w * k)
     a = int(255 * alpha)
     d.rectangle([x, y, x + w, y + h], fill=(236, 238, 240, int(245 * alpha)))
     d.rectangle([x, y, x + w, y + 44], fill=(20, 22, 26, a))
