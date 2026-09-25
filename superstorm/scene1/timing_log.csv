@@ -1,0 +1,2 @@
+part,start_utc,end_utc,minutes,notes
+setup_checkpoint_1,2026-09-25T20:29:00Z,2026-09-25T20:52:00Z,23,"image ID, map cleanup (3 iterations to remove the island shadow and keep aurora curtains continuous), network/env checks; includes ~2 min waiting for the image upload"

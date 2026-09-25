@@ -1,0 +1,13 @@
+# Heavy or regenerable outputs: delivered directly, not committed (public repo)
+build/
+renders/
+frames/
+cache/
+deliverables/
+*.blend1
+*.mp4
+*.mov
+*.wav
+*.osm
+*.osm.pbf
+__pycache__/
