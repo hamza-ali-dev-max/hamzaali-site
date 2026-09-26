@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="so" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Daawada Cadayga</title>
+    <script src="assets/js/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Dancing Script"; src: url("assets/fonts/dancing-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-900.woff2") format("woff2"); font-weight: 900; }
+      @font-face { font-family: "Lora"; src: url("assets/fonts/lora-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Lora"; src: url("assets/fonts/lora-600i.woff2") format("woff2"); font-weight: 600; font-style: italic; }
+      :root {
+        --paper: #fbf7f0;
+        --sand: #efe4d2;
+        --sand2: #f6eee1;
+        --gold: #c9a24b;
+        --gold2: #e3c173;
+        --brown: #4a2e1a;
+        --brown2: #8a5a36;
+        --blue: #2f6fd0;
+        --navy: #1c3f86;
+        --terra: #b8452f;
+        --skin: #8d5a3b;
+        --sticker: drop-shadow(6px 0 0 #fff) drop-shadow(-6px 0 0 #fff) drop-shadow(0 6px 0 #fff) drop-shadow(0 -6px 0 #fff) drop-shadow(0 14px 14px rgba(74, 46, 26, 0.22));
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Lora", serif; color: var(--brown); background: var(--paper); }
+
+      /* persistent heritage theme: warm paper, woven diamond lattice, patterned band */
+      #bg { position: absolute; inset: 0; background: radial-gradient(1000px 900px at 50% 30%, #ffffff 0%, var(--paper) 55%, var(--sand2) 100%); }
+      #weave { position: absolute; inset: 0; opacity: 0.55;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><path d='M60 6 L114 60 L60 114 L6 60 Z' fill='none' stroke='%23e3c173' stroke-width='2' opacity='.45'/><path d='M60 48 L72 60 L60 72 L48 60 Z' fill='%23c9a24b' opacity='.28'/></svg>");
+        background-size: 120px 120px; }
+      #band { position: absolute; left: 0; top: 0; width: 1080px; height: 30px;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='30'><rect width='60' height='30' fill='%231c3f86'/><path d='M0 30 L15 6 L30 30Z' fill='%23c9a24b'/><path d='M30 30 L45 6 L60 30Z' fill='%23b8452f'/><path d='M15 0 L30 18 L45 0Z' fill='%23fbf7f0'/></svg>");
+        background-size: 60px 30px; }
+      #brand { position: absolute; left: 60px; top: 66px; display: flex; align-items: center; gap: 14px; font-family: "Cinzel"; font-weight: 700; font-size: 28px; letter-spacing: 0.16em; color: var(--brown); }
+      #brand svg { display: block; }
+      #prog { position: absolute; left: 60px; top: 118px; width: 820px; height: 10px; border-radius: 6px; background: var(--sand); overflow: hidden; }
+      #prog-fill { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold2)); transform-origin: left center; }
+      #flash { position: absolute; inset: 0; background: var(--gold2); opacity: 0; pointer-events: none; }
+
+      /* scenes */
+      .clip { position: absolute; inset: 0; }
+      .stage { position: absolute; inset: 0; transform-origin: 470px 900px; }
+      .stk { filter: var(--sticker); }
+      .chip { position: absolute; left: 60px; top: 190px; height: 66px; padding: 0 26px; border-radius: 33px; background: #fff; border: 3px solid var(--gold); color: var(--brown);
+        font-family: "Cinzel"; font-weight: 900; font-size: 30px; letter-spacing: 0.12em; display: flex; align-items: center; gap: 14px; box-shadow: 0 8px 14px rgba(74, 46, 26, 0.15); }
+      .chip i { display: block; width: 14px; height: 14px; background: var(--gold); transform: rotate(45deg); }
+      .chip.alt { background: var(--blue); border-color: #fff; color: #fff; }
+      .chip.alt i { background: #fff; }
+      .headline { position: absolute; left: 60px; top: 285px; width: 860px; font-family: "Cinzel"; font-weight: 900; font-size: 88px; line-height: 1.08; text-transform: uppercase; color: var(--brown); }
+      .headline .hl { display: block; overflow: hidden; padding-bottom: 8px; }
+      .headline .hw { display: inline-block; }
+      .headline .y { font-family: "Dancing Script"; font-weight: 700; font-size: 1.62em; line-height: 0.95; text-transform: none; color: var(--blue); }
+      .headline .sm { font-size: 62px; letter-spacing: 0.04em; color: var(--brown2); }
+      .visual { position: absolute; left: 40px; top: 690px; width: 880px; height: 640px; }
+      .center { display: flex; align-items: center; justify-content: center; }
+
+      .lab { display: flex; align-items: center; gap: 22px; height: 70px; white-space: nowrap; padding: 0 28px; border-radius: 38px; background: #fff; border: 3px solid var(--gold2); box-shadow: 0 10px 16px rgba(74, 46, 26, 0.13);
+        font-family: "Cinzel"; font-weight: 900; font-size: 40px; text-transform: uppercase; color: var(--brown); }
+      .lab i { display: block; width: 38px; height: 38px; border-radius: 50%; }
+      .tag { position: absolute; }
+      .hface { position: absolute; width: 440px; height: 536px; }
+      .card2 { position: absolute; top: 30px; width: 400px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+      .card2 .disc { position: relative; width: 340px; height: 340px; border-radius: 50%; background: #fff; box-shadow: 0 14px 20px rgba(74, 46, 26, 0.16); overflow: hidden; }
+      .card2 .disc svg { position: absolute; }
+      .ban { position: absolute; inset: 0; width: 340px; height: 340px; }
+      .tick { position: absolute; right: 16px; bottom: 16px; width: 80px; height: 80px; border-radius: 50%; background: var(--blue); border: 6px solid #fff; display: flex; align-items: center; justify-content: center; }
+      .tick svg { position: static !important; }
+      .badge { position: absolute; border-radius: 50%; color: #fff; font-family: "Cinzel"; font-weight: 900; }
+
+      /* 1 toothpaste on a pimple */
+      #q-face { left: 20px; top: 40px; }
+      #q-tube { position: absolute; left: 470px; top: 60px; width: 400px; height: 200px; transform-origin: 20% 50%; }
+      #q-dab { opacity: 0; }
+
+      /* 2 wait */
+      #w-face { left: 20px; top: 40px; }
+      #wait-badge { left: 580px; top: 20px; width: 260px; height: 260px; background: var(--terra); font-size: 70px; }
+      #w-harm { left: 480px; top: 360px; }
+
+      /* 3 for teeth, not pimples */
+      #t-left { left: 10px; } #t-right { left: 470px; }
+
+      /* 4 dryness, itching, irritation */
+      #h-face { left: 20px; top: 40px; }
+      #h-1 { left: 500px; top: 80px; } #h-2 { left: 500px; top: 190px; } #h-3 { left: 500px; top: 300px; }
+
+      /* 5 dried is not healed */
+      .skin2 { position: absolute; top: 40px; width: 340px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+      .skin2 svg { display: block; width: 320px; height: 320px; }
+      #k-dried { left: 20px; } #k-healed { left: 520px; }
+      #neq { position: absolute; left: 368px; top: 150px; width: 140px; height: 110px; }
+
+      /* 6 gentle wash */
+      #g-face { left: 20px; top: 40px; }
+      #g-bottle { position: absolute; left: 560px; top: 10px; width: 240px; height: 560px; }
+
+      /* 7 acne treatment + follow the label */
+      #m-tube { position: absolute; left: 30px; top: 60px; width: 440px; height: 220px; }
+      #leaflet { position: absolute; left: 520px; top: 40px; width: 320px; height: 420px; }
+      #m-med { left: 40px; top: 330px; } #m-label { left: 480px; top: 490px; }
+
+      /* 8 no popping, no social-media hacks */
+      #x-left { left: 10px; } #x-right { left: 470px; }
+
+      /* 9 dermatologist */
+      #pain-tag { left: 0; top: 0; } #stay-tag { left: 530px; top: 0; }
+      #docbadge { position: absolute; left: 250px; top: 130px; width: 380px; height: 380px; }
+      #derm-tag { left: 110px; top: 540px; }
+
+      /* 10 brush your teeth, be kind to your skin */
+      #r-brush { position: absolute; left: 30px; top: 40px; width: 400px; height: 400px; }
+      #r-face { left: 440px; top: 40px; width: 420px; height: 512px; }
+      #r-hearts { position: absolute; left: 380px; top: 0; width: 500px; height: 500px; }
+
+      /* 11 cta */
+      #pfp { position: absolute; left: 290px; top: 0; width: 300px; height: 300px; border-radius: 50%; background: #fff; border: 8px solid var(--gold); overflow: hidden; box-shadow: 0 14px 22px rgba(74, 46, 26, 0.2); }
+      #pfp svg { position: absolute; left: -40px; top: 6px; width: 380px; height: 463px; }
+      #brandname { position: absolute; left: 40px; top: 310px; width: 800px; text-align: center; font-family: "Dancing Script"; font-weight: 700; font-size: 96px; color: var(--blue); line-height: 1.1; }
+      #follow { position: absolute; left: 60px; top: 460px; width: 380px; height: 120px; border-radius: 60px; background: var(--blue); gap: 18px; color: #fff; font-family: "Cinzel"; font-weight: 900; font-size: 40px; }
+      #shareit { position: absolute; left: 470px; top: 460px; width: 360px; height: 120px; border-radius: 60px; background: #fff; border: 4px solid var(--gold); gap: 16px; color: var(--brown); font-family: "Cinzel"; font-weight: 900; font-size: 40px; }
+      #tiktok { display: block; flex: 0 0 72px; width: 72px; height: 72px; border-radius: 16px; box-shadow: 0 0 0 4px #fff; }
+
+      /* captions: word-by-word, on a white sticker label */
+      #caps { position: absolute; left: 60px; top: 1370px; width: 840px; height: 190px; }
+      .cap-line { position: absolute; left: 0; top: 0; width: 840px; text-align: center; opacity: 0; }
+      .cap-pill { display: inline-block; max-width: 840px; padding: 14px 30px 18px; border-radius: 30px; background: #fff; border: 3px solid var(--gold2); box-shadow: 0 10px 18px rgba(74, 46, 26, 0.16);
+        font-weight: 700; font-size: 60px; line-height: 1.15; }
+      .cw { display: inline-block; margin: 0 8px; color: var(--brown); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="%TOTAL%" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="weave"></div>
+      <div id="band"></div>
+      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <radialGradient id="skin-g" cx="40%" cy="35%"><stop offset="0" stop-color="#c99470" /><stop offset=".7" stop-color="#a86f4a" /><stop offset="1" stop-color="#8d5a3b" /></radialGradient>
+          <radialGradient id="zit-g" cx="45%" cy="40%"><stop offset="0" stop-color="#fff6e6" /><stop offset=".28" stop-color="#fff0d6" /><stop offset=".32" stop-color="#d9745a" /><stop offset="1" stop-color="#b8452f" /></radialGradient>
+          <radialGradient id="crater-g" cx="50%" cy="45%"><stop offset="0" stop-color="#5c3520" /><stop offset=".6" stop-color="#7a4a2f" /><stop offset=".85" stop-color="#9a6444" /><stop offset="1" stop-color="#c99470" /></radialGradient>
+          <radialGradient id="swell-g"><stop offset="0" stop-color="#b8452f" stop-opacity=".75" /><stop offset="1" stop-color="#b8452f" stop-opacity="0" /></radialGradient>
+          <filter id="soft"><feGaussianBlur stdDeviation="9" /></filter>
+        </defs>
+      </svg>
+      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <radialGradient id="u-skin" cx="46%" cy="36%" r="72%"><stop offset="0" stop-color="#c08a68" /><stop offset=".6" stop-color="#9d6646" /><stop offset="1" stop-color="#7a4b31" /></radialGradient>
+          <linearGradient id="u-hijab" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2d5bb0" /><stop offset=".55" stop-color="#1e428c" /><stop offset="1" stop-color="#15326c" /></linearGradient>
+          <radialGradient id="u-gem"><stop offset="0" stop-color="#8fc0ff" /><stop offset="1" stop-color="#2f6fd0" /></radialGradient>
+          <pattern id="u-weave" width="24" height="12" patternUnits="userSpaceOnUse"><rect width="24" height="12" fill="#c9a24b" /><path d="M0 12 L6 2 L12 12Z M12 12 L18 2 L24 12Z" fill="#ecd08c" /><path d="M6 0 L12 6 L18 0Z" fill="#b8452f" /></pattern>
+          <linearGradient id="gloss" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e9e4dc" /><stop offset=".22" stop-color="#ffffff" /><stop offset=".5" stop-color="#f7f3ec" /><stop offset="1" stop-color="#d9d1c4" /></linearGradient>
+          <linearGradient id="chrome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f6f9" /><stop offset=".45" stop-color="#b9c1cc" /><stop offset=".55" stop-color="#8e98a6" /><stop offset="1" stop-color="#dfe4ea" /></linearGradient>
+          <linearGradient id="goldlid" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a8822f" /><stop offset=".3" stop-color="#ecd08c" /><stop offset=".6" stop-color="#c9a24b" /><stop offset="1" stop-color="#8f6d22" /></linearGradient>
+          <linearGradient id="waterg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe0ff" stop-opacity=".95" /><stop offset="1" stop-color="#6fa4e8" stop-opacity=".75" /></linearGradient>
+          <radialGradient id="sponge-g" cx="40%" cy="35%"><stop offset="0" stop-color="#ffe17a" /><stop offset="1" stop-color="#e0a92c" /></radialGradient>
+          <radialGradient id="red-g"><stop offset="0" stop-color="#d9463a" stop-opacity=".6" /><stop offset="1" stop-color="#d9463a" stop-opacity="0" /></radialGradient>
+
+          <!-- Somali hijabi face (the tutorials' character), v2: larger face opening, slim forehead band.
+               Key points in this 460x560 box: eyes (175,237) (287,237) · mouth (230,324) · cheeks (185,275) (303,275) · forehead (230,150) · chin (230,380) -->
+          <symbol id="hface-art" viewBox="0 0 460 560">
+            <g transform="translate(-30 -64)">
+              <path d="M260 60 C394 60 446 158 446 272 C446 366 432 436 478 522 C510 586 466 652 384 668 L136 668 C54 652 10 586 42 522 C88 436 74 366 74 272 C74 158 126 60 260 60 Z" fill="url(#u-hijab)" />
+              <path d="M118 170 C142 108 196 86 256 84" fill="none" stroke="#4476cc" stroke-width="10" stroke-linecap="round" opacity=".5" />
+              <path d="M412 490 C438 546 444 594 414 640" fill="none" stroke="#12295a" stroke-width="10" stroke-linecap="round" opacity=".55" />
+              <path d="M108 490 C82 546 76 594 106 640" fill="none" stroke="#12295a" stroke-width="10" stroke-linecap="round" opacity=".55" />
+              <ellipse cx="260" cy="286" rx="136" ry="160" fill="#12295a" />
+              <ellipse cx="260" cy="290" rx="125" ry="148" fill="url(#u-skin)" />
+              <path d="M160 400 C190 446 330 446 360 400 C344 432 300 448 260 448 C220 448 176 432 160 400Z" fill="#6e412a" opacity=".3" />
+              <path d="M132 216 C144 112 376 112 388 216 C352 160 168 160 132 216 Z" fill="url(#u-hijab)" />
+              <path d="M136 208 C176 158 344 158 384 208" fill="none" stroke="url(#u-weave)" stroke-width="10" stroke-linecap="round" />
+              <path d="M140 350 C136 500 384 500 380 350 C398 520 122 520 140 350 Z" fill="url(#u-hijab)" />
+              <circle cx="260" cy="506" r="15" fill="#c9a24b" /><circle cx="260" cy="506" r="8" fill="url(#u-gem)" />
+              <g transform="translate(260 300) scale(1.14) translate(-260 -300)">
+                <g fill="none" stroke="#24150c" stroke-width="7" stroke-linecap="round"><path d="M192 250 Q214 236 238 244" /><path d="M282 244 Q306 236 328 250" /></g>
+                <path d="M192 280 Q214 263 238 280 Q214 292 192 280Z" fill="#fff8ef" /><circle cx="215" cy="279" r="11" fill="#3a2214" /><circle cx="215" cy="279" r="5" fill="#120a06" /><circle cx="219" cy="275" r="3.5" fill="#ffffff" /><path d="M189 281 Q213 258 240 278 L246 272" fill="none" stroke="#150c06" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M282 280 Q306 263 328 280 Q306 292 282 280Z" fill="#fff8ef" /><circle cx="305" cy="279" r="11" fill="#3a2214" /><circle cx="305" cy="279" r="5" fill="#120a06" /><circle cx="309" cy="275" r="3.5" fill="#ffffff" /><path d="M331 281 Q307 258 280 278 L274 272" fill="none" stroke="#150c06" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M258 288 L256 318" stroke="#d6a07f" stroke-width="5" stroke-linecap="round" opacity=".45" />
+                <path d="M246 328 Q252 338 260 336 Q268 338 274 328" fill="none" stroke="#6e412a" stroke-width="4" stroke-linecap="round" />
+                <ellipse cx="196" cy="334" rx="22" ry="12" fill="#e0707a" opacity=".25" /><ellipse cx="324" cy="334" rx="22" ry="12" fill="#e0707a" opacity=".25" />
+                <path d="M226 362 Q244 350 260 357 Q276 350 294 362 Q260 368 226 362Z" fill="#8e4440" />
+                <path d="M230 366 Q260 388 290 366 Q260 374 230 366Z" fill="#aa564e" />
+                <path d="M220 357 Q224 364 230 365 M290 365 Q296 364 300 357" fill="none" stroke="#6e3a30" stroke-width="3" stroke-linecap="round" />
+              </g>
+            </g>
+          </symbol>
+
+          <!-- realistic props -->
+          <symbol id="cleanser-real" viewBox="0 0 240 560">
+            <rect x="100" y="0" width="92" height="24" rx="9" fill="url(#chrome)" />
+            <rect x="108" y="20" width="22" height="58" fill="url(#chrome)" />
+            <rect x="80" y="70" width="80" height="42" rx="12" fill="url(#chrome)" />
+            <rect x="94" y="108" width="52" height="38" fill="#d9d1c4" />
+            <path d="M38 156 Q38 142 60 142 H180 Q202 142 202 156 V518 Q202 552 168 552 H72 Q38 552 38 518 Z" fill="url(#gloss)" />
+            <rect x="58" y="170" width="14" height="360" rx="7" fill="#ffffff" opacity=".85" />
+            <rect x="38" y="250" width="164" height="180" fill="#2f6fd0" />
+            <path d="M120 270 C128 286 138 294 138 306 C138 317 130 324 120 324 C110 324 102 317 102 306 C102 294 112 286 120 270Z" fill="#ffffff" />
+            <text x="120" y="366" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="24" fill="#ffffff">NADIIFIYE</text>
+            <text x="120" y="398" text-anchor="middle" font-family="Cinzel" font-weight="700" font-size="17" fill="#e3c173">JILICSAN · WEJIGA</text>
+            <path d="M60 470 H180 M60 490 H160" stroke="#c9a24b" stroke-width="4" />
+          </symbol>
+          <symbol id="jar-real" viewBox="0 0 330 300">
+            <ellipse cx="165" cy="284" rx="150" ry="14" fill="#4a2e1a" opacity=".15" />
+            <rect x="30" y="18" width="270" height="84" rx="24" fill="url(#goldlid)" />
+            <rect x="46" y="28" width="238" height="10" rx="5" fill="#fff4d0" opacity=".6" />
+            <rect x="20" y="96" width="290" height="186" rx="38" fill="url(#gloss)" />
+            <rect x="40" y="110" width="14" height="156" rx="7" fill="#ffffff" opacity=".9" />
+            <rect x="20" y="146" width="290" height="96" fill="#2f6fd0" />
+            <text x="165" y="206" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="42" fill="#ffffff">QOYAAN</text>
+            <path d="M150 260 L165 272 L180 260 L165 248 Z" fill="#b8452f" />
+          </symbol>
+          <symbol id="faucet-real" viewBox="0 0 360 460">
+            <rect x="40" y="20" width="260" height="46" rx="20" fill="url(#chrome)" />
+            <rect x="140" y="60" width="60" height="70" fill="url(#chrome)" />
+            <path d="M120 130 H300 Q330 130 330 160 V190 H290 V170 H120 Z" fill="url(#chrome)" />
+            <rect x="286" y="186" width="48" height="20" rx="6" fill="#8e98a6" />
+          </symbol>
+          <symbol id="sponge-real" viewBox="0 0 300 220">
+            <rect x="10" y="30" width="280" height="170" rx="34" fill="url(#sponge-g)" />
+            <rect x="10" y="30" width="280" height="54" rx="26" fill="#3f8f4a" />
+            <g fill="#b37f16" opacity=".55"><circle cx="60" cy="120" r="9" /><circle cx="100" cy="150" r="6" /><circle cx="140" cy="118" r="8" /><circle cx="190" cy="160" r="10" /><circle cx="230" cy="125" r="7" /><circle cx="250" cy="170" r="5" /><circle cx="80" cy="175" r="6" /><circle cx="170" cy="135" r="4" /></g>
+            <g stroke="#2d6b37" stroke-width="3" opacity=".7"><path d="M30 44 L44 64 M60 42 L72 66 M92 44 L104 64 M124 42 L136 66 M156 44 L168 64 M188 42 L200 66 M220 44 L232 64 M252 42 L264 66" /></g>
+          </symbol>
+          <symbol id="towel-real" viewBox="0 0 400 260">
+            <path d="M20 60 Q20 30 50 30 H350 Q380 30 380 60 V220 Q380 240 360 240 H40 Q20 240 20 220 Z" fill="#fffaf1" />
+            <path d="M20 60 Q20 30 50 30 H350 Q380 30 380 60 V96 H20 Z" fill="#f1e8d8" />
+            <rect x="20" y="176" width="360" height="30" fill="#2f6fd0" /><rect x="20" y="212" width="360" height="8" fill="#c9a24b" />
+            <g stroke="#e8ddcb" stroke-width="3"><path d="M40 118 H360 M40 136 H360 M40 154 H360" /></g>
+          </symbol>
+          <symbol id="feather-real" viewBox="0 0 200 320">
+            <path d="M100 20 C160 60 170 170 110 280 C60 200 40 90 100 20Z" fill="#fffaf1" stroke="#e3c173" stroke-width="4" />
+            <path d="M100 30 C112 120 108 220 104 310" fill="none" stroke="#c9a24b" stroke-width="5" stroke-linecap="round" />
+            <g stroke="#e8ddcb" stroke-width="3" fill="none"><path d="M106 80 L140 60 M106 120 L150 100 M106 160 L150 146 M104 200 L140 196 M104 110 L70 88 M104 150 L64 134 M104 190 L70 184" /></g>
+          </symbol>
+          <symbol id="weight-real" viewBox="0 0 240 240">
+            <path d="M80 70 Q80 26 120 26 Q160 26 160 70" fill="none" stroke="#3a2a20" stroke-width="22" stroke-linecap="round" />
+            <path d="M40 120 Q40 76 86 76 H154 Q200 76 200 120 L214 196 Q218 222 190 222 H50 Q22 222 26 196 Z" fill="#3a2a20" />
+            <path d="M60 110 Q70 92 96 90" stroke="#6a5446" stroke-width="10" stroke-linecap="round" fill="none" />
+            <text x="120" y="178" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="46" fill="#e3c173">KG</text>
+          </symbol>
+          <symbol id="hand-circle" viewBox="0 0 340 340">
+            <g fill="url(#u-skin)"><rect x="110" y="70" width="40" height="160" rx="20" /><rect x="156" y="50" width="40" height="176" rx="20" /><rect x="202" y="80" width="38" height="150" rx="19" /><path d="M104 190 H244 V250 C244 290 214 310 176 310 C136 310 104 290 104 256Z" /></g>
+            <g fill="#d4a080" opacity=".8"><ellipse cx="130" cy="84" rx="12" ry="10" /><ellipse cx="176" cy="64" rx="12" ry="10" /><ellipse cx="221" cy="94" rx="11" ry="10" /></g>
+          </symbol>
+        </defs>
+      </svg>
+      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <linearGradient id="tubeg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" /><stop offset=".5" stop-color="#f3efe8" /><stop offset="1" stop-color="#d8d0c2" /></linearGradient>
+          <symbol id="toothpaste-real" viewBox="0 0 400 200">
+            <path d="M20 40 L300 60 Q330 62 330 100 Q330 138 300 140 L20 160 Q8 160 8 148 V52 Q8 40 20 40Z" fill="url(#tubeg)" />
+            <path d="M8 44 H26 V156 H8Z" fill="#d8d0c2" /><g stroke="#bfb5a4" stroke-width="3"><path d="M12 50 V150 M18 50 V150" /></g>
+            <path d="M60 58 L240 70 V130 L60 142 Z" fill="#2f6fd0" /><path d="M60 58 L240 70 V80 L60 70 Z" fill="#b8452f" /><path d="M60 142 L240 130 V120 L60 130 Z" fill="#b8452f" />
+            <text x="150" y="112" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="26" fill="#ffffff">CADAY</text>
+            <rect x="326" y="78" width="60" height="44" rx="8" fill="#e8e8ec" /><path d="M330 84 H382" stroke="#ffffff" stroke-width="4" />
+            <path d="M40 50 L280 66" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity=".9" />
+          </symbol>
+          <symbol id="treatment-real" viewBox="0 0 400 200">
+            <path d="M20 40 L300 60 Q330 62 330 100 Q330 138 300 140 L20 160 Q8 160 8 148 V52 Q8 40 20 40Z" fill="url(#tubeg)" />
+            <path d="M8 44 H26 V156 H8Z" fill="#d8d0c2" /><g stroke="#bfb5a4" stroke-width="3"><path d="M12 50 V150 M18 50 V150" /></g>
+            <path d="M60 58 L240 70 V130 L60 142 Z" fill="#1c3f86" />
+            <text x="150" y="98" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="22" fill="#ffffff">DAAWO</text>
+            <text x="150" y="124" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="22" fill="#e3c173">FINAN</text>
+            <rect x="326" y="78" width="60" height="44" rx="8" fill="#c9a24b" /><path d="M330 84 H382" stroke="#ecd08c" stroke-width="4" />
+            <path d="M40 50 L280 66" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity=".9" />
+          </symbol>
+          <symbol id="toothbrush-real" viewBox="0 0 400 140">
+            <rect x="10" y="70" width="300" height="34" rx="17" fill="#2f6fd0" /><rect x="30" y="76" width="200" height="8" rx="4" fill="#8fc0ff" opacity=".7" />
+            <rect x="290" y="74" width="100" height="26" rx="10" fill="#1c3f86" />
+            <g fill="#ffffff" stroke="#d9e3f2" stroke-width="2"><rect x="300" y="30" width="12" height="44" rx="4" /><rect x="316" y="30" width="12" height="44" rx="4" /><rect x="332" y="30" width="12" height="44" rx="4" /><rect x="348" y="30" width="12" height="44" rx="4" /><rect x="364" y="30" width="12" height="44" rx="4" /></g>
+            <path d="M298 30 Q320 6 344 24 Q362 6 380 26" fill="#ffffff" stroke="#8fc0ff" stroke-width="4" />
+          </symbol>
+          <symbol id="tooth-real" viewBox="0 0 200 220">
+            <path d="M40 30 Q100 0 160 30 Q196 50 184 110 Q176 150 164 200 Q156 216 146 200 L124 140 Q100 124 76 140 L54 200 Q44 216 36 200 Q24 150 16 110 Q4 50 40 30Z" fill="#ffffff" stroke="#d9e3f2" stroke-width="5" />
+            <path d="M52 50 Q70 36 92 40" stroke="#dfeaff" stroke-width="10" stroke-linecap="round" fill="none" />
+          </symbol>
+          <symbol id="phone-real" viewBox="0 0 220 400">
+            <rect x="6" y="6" width="208" height="388" rx="34" fill="#1a1a1f" /><rect x="18" y="30" width="184" height="340" rx="18" fill="#2a2a33" />
+            <rect x="86" y="14" width="48" height="8" rx="4" fill="#3a3a44" />
+            <circle cx="110" cy="190" r="40" fill="#ffffff" opacity=".9" /><path d="M98 170 L130 190 L98 210Z" fill="#2a2a33" />
+            <g fill="#fe2c55"><path d="M176 280 C166 272 160 266 160 259 C160 253 165 250 169 250 C172 250 175 252 176 255 C177 252 180 250 183 250 C187 250 192 253 192 259 C192 266 186 272 176 280Z" /></g>
+            <text x="176" y="306" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="18" fill="#ffffff">1M</text>
+            <rect x="30" y="320" width="120" height="10" rx="5" fill="#ffffff" opacity=".6" /><rect x="30" y="338" width="80" height="10" rx="5" fill="#ffffff" opacity=".4" />
+          </symbol>
+        </defs>
+      </svg>
+
+      <!-- 1. TOOTHPASTE ON PIMPLES? -->
+      <section id="s-q" class="clip" data-start="%q.start%" data-duration="%q.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip alt"><i></i>SU'AAL<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Daawada</span> <span class="hw y">cadayga?</span></span><span class="hl sm"><span class="hw">finanka</span> <span class="hw">ma</span> <span class="hw">marisaa</span></span></div>
+          <div class="visual">
+            <svg class="hface stk" id="q-face" viewBox="0 0 460 560"><use href="#hface-art" width="460" height="560" /><g transform="matrix(1.23913 0 0 1.23913 -55 -38.59)"><g><circle cx="292" cy="258" r="11" fill="url(#zit-g)" /></g><g id="q-dab"><ellipse cx="292" cy="256" rx="17" ry="12" fill="#ffffff" stroke="#d9e3f2" stroke-width="2" /><path d="M280 254 Q292 248 304 254" stroke="#8fc0ff" stroke-width="3" fill="none" /></g></g></svg>
+            <svg id="q-tube" class="stk" viewBox="0 0 400 200"><use href="#toothpaste-real" width="400" height="200" /></svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. WAIT! -->
+      <section id="s-wait" class="clip" data-start="%wait.start%" data-duration="%wait.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip alt"><i></i>DIGNIIN<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Sug!</span></span><span class="hl sm"><span class="hw">waxay</span> <span class="hw">dhaawici</span> <span class="hw">kartaa</span></span></div>
+          <div class="visual">
+            <svg class="hface stk" id="w-face" viewBox="0 0 460 560"><use href="#hface-art" width="460" height="560" /><g transform="matrix(1.23913 0 0 1.23913 -55 -38.59)"><ellipse cx="292" cy="256" rx="17" ry="12" fill="#ffffff" stroke="#d9e3f2" stroke-width="2" /></g></svg>
+            <div id="wait-badge" class="badge center stk">SUG!</div>
+            <div class="lab tag" id="w-harm"><i style="background: var(--terra)"></i>Dhaawac</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. FOR TEETH, NOT PIMPLES -->
+      <section id="s-teeth" class="clip" data-start="%teeth.start%" data-duration="%teeth.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>XAQIIQ<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Ilkaha</span></span><span class="hl sm"><span class="hw">ma</span> <span class="hw">aha</span> <span class="hw">daawo</span> <span class="hw">finan</span></span></div>
+          <div class="visual">
+            <div class="card2" id="t-left">
+              <div class="disc"><svg viewBox="0 0 200 220" style="left: 80px; top: 60px; width: 180px; height: 198px"><use href="#tooth-real" width="200" height="220" /></svg><svg viewBox="0 0 400 140" style="left: 10px; top: 210px; width: 320px; height: 112px"><use href="#toothbrush-real" width="400" height="140" /></svg><div class="tick"><svg width="42" height="32" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+              <div class="lab"><i style="background: var(--blue)"></i>Ilkaha</div>
+            </div>
+            <div class="card2" id="t-right">
+              <div class="disc"><svg viewBox="0 0 320 320" style="left: 10px; top: 10px; width: 320px; height: 320px"><circle cx="160" cy="160" r="150" fill="url(#u-skin)" /><circle cx="160" cy="160" r="26" fill="url(#zit-g)" /><ellipse cx="160" cy="156" rx="34" ry="22" fill="#ffffff" stroke="#d9e3f2" stroke-width="3" /></svg><svg class="ban" id="t-ban" viewBox="0 0 340 340"><g fill="none" stroke="#b8452f" stroke-width="22"><circle cx="170" cy="170" r="150" /><path d="M64 64 L276 276" /></g></svg></div>
+              <div class="lab"><i style="background: var(--terra)"></i>Daawo finan</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. DRYNESS, ITCHING, IRRITATION -->
+      <section id="s-harm" class="clip" data-start="%harm.start%" data-duration="%harm.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip alt"><i></i>KHATAR<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Qallayl</span></span><span class="hl sm"><span class="hw">cuncun</span> <span class="hw">iyo</span> <span class="hw">xanaaq</span></span></div>
+          <div class="visual">
+            <svg class="hface stk" id="h-face" viewBox="0 0 460 560"><use href="#hface-art" width="460" height="560" /><g transform="matrix(1.23913 0 0 1.23913 -55 -38.59)">
+              <g id="h-dry" fill="none" stroke="#5c3520" stroke-width="2.5" opacity=".7"><path d="M268 244 L282 252 L294 242 L306 252 L316 246" /><path d="M276 266 L290 260 L302 270" /></g>
+              <g id="h-zz" fill="none" stroke="#b8452f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M320 220 L332 208 L344 220 L356 208" /><path d="M110 280 L122 268 L134 280 L146 268" /></g>
+              <ellipse id="h-red" cx="292" cy="256" rx="54" ry="36" fill="url(#red-g)" />
+            </g></svg>
+            <div class="lab tag" id="h-1"><i style="background: var(--brown2)"></i>Qallayl</div>
+            <div class="lab tag" id="h-2"><i style="background: var(--terra)"></i>Cuncun</div>
+            <div class="lab tag" id="h-3"><i style="background: #d9463a"></i>Xanaaq</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. DRIED IS NOT HEALED -->
+      <section id="s-dry" class="clip" data-start="%dry.start%" data-duration="%dry.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>XAQIIQ<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Qalalay</span> <span class="hw y">≠</span> <span class="hw y">bogsaday</span></span></div>
+          <div class="visual">
+            <div class="skin2" id="k-dried"><svg class="stk" viewBox="0 0 320 320"><circle cx="160" cy="160" r="150" fill="url(#u-skin)" /><circle cx="160" cy="160" r="60" fill="url(#red-g)" /><circle cx="160" cy="160" r="24" fill="#b8452f" /><g fill="none" stroke="#f2d9c4" stroke-width="3"><path d="M140 150 L152 160 L144 172 M166 142 L176 156 L168 170" /></g><g fill="#e8c9b0"><path d="M130 190 l10 -6 4 10z" /><path d="M180 132 l12 -4 2 10z" /></g></svg><div class="lab"><i style="background: #b8452f"></i>Qalalay</div></div>
+            <svg id="neq" viewBox="0 0 140 110"><g stroke="#b8452f" stroke-width="16" stroke-linecap="round"><path d="M20 38 H120 M20 72 H120" /><path d="M96 10 L44 100" /></g></svg>
+            <div class="skin2" id="k-healed"><svg class="stk" viewBox="0 0 320 320"><circle cx="160" cy="160" r="150" fill="url(#u-skin)" /><path d="M120 130 Q160 110 200 130" stroke="#d6a07f" stroke-width="8" stroke-linecap="round" opacity=".5" fill="none" /><g fill="#c9a24b"><path d="M230 80 l8 18 18 8 -18 8 -8 18 -8 -18 -18 -8 18 -8z" /></g></svg><div class="lab"><i style="background: var(--blue)"></i>Bogsaday</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. GENTLE CLEANSER -->
+      <section id="s-wash" class="clip" data-start="%wash.start%" data-duration="%wash.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>TALLAABO 1<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Si</span> <span class="hw y">tartiib</span> <span class="hw y">ah</span></span><span class="hl sm"><span class="hw">nadiifiye</span> <span class="hw">jilicsan</span></span></div>
+          <div class="visual">
+            <svg class="hface stk" id="g-face" viewBox="0 0 460 560"><use href="#hface-art" width="460" height="560" /><g transform="matrix(1.23913 0 0 1.23913 -55 -38.59)"><g fill="#ffffff" stroke="#d9e3f2" stroke-width="3"><circle class="gb" cx="140" cy="240" r="16" /><circle class="gb" cx="320" cy="270" r="14" /><circle class="gb" cx="170" cy="290" r="10" /><circle class="gb" cx="300" cy="220" r="9" /></g></g></svg>
+            <svg id="g-bottle" class="stk" viewBox="0 0 240 560"><use href="#cleanser-real" width="240" height="560" /></svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. REAL ACNE TREATMENT, FOLLOW THE LABEL -->
+      <section id="s-treat" class="clip" data-start="%treat.start%" data-duration="%treat.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>TALLAABO 2<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Daawo</span> <span class="hw y">finan</span></span><span class="hl sm"><span class="hw">raac</span> <span class="hw">tilmaamaha</span></span></div>
+          <div class="visual">
+            <svg id="m-tube" class="stk" viewBox="0 0 400 200"><use href="#treatment-real" width="400" height="200" /></svg>
+            <svg id="leaflet" class="stk" viewBox="0 0 320 420"><rect x="10" y="10" width="300" height="400" rx="18" fill="#ffffff" /><rect x="10" y="10" width="300" height="70" rx="18" fill="#1c3f86" /><rect x="10" y="50" width="300" height="30" fill="#1c3f86" /><text x="160" y="58" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="26" fill="#ffffff">TILMAAMAHA</text><g fill="#2f6fd0"><circle cx="46" cy="126" r="12" /><circle cx="46" cy="196" r="12" /><circle cx="46" cy="266" r="12" /></g><g fill="#e8ddcb"><rect x="72" y="118" width="200" height="16" rx="8" /><rect x="72" y="188" width="170" height="16" rx="8" /><rect x="72" y="258" width="190" height="16" rx="8" /><rect x="40" y="320" width="240" height="12" rx="6" /><rect x="40" y="346" width="200" height="12" rx="6" /></g></svg>
+            <div class="lab tag" id="m-med"><i style="background: var(--navy)"></i>Daawo finan</div>
+            <div class="lab tag" id="m-label"><i style="background: var(--gold)"></i>Tilmaamaha</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. DON'T POP, DON'T FOLLOW EVERY HACK -->
+      <section id="s-hacks" class="clip" data-start="%hacks.start%" data-duration="%hacks.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip alt"><i></i>DIGNIIN<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Ha</span> <span class="hw y">tuujin</span></span><span class="hl sm"><span class="hw">hana</span> <span class="hw">raacin</span> <span class="hw">baraha</span> <span class="hw">bulshada</span></span></div>
+          <div class="visual">
+            <div class="card2" id="x-left">
+              <div class="disc"><svg viewBox="0 0 320 320" style="left: 10px; top: 10px; width: 320px; height: 320px"><circle cx="160" cy="160" r="150" fill="url(#u-skin)" /><circle cx="160" cy="160" r="30" fill="url(#zit-g)" /><rect x="40" y="130" width="80" height="54" rx="26" fill="#a06a48" /><rect x="200" y="130" width="80" height="54" rx="26" fill="#a06a48" /></svg><svg class="ban" id="x-ban1" viewBox="0 0 340 340"><g fill="none" stroke="#b8452f" stroke-width="22"><circle cx="170" cy="170" r="150" /><path d="M64 64 L276 276" /></g></svg></div>
+              <div class="lab"><i style="background: var(--terra)"></i>Ha tuujin</div>
+            </div>
+            <div class="card2" id="x-right">
+              <div class="disc"><svg viewBox="0 0 220 400" style="left: 95px; top: 18px; width: 150px; height: 273px"><use href="#phone-real" width="220" height="400" /></svg><svg class="ban" id="x-ban2" viewBox="0 0 340 340"><g fill="none" stroke="#b8452f" stroke-width="22"><circle cx="170" cy="170" r="150" /><path d="M64 64 L276 276" /></g></svg></div>
+              <div class="lab" style="font-size: 32px"><i style="background: var(--navy)"></i>Baraha bulshada</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. SEE A DERMATOLOGIST -->
+      <section id="s-doctor" class="clip" data-start="%doctor.start%" data-duration="%doctor.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>TALLAABO 3<i></i></div>
+          <div class="headline"><span class="hl sm"><span class="hw">La</span> <span class="hw">tasho</span></span><span class="hl"><span class="hw y">dhakhtarka</span></span></div>
+          <div class="visual">
+            <div class="lab tag" id="pain-tag"><i style="background: var(--terra)"></i>Xanuun badan</div>
+            <div class="lab tag" id="stay-tag"><i style="background: var(--brown2)"></i>Aan tegin</div>
+            <svg id="docbadge" class="stk" viewBox="0 0 380 380"><circle cx="190" cy="190" r="180" fill="#ffffff" stroke="#c9a24b" stroke-width="8" /><path d="M160 80 H220 V160 H300 V220 H220 V300 H160 V220 H80 V160 H160Z" fill="#2f6fd0" /><path d="M60 110 Q40 200 110 250 Q160 280 190 330" fill="none" stroke="#4a2e1a" stroke-width="10" stroke-linecap="round" opacity=".85" /><circle cx="190" cy="336" r="16" fill="#c9a24b" stroke="#4a2e1a" stroke-width="6" /></svg>
+            <div class="lab tag" id="derm-tag"><i style="background: var(--blue)"></i>Dhakhtarka maqaarka</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 10. BRUSH TEETH, BE KIND TO SKIN -->
+      <section id="s-remind" class="clip" data-start="%remind.start%" data-duration="%remind.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>XUSUUS<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Ilkaha</span> <span class="hw y">caday</span></span><span class="hl sm"><span class="hw">maqaarka</span> <span class="hw">u</span> <span class="hw">naxariiso</span></span></div>
+          <div class="visual">
+            <svg id="r-brush" class="stk" viewBox="0 0 400 400"><circle cx="200" cy="200" r="190" fill="#ffffff" /><use href="#tooth-real" x="110" y="60" width="180" height="198" /><use href="#toothbrush-real" x="30" y="250" width="340" height="119" /><g fill="#c9a24b"><path d="M300 70 l8 18 18 8 -18 8 -8 18 -8 -18 -18 -8 18 -8z" /></g></svg>
+            <svg id="r-hearts" viewBox="0 0 500 500"><g fill="#b8452f"><path class="rh" d="M60 120 C40 104 30 94 30 82 C30 72 38 66 46 66 C52 66 57 70 60 76 C63 70 68 66 74 66 C82 66 90 72 90 82 C90 94 80 104 60 120Z" /><path class="rh" d="M460 110 C440 94 430 84 430 72 C430 62 438 56 446 56 C452 56 457 60 460 66 C463 60 468 56 474 56 C482 56 490 62 490 72 C490 84 480 94 460 110Z" /></g></svg>
+            <svg class="hface stk" id="r-face" viewBox="0 0 460 560"><use href="#hface-art" width="460" height="560" /></svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- 11. SHARE + FOLLOW -->
+      <section id="s-cta" class="clip" data-start="%cta.start%" data-duration="%cta.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>LA SOCO<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">La</span> <span class="hw y">wadaag</span></span><span class="hl sm"><span class="hw">qof</span> <span class="hw">u</span> <span class="hw">baahan</span> <span class="hw">taladan</span></span></div>
+          <div class="visual">
+            <div id="pfp"><svg viewBox="0 0 460 560"><use href="#hface-art" width="460" height="560" /></svg></div>
+            <div id="brandname">Skincare by Ubah</div>
+            <div id="follow" class="center stk"><svg id="tiktok" viewBox="0 0 48 48"><rect width="48" height="48" rx="11" fill="#000000" /><g transform="translate(7.8 7.8) scale(1.35)"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.650-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" fill="#25f4ee" transform="translate(-0.9 -0.9)" /><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.650-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" fill="#fe2c55" transform="translate(0.9 0.9)" /><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.650-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" fill="#ffffff" /></g></svg><span>LA SOCO</span></div>
+            <div id="shareit" class="center stk"><svg width="54" height="54" viewBox="0 0 64 64"><path d="M36 10 L58 30 L36 50 V38 C22 38 12 42 6 54 C8 34 18 24 36 22 Z" fill="#2f6fd0" /></svg><span>LA WADAAG</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- persistent chrome above scenes -->
+      <div id="brand"><svg width="30" height="28" viewBox="0 0 46 42"><path d="M23 40 C8 28 2 20 2 12 C2 6 7 2 12 2 C17 2 21 5 23 9 C25 5 29 2 34 2 C39 2 44 6 44 12 C44 20 38 28 23 40Z" fill="#2f6fd0" /></svg>SKINCARE BY UBAH</div>
+      <div id="prog"><span id="prog-fill"></span></div>
+      <div id="caps">
+        %CAPTIONS%
+      </div>
+      <div id="flash"></div>
+
+    %AUDIO%
+    </div>
+    <script>
+      const D = %DATA%;
+      const tl = gsap.timeline({ paused: true });
+      const S = {};
+      D.scenes.forEach((s) => (S[s.id] = s));
+      const B = D.beats;
+      const q = (sel) => document.querySelector(sel);
+      const pop = (sel, t, from = 0.3) => tl.fromTo(sel, { scale: from, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2.4)" }, t);
+      const ban = (sel, t) => tl.fromTo(sel, { opacity: 0, scale: 1.5, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.25, ease: "power4.in" }, t);
+
+      // persistent theme motion: the woven lattice and patterned band drift slowly, progress fills
+      tl.fromTo("#weave", { backgroundPosition: "0px 0px" }, { backgroundPosition: "0px 220px", duration: D.total, ease: "none" }, 0);
+      tl.fromTo("#band", { backgroundPosition: "0px 0px" }, { backgroundPosition: "220px 0px", duration: D.total, ease: "none" }, 0);
+      tl.fromTo("#prog-fill", { scaleX: 0 }, { scaleX: 1, duration: D.total, ease: "none" }, 0);
+
+      // every scene: hard cut + gold flash, punch-in landing, a mid-scene jump-cut zoom
+      D.scenes.forEach((s, i) => {
+        const el = q("#s-" + s.id);
+        const stage = el.querySelector(".stage");
+        const dir = i % 2 ? -1 : 1;
+        tl.fromTo(stage, { scale: 1.16, x: 90 * dir }, { scale: 1, x: 0, duration: 0.38, ease: "power3.out" }, s.start);
+        const jump = s.start + s.dur * 0.56;
+        tl.set(stage, { scale: 1.07 }, jump);
+        tl.to(stage, { scale: 1.1, duration: s.dur * 0.44 - 0.02, ease: "none" }, jump + 0.01);
+        if (i > 0) {
+          tl.set("#flash", { opacity: 0.55 }, s.start);
+          tl.to("#flash", { opacity: 0, duration: 0.16, ease: "power2.out" }, s.start + 0.001);
+        }
+        tl.fromTo(el.querySelector(".chip"), { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(3)" }, s.start + 0.05);
+        tl.fromTo(el.querySelectorAll(".hw"), { yPercent: 105 }, { yPercent: 0, duration: 0.42, stagger: 0.06, ease: "power4.out" }, s.start + 0.08);
+      });
+
+      // 1 tube squeezes a dab onto the pimple
+      pop("#q-face", S.q.start + 0.1);
+      tl.fromTo("#q-tube", { x: 400, rotation: 0 }, { x: 0, rotation: 8, duration: 0.45, ease: "power3.out" }, B.paste - 0.3);
+      tl.fromTo("#q-tube", { scaleY: 1 }, { scaleY: 0.8, duration: 0.15, yoyo: true, repeat: 1 }, B.pimple);
+      tl.fromTo("#q-dab", { opacity: 0, scale: 0.3, transformOrigin: "292px 256px" }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(3)" }, B.pimple + 0.15);
+
+      // 2 wait: this can hurt your skin
+      pop("#w-face", S.wait.start + 0.1);
+      tl.fromTo("#wait-badge", { scale: 3, opacity: 0, rotation: 15 }, { scale: 1, opacity: 1, rotation: -8, duration: 0.25, ease: "power4.in" }, B.wait - 0.2);
+      pop("#w-harm", B.harm);
+
+      // 3 made for teeth, not a pimple treatment
+      pop("#t-left", B.teeth - 0.1);
+      pop("#t-right", B.notmed - 0.4);
+      ban("#t-ban", B.notmed);
+
+      // 4 dryness, itching, irritation
+      pop("#h-face", S.harm.start + 0.1);
+      tl.set(["#h-dry", "#h-zz", "#h-red"], { opacity: 0 }, S.harm.start);
+      tl.fromTo("#h-dry", { opacity: 0 }, { opacity: 1, duration: 0.3 }, B.dryness);
+      pop("#h-1", B.dryness);
+      tl.fromTo("#h-zz", { opacity: 0 }, { opacity: 1, duration: 0.08, yoyo: true, repeat: 4 }, B.itch);
+      tl.set("#h-zz", { opacity: 1 }, B.itch + 0.45);
+      pop("#h-2", B.itch);
+      tl.fromTo("#h-red", { opacity: 0 }, { opacity: 1, duration: 0.4 }, B.irritate - 0.1);
+      pop("#h-3", B.irritate);
+
+      // 5 dried out is not the same as healed
+      pop("#k-dried", B.dried - 0.1);
+      pop("#neq", B.notheal - 0.8);
+      pop("#k-healed", B.notheal - 0.4);
+
+      // 6 gentle cleanser
+      pop("#g-face", S.wash.start + 0.1);
+      tl.fromTo(".gb", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.25, stagger: 0.1, ease: "back.out(3)" }, B.face);
+      tl.fromTo("#g-bottle", { y: 600 }, { y: 0, duration: 0.45, ease: "back.out(1.4)" }, B.cleanser - 0.3);
+
+      // 7 acne treatment + follow the label
+      tl.fromTo("#m-tube", { x: -500, rotation: -10 }, { x: 0, rotation: -4, duration: 0.45, ease: "back.out(1.4)" }, B.med - 0.2);
+      pop("#m-med", B.med + 0.1);
+      tl.fromTo("#leaflet", { y: 500, rotation: 8 }, { y: 0, rotation: 3, duration: 0.45, ease: "back.out(1.5)" }, B.label - 0.3);
+      pop("#m-label", B.label + 0.1);
+
+      // 8 no popping, no social-media hacks
+      pop("#x-left", S.hacks.start + 0.2);
+      ban("#x-ban1", B.squeeze + 0.1);
+      pop("#x-right", B.social - 0.3);
+      ban("#x-ban2", B.social + 0.2);
+
+      // 9 dermatologist if painful or won't go away
+      pop("#pain-tag", B.pain - 0.05);
+      pop("#stay-tag", B.stay - 0.05);
+      pop("#docbadge", B.derm - 0.2);
+      tl.fromTo("#derm-tag", { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "back.out(2)" }, B.derm + 0.1);
+
+      // 10 brush your teeth, be kind to your skin
+      pop("#r-brush", B.brush - 0.05);
+      pop("#r-face", B.kind - 0.5);
+      tl.fromTo(".rh", { scale: 0, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1, opacity: 1, duration: 0.3, stagger: 0.1, ease: "back.out(3)" }, B.kind);
+
+      // 11 share + follow Skincare by Ubah
+      pop("#pfp", S.cta.start + 0.15);
+      tl.fromTo("#shareit", { y: 240, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "back.out(2)" }, B.shareit);
+      tl.fromTo("#follow", { y: 240, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "back.out(2)" }, B.follow - 0.1);
+      tl.fromTo("#tiktok", { scale: 0, rotation: -30 }, { scale: 1, rotation: 0, duration: 0.4, ease: "back.out(3)" }, B.follow + 0.05);
+      pop("#brandname", B.brand - 0.1, 0.6);
+
+      // captions: word-by-word karaoke in Somali (active word in Somali blue)
+      D.caps.forEach((g, gi) => {
+        const line = "#cap-" + gi;
+        tl.set(line, { opacity: 1 }, g.s);
+        tl.fromTo(line, { scale: 0.86 }, { scale: 1, duration: 0.12, ease: "back.out(3)", immediateRender: false }, g.s);
+        tl.set(line, { opacity: 0 }, g.e);
+        g.w.forEach((w, wi) => {
+          const id = "#cw-" + gi + "-" + wi;
+          tl.set(id, { color: "#2f6fd0" }, w.s);
+          if (wi + 1 < g.w.length) tl.set(id, { color: "#4a2e1a" }, g.w[wi + 1].s);
+        });
+      });
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
