@@ -59,7 +59,7 @@ beats = {
 
 # ---- audio: VO + music bed + SFX on every cut and reveal ----
 audio = [
-    '<audio id="vo" src="assets/audio/vo_tight.mp3" data-start="0" data-duration="44.12" data-track-index="10" data-volume="1"></audio>',
+    '<audio id="vo" src="assets/audio/vo_muuse.mp3" data-start="0" data-duration="44.09" data-track-index="10" data-volume="1"></audio>',
     '<audio id="bgm" src="assets/audio/bgm.mp3" data-start="0" data-duration="45" data-track-index="11" data-volume="0.22" data-fade-out="1.2"></audio>',
 ]
 for i, c in enumerate(cuts[1:-1], 1):

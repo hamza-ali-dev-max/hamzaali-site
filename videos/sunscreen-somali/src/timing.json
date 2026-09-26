@@ -3,652 +3,652 @@
   {
    "id": "hook",
    "text": "Qorraxdu waxay dhaawacdaa maqaarkaaga, xitaa maalmaha daruurta leh!",
-   "s": 0.309,
-   "e": 4.186
+   "s": 0.3,
+   "e": 3.706
   },
   {
    "id": "uv",
    "text": "Shucaaca UV-ga wuxuu keenaa gubasho, gabow hore, iyo kansarka maqaarka.",
-   "s": 4.718,
-   "e": 9.278
+   "s": 4.696,
+   "e": 8.939
   },
   {
    "id": "spf",
    "text": "Tallaabada koowaad: dooro kareemka qorraxda oo SPF soddon ama ka badan ah.",
-   "s": 9.794,
-   "e": 14.492
+   "s": 9.929,
+   "e": 13.928
   },
   {
    "id": "amount",
    "text": "Tallaabada labaad: mari qadar ku filan, qiyaastii laba farood wejiga iyo qoorta.",
-   "s": 15.01,
-   "e": 19.739
+   "s": 14.918,
+   "e": 19.219
   },
   {
    "id": "time",
    "text": "Tallaabada saddexaad: mari shan iyo toban daqiiqo ka hor intaadan bannaanka u bixin.",
-   "s": 20.267,
-   "e": 25.192
+   "s": 20.209,
+   "e": 24.538
   },
   {
    "id": "spots",
    "text": "Ha illoobin dhegaha, qoorta, gacmaha dushooda, iyo cagaha.",
-   "s": 25.729,
-   "e": 29.412
+   "s": 25.528,
+   "e": 28.61
   },
   {
    "id": "reapply",
    "text": "Dib u mari labadii saacadoodba mar, iyo mar kasta oo aad dabaalato ama dhididdo.",
-   "s": 30.098,
-   "e": 34.757
+   "s": 29.6,
+   "e": 33.834
   },
   {
    "id": "myth",
    "text": "Maqaarka madow sidoo kale wuu gubtaa. Qof kasta wuxuu u baahan yahay ilaalin.",
-   "s": 35.291,
-   "e": 39.642
+   "s": 34.824,
+   "e": 39.263
   },
   {
    "id": "cta",
    "text": "Maanta bilow, maqaarkaaga ilaali! U dir qof aad jeceshahay.",
-   "s": 40.174,
-   "e": 44.075
+   "s": 40.253,
+   "e": 43.96
   }
  ],
  "words": [
   {
    "scene": "hook",
    "w": "Qorraxdu",
-   "s": 0.309,
-   "e": 0.804
+   "s": 0.3,
+   "e": 0.731
   },
   {
    "scene": "hook",
    "w": "waxay",
-   "s": 0.845,
-   "e": 1.052
+   "s": 0.731,
+   "e": 1.034
   },
   {
    "scene": "hook",
    "w": "dhaawacdaa",
-   "s": 1.093,
-   "e": 1.629
+   "s": 1.034,
+   "e": 1.594
   },
   {
    "scene": "hook",
    "w": "maqaarkaaga,",
-   "s": 1.657,
-   "e": 2.536
+   "s": 1.594,
+   "e": 2.283
   },
   {
    "scene": "hook",
    "w": "xitaa",
-   "s": 2.577,
-   "e": 2.866
+   "s": 2.408,
+   "e": 2.718
   },
   {
    "scene": "hook",
    "w": "maalmaha",
-   "s": 2.921,
-   "e": 3.361
+   "s": 2.718,
+   "e": 3.138
   },
   {
    "scene": "hook",
    "w": "daruurta",
-   "s": 3.402,
-   "e": 3.773
+   "s": 3.138,
+   "e": 3.558
   },
   {
    "scene": "hook",
    "w": "leh!",
-   "s": 3.814,
-   "e": 4.186
+   "s": 3.558,
+   "e": 3.706
   },
   {
    "scene": "uv",
    "w": "Shucaaca",
-   "s": 4.716,
-   "e": 5.183
+   "s": 4.696,
+   "e": 5.2
   },
   {
    "scene": "uv",
    "w": "UV-ga",
-   "s": 5.321,
-   "e": 5.761
+   "s": 5.2,
+   "e": 5.665
   },
   {
    "scene": "uv",
    "w": "wuxuu",
-   "s": 5.802,
-   "e": 6.091
+   "s": 5.665,
+   "e": 6.038
   },
   {
    "scene": "uv",
    "w": "keenaa",
-   "s": 6.157,
-   "e": 6.503
+   "s": 6.038,
+   "e": 6.477
   },
   {
    "scene": "uv",
    "w": "gubasho,",
-   "s": 6.544,
-   "e": 7.163
+   "s": 6.477,
+   "e": 6.916
   },
   {
    "scene": "uv",
    "w": "gabow",
-   "s": 7.204,
-   "e": 7.41
+   "s": 7.073,
+   "e": 7.341
   },
   {
    "scene": "uv",
    "w": "hore,",
-   "s": 7.493,
-   "e": 7.905
+   "s": 7.341,
+   "e": 7.61
   },
   {
    "scene": "uv",
    "w": "iyo",
-   "s": 7.946,
-   "e": 8.07
+   "s": 7.755,
+   "e": 8.046
   },
   {
    "scene": "uv",
    "w": "kansarka",
-   "s": 8.12,
-   "e": 8.565
+   "s": 8.046,
+   "e": 8.462
   },
   {
    "scene": "uv",
    "w": "maqaarka.",
-   "s": 8.62,
-   "e": 9.307
+   "s": 8.462,
+   "e": 8.939
   },
   {
    "scene": "spf",
    "w": "Tallaabada",
-   "s": 9.75,
-   "e": 10.286
+   "s": 9.929,
+   "e": 10.425
   },
   {
    "scene": "spf",
    "w": "koowaad:",
-   "s": 10.314,
-   "e": 10.863
+   "s": 10.425,
+   "e": 10.767
   },
   {
    "scene": "spf",
    "w": "dooro",
-   "s": 10.913,
-   "e": 11.193
+   "s": 10.908,
+   "e": 11.248
   },
   {
    "scene": "spf",
    "w": "kareemka",
-   "s": 11.234,
-   "e": 11.606
+   "s": 11.248,
+   "e": 11.707
   },
   {
    "scene": "spf",
    "w": "qorraxda",
-   "s": 11.647,
-   "e": 12.265
+   "s": 11.707,
+   "e": 12.107
   },
   {
    "scene": "spf",
    "w": "oo",
-   "s": 12.32,
-   "e": 12.43
+   "s": 12.107,
+   "e": 12.328
   },
   {
    "scene": "spf",
    "w": "SPF",
-   "s": 12.554,
-   "e": 12.925
+   "s": 12.328,
+   "e": 12.764
   },
   {
    "scene": "spf",
    "w": "soddon",
-   "s": 12.966,
-   "e": 13.42
+   "s": 12.764,
+   "e": 13.044
   },
   {
    "scene": "spf",
    "w": "ama",
-   "s": 13.503,
-   "e": 13.75
+   "s": 13.044,
+   "e": 13.325
   },
   {
    "scene": "spf",
    "w": "ka",
-   "s": 13.778,
-   "e": 13.832
+   "s": 13.325,
+   "e": 13.486
   },
   {
    "scene": "spf",
    "w": "badan",
-   "s": 13.874,
-   "e": 14.08
+   "s": 13.486,
+   "e": 13.767
   },
   {
    "scene": "spf",
    "w": "ah.",
-   "s": 14.134,
-   "e": 14.492
+   "s": 13.767,
+   "e": 13.928
   },
   {
    "scene": "amount",
    "w": "Tallaabada",
-   "s": 14.956,
-   "e": 15.492
+   "s": 14.918,
+   "e": 15.46
   },
   {
    "scene": "amount",
    "w": "labaad:",
-   "s": 15.533,
-   "e": 16.069
+   "s": 15.46,
+   "e": 15.779
   },
   {
    "scene": "amount",
    "w": "mari",
-   "s": 16.119,
-   "e": 16.317
+   "s": 15.942,
+   "e": 16.218
   },
   {
    "scene": "amount",
    "w": "qadar",
-   "s": 16.358,
-   "e": 16.564
+   "s": 16.218,
+   "e": 16.494
   },
   {
    "scene": "amount",
    "w": "ku",
-   "s": 16.592,
-   "e": 16.647
+   "s": 16.494,
+   "e": 16.653
   },
   {
    "scene": "amount",
    "w": "filan,",
-   "s": 16.709,
-   "e": 17.224
+   "s": 16.653,
+   "e": 16.929
   },
   {
    "scene": "amount",
    "w": "qiyaastii",
-   "s": 17.279,
-   "e": 17.719
+   "s": 17.095,
+   "e": 17.605
   },
   {
    "scene": "amount",
    "w": "laba",
-   "s": 17.76,
-   "e": 17.966
+   "s": 17.605,
+   "e": 17.881
   },
   {
    "scene": "amount",
    "w": "farood",
-   "s": 18.007,
-   "e": 18.296
+   "s": 17.881,
+   "e": 18.216
   },
   {
    "scene": "amount",
    "w": "wejiga",
-   "s": 18.351,
-   "e": 18.791
+   "s": 18.216,
+   "e": 18.609
   },
   {
    "scene": "amount",
    "w": "iyo",
-   "s": 18.873,
-   "e": 19.038
+   "s": 18.609,
+   "e": 18.884
   },
   {
    "scene": "amount",
    "w": "qoorta.",
-   "s": 19.121,
-   "e": 19.781
+   "s": 18.884,
+   "e": 19.219
   },
   {
    "scene": "time",
    "w": "Tallaabada",
-   "s": 20.267,
-   "e": 20.7
+   "s": 20.209,
+   "e": 20.799
   },
   {
    "scene": "time",
    "w": "saddexaad:",
-   "s": 20.75,
-   "e": 21.442
+   "s": 20.799,
+   "e": 21.267
   },
   {
    "scene": "time",
    "w": "mari",
-   "s": 21.492,
-   "e": 21.69
+   "s": 21.42,
+   "e": 21.698
   },
   {
    "scene": "time",
    "w": "shan",
-   "s": 21.744,
-   "e": 22.02
+   "s": 21.698,
+   "e": 21.858
   },
   {
    "scene": "time",
    "w": "iyo",
-   "s": 22.102,
-   "e": 22.267
+   "s": 21.858,
+   "e": 22.136
   },
   {
    "scene": "time",
    "w": "toban",
-   "s": 22.322,
-   "e": 22.679
+   "s": 22.136,
+   "e": 22.414
   },
   {
    "scene": "time",
    "w": "daqiiqo",
-   "s": 22.762,
-   "e": 23.174
+   "s": 22.414,
+   "e": 22.869
   },
   {
    "scene": "time",
    "w": "ka",
-   "s": 23.229,
-   "e": 23.339
+   "s": 22.869,
+   "e": 23.029
   },
   {
    "scene": "time",
    "w": "hor",
-   "s": 23.38,
-   "e": 23.504
+   "s": 23.029,
+   "e": 23.189
   },
   {
    "scene": "time",
    "w": "intaadan",
-   "s": 23.545,
-   "e": 23.999
+   "s": 23.189,
+   "e": 23.644
   },
   {
    "scene": "time",
    "w": "bannaanka",
-   "s": 24.04,
-   "e": 24.494
+   "s": 23.644,
+   "e": 24.1
   },
   {
    "scene": "time",
    "w": "u",
-   "s": 24.535,
-   "e": 24.576
+   "s": 24.1,
+   "e": 24.26
   },
   {
    "scene": "time",
    "w": "bixin.",
-   "s": 24.618,
-   "e": 25.236
+   "s": 24.26,
+   "e": 24.538
   },
   {
    "scene": "spots",
    "w": "Ha",
-   "s": 25.729,
-   "e": 25.783
+   "s": 25.528,
+   "e": 25.672
   },
   {
    "scene": "spots",
    "w": "illoobin",
-   "s": 25.838,
-   "e": 26.278
+   "s": 25.672,
+   "e": 26.084
   },
   {
    "scene": "spots",
    "w": "dhegaha,",
-   "s": 26.319,
-   "e": 26.773
+   "s": 26.084,
+   "e": 26.443
   },
   {
    "scene": "spots",
    "w": "qoorta,",
-   "s": 26.897,
-   "e": 27.598
+   "s": 26.582,
+   "e": 26.955
   },
   {
    "scene": "spots",
    "w": "gacmaha",
-   "s": 27.639,
-   "e": 28.093
+   "s": 27.078,
+   "e": 27.498
   },
   {
    "scene": "spots",
    "w": "dushooda,",
-   "s": 28.154,
-   "e": 28.67
+   "s": 27.498,
+   "e": 27.98
   },
   {
    "scene": "spots",
    "w": "iyo",
-   "s": 28.752,
-   "e": 28.917
+   "s": 28.08,
+   "e": 28.299
   },
   {
    "scene": "spots",
    "w": "cagaha.",
-   "s": 28.959,
-   "e": 29.412
+   "s": 28.299,
+   "e": 28.61
   },
   {
    "scene": "reapply",
    "w": "Dib",
-   "s": 30.015,
-   "e": 30.221
+   "s": 29.6,
+   "e": 29.757
   },
   {
    "scene": "reapply",
    "w": "u",
-   "s": 30.303,
-   "e": 30.386
+   "s": 29.757,
+   "e": 29.913
   },
   {
    "scene": "reapply",
    "w": "mari",
-   "s": 30.419,
-   "e": 30.551
+   "s": 29.913,
+   "e": 30.186
   },
   {
    "scene": "reapply",
    "w": "labadii",
-   "s": 30.613,
-   "e": 31.046
+   "s": 30.186,
+   "e": 30.633
   },
   {
    "scene": "reapply",
    "w": "saacadoodba",
-   "s": 31.073,
-   "e": 31.705
+   "s": 30.633,
+   "e": 31.253
   },
   {
    "scene": "reapply",
    "w": "mar,",
-   "s": 31.767,
-   "e": 32.118
+   "s": 31.253,
+   "e": 31.41
   },
   {
    "scene": "reapply",
    "w": "iyo",
-   "s": 32.159,
-   "e": 32.365
+   "s": 31.562,
+   "e": 31.825
   },
   {
    "scene": "reapply",
    "w": "mar",
-   "s": 32.406,
-   "e": 32.53
+   "s": 31.825,
+   "e": 31.976
   },
   {
    "scene": "reapply",
    "w": "kasta",
-   "s": 32.571,
-   "e": 32.942
+   "s": 31.976,
+   "e": 32.239
   },
   {
    "scene": "reapply",
    "w": "oo",
-   "s": 32.997,
-   "e": 33.107
+   "s": 32.239,
+   "e": 32.446
   },
   {
    "scene": "reapply",
    "w": "aad",
-   "s": 33.128,
-   "e": 33.19
+   "s": 32.446,
+   "e": 32.653
   },
   {
    "scene": "reapply",
    "w": "dabaalato",
-   "s": 33.231,
-   "e": 33.767
+   "s": 32.653,
+   "e": 33.196
   },
   {
    "scene": "reapply",
    "w": "ama",
-   "s": 33.85,
-   "e": 34.097
+   "s": 33.196,
+   "e": 33.459
   },
   {
    "scene": "reapply",
    "w": "dhididdo.",
-   "s": 34.125,
-   "e": 34.757
+   "s": 33.459,
+   "e": 33.834
   },
   {
    "scene": "myth",
    "w": "Maqaarka",
-   "s": 35.243,
-   "e": 35.683
+   "s": 34.824,
+   "e": 35.27
   },
   {
    "scene": "myth",
    "w": "madow",
-   "s": 35.724,
-   "e": 36.013
+   "s": 35.27,
+   "e": 35.542
   },
   {
    "scene": "myth",
    "w": "sidoo",
-   "s": 36.054,
-   "e": 36.26
+   "s": 35.542,
+   "e": 35.872
   },
   {
    "scene": "myth",
    "w": "kale",
-   "s": 36.31,
-   "e": 36.508
+   "s": 35.872,
+   "e": 36.144
   },
   {
    "scene": "myth",
    "w": "wuu",
-   "s": 36.549,
-   "e": 36.673
+   "s": 36.144,
+   "e": 36.359
   },
   {
    "scene": "myth",
    "w": "gubtaa.",
-   "s": 36.714,
-   "e": 37.291
+   "s": 36.359,
+   "e": 36.689
   },
   {
    "scene": "myth",
    "w": "Qof",
-   "s": 37.353,
-   "e": 37.58
+   "s": 37.229,
+   "e": 37.391
   },
   {
    "scene": "myth",
    "w": "kasta",
-   "s": 37.621,
-   "e": 37.992
+   "s": 37.391,
+   "e": 37.673
   },
   {
    "scene": "myth",
    "w": "wuxuu",
-   "s": 38.033,
-   "e": 38.24
+   "s": 37.673,
+   "e": 38.015
   },
   {
    "scene": "myth",
    "w": "u",
-   "s": 38.281,
-   "e": 38.322
+   "s": 38.015,
+   "e": 38.177
   },
   {
    "scene": "myth",
    "w": "baahan",
-   "s": 38.377,
-   "e": 38.652
+   "s": 38.177,
+   "e": 38.519
   },
   {
    "scene": "myth",
    "w": "yahay",
-   "s": 38.693,
-   "e": 38.899
+   "s": 38.519,
+   "e": 38.801
   },
   {
    "scene": "myth",
    "w": "ilaalin.",
-   "s": 38.954,
-   "e": 39.642
+   "s": 38.801,
+   "e": 39.263
   },
   {
    "scene": "cta",
    "w": "Maanta",
-   "s": 40.171,
-   "e": 40.447
+   "s": 40.253,
+   "e": 40.618
   },
   {
    "scene": "cta",
    "w": "bilow,",
-   "s": 40.508,
-   "e": 41.024
+   "s": 40.618,
+   "e": 40.92
   },
   {
    "scene": "cta",
    "w": "maqaarkaaga",
-   "s": 41.079,
-   "e": 41.684
+   "s": 40.92,
+   "e": 41.607
   },
   {
    "scene": "cta",
    "w": "ilaali!",
-   "s": 41.738,
-   "e": 42.343
+   "s": 41.607,
+   "e": 42.101
   },
   {
    "scene": "cta",
    "w": "U",
-   "s": 42.385,
-   "e": 42.426
+   "s": 42.641,
+   "e": 42.814
   },
   {
    "scene": "cta",
    "w": "dir",
-   "s": 42.488,
-   "e": 42.673
+   "s": 42.814,
+   "e": 42.988
   },
   {
    "scene": "cta",
    "w": "qof",
-   "s": 42.715,
-   "e": 42.921
+   "s": 42.988,
+   "e": 43.162
   },
   {
    "scene": "cta",
    "w": "aad",
-   "s": 42.962,
-   "e": 43.086
+   "s": 43.162,
+   "e": 43.4
   },
   {
    "scene": "cta",
    "w": "jeceshahay.",
-   "s": 43.127,
-   "e": 44.075
+   "s": 43.4,
+   "e": 43.96
   }
  ]
 }

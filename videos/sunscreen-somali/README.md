@@ -21,9 +21,9 @@ A 45-second vertical (1080×1920) TikTok explainer on how to use sunscreen, buil
 ## How it's built
 
 - `src/script-somali.json` holds the narration script.
-- `src/gen.py <voice_id>` generates the voiceover with ElevenLabs `eleven_v3` (`language_code: so`) and saves character timestamps. The video uses "Ali - Saudi Arabic" (`Hvlnv5DwiIO2CQ6oYMZ3`). ElevenLabs has no native Somali voices, so an Arabic native voice was picked because it pronounces Somali x (ħ), c (ʕ) and q correctly, where English voices flatten them.
-- `src/tighten.py <gap> <lead> <tempo>` splits the voiceover into sentences, sets the pause between them, applies the tempo, loudness-normalises it, and remaps the word timings into `src/timing.json`. The video uses `0.5 0.3 0.97`.
-- `renders/voice-comparison.mp4` plays the same two lines in six candidate voices, numbered, so a native speaker can pick the most natural one.
+- **Voice: Microsoft `so-SO-MuuseNeural`, a native Somali male voice.** `assets/audio/muuse.mp3` was generated from `src/somali-vo.txt` with `edge-tts --voice so-SO-MuuseNeural -f somali-vo.txt --write-media muuse.mp3` (one sentence per line).
+- `src/align_external.py assets/audio/muuse.mp3 src/script-somali.json assets/audio/vo_muuse.mp3 src/timing.json 0.9 0.45 0.3 1.0` splits the narration at its pauses and sets a 0.9s pause at each scene cut. It also estimates word timings for the captions: the comma and colon breaths anchor each phrase, and words inside a phrase are spread by syllable count. Muuse's audio has no word timestamps, which is why this step is needed.
+- Earlier ElevenLabs attempts are kept for reference. `src/gen.py` and `src/tighten.py` generate and retime ElevenLabs `eleven_v3` Somali. `renders/voice-comparison.mp4` compares those voices.
 - `src/synth.py` makes the music bed and the whoosh, pop and ding sounds procedurally with numpy and scipy.
 - `src/build.py` fills in `src/template.html.tmpl` from `src/timing.json` to produce `index.html`. It sets the scene cuts, the SFX placement, and the word-by-word Somali captions.
 
