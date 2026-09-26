@@ -1,0 +1,798 @@
+{
+ "scenes": [
+  {
+   "id": "q",
+   "text": "Ma isticmaashaa kareem maqaarka cadeeya?",
+   "s": 0.3,
+   "e": 2.309
+  },
+  {
+   "id": "hidden",
+   "text": "Qaar badan oo ka mid ah waxaa ku jira walxo khatar ah oo aan summadda lagu qorin.",
+   "s": 2.949,
+   "e": 7.195
+  },
+  {
+   "id": "mercury",
+   "text": "Meerkuri wuxuu dhaawici karaa kelyaha iyo dareemayaasha.",
+   "s": 7.835,
+   "e": 10.824
+  },
+  {
+   "id": "steroid",
+   "text": "Steroid-ka xooggan wuxuu khafiifin karaa maqaarka, wuxuuna keeni karaa finan iyo xariijimo.",
+   "s": 11.464,
+   "e": 16.351
+  },
+  {
+   "id": "rebound",
+   "text": "Marka la joojiyo, maqaarku wuxuu noqon karaa mid ka madow sidii hore.",
+   "s": 16.991,
+   "e": 20.721
+  },
+  {
+   "id": "label",
+   "text": "Akhri summadda, kana fogow mercury, calomel iyo clobetasol aan dhakhtar kuu qorin.",
+   "s": 21.361,
+   "e": 25.779
+  },
+  {
+   "id": "nolist",
+   "text": "Kareem aan liiska walxaha lahayn ama meel aan la hubin laga keenay, ha iibsan.",
+   "s": 26.419,
+   "e": 30.486
+  },
+  {
+   "id": "beauty",
+   "text": "Midabka maqaarkaagu waa qurux, uma baahna in la beddelo.",
+   "s": 31.126,
+   "e": 34.166
+  },
+  {
+   "id": "doctor",
+   "text": "Haddii aad bar madow ka welwelsan tahay, la tasho dhakhtarka maqaarka.",
+   "s": 34.806,
+   "e": 38.459
+  },
+  {
+   "id": "spf",
+   "text": "Kareemka qorraxda maalin kasta ayaa si ammaan ah u ilaaliya maqaarkaaga.",
+   "s": 39.099,
+   "e": 42.808
+  },
+  {
+   "id": "cta",
+   "text": "La wadaag qof u baahan taladan, lana soco Skincare by Ubah.",
+   "s": 43.448,
+   "e": 46.748
+  }
+ ],
+ "words": [
+  {
+   "scene": "q",
+   "w": "Ma",
+   "s": 0.3,
+   "e": 0.457
+  },
+  {
+   "scene": "q",
+   "w": "isticmaashaa",
+   "s": 0.457,
+   "e": 1.08
+  },
+  {
+   "scene": "q",
+   "w": "kareem",
+   "s": 1.08,
+   "e": 1.412
+  },
+  {
+   "scene": "q",
+   "w": "maqaarka",
+   "s": 1.412,
+   "e": 1.861
+  },
+  {
+   "scene": "q",
+   "w": "cadeeya?",
+   "s": 1.861,
+   "e": 2.309
+  },
+  {
+   "scene": "hidden",
+   "w": "Qaar",
+   "s": 2.949,
+   "e": 3.177
+  },
+  {
+   "scene": "hidden",
+   "w": "badan",
+   "s": 3.177,
+   "e": 3.467
+  },
+  {
+   "scene": "hidden",
+   "w": "oo",
+   "s": 3.467,
+   "e": 3.695
+  },
+  {
+   "scene": "hidden",
+   "w": "ka",
+   "s": 3.695,
+   "e": 3.861
+  },
+  {
+   "scene": "hidden",
+   "w": "mid",
+   "s": 3.861,
+   "e": 4.028
+  },
+  {
+   "scene": "hidden",
+   "w": "ah",
+   "s": 4.028,
+   "e": 4.194
+  },
+  {
+   "scene": "hidden",
+   "w": "waxaa",
+   "s": 4.194,
+   "e": 4.545
+  },
+  {
+   "scene": "hidden",
+   "w": "ku",
+   "s": 4.545,
+   "e": 4.712
+  },
+  {
+   "scene": "hidden",
+   "w": "jira",
+   "s": 4.712,
+   "e": 5.001
+  },
+  {
+   "scene": "hidden",
+   "w": "walxo",
+   "s": 5.001,
+   "e": 5.291
+  },
+  {
+   "scene": "hidden",
+   "w": "khatar",
+   "s": 5.291,
+   "e": 5.581
+  },
+  {
+   "scene": "hidden",
+   "w": "ah",
+   "s": 5.581,
+   "e": 5.747
+  },
+  {
+   "scene": "hidden",
+   "w": "oo",
+   "s": 5.747,
+   "e": 5.975
+  },
+  {
+   "scene": "hidden",
+   "w": "aan",
+   "s": 5.975,
+   "e": 6.203
+  },
+  {
+   "scene": "hidden",
+   "w": "summadda",
+   "s": 6.203,
+   "e": 6.616
+  },
+  {
+   "scene": "hidden",
+   "w": "lagu",
+   "s": 6.616,
+   "e": 6.905
+  },
+  {
+   "scene": "hidden",
+   "w": "qorin.",
+   "s": 6.905,
+   "e": 7.195
+  },
+  {
+   "scene": "mercury",
+   "w": "Meerkuri",
+   "s": 7.835,
+   "e": 8.287
+  },
+  {
+   "scene": "mercury",
+   "w": "wuxuu",
+   "s": 8.287,
+   "e": 8.622
+  },
+  {
+   "scene": "mercury",
+   "w": "dhaawici",
+   "s": 8.622,
+   "e": 9.074
+  },
+  {
+   "scene": "mercury",
+   "w": "karaa",
+   "s": 9.074,
+   "e": 9.409
+  },
+  {
+   "scene": "mercury",
+   "w": "kelyaha",
+   "s": 9.409,
+   "e": 9.803
+  },
+  {
+   "scene": "mercury",
+   "w": "iyo",
+   "s": 9.803,
+   "e": 10.079
+  },
+  {
+   "scene": "mercury",
+   "w": "dareemayaasha.",
+   "s": 10.079,
+   "e": 10.824
+  },
+  {
+   "scene": "steroid",
+   "w": "Steroid-ka",
+   "s": 11.464,
+   "e": 11.944
+  },
+  {
+   "scene": "steroid",
+   "w": "xooggan",
+   "s": 11.944,
+   "e": 12.3
+  },
+  {
+   "scene": "steroid",
+   "w": "wuxuu",
+   "s": 12.3,
+   "e": 12.655
+  },
+  {
+   "scene": "steroid",
+   "w": "khafiifin",
+   "s": 12.655,
+   "e": 13.135
+  },
+  {
+   "scene": "steroid",
+   "w": "karaa",
+   "s": 13.135,
+   "e": 13.49
+  },
+  {
+   "scene": "steroid",
+   "w": "maqaarka,",
+   "s": 13.49,
+   "e": 13.97
+  },
+  {
+   "scene": "steroid",
+   "w": "wuxuuna",
+   "s": 13.97,
+   "e": 14.45
+  },
+  {
+   "scene": "steroid",
+   "w": "keeni",
+   "s": 14.45,
+   "e": 14.805
+  },
+  {
+   "scene": "steroid",
+   "w": "karaa",
+   "s": 14.805,
+   "e": 15.16
+  },
+  {
+   "scene": "steroid",
+   "w": "finan",
+   "s": 15.16,
+   "e": 15.453
+  },
+  {
+   "scene": "steroid",
+   "w": "iyo",
+   "s": 15.453,
+   "e": 15.746
+  },
+  {
+   "scene": "steroid",
+   "w": "xariijimo.",
+   "s": 15.746,
+   "e": 16.351
+  },
+  {
+   "scene": "rebound",
+   "w": "Marka",
+   "s": 16.991,
+   "e": 17.286
+  },
+  {
+   "scene": "rebound",
+   "w": "la",
+   "s": 17.286,
+   "e": 17.456
+  },
+  {
+   "scene": "rebound",
+   "w": "joojiyo,",
+   "s": 17.456,
+   "e": 17.939
+  },
+  {
+   "scene": "rebound",
+   "w": "maqaarku",
+   "s": 17.939,
+   "e": 18.423
+  },
+  {
+   "scene": "rebound",
+   "w": "wuxuu",
+   "s": 18.423,
+   "e": 18.781
+  },
+  {
+   "scene": "rebound",
+   "w": "noqon",
+   "s": 18.781,
+   "e": 19.076
+  },
+  {
+   "scene": "rebound",
+   "w": "karaa",
+   "s": 19.076,
+   "e": 19.434
+  },
+  {
+   "scene": "rebound",
+   "w": "mid",
+   "s": 19.434,
+   "e": 19.603
+  },
+  {
+   "scene": "rebound",
+   "w": "ka",
+   "s": 19.603,
+   "e": 19.773
+  },
+  {
+   "scene": "rebound",
+   "w": "madow",
+   "s": 19.773,
+   "e": 20.068
+  },
+  {
+   "scene": "rebound",
+   "w": "sidii",
+   "s": 20.068,
+   "e": 20.426
+  },
+  {
+   "scene": "rebound",
+   "w": "hore.",
+   "s": 20.426,
+   "e": 20.721
+  },
+  {
+   "scene": "label",
+   "w": "Akhri",
+   "s": 21.361,
+   "e": 21.694
+  },
+  {
+   "scene": "label",
+   "w": "summadda,",
+   "s": 21.694,
+   "e": 22.168
+  },
+  {
+   "scene": "label",
+   "w": "kana",
+   "s": 22.168,
+   "e": 22.501
+  },
+  {
+   "scene": "label",
+   "w": "fogow",
+   "s": 22.501,
+   "e": 22.834
+  },
+  {
+   "scene": "label",
+   "w": "mercury,",
+   "s": 22.834,
+   "e": 23.167
+  },
+  {
+   "scene": "label",
+   "w": "calomel",
+   "s": 23.167,
+   "e": 23.641
+  },
+  {
+   "scene": "label",
+   "w": "iyo",
+   "s": 23.641,
+   "e": 23.974
+  },
+  {
+   "scene": "label",
+   "w": "clobetasol",
+   "s": 23.974,
+   "e": 24.59
+  },
+  {
+   "scene": "label",
+   "w": "aan",
+   "s": 24.59,
+   "e": 24.852
+  },
+  {
+   "scene": "label",
+   "w": "dhakhtar",
+   "s": 24.852,
+   "e": 25.185
+  },
+  {
+   "scene": "label",
+   "w": "kuu",
+   "s": 25.185,
+   "e": 25.447
+  },
+  {
+   "scene": "label",
+   "w": "qorin.",
+   "s": 25.447,
+   "e": 25.779
+  },
+  {
+   "scene": "nolist",
+   "w": "Kareem",
+   "s": 26.419,
+   "e": 26.767
+  },
+  {
+   "scene": "nolist",
+   "w": "aan",
+   "s": 26.767,
+   "e": 26.993
+  },
+  {
+   "scene": "nolist",
+   "w": "liiska",
+   "s": 26.993,
+   "e": 27.341
+  },
+  {
+   "scene": "nolist",
+   "w": "walxaha",
+   "s": 27.341,
+   "e": 27.75
+  },
+  {
+   "scene": "nolist",
+   "w": "lahayn",
+   "s": 27.75,
+   "e": 28.037
+  },
+  {
+   "scene": "nolist",
+   "w": "ama",
+   "s": 28.037,
+   "e": 28.324
+  },
+  {
+   "scene": "nolist",
+   "w": "meel",
+   "s": 28.324,
+   "e": 28.55
+  },
+  {
+   "scene": "nolist",
+   "w": "aan",
+   "s": 28.55,
+   "e": 28.775
+  },
+  {
+   "scene": "nolist",
+   "w": "la",
+   "s": 28.775,
+   "e": 28.94
+  },
+  {
+   "scene": "nolist",
+   "w": "hubin",
+   "s": 28.94,
+   "e": 29.227
+  },
+  {
+   "scene": "nolist",
+   "w": "laga",
+   "s": 29.227,
+   "e": 29.514
+  },
+  {
+   "scene": "nolist",
+   "w": "keenay,",
+   "s": 29.514,
+   "e": 29.862
+  },
+  {
+   "scene": "nolist",
+   "w": "ha",
+   "s": 30.009,
+   "e": 30.162
+  },
+  {
+   "scene": "nolist",
+   "w": "iibsan.",
+   "s": 30.162,
+   "e": 30.486
+  },
+  {
+   "scene": "beauty",
+   "w": "Midabka",
+   "s": 31.126,
+   "e": 31.528
+  },
+  {
+   "scene": "beauty",
+   "w": "maqaarkaagu",
+   "s": 31.528,
+   "e": 32.172
+  },
+  {
+   "scene": "beauty",
+   "w": "waa",
+   "s": 32.172,
+   "e": 32.394
+  },
+  {
+   "scene": "beauty",
+   "w": "qurux,",
+   "s": 32.394,
+   "e": 32.677
+  },
+  {
+   "scene": "beauty",
+   "w": "uma",
+   "s": 32.908,
+   "e": 33.171
+  },
+  {
+   "scene": "beauty",
+   "w": "baahna",
+   "s": 33.171,
+   "e": 33.49
+  },
+  {
+   "scene": "beauty",
+   "w": "in",
+   "s": 33.49,
+   "e": 33.641
+  },
+  {
+   "scene": "beauty",
+   "w": "la",
+   "s": 33.641,
+   "e": 33.791
+  },
+  {
+   "scene": "beauty",
+   "w": "beddelo.",
+   "s": 33.791,
+   "e": 34.166
+  },
+  {
+   "scene": "doctor",
+   "w": "Haddii",
+   "s": 34.806,
+   "e": 35.172
+  },
+  {
+   "scene": "doctor",
+   "w": "aad",
+   "s": 35.172,
+   "e": 35.41
+  },
+  {
+   "scene": "doctor",
+   "w": "bar",
+   "s": 35.41,
+   "e": 35.584
+  },
+  {
+   "scene": "doctor",
+   "w": "madow",
+   "s": 35.584,
+   "e": 35.886
+  },
+  {
+   "scene": "doctor",
+   "w": "ka",
+   "s": 35.886,
+   "e": 36.06
+  },
+  {
+   "scene": "doctor",
+   "w": "welwelsan",
+   "s": 36.06,
+   "e": 36.491
+  },
+  {
+   "scene": "doctor",
+   "w": "tahay,",
+   "s": 36.491,
+   "e": 36.793
+  },
+  {
+   "scene": "doctor",
+   "w": "la",
+   "s": 36.945,
+   "e": 37.132
+  },
+  {
+   "scene": "doctor",
+   "w": "tasho",
+   "s": 37.132,
+   "e": 37.459
+  },
+  {
+   "scene": "doctor",
+   "w": "dhakhtarka",
+   "s": 37.459,
+   "e": 37.924
+  },
+  {
+   "scene": "doctor",
+   "w": "maqaarka.",
+   "s": 37.924,
+   "e": 38.459
+  },
+  {
+   "scene": "spf",
+   "w": "Kareemka",
+   "s": 39.099,
+   "e": 39.541
+  },
+  {
+   "scene": "spf",
+   "w": "qorraxda",
+   "s": 39.541,
+   "e": 39.925
+  },
+  {
+   "scene": "spf",
+   "w": "maalin",
+   "s": 39.925,
+   "e": 40.252
+  },
+  {
+   "scene": "spf",
+   "w": "kasta",
+   "s": 40.252,
+   "e": 40.521
+  },
+  {
+   "scene": "spf",
+   "w": "ayaa",
+   "s": 40.521,
+   "e": 40.848
+  },
+  {
+   "scene": "spf",
+   "w": "si",
+   "s": 40.848,
+   "e": 41.002
+  },
+  {
+   "scene": "spf",
+   "w": "ammaan",
+   "s": 41.002,
+   "e": 41.329
+  },
+  {
+   "scene": "spf",
+   "w": "ah",
+   "s": 41.329,
+   "e": 41.484
+  },
+  {
+   "scene": "spf",
+   "w": "u",
+   "s": 41.484,
+   "e": 41.639
+  },
+  {
+   "scene": "spf",
+   "w": "ilaaliya",
+   "s": 41.639,
+   "e": 42.195
+  },
+  {
+   "scene": "spf",
+   "w": "maqaarkaaga.",
+   "s": 42.195,
+   "e": 42.808
+  },
+  {
+   "scene": "cta",
+   "w": "La",
+   "s": 43.448,
+   "e": 43.635
+  },
+  {
+   "scene": "cta",
+   "w": "wadaag",
+   "s": 43.635,
+   "e": 44.029
+  },
+  {
+   "scene": "cta",
+   "w": "qof",
+   "s": 44.029,
+   "e": 44.216
+  },
+  {
+   "scene": "cta",
+   "w": "u",
+   "s": 44.216,
+   "e": 44.403
+  },
+  {
+   "scene": "cta",
+   "w": "baahan",
+   "s": 44.403,
+   "e": 44.797
+  },
+  {
+   "scene": "cta",
+   "w": "taladan,",
+   "s": 44.797,
+   "e": 45.26
+  },
+  {
+   "scene": "cta",
+   "w": "lana",
+   "s": 45.26,
+   "e": 45.586
+  },
+  {
+   "scene": "cta",
+   "w": "soco",
+   "s": 45.586,
+   "e": 45.911
+  },
+  {
+   "scene": "cta",
+   "w": "Skincare",
+   "s": 45.911,
+   "e": 46.374
+  },
+  {
+   "scene": "cta",
+   "w": "by",
+   "s": 46.374,
+   "e": 46.423
+  },
+  {
+   "scene": "cta",
+   "w": "Ubah.",
+   "s": 46.423,
+   "e": 46.748
+  }
+ ]
+}
