@@ -190,3 +190,22 @@ def _wrap(d, text, fnt, width):
 
 def np_rgba(img):
     return np.asarray(img)
+
+
+def location_tag(size, t_on, place, when, caption=None, critical=True, alpha=1.0):
+    """Incident tag (bottom left): place, local time / T+, one caption line. Types on."""
+    lay = Image.new("RGBA", size, (0, 0, 0, 0))
+    d = ImageDraw.Draw(lay)
+    W_, H_ = size
+    k = min(1.0, max(0.0, t_on / 0.35)) * alpha
+    a = int(255 * k)
+    x, y = 90, H_ - 250
+    d.rectangle([x - 18, y - 8, x - 12, y + (132 if caption else 86)], fill=(RED if critical else CYAN) + (a,))
+    n = int(len(place) * min(1.0, max(0.0, t_on / 0.6)))                 # typewriter
+    text_spaced(d, (x, y), place[:n], font(40, "Bold"), (240, 244, 248, a), spacing=4)
+    if t_on > 0.45:
+        d.text((x, y + 54), when, font=font(24, "Medium"), fill=AMBER + (a,))
+    if caption and t_on > 0.8:
+        kk = min(1.0, (t_on - 0.8) / 0.3)
+        d.text((x, y + 92), caption, font=font(26, "Bold"), fill=(RED if critical else CYAN) + (int(a * kk),))
+    return _glowed(lay, 4, 0.8)
