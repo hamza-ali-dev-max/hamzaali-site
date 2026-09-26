@@ -1,0 +1,93 @@
+{
+  "image_size": [
+    1672,
+    941
+  ],
+  "model": "x = a*lon + b, y = c*lat + d (cropped equirectangular)",
+  "global": {
+    "a": 5.160683185865714,
+    "b": 684.377316599401,
+    "c": -5.748340580266958,
+    "d": 508.08639019649337,
+    "chamfer_px": 3.8310461044311523,
+    "lon_range": [
+      -132.6137048043951,
+      191.37440680442072
+    ],
+    "lat_range": [
+      88.388358884069,
+      -75.3110578189509
+    ]
+  },
+  "local": {
+    "affine_x": [
+      4.195338216966159,
+      0.8036421420209153,
+      613.1903465966702
+    ],
+    "affine_y": [
+      0.06359936041712672,
+      -6.202263194614709,
+      516.1470043656641
+    ],
+    "bbox": [
+      -95.0,
+      35.0,
+      -50.0,
+      62.0
+    ],
+    "model": "x,y = coef @ [lon, lat, 1]; exact through the three landmarks"
+  },
+  "local_registration": {
+    "a": 5.083362177704756,
+    "b": 704.0933300235916,
+    "c": -7.2665682219598615,
+    "d": 558.9140045382943,
+    "chamfer_px": 2.890166997909546
+  },
+  "landmarks": {
+    "Cape Cod (Race Point)": {
+      "lat": 42.062,
+      "lon": -70.243,
+      "x": 352.3,
+      "y": 250.8
+    },
+    "Cap Gaspe": {
+      "lat": 48.751,
+      "lon": -64.159,
+      "x": 383.2,
+      "y": 209.7
+    },
+    "James Bay south tip": {
+      "lat": 51.2,
+      "lon": -80.05,
+      "x": 318.5,
+      "y": 193.5
+    }
+  },
+  "montreal": {
+    "lat": 45.5017,
+    "lon": -73.5673,
+    "px_from_landmarks": [
+      341.12,
+      229.25
+    ],
+    "px_from_local_registration": [
+      330.12,
+      228.27
+    ],
+    "px_from_global_fit": [
+      304.72,
+      246.53
+    ],
+    "light_cluster_px": [
+      340.91,
+      223.14
+    ],
+    "zoom_target_px": [
+      340.91,
+      223.14
+    ],
+    "note": "zoom target = centre of the visible Montreal light cluster"
+  }
+}
