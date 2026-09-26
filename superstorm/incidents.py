@@ -295,6 +295,8 @@ BUDGET = 21.00
 
 
 def funded(i):
+    if not (i["aerial"] or i["people"]):               # e.g. the Boulder coronagraph beat (graphics only)
+        return {}
     return FUNDED.get((i["ch"], i["place"]), {})
 
 

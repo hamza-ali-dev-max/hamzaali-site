@@ -56,7 +56,7 @@ World map at T+17:02, red spreading, six 2 s flashes reused from later incidents
 | North Atlantic, at sea | -- | A transatlantic flight loses HF radio (sunlit side) | people 4 s | NORTH ATLANTIC · FLIGHT 212 / HF RADIO: NO CONTACT | PILOT: “Gander, Speedbird two-one-two... Gander, do you read? ...Nothing on any frequency.” |
 | Lagos, Nigeria | 12:25 | Shortwave and maritime radio die across West Africa at midday | — (map, text, audio) | LAGOS, NIGERIA · 12:25 / HF RADIO BLACKOUT ACROSS THE DAY SIDE | NARR: “Eight minutes after the flare, its X-rays hit the day side of the planet. Every shortwave radio from Lagos to Delhi goes silent.” |
 | Low Earth orbit, orbit | -- | Station crew ordered into the shielded module (radiation storm) | people 4 s | ORBITAL STATION · 410 KM / PROTON FLUX RISING | FLIGHT: “Station, Houston... get everyone into the shielded module. Now, please.” |
-| Boulder, USA | 05:30 | Coronagraph shows the CME: 2,900 km/s, Earth-directed | people 4 s | CME SPEED 2,900 KM/S / ETA T+17:00 | NARR: “Then the coronagraph images arrive. A billion-ton cloud, heading straight for us. Seventeen hours.” |
+| Boulder, USA | 05:30 | Coronagraph shows the CME: 2,900 km/s, Earth-directed | — (map, text, audio) | CME SPEED 2,900 KM/S / ETA T+17:00 | NARR: “Then the coronagraph images arrive. A billion-ton cloud, heading straight for us. Seventeen hours.” |
 
 ### 2 · The Warning (7:00-14:00)
 
@@ -152,8 +152,8 @@ World map at T+17:02, red spreading, six 2 s flashes reused from later incidents
 | Item | Count | Cost |
 |------|-------|------|
 | Zoom → real-city hand-offs (image-to-video from the zoom's last frame, 5 s, 480p) | 4 (Tokyo, New York, London, Stockholm) | $4.12 |
-| People clips (4 s 480p; the Montreal reporter 5 s with audio = the lip-sync test) | 18 | $15.04 |
-| **Total** | **22 clips, ~93 s of footage** | **$19.16** (reserve $1.84 ≈ 2 retries) |
+| People clips (4 s 480p; the Montreal reporter 5 s with audio = the lip-sync test) | 17 | $14.21 |
+| **Total** | **21 clips, ~89 s of footage** | **$18.33** (reserve $2.67 ≈ 3 retries) |
 | Every other incident | map zoom + text + audio + graphics (headline cards, radio panels, HUD counters) | $0 |
 | Blender top views (Montreal blackout ch. 4, lights back ch. 8) | ~25 s | CPU only (~28 s/frame at 720p) |
 | Voices (ElevenLabs, FR/EN/JA/SV/PT/pidgin…) | ~45,000 characters | Creator plan (131k) |
