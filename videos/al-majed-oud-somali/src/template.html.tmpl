@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="so" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Al Majed Oud</title>
+    <script src="assets/js/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Dancing Script"; src: url("assets/fonts/dancing-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-900.woff2") format("woff2"); font-weight: 900; }
+      @font-face { font-family: "Lora"; src: url("assets/fonts/lora-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Lora"; src: url("assets/fonts/lora-600i.woff2") format("woff2"); font-weight: 600; font-style: italic; }
+      :root {
+        --paper: #fbf7f0;
+        --sand: #efe4d2;
+        --sand2: #f6eee1;
+        --gold: #c9a24b;
+        --gold2: #e3c173;
+        --brown: #4a2e1a;
+        --brown2: #8a5a36;
+        --blue: #2f6fd0;
+        --navy: #1c3f86;
+        --terra: #b8452f;
+        --skin: #8d5a3b;
+        --sticker: drop-shadow(6px 0 0 #fff) drop-shadow(-6px 0 0 #fff) drop-shadow(0 6px 0 #fff) drop-shadow(0 -6px 0 #fff) drop-shadow(0 14px 14px rgba(74, 46, 26, 0.22));
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Lora", serif; color: var(--brown); background: var(--paper); }
+
+      /* persistent heritage theme: warm paper, woven diamond lattice, patterned band */
+      #bg { position: absolute; inset: 0; background: radial-gradient(1000px 900px at 50% 30%, #ffffff 0%, var(--paper) 55%, var(--sand2) 100%); }
+      #weave { position: absolute; inset: 0; opacity: 0.55;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><path d='M60 6 L114 60 L60 114 L6 60 Z' fill='none' stroke='%23e3c173' stroke-width='2' opacity='.45'/><path d='M60 48 L72 60 L60 72 L48 60 Z' fill='%23c9a24b' opacity='.28'/></svg>");
+        background-size: 120px 120px; }
+      #band { position: absolute; left: 0; top: 0; width: 1080px; height: 30px;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='30'><rect width='60' height='30' fill='%231c3f86'/><path d='M0 30 L15 6 L30 30Z' fill='%23c9a24b'/><path d='M30 30 L45 6 L60 30Z' fill='%23b8452f'/><path d='M15 0 L30 18 L45 0Z' fill='%23fbf7f0'/></svg>");
+        background-size: 60px 30px; }
+      #brand { position: absolute; left: 60px; top: 66px; display: flex; align-items: center; gap: 14px; font-family: "Cinzel"; font-weight: 700; font-size: 28px; letter-spacing: 0.16em; color: var(--brown); }
+      #brand svg { display: block; }
+      #prog { position: absolute; left: 60px; top: 118px; width: 820px; height: 10px; border-radius: 6px; background: var(--sand); overflow: hidden; }
+      #prog-fill { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold2)); transform-origin: left center; }
+      #flash { position: absolute; inset: 0; background: var(--gold2); opacity: 0; pointer-events: none; }
+
+      /* scenes */
+      .clip { position: absolute; inset: 0; }
+      .stage { position: absolute; inset: 0; transform-origin: 470px 900px; }
+      .stk { filter: var(--sticker); }
+      .chip { position: absolute; left: 60px; top: 190px; height: 66px; padding: 0 26px; border-radius: 33px; background: #fff; border: 3px solid var(--gold); color: var(--brown);
+        font-family: "Cinzel"; font-weight: 900; font-size: 30px; letter-spacing: 0.12em; display: flex; align-items: center; gap: 14px; box-shadow: 0 8px 14px rgba(74, 46, 26, 0.15); }
+      .chip i { display: block; width: 14px; height: 14px; background: var(--gold); transform: rotate(45deg); }
+      .chip.alt { background: var(--blue); border-color: #fff; color: #fff; }
+      .chip.alt i { background: #fff; }
+      .headline { position: absolute; left: 60px; top: 285px; width: 860px; font-family: "Cinzel"; font-weight: 900; font-size: 88px; line-height: 1.08; text-transform: uppercase; color: var(--brown); }
+      .headline .hl { display: block; overflow: hidden; padding-bottom: 8px; }
+      .headline .hw { display: inline-block; }
+      .headline .y { font-family: "Dancing Script"; font-weight: 700; font-size: 1.62em; line-height: 0.95; text-transform: none; color: var(--blue); }
+      .headline .sm { font-size: 62px; letter-spacing: 0.04em; color: var(--brown2); }
+      .visual { position: absolute; left: 40px; top: 690px; width: 880px; height: 640px; }
+      .center { display: flex; align-items: center; justify-content: center; }
+
+      .lab { display: flex; align-items: center; gap: 22px; height: 70px; white-space: nowrap; padding: 0 28px; border-radius: 38px; background: #fff; border: 3px solid var(--gold2); box-shadow: 0 10px 16px rgba(74, 46, 26, 0.13);
+        font-family: "Cinzel"; font-weight: 900; font-size: 38px; text-transform: uppercase; color: var(--brown); }
+      .lab i { display: block; width: 36px; height: 36px; border-radius: 50%; }
+      .tag { position: absolute; }
+      /* real product photos in heritage frames */
+      .photo { position: absolute; overflow: hidden; background: #fff; border: 10px solid #fff; box-shadow: 0 0 0 5px var(--gold), 0 18px 28px rgba(74, 46, 26, 0.28); }
+      .photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      .arch { border-radius: 220px 220px 30px 30px; }
+      .round { border-radius: 50%; }
+      .disc2 { position: absolute; border-radius: 50%; background: #fff; box-shadow: 0 14px 20px rgba(74, 46, 26, 0.16); display: flex; align-items: center; justify-content: center; }
+
+      /* 1 hook */
+      #h-jar { left: 220px; top: 0; width: 440px; height: 600px; }
+      #smoke1 { position: absolute; left: 260px; top: -60px; width: 360px; height: 300px; }
+      #h-spark { position: absolute; left: 120px; top: 20px; width: 640px; height: 560px; }
+
+      /* 2 what it is */
+      #w-label { left: 40px; top: 20px; width: 460px; height: 460px; }
+      #w-1 { left: 470px; top: 120px; } #w-2 { left: 470px; top: 250px; }
+      #w-chips { position: absolute; left: 560px; top: 360px; width: 280px; height: 180px; }
+
+      /* 3 made in Riyadh, jar + lid */
+      #m-lid { left: 20px; top: 40px; width: 380px; height: 380px; }
+      #m-jar { left: 470px; top: 0; width: 370px; height: 520px; }
+      #m-1 { left: 20px; top: 460px; } #m-2 { left: 440px; top: 560px; }
+      #m-flag { position: absolute; left: 60px; top: -10px; }
+
+      /* 4 how to use: burner */
+      #burner { position: absolute; left: 60px; top: 30px; width: 400px; height: 520px; }
+      #b-coal { left: 450px; top: 150px; font-size: 32px; } #b-elec { left: 450px; top: 270px; font-size: 32px; }
+      #b-smoke { position: absolute; left: 110px; top: -80px; width: 300px; height: 260px; }
+
+      /* 5 when */
+      .when { position: absolute; top: 40px; width: 200px; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+      .when .disc { width: 180px; height: 180px; border-radius: 50%; background: #fff; box-shadow: 0 14px 20px rgba(74, 46, 26, 0.16); display: flex; align-items: center; justify-content: center; }
+      .when .lab { font-size: 28px; padding: 0 18px; height: 58px; gap: 12px; }
+      .when .lab i { width: 24px; height: 24px; }
+      #wh1 { left: 0; } #wh2 { left: 220px; } #wh3 { left: 440px; } #wh4 { left: 660px; }
+      #wh-jar { left: 300px; top: 330px; width: 280px; height: 300px; }
+
+      /* 6 air + a little */
+      #window { position: absolute; left: 60px; top: 20px; width: 400px; height: 480px; }
+      #a-1 { left: 490px; top: 140px; } #a-2 { left: 490px; top: 260px; }
+      #a-jar { left: 560px; top: 360px; width: 220px; height: 240px; }
+
+      /* 7 safety */
+      #s-eye { left: 30px; top: 40px; width: 250px; height: 250px; }
+      #s-kid { left: 315px; top: 40px; width: 250px; height: 250px; }
+      #s-cloth { left: 600px; top: 40px; width: 250px; height: 250px; }
+      #s-1 { left: 610px; top: 330px; font-size: 30px; } #s-2 { left: 40px; top: 330px; font-size: 30px; } #s-3 { left: 310px; top: 330px; font-size: 30px; }
+      #s-labelphoto { left: 300px; top: 430px; width: 280px; height: 200px; border-radius: 26px; }
+
+      /* 8 cta */
+      #c-jar { left: 60px; top: 0; width: 380px; height: 560px; }
+      #c-name { position: absolute; left: 460px; top: 60px; width: 420px; font-family: "Dancing Script"; font-weight: 700; font-size: 104px; line-height: 1; color: var(--blue); text-align: center; }
+      #c-ar { position: absolute; left: 460px; top: 290px; width: 420px; text-align: center; font-family: serif; font-weight: 700; font-size: 64px; color: var(--brown); }
+      #c-buy { position: absolute; left: 470px; top: 420px; width: 400px; white-space: nowrap; height: 120px; border-radius: 60px; background: linear-gradient(90deg, var(--gold), var(--gold2)); color: var(--brown); font-family: "Cinzel"; font-weight: 900; font-size: 36px; }
+
+      /* captions: word-by-word, on a white sticker label */
+      #caps { position: absolute; left: 60px; top: 1370px; width: 840px; height: 190px; }
+      .cap-line { position: absolute; left: 0; top: 0; width: 840px; text-align: center; opacity: 0; }
+      .cap-pill { display: inline-block; max-width: 840px; padding: 14px 30px 18px; border-radius: 30px; background: #fff; border: 3px solid var(--gold2); box-shadow: 0 10px 18px rgba(74, 46, 26, 0.16);
+        font-weight: 700; font-size: 60px; line-height: 1.15; }
+      .cw { display: inline-block; margin: 0 8px; color: var(--brown); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="%TOTAL%" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="weave"></div>
+      <div id="band"></div>
+      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <radialGradient id="skin-g" cx="40%" cy="35%"><stop offset="0" stop-color="#c99470" /><stop offset=".7" stop-color="#a86f4a" /><stop offset="1" stop-color="#8d5a3b" /></radialGradient>
+          <radialGradient id="zit-g" cx="45%" cy="40%"><stop offset="0" stop-color="#fff6e6" /><stop offset=".28" stop-color="#fff0d6" /><stop offset=".32" stop-color="#d9745a" /><stop offset="1" stop-color="#b8452f" /></radialGradient>
+          <radialGradient id="crater-g" cx="50%" cy="45%"><stop offset="0" stop-color="#5c3520" /><stop offset=".6" stop-color="#7a4a2f" /><stop offset=".85" stop-color="#9a6444" /><stop offset="1" stop-color="#c99470" /></radialGradient>
+          <radialGradient id="swell-g"><stop offset="0" stop-color="#b8452f" stop-opacity=".75" /><stop offset="1" stop-color="#b8452f" stop-opacity="0" /></radialGradient>
+          <filter id="soft"><feGaussianBlur stdDeviation="9" /></filter>
+        </defs>
+      </svg>
+      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <radialGradient id="u-skin" cx="46%" cy="36%" r="72%"><stop offset="0" stop-color="#c08a68" /><stop offset=".6" stop-color="#9d6646" /><stop offset="1" stop-color="#7a4b31" /></radialGradient>
+          <linearGradient id="smokeg" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#8a8a92" stop-opacity=".55" /><stop offset="1" stop-color="#c8c8d0" stop-opacity="0" /></linearGradient>
+          <linearGradient id="brass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8f6d22" /><stop offset=".3" stop-color="#ecd08c" /><stop offset=".55" stop-color="#c9a24b" /><stop offset="1" stop-color="#7a5a1a" /></linearGradient>
+          <symbol id="smoke-art" viewBox="0 0 300 260"><g fill="none" stroke="url(#smokeg)" stroke-width="18" stroke-linecap="round"><path d="M150 250 C110 200 190 170 150 120 C110 70 190 50 160 10" /><path d="M120 250 C90 210 150 180 120 140 C95 105 140 80 120 50" opacity=".7" /><path d="M185 250 C215 205 160 175 190 135 C215 100 175 75 195 40" opacity=".7" /></g></symbol>
+          <symbol id="mabkhara" viewBox="0 0 400 520">
+            <ellipse cx="200" cy="500" rx="140" ry="16" fill="#4a2e1a" opacity=".15" />
+            <path d="M60 120 H340 L300 300 H100 Z" fill="url(#brass)" />
+            <g fill="#1c3f86" opacity=".85"><path d="M120 150 L150 190 L120 230 L90 190Z" /><path d="M200 150 L230 190 L200 230 L170 190Z" /><path d="M280 150 L310 190 L280 230 L250 190Z" /></g>
+            <path d="M60 120 H340" stroke="#fff4d0" stroke-width="6" />
+            <rect x="170" y="300" width="60" height="90" fill="url(#brass)" />
+            <path d="M100 390 H300 L330 470 H70 Z" fill="url(#brass)" />
+            <g fill="#2a1a10"><path d="M150 108 Q170 80 200 96 Q228 78 252 106 Z" /></g>
+            <g fill="#ff8a3c" opacity=".8"><circle cx="180" cy="110" r="6" /><circle cx="222" cy="108" r="5" /></g>
+            <path d="M190 88 L214 70 L226 92 Z" fill="#3a2214" />
+          </symbol>
+        </defs>
+      </svg>
+
+      <!-- 1. HOOK -->
+      <section id="s-hook" class="clip" data-start="%hook.start%" data-duration="%hook.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip alt"><i></i>AL MAJED OUD<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Udgoon</span> <span class="hw y">Carabeed</span></span><span class="hl sm"><span class="hw">gurigaaga</span> <span class="hw">u</span> <span class="hw">keen</span></span></div>
+          <div class="visual">
+            <div class="photo arch" id="h-jar"><img src="assets/photos/jar.jpg" alt="" /></div>
+            <svg id="smoke1" viewBox="0 0 300 260"><use href="#smoke-art" width="300" height="260" /></svg>
+            <svg id="h-spark" viewBox="0 0 640 560"><g fill="#c9a24b"><path class="hs" d="M40 120 l10 24 24 10 -24 10 -10 24 -10 -24 -24 -10 24 -10z" /><path class="hs" d="M590 90 l8 18 18 8 -18 8 -8 18 -8 -18 -18 -8 18 -8z" /><path class="hs" d="M600 420 l10 24 24 10 -24 10 -10 24 -10 -24 -24 -10 24 -10z" /><path class="hs" d="M30 440 l7 16 16 7 -16 7 -7 16 -7 -16 -16 -7 16 -7z" /></g></svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. WHAT IT IS -->
+      <section id="s-what" class="clip" data-start="%what.start%" data-duration="%what.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>MAXAA KU JIRA?<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Cuud</span> <span class="hw y">+</span> <span class="hw y">saliid</span></span><span class="hl sm"><span class="hw">jajab</span> <span class="hw">qori</span> <span class="hw">cuud</span></span></div>
+          <div class="visual">
+            <div class="photo round" id="w-label"><img src="assets/photos/label.jpg" alt="" /></div>
+            <div class="lab tag" id="w-1"><i style="background: #3a2214"></i>Jajab cuud</div>
+            <div class="lab tag" id="w-2"><i style="background: var(--gold)"></i>Saliid udgoon</div>
+            <svg id="w-chips" viewBox="0 0 280 180"><g fill="#2a1a10"><path d="M20 140 L80 90 L110 120 L60 170Z" /><path d="M110 150 L150 70 L190 90 L150 170Z" fill="#3a2214" /><path d="M180 160 L230 100 L262 130 L210 176Z" /></g><g fill="#c9a24b" opacity=".85"><circle cx="70" cy="120" r="5" /><circle cx="160" cy="110" r="5" /><circle cx="226" cy="132" r="5" /></g></svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. MADE IN RIYADH -->
+      <section id="s-made" class="clip" data-start="%made.start%" data-duration="%made.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>SAMAYSKA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Riyaad</span></span><span class="hl sm"><span class="hw">Sacuudiga</span></span></div>
+          <div class="visual">
+            <div class="photo round" id="m-lid"><img src="assets/photos/lid.jpg" alt="" /></div>
+            <div class="photo arch" id="m-jar"><img src="assets/photos/jar.jpg" alt="" /></div>
+            <div class="lab tag" id="m-1"><i style="background: #c9a24b"></i>Dabool alwaax</div>
+            <div class="lab tag" id="m-2"><i style="background: #9fc4e8"></i>Quraarad</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. HOW TO USE -->
+      <section id="s-how" class="clip" data-start="%how.start%" data-duration="%how.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>SIDEE?<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Gabal</span> <span class="hw y">yar</span></span><span class="hl sm"><span class="hw">dhuxul</span> <span class="hw">ama</span> <span class="hw">dabqaad</span></span></div>
+          <div class="visual">
+            <svg id="burner" class="stk" viewBox="0 0 400 520"><use href="#mabkhara" width="400" height="520" /></svg>
+            <svg id="b-smoke" viewBox="0 0 300 260"><use href="#smoke-art" width="300" height="260" /></svg>
+            <div class="lab tag" id="b-coal"><i style="background: #ff8a3c"></i>Dhuxul kulul</div>
+            <div class="lab tag" id="b-elec"><i style="background: var(--blue)"></i>Dabqaad koronto</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. WHEN -->
+      <section id="s-when" class="clip" data-start="%when.start%" data-duration="%when.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>GOORMA?<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Goorma?</span></span><span class="hl sm"><span class="hw">martida,</span> <span class="hw">Jimcaha,</span> <span class="hw">ciidaha</span></span></div>
+          <div class="visual">
+            <div class="when" id="wh1"><div class="disc"><svg width="120" height="120" viewBox="0 0 120 120"><path d="M40 30 Q40 16 54 16 H66 Q80 16 80 30 L86 96 Q86 104 78 104 H42 Q34 104 34 96Z" fill="url(#brass)" /><path d="M86 50 Q106 52 104 72 L96 76" fill="none" stroke="#c9a24b" stroke-width="7" /><path d="M36 40 L14 24" stroke="#c9a24b" stroke-width="7" stroke-linecap="round" /><rect x="50" y="6" width="20" height="12" rx="4" fill="#c9a24b" /></svg></div><div class="lab"><i style="background: var(--gold)"></i>Martida</div></div>
+            <div class="when" id="wh2"><div class="disc"><svg width="120" height="120" viewBox="0 0 120 120"><path d="M20 100 V70 Q60 30 100 70 V100Z" fill="#2f6fd0" /><rect x="50" y="20" width="20" height="30" fill="#2f6fd0" /><path d="M60 8 A10 10 0 1 0 68 20 A8 8 0 1 1 60 8Z" fill="#c9a24b" /><rect x="10" y="100" width="100" height="8" rx="4" fill="#1c3f86" /></svg></div><div class="lab"><i style="background: var(--blue)"></i>Jimcaha</div></div>
+            <div class="when" id="wh3"><div class="disc"><svg width="110" height="110" viewBox="0 0 110 110"><path d="M70 12 A44 44 0 1 0 98 74 A34 34 0 1 1 70 12Z" fill="#c9a24b" /><path d="M78 40 l5 12 12 5 -12 5 -5 12 -5 -12 -12 -5 12 -5z" fill="#2f6fd0" /></svg></div><div class="lab"><i style="background: var(--gold)"></i>Ciidaha</div></div>
+            <div class="when" id="wh4"><div class="disc"><svg width="120" height="110" viewBox="0 0 120 110"><circle cx="46" cy="60" r="30" fill="none" stroke="#c9a24b" stroke-width="10" /><circle cx="76" cy="60" r="30" fill="none" stroke="#e3c173" stroke-width="10" /><path d="M70 18 l6 -12 6 12z" fill="#9fc4e8" /></svg></div><div class="lab"><i style="background: var(--terra)"></i>Aroosyada</div></div>
+            <div class="photo arch" id="wh-jar"><img src="assets/photos/jar.jpg" alt="" /></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. AIR + A LITTLE -->
+      <section id="s-air" class="clip" data-start="%air.start%" data-duration="%air.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>TALO<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Wax</span> <span class="hw y">yar</span></span><span class="hl sm"><span class="hw">qolka</span> <span class="hw">hawo</span> <span class="hw">sii</span></span></div>
+          <div class="visual">
+            <svg id="window" class="stk" viewBox="0 0 400 480"><rect x="20" y="20" width="360" height="440" rx="180" ry="30" fill="#ffffff" /><path d="M40 200 Q40 40 200 40 Q360 40 360 200 V440 H40 Z" fill="#bfe0ff" /><path d="M40 200 Q40 40 200 40 Q360 40 360 200 V440 H40 Z" fill="none" stroke="#c9a24b" stroke-width="12" /><g id="pane-l"><path d="M40 200 Q40 40 200 40 V440 H40 Z" fill="#8fc0ff" opacity=".55" stroke="#c9a24b" stroke-width="8" /></g><g id="pane-r"><path d="M200 40 Q360 40 360 200 V440 H200 Z" fill="#8fc0ff" opacity=".55" stroke="#c9a24b" stroke-width="8" /></g><g fill="#ffffff" opacity=".8"><ellipse cx="140" cy="140" rx="46" ry="18" /><ellipse cx="270" cy="110" rx="36" ry="14" /></g><use href="#smoke-art" x="60" y="200" width="280" height="240" /></svg>
+            <div class="lab tag" id="a-1"><i style="background: #9fc4e8"></i>Daaqadda fur</div>
+            <div class="lab tag" id="a-2"><i style="background: var(--gold)"></i>Wax yar</div>
+            <div class="photo arch" id="a-jar"><img src="assets/photos/jar.jpg" alt="" /></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. SAFETY -->
+      <section id="s-safe" class="clip" data-start="%safe.start%" data-duration="%safe.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip alt"><i></i>TAXADDAR<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Taxaddar</span></span><span class="hl sm"><span class="hw">indhaha</span> <span class="hw">iyo</span> <span class="hw">carruurta</span></span></div>
+          <div class="visual">
+            <div class="disc2" id="s-cloth"><svg width="150" height="150" viewBox="0 0 150 150"><path d="M40 20 L60 10 Q75 26 90 10 L110 20 L135 50 L115 66 L108 58 V140 H42 V58 L35 66 L15 50Z" fill="#2f6fd0" /><path d="M20 120 H130" stroke="#c9a24b" stroke-width="5" stroke-dasharray="8 8" /></svg></div>
+            <div class="disc2" id="s-eye"><svg width="160" height="120" viewBox="0 0 160 120"><path d="M10 60 Q80 -10 150 60 Q80 130 10 60Z" fill="#ffffff" stroke="#4a2e1a" stroke-width="6" /><circle cx="80" cy="60" r="26" fill="#3a2214" /><circle cx="88" cy="52" r="7" fill="#fff" /><path d="M20 20 L140 100" stroke="#b8452f" stroke-width="12" stroke-linecap="round" /></svg></div>
+            <div class="disc2" id="s-kid"><svg width="140" height="150" viewBox="0 0 140 150"><circle cx="70" cy="40" r="26" fill="url(#u-skin)" /><path d="M30 140 V96 Q30 72 70 72 Q110 72 110 96 V140Z" fill="#c9a24b" /><path d="M10 10 L130 140" stroke="#b8452f" stroke-width="12" stroke-linecap="round" /></svg></div>
+            <div class="lab tag" id="s-1"><i style="background: #2f6fd0"></i>Meel fog</div>
+            <div class="lab tag" id="s-2"><i style="background: var(--terra)"></i>Indhaha</div>
+            <div class="lab tag" id="s-3"><i style="background: var(--terra)"></i>Carruurta</div>
+            <div class="photo" id="s-labelphoto"><img src="assets/photos/label.jpg" alt="" style="object-position: 50% 62%" /></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. CTA -->
+      <section id="s-cta" class="clip" data-start="%cta.start%" data-duration="%cta.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>HADDA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Udgoonka</span></span><span class="hl sm"><span class="hw">gurigaaga</span></span></div>
+          <div class="visual">
+            <div class="photo arch" id="c-jar"><img src="assets/photos/jar.jpg" alt="" /></div>
+            <div id="c-name">Al Majed Oud</div>
+            <div id="c-ar">الماجد للعود</div>
+            <div id="c-buy" class="center stk">HADDA RAADSO</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- persistent chrome above scenes -->
+      <div id="brand"><svg width="30" height="28" viewBox="0 0 46 42"><path d="M23 40 C8 28 2 20 2 12 C2 6 7 2 12 2 C17 2 21 5 23 9 C25 5 29 2 34 2 C39 2 44 6 44 12 C44 20 38 28 23 40Z" fill="#c9a24b" /></svg>AL MAJED OUD · CUUD</div>
+      <div id="prog"><span id="prog-fill"></span></div>
+      <div id="caps">
+        %CAPTIONS%
+      </div>
+      <div id="flash"></div>
+
+    %AUDIO%
+    </div>
+    <script>
+      const D = %DATA%;
+      const tl = gsap.timeline({ paused: true });
+      const S = {};
+      D.scenes.forEach((s) => (S[s.id] = s));
+      const B = D.beats;
+      const q = (sel) => document.querySelector(sel);
+      const pop = (sel, t, from = 0.3) => tl.fromTo(sel, { scale: from, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2.4)" }, t);
+      const drift = (sel, t, dur) => tl.fromTo(sel, { y: 30, opacity: 0 }, { y: -40, opacity: 1, duration: dur, ease: "sine.out" }, t);
+
+      // persistent theme motion
+      tl.fromTo("#weave", { backgroundPosition: "0px 0px" }, { backgroundPosition: "0px 180px", duration: D.total, ease: "none" }, 0);
+      tl.fromTo("#band", { backgroundPosition: "0px 0px" }, { backgroundPosition: "180px 0px", duration: D.total, ease: "none" }, 0);
+      tl.fromTo("#prog-fill", { scaleX: 0 }, { scaleX: 1, duration: D.total, ease: "none" }, 0);
+
+      // every scene: hard cut + gold flash, punch-in landing, a mid-scene jump-cut zoom
+      D.scenes.forEach((s, i) => {
+        const el = q("#s-" + s.id);
+        const stage = el.querySelector(".stage");
+        const dir = i % 2 ? -1 : 1;
+        tl.fromTo(stage, { scale: 1.16, x: 90 * dir }, { scale: 1, x: 0, duration: 0.38, ease: "power3.out" }, s.start);
+        const jump = s.start + s.dur * 0.56;
+        tl.set(stage, { scale: 1.07 }, jump);
+        tl.to(stage, { scale: 1.1, duration: s.dur * 0.44 - 0.02, ease: "none" }, jump + 0.01);
+        if (i > 0) {
+          tl.set("#flash", { opacity: 0.55 }, s.start);
+          tl.to("#flash", { opacity: 0, duration: 0.16, ease: "power2.out" }, s.start + 0.001);
+        }
+        tl.fromTo(el.querySelector(".chip"), { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(3)" }, s.start + 0.05);
+        tl.fromTo(el.querySelectorAll(".hw"), { yPercent: 105 }, { yPercent: 0, duration: 0.42, stagger: 0.06, ease: "power4.out" }, s.start + 0.08);
+        // slow Ken Burns on every real photo in the scene
+        el.querySelectorAll(".photo img").forEach((img) => tl.fromTo(img, { scale: 1.02 }, { scale: 1.14, duration: s.dur, ease: "none" }, s.start));
+      });
+
+      // 1 hook: the real jar, smoke curling up, sparkles
+      tl.fromTo("#h-jar", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "back.out(1.4)" }, S.hook.start + 0.1);
+      drift("#smoke1", S.hook.start + 0.6, S.hook.dur - 0.7);
+      tl.fromTo(".hs", { scale: 0, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1, opacity: 1, duration: 0.3, stagger: 0.12, ease: "back.out(3)" }, B.home - 0.2);
+
+      // 2 what: the real label, agarwood chips + perfume oil
+      pop("#w-label", S.what.start + 0.1);
+      pop("#w-1", B.chips);
+      tl.fromTo("#w-chips", { y: -200, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "bounce.out" }, B.chips + 0.1);
+      pop("#w-2", B.oil);
+
+      // 3 made in Riyadh: lid seal close-up + jar
+      pop("#m-lid", S.made.start + 0.1);
+      pop("#m-jar", B.jar - 0.2);
+      pop("#m-2", B.jar + 0.1);
+      pop("#m-1", B.lid);
+
+      // 4 how: a small piece on the burner
+      tl.fromTo("#burner", { y: 500 }, { y: 0, duration: 0.5, ease: "back.out(1.4)" }, S.how.start + 0.1);
+      pop("#b-coal", B.coal);
+      drift("#b-smoke", B.coal + 0.2, S.how.dur - (B.coal - S.how.start) - 0.3);
+      pop("#b-elec", B.electric);
+
+      // 5 when: guests, Friday, Eid, weddings
+      pop("#wh1", B.guests - 0.05);
+      pop("#wh2", B.friday - 0.05);
+      pop("#wh3", B.eid - 0.05);
+      pop("#wh4", B.wedding - 0.05);
+      pop("#wh-jar", S.when.start + 0.2);
+
+      // 6 ventilate, a little is enough
+      pop("#window", S.air.start + 0.1);
+      tl.fromTo("#pane-l", { scaleX: 1, transformOrigin: "40px 50%" }, { scaleX: 0.25, duration: 0.5, ease: "power2.inOut" }, B.air);
+      tl.fromTo("#pane-r", { scaleX: 1, transformOrigin: "360px 50%" }, { scaleX: 0.25, duration: 0.5, ease: "power2.inOut" }, B.air);
+      pop("#a-1", B.air + 0.1);
+      pop("#a-2", B.little);
+      pop("#a-jar", B.little + 0.2);
+
+      // 7 safety: clothes from a distance, eyes, children
+      pop("#s-cloth", B.clothes - 0.05);
+      pop("#s-1", B.clothes + 0.1);
+      pop("#s-eye", B.eyes - 0.05);
+      pop("#s-2", B.eyes + 0.1);
+      pop("#s-kid", B.kids - 0.05);
+      pop("#s-3", B.kids + 0.1);
+      pop("#s-labelphoto", S.safe.start + 0.2);
+
+      // 8 cta
+      tl.fromTo("#c-jar", { x: -400, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, S.cta.start + 0.1);
+      pop("#c-name", B.brand - 0.1, 0.6);
+      pop("#c-ar", B.brand + 0.3, 0.6);
+      tl.fromTo("#c-buy", { y: 240, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "back.out(2)" }, B.buy - 0.1);
+      tl.fromTo("#c-buy", { scale: 1 }, { scale: 1.06, duration: 0.3, yoyo: true, repeat: 3, ease: "sine.inOut" }, B.buy + 0.4);
+
+      // captions: word-by-word karaoke in Somali
+      D.caps.forEach((g, gi) => {
+        const line = "#cap-" + gi;
+        tl.set(line, { opacity: 1 }, g.s);
+        tl.fromTo(line, { scale: 0.86 }, { scale: 1, duration: 0.12, ease: "back.out(3)", immediateRender: false }, g.s);
+        tl.set(line, { opacity: 0 }, g.e);
+        g.w.forEach((w, wi) => {
+          const id = "#cw-" + gi + "-" + wi;
+          tl.set(id, { color: "#2f6fd0" }, w.s);
+          if (wi + 1 < g.w.length) tl.set(id, { color: "#4a2e1a" }, g.w[wi + 1].s);
+        });
+      });
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
