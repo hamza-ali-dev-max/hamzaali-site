@@ -70,15 +70,15 @@ def weight(word):
     SPF / UV are spelled out, so each capital letter counts as a syllable."""
     caps = re.match(r"[A-Z]{2,}", word)
     rest = word[caps.end():] if caps else word
-    w = rest.lower().strip(".,:!?-")
+    w = rest.lower().strip(".,:;!?-")
     nuclei = re.findall(r"[aeiou]+", w)
     return 0.35 + (1.1 * len(caps.group()) if caps else 0) + sum(1.0 if len(n) == 1 else 1.5 for n in nuclei)
 
 
 def align_chunk(text, a, b):
     words = text.split()
-    # phrase breaks after words ending in , or :
-    brk = [i for i, w in enumerate(words[:-1]) if w[-1] in ",:"]
+    # phrase breaks after words ending in , : or ;
+    brk = [i for i, w in enumerate(words[:-1]) if w[-1] in ",:;"]
     pauses = [p for p in silences(src, -32, 0.1, a, b) if p[0] > a + 0.05 and p[1] < b - 0.05]
     if len(pauses) > len(brk) and brk:
         # keep, for each break, the unused pause nearest where the syllable weights put it
