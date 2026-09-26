@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="so" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Kareemka Qorraxda</title>
+    <script src="assets/js/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Anton"; src: url("assets/fonts/anton.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: "Poppins"; src: url("assets/fonts/poppins-600.woff2") format("woff2"); font-weight: 600; }
+      @font-face { font-family: "Poppins"; src: url("assets/fonts/poppins-800.woff2") format("woff2"); font-weight: 800; }
+      @font-face { font-family: "Poppins"; src: url("assets/fonts/poppins-900.woff2") format("woff2"); font-weight: 900; }
+      :root {
+        --navy: #0f1e45;
+        --navy2: #1a2f66;
+        --navy3: #243f82;
+        --sun: #ffc933;
+        --sun2: #ff9f1c;
+        --coral: #ff5a3c;
+        --cream: #fff4dc;
+        --sky: #6fd3ff;
+        --skin: #8d5a3b;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--navy); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Poppins", sans-serif; color: var(--cream); background: var(--navy); }
+
+      /* persistent theme layers */
+      #bg { position: absolute; inset: 0; background: radial-gradient(1100px 1100px at 85% 8%, #2b3f86 0%, var(--navy) 60%); }
+      #rays { position: absolute; left: -460px; top: -1060px; width: 2000px; height: 2000px; opacity: 0.1;
+        background: repeating-conic-gradient(from 0deg, var(--sun) 0deg 6deg, transparent 6deg 18deg);
+        -webkit-mask: radial-gradient(circle, #000 0%, transparent 70%); mask: radial-gradient(circle, #000 0%, transparent 70%); }
+      #dots { position: absolute; inset: 0; opacity: 0.08; background-image: radial-gradient(var(--cream) 2px, transparent 2.5px); background-size: 36px 36px; }
+      #brand { position: absolute; left: 60px; top: 70px; display: flex; align-items: center; gap: 14px; font-weight: 800; font-size: 30px; letter-spacing: 0.08em; }
+      #brand i { display: block; width: 30px; height: 30px; border-radius: 50%; background: var(--sun); box-shadow: 0 0 0 6px rgba(255, 201, 51, 0.25); }
+      #prog { position: absolute; left: 60px; top: 128px; width: 820px; height: 10px; border-radius: 6px; background: rgba(255, 244, 220, 0.15); overflow: hidden; }
+      #prog-fill { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, var(--sun2), var(--sun)); transform-origin: left center; }
+      #flash { position: absolute; inset: 0; background: var(--sun); opacity: 0; pointer-events: none; }
+
+      /* scenes */
+      .clip { position: absolute; inset: 0; }
+      .stage { position: absolute; inset: 0; transform-origin: 470px 900px; }
+      .chip { position: absolute; left: 60px; top: 205px; height: 64px; padding: 0 28px; border-radius: 32px; background: var(--sun); color: var(--navy);
+        font-weight: 900; font-size: 32px; letter-spacing: 0.06em; display: flex; align-items: center; }
+      .chip.coral { background: var(--coral); color: var(--cream); }
+      .headline { position: absolute; left: 60px; top: 300px; width: 860px; font-family: "Anton", sans-serif; font-size: 132px; line-height: 1.02; text-transform: uppercase; }
+      .headline .hl { display: block; overflow: hidden; padding-bottom: 6px; }
+      .headline .hw { display: inline-block; }
+      .headline .y { color: var(--sun); }
+      .headline .sm { font-size: 92px; }
+      .visual { position: absolute; left: 40px; top: 690px; width: 880px; height: 640px; }
+      .center { display: flex; align-items: center; justify-content: center; }
+
+      /* hook */
+      #sun { position: absolute; left: 190px; top: 10px; width: 500px; height: 500px; }
+            #cloud { position: absolute; left: 120px; top: 180px; width: 560px; height: 280px; }
+      #uv-lines { position: absolute; left: 0; top: 330px; width: 880px; height: 300px; }
+      #skin-bar { position: absolute; left: 120px; top: 600px; width: 640px; height: 36px; border-radius: 18px; background: linear-gradient(90deg, #6b3f27, var(--skin), #b5774f); box-shadow: 0 0 40px rgba(255, 90, 60, 0.0); }
+      .sticker { position: absolute; padding: 18px 34px; border-radius: 20px; background: var(--coral); color: var(--cream); font-family: "Anton"; font-size: 76px; text-transform: uppercase; box-shadow: 0 16px 0 rgba(0, 0, 0, 0.25); }
+      #hook-sticker { left: 330px; top: 40px; }
+
+      /* uv cards */
+      .cards { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; gap: 34px; }
+      .card { display: flex; align-items: center; gap: 34px; width: 840px; height: 160px; padding: 0 34px; border-radius: 34px; background: var(--navy2); border: 4px solid rgba(255, 244, 220, 0.12); }
+      .card .ic { display: flex; align-items: center; justify-content: center; flex: 0 0 110px; width: 110px; height: 110px; border-radius: 50%; background: var(--navy); }
+      .card .lb { font-family: "Anton"; font-size: 84px; text-transform: uppercase; line-height: 1; }
+      .card .lb.sm { font-size: 66px; }
+
+      /* spf */
+      #tube { position: absolute; left: 70px; top: 40px; width: 260px; height: 580px; }
+      #stamp { position: absolute; left: 330px; top: 110px; width: 540px; font-family: "Anton"; font-size: 250px; line-height: 0.9; color: var(--sun); text-align: center; text-shadow: 0 14px 0 rgba(0, 0, 0, 0.25); }
+      #spf-more { position: absolute; left: 380px; top: 470px; width: 440px; height: 100px; border-radius: 50px; background: var(--cream); color: var(--navy); font-weight: 900; font-size: 50px; }
+
+      /* amount */
+      .finger { position: absolute; top: 90px; width: 150px; height: 500px; border-radius: 75px 75px 30px 30px; background: linear-gradient(90deg, #7a4a2f, var(--skin) 45%, #a06a48); }
+      .finger .nail { position: absolute; left: 30px; top: 18px; width: 90px; height: 100px; border-radius: 45px 45px 30px 30px; background: #c99277; }
+      .finger .cream { position: absolute; left: 35px; top: 60px; width: 80px; height: 420px; border-radius: 40px; background: linear-gradient(90deg, #ffffff, var(--cream)); box-shadow: 0 0 24px rgba(255, 255, 255, 0.35); transform-origin: 50% 100%; }
+      #f1 { left: 90px; } #f2 { left: 270px; top: 60px; }
+      #two-f { position: absolute; left: 480px; top: 120px; width: 400px; font-family: "Anton"; font-size: 150px; line-height: 0.95; color: var(--sun); text-transform: uppercase; }
+      #two-f .s { display: block; font-size: 90px; color: var(--cream); }
+      #face-eq { position: absolute; left: 480px; top: 430px; width: 400px; font-weight: 900; font-size: 48px; line-height: 1.2; text-transform: uppercase; }
+      #face-eq b { display: block; color: var(--sun); }
+
+      /* timer */
+      #timer { position: absolute; left: 180px; top: 20px; width: 520px; height: 520px; }
+      #timer svg { position: absolute; inset: 0; }
+      #timer-num { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      #timer-num .n { font-family: "Anton"; font-size: 230px; line-height: 1; color: var(--sun); }
+      #timer-num .u { font-weight: 900; font-size: 44px; letter-spacing: 0.1em; margin-top: -8px; }
+      #go-out { position: absolute; left: 190px; top: 560px; width: 500px; height: 90px; border-radius: 45px; background: var(--coral); font-weight: 900; font-size: 46px; gap: 18px; }
+
+      /* spots */
+      #body { position: absolute; left: 20px; top: 0; width: 360px; height: 640px; }
+      .spot-list { position: absolute; left: 400px; top: 40px; width: 480px; display: flex; flex-direction: column; gap: 26px; }
+      .spot { display: flex; align-items: center; gap: 22px; height: 120px; padding: 0 26px; border-radius: 28px; background: var(--navy2); font-family: "Anton"; font-size: 58px; line-height: 1; text-transform: uppercase; }
+      .spot .num { display: flex; align-items: center; justify-content: center; flex: 0 0 64px; height: 64px; border-radius: 50%; background: var(--sun); color: var(--navy); font-size: 40px; }
+      .spot .t2 { font-size: 46px; }
+
+      /* reapply */
+      #cycle { position: absolute; left: 200px; top: -30px; width: 480px; height: 480px; }
+      #cycle-arrows { position: absolute; inset: 0; transform-origin: 240px 240px; }
+      #cycle-num { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      #cycle-num .n { font-family: "Anton"; font-size: 170px; line-height: 1; color: var(--sun); }
+      #cycle-num .u { font-weight: 900; font-size: 32px; letter-spacing: 0.08em; }
+      .pill { position: absolute; top: 470px; width: 390px; height: 130px; border-radius: 65px; background: var(--navy2); border: 4px solid var(--sky); gap: 20px; font-family: "Anton"; font-size: 64px; text-transform: uppercase; }
+      #p-swim { left: 30px; } #p-sweat { left: 460px; }
+
+      /* myth */
+      .tones { position: absolute; left: 20px; top: 120px; width: 840px; display: flex; justify-content: space-between; }
+      .tone { position: relative; width: 150px; height: 150px; border-radius: 50%; border: 6px solid rgba(255, 244, 220, 0.25); }
+      .tone .ok { position: absolute; right: -14px; bottom: -14px; width: 70px; height: 70px; border-radius: 50%; background: var(--sun); display: flex; align-items: center; justify-content: center; }
+      #everyone { position: absolute; left: 60px; top: 380px; width: 760px; height: 170px; border-radius: 40px; background: var(--sun); color: var(--navy); font-family: "Anton"; font-size: 110px; text-transform: uppercase; }
+
+      /* cta */
+      #cta-sun { position: absolute; left: 240px; top: 0; width: 400px; height: 400px; }
+      #cta-shield { position: absolute; left: 335px; top: 100px; width: 210px; height: 250px; }
+      #share { position: absolute; left: 40px; top: 470px; width: 800px; height: 130px; border-radius: 65px; background: var(--coral); gap: 24px; font-weight: 900; font-size: 48px; text-transform: uppercase; }
+      #share-arrow { display: block; width: 64px; height: 64px; }
+
+      /* captions */
+      #caps { position: absolute; left: 60px; top: 1380px; width: 840px; height: 170px; }
+      .cap-line { position: absolute; left: 0; top: 0; width: 840px; text-align: center; opacity: 0; font-weight: 900; font-size: 64px; line-height: 1.15;
+        text-shadow: 0 5px 0 rgba(0, 0, 0, 0.55), 0 0 18px rgba(0, 0, 0, 0.45); }
+      .cw { display: inline-block; margin: 0 10px; color: var(--cream); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="45" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="rays"></div>
+      <div id="dots"></div>
+
+      <!-- 1. HOOK -->
+      <section id="s-hook" class="clip" data-start="0.000" data-duration="4.329" data-track-index="1">
+        <div class="stage">
+          <div class="chip coral">DIGNIIN</div>
+          <div class="headline"><span class="hl"><span class="hw y">Qorraxdu</span></span><span class="hl sm"><span class="hw">maqaarkaaga</span> <span class="hw">way</span> <span class="hw">dhaawacdaa</span></span></div>
+          <div class="visual">
+            <svg id="sun" viewBox="0 0 500 500">
+              <defs><radialGradient id="sg" cx="40%" cy="38%"><stop offset="0" stop-color="#fff1a8" /><stop offset=".55" stop-color="#ffc933" /><stop offset="1" stop-color="#ff9f1c" /></radialGradient></defs>
+              <g id="sun-rays" fill="#ffc933">
+                <rect x="238" y="0" width="24" height="80" rx="12" /><rect x="238" y="420" width="24" height="80" rx="12" />
+                <rect x="0" y="238" width="80" height="24" rx="12" /><rect x="420" y="238" width="80" height="24" rx="12" />
+                <rect x="238" y="0" width="24" height="80" rx="12" transform="rotate(45 250 250)" /><rect x="238" y="420" width="24" height="80" rx="12" transform="rotate(45 250 250)" />
+                <rect x="0" y="238" width="80" height="24" rx="12" transform="rotate(45 250 250)" /><rect x="420" y="238" width="80" height="24" rx="12" transform="rotate(45 250 250)" />
+              </g>
+              <circle cx="250" cy="250" r="140" fill="url(#sg)" />
+            </svg>
+            <svg id="uv-lines" viewBox="0 0 880 300" fill="none" stroke="#b58cff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+              <path class="uv" d="M300 0 L330 60 L280 120 L330 180 L280 240 L310 290" />
+              <path class="uv" d="M440 0 L470 60 L420 120 L470 180 L420 240 L450 290" />
+              <path class="uv" d="M580 0 L610 60 L560 120 L610 180 L560 240 L590 290" />
+            </svg>
+            <svg id="cloud" viewBox="0 0 560 280"><path fill="#e8eefc" d="M120 250 C50 250 20 200 40 160 C55 125 95 115 125 125 C130 70 180 35 240 40 C300 45 335 85 345 120 C370 95 420 95 450 120 C480 145 480 175 470 190 C520 195 540 225 525 245 C520 250 510 250 500 250 Z" /><path fill="#c9d4f2" d="M120 250 L500 250 C510 250 520 250 525 245 C500 262 150 268 120 250Z" /></svg>
+            <div id="skin-bar"></div>
+            <div id="hook-sticker" class="sticker">xitaa daruur!</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. UV -->
+      <section id="s-uv" class="clip" data-start="4.329" data-duration="5.200" data-track-index="1">
+        <div class="stage">
+          <div class="chip">UV</div>
+          <div class="headline"><span class="hl"><span class="hw">Shucaaca</span></span><span class="hl"><span class="hw y">UV-ga</span> <span class="hw">wuxuu</span> <span class="hw">keenaa</span></span></div>
+          <div class="visual">
+            <div class="cards">
+              <div class="card" id="c-burn"><div class="ic"><svg width="70" height="80" viewBox="0 0 100 110"><path fill="#ff5a3c" d="M50 4 C62 30 88 42 84 72 C81 94 64 106 50 106 C32 106 16 94 16 72 C16 52 32 46 36 28 C44 40 48 46 50 54 C56 38 54 20 50 4Z" /><path fill="#ffc933" d="M50 56 C58 70 68 76 66 88 C64 98 56 102 50 102 C42 102 34 96 34 86 C34 76 44 72 50 56Z" /></svg></div><div class="lb">Gubasho</div></div>
+              <div class="card" id="c-age"><div class="ic"><svg width="64" height="84" viewBox="0 0 64 84"><rect x="4" y="2" width="56" height="8" rx="4" fill="#fff4dc" /><rect x="4" y="74" width="56" height="8" rx="4" fill="#fff4dc" /><path d="M10 12 H54 L34 42 L54 72 H10 L30 42 Z" fill="none" stroke="#fff4dc" stroke-width="5" stroke-linejoin="round" /><path d="M18 66 H46 L32 50 Z" fill="#ffc933" /></svg></div><div class="lb">Gabow hore</div></div>
+              <div class="card" id="c-cancer"><div class="ic"><svg width="80" height="72" viewBox="0 0 80 72"><path d="M40 4 L76 68 H4 Z" fill="#ffc933" stroke="#ffc933" stroke-width="6" stroke-linejoin="round" /><rect x="36" y="24" width="8" height="24" rx="4" fill="#0f1e45" /><circle cx="40" cy="57" r="5" fill="#0f1e45" /></svg></div><div class="lb sm">Kansarka maqaarka</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. SPF -->
+      <section id="s-spf" class="clip" data-start="9.529" data-duration="5.122" data-track-index="1">
+        <div class="stage">
+          <div class="chip">TALLAABO 1</div>
+          <div class="headline"><span class="hl"><span class="hw y">Dooro</span></span><span class="hl sm"><span class="hw">kareemka</span> <span class="hw">qorraxda</span></span></div>
+          <div class="visual">
+            <svg id="tube" viewBox="0 0 260 580">
+              <rect x="40" y="10" width="180" height="40" rx="8" fill="#e6d8b8" />
+              <path d="M40 40 H220 L236 470 C236 490 220 500 200 500 H60 C40 500 24 490 24 470 Z" fill="#fff4dc" />
+              <rect x="40" y="150" width="190" height="170" fill="#ffc933" />
+              <text x="135" y="225" text-anchor="middle" font-family="Anton" font-size="62" fill="#0f1e45">SPF</text>
+              <text x="135" y="295" text-anchor="middle" font-family="Anton" font-size="62" fill="#0f1e45">30+</text>
+              <circle cx="135" cy="390" r="34" fill="#ff9f1c" />
+              <rect x="80" y="500" width="100" height="72" rx="14" fill="#ff5a3c" />
+            </svg>
+            <div id="stamp">SPF 30+</div>
+            <div id="spf-more" class="center">ama ka badan</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. AMOUNT -->
+      <section id="s-amount" class="clip" data-start="14.651" data-duration="5.283" data-track-index="1">
+        <div class="stage">
+          <div class="chip">TALLAABO 2</div>
+          <div class="headline"><span class="hl"><span class="hw">Qadar</span></span><span class="hl"><span class="hw y">ku</span> <span class="hw y">filan</span></span></div>
+          <div class="visual">
+            <div class="finger" id="f1"><div class="nail"></div><div class="cream"></div></div>
+            <div class="finger" id="f2"><div class="nail"></div><div class="cream"></div></div>
+            <div id="two-f">2<span class="s">farood</span></div>
+            <div id="face-eq"><b>= wejiga</b>+ qoorta</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. TIME -->
+      <section id="s-time" class="clip" data-start="19.934" data-duration="5.393" data-track-index="1">
+        <div class="stage">
+          <div class="chip">TALLAABO 3</div>
+          <div class="headline"><span class="hl"><span class="hw y">15</span> <span class="hw">daqiiqo</span></span><span class="hl"><span class="hw">ka</span> <span class="hw">hor</span></span></div>
+          <div class="visual">
+            <div id="timer">
+              <svg viewBox="0 0 520 520"><circle cx="260" cy="260" r="220" fill="none" stroke="#1a2f66" stroke-width="40" /><circle id="ring" cx="260" cy="260" r="220" fill="none" stroke="#ffc933" stroke-width="40" stroke-linecap="round" stroke-dasharray="1382.3" stroke-dashoffset="0" transform="rotate(-90 260 260)" /></svg>
+              <div id="timer-num"><div class="n" id="tn">15</div><div class="u">daqiiqo</div></div>
+            </div>
+            <div id="go-out" class="center"><span>bannaanka</span><svg width="56" height="40" viewBox="0 0 56 40"><path d="M4 20 H46 M32 6 L48 20 L32 34" fill="none" stroke="#fff4dc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. SPOTS -->
+      <section id="s-spots" class="clip" data-start="25.327" data-duration="4.600" data-track-index="1">
+        <div class="stage">
+          <div class="chip coral">TALLAABO 4</div>
+          <div class="headline"><span class="hl"><span class="hw">Ha</span></span><span class="hl"><span class="hw y">illoobin!</span></span></div>
+          <div class="visual">
+            <svg id="body" viewBox="0 0 360 640">
+              <g fill="#1a2f66" stroke="#fff4dc" stroke-opacity=".35" stroke-width="4">
+                <ellipse cx="124" cy="92" rx="16" ry="26" /><ellipse cx="236" cy="92" rx="16" ry="26" />
+                <circle cx="180" cy="86" r="58" />
+                <rect x="158" y="138" width="44" height="40" rx="10" />
+                <path d="M110 180 H250 C272 180 286 196 288 218 L300 360 C302 376 290 384 280 372 L262 250 L258 390 H102 L98 250 L80 372 C70 384 58 376 60 360 L72 218 C74 196 88 180 110 180Z" />
+                <path d="M104 390 H256 L250 590 C250 604 230 606 226 592 L184 420 H176 L134 592 C130 606 110 604 110 590Z" />
+                <ellipse cx="116" cy="608" rx="34" ry="16" /><ellipse cx="244" cy="608" rx="34" ry="16" />
+                <circle cx="62" cy="388" r="20" /><circle cx="298" cy="388" r="20" />
+              </g>
+              <g fill="#ffc933">
+                <circle class="dot" id="d-ears" cx="236" cy="92" r="14" />
+                <circle class="dot" id="d-neck" cx="180" cy="160" r="14" />
+                <circle class="dot" id="d-hands" cx="298" cy="388" r="14" />
+                <circle class="dot" id="d-feet" cx="244" cy="608" r="14" />
+              </g>
+            </svg>
+            <div class="spot-list">
+              <div class="spot" id="sp-ears"><span class="num">1</span>Dhegaha</div>
+              <div class="spot" id="sp-neck"><span class="num">2</span>Qoorta</div>
+              <div class="spot" id="sp-hands"><span class="num">3</span><span class="t2">Gacmaha dushooda</span></div>
+              <div class="spot" id="sp-feet"><span class="num">4</span>Cagaha</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. REAPPLY -->
+      <section id="s-reapply" class="clip" data-start="29.927" data-duration="5.060" data-track-index="1">
+        <div class="stage">
+          <div class="chip">TALLAABO 5</div>
+          <div class="headline"><span class="hl"><span class="hw">Dib</span> <span class="hw">u</span> <span class="hw y">mari</span></span></div>
+          <div class="visual">
+            <div id="cycle">
+              <svg id="cycle-arrows" viewBox="0 0 420 420" fill="none" stroke="#ffc933" stroke-width="22" stroke-linecap="round">
+                <path d="M60 210 A150 150 0 0 1 300 90" /><path d="M285 55 L318 98 L266 112" stroke-linejoin="round" />
+                <path d="M360 210 A150 150 0 0 1 120 330" /><path d="M135 365 L102 322 L154 308" stroke-linejoin="round" />
+              </svg>
+              <div id="cycle-num"><div class="n">2</div><div class="u">saacadood</div></div>
+            </div>
+            <div class="pill center" id="p-swim"><svg width="70" height="44" viewBox="0 0 70 44" fill="none" stroke="#6fd3ff" stroke-width="7" stroke-linecap="round"><path d="M4 14 Q14 4 24 14 T44 14 T66 14" /><path d="M4 32 Q14 22 24 32 T44 32 T66 32" /></svg>dabaal</div>
+            <div class="pill center" id="p-sweat"><svg width="44" height="60" viewBox="0 0 44 60"><path d="M22 4 C30 20 40 30 40 40 C40 51 32 58 22 58 C12 58 4 51 4 40 C4 30 14 20 22 4Z" fill="#6fd3ff" /></svg>dhidid</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. MYTH -->
+      <section id="s-myth" class="clip" data-start="34.987" data-duration="4.757" data-track-index="1">
+        <div class="stage">
+          <div class="chip coral">XAQIIQ</div>
+          <div class="headline"><span class="hl"><span class="hw y">Maqaarka</span> <span class="hw y">madow</span></span><span class="hl sm"><span class="hw">sidoo</span> <span class="hw">kale</span> <span class="hw">wuu</span> <span class="hw">gubtaa</span></span></div>
+          <div class="visual">
+            <div class="tones">
+              <div class="tone" style="background: #f3d2b3"><div class="ok"><svg width="38" height="30" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#0f1e45" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+              <div class="tone" style="background: #d9a47c"><div class="ok"><svg width="38" height="30" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#0f1e45" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+              <div class="tone" style="background: #a86f4a"><div class="ok"><svg width="38" height="30" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#0f1e45" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+              <div class="tone" style="background: #7a4a2f"><div class="ok"><svg width="38" height="30" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#0f1e45" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+              <div class="tone" style="background: #4a2a1a"><div class="ok"><svg width="38" height="30" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#0f1e45" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+            </div>
+            <div id="everyone" class="center">Qof kasta</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. CTA -->
+      <section id="s-cta" class="clip" data-start="39.744" data-duration="5.256" data-track-index="1">
+        <div class="stage">
+          <div class="chip">MAANTA</div>
+          <div class="headline"><span class="hl"><span class="hw">Maanta</span> <span class="hw y">bilow!</span></span><span class="hl sm" id="cta-sub"><span class="hw">maqaarkaaga</span> <span class="hw y">ilaali</span></span></div>
+          <div class="visual">
+            <svg id="cta-sun" viewBox="0 0 500 500"><g id="cta-rays" fill="#ffc933" style="transform-origin: 250px 250px"><rect x="238" y="0" width="24" height="80" rx="12" /><rect x="238" y="420" width="24" height="80" rx="12" /><rect x="0" y="238" width="80" height="24" rx="12" /><rect x="420" y="238" width="80" height="24" rx="12" /><rect x="238" y="0" width="24" height="80" rx="12" transform="rotate(45 250 250)" /><rect x="238" y="420" width="24" height="80" rx="12" transform="rotate(45 250 250)" /><rect x="0" y="238" width="80" height="24" rx="12" transform="rotate(45 250 250)" /><rect x="420" y="238" width="80" height="24" rx="12" transform="rotate(45 250 250)" /></g><circle cx="250" cy="250" r="140" fill="url(#sg)" /></svg>
+            <svg id="cta-shield" viewBox="0 0 210 250"><path d="M105 6 L200 40 V120 C200 185 160 225 105 244 C50 225 10 185 10 120 V40 Z" fill="#0f1e45" stroke="#fff4dc" stroke-width="10" stroke-linejoin="round" /><path d="M58 128 L92 162 L154 96" fill="none" stroke="#ffc933" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <div id="share" class="center"><span>U dir qof aad jeceshahay</span><svg id="share-arrow" viewBox="0 0 64 64"><path d="M36 10 L58 30 L36 50 V38 C22 38 12 42 6 54 C8 34 18 24 36 22 Z" fill="#fff4dc" /></svg></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- persistent chrome above scenes -->
+      <div id="brand"><i></i>QORRAXDA &amp; MAQAARKA</div>
+      <div id="prog"><span id="prog-fill"></span></div>
+      <div id="caps">
+        <div class="cap-line" id="cap-0"><span class="cw" id="cw-0-0">Qorraxdu</span><span class="cw" id="cw-0-1">waxay</span><span class="cw" id="cw-0-2">dhaawacdaa</span></div>
+        <div class="cap-line" id="cap-1"><span class="cw" id="cw-1-0">maqaarkaaga</span></div>
+        <div class="cap-line" id="cap-2"><span class="cw" id="cw-2-0">xitaa</span><span class="cw" id="cw-2-1">maalmaha</span><span class="cw" id="cw-2-2">daruurta</span></div>
+        <div class="cap-line" id="cap-3"><span class="cw" id="cw-3-0">leh</span></div>
+        <div class="cap-line" id="cap-4"><span class="cw" id="cw-4-0">Shucaaca</span><span class="cw" id="cw-4-1">UV-ga</span><span class="cw" id="cw-4-2">wuxuu</span></div>
+        <div class="cap-line" id="cap-5"><span class="cw" id="cw-5-0">keenaa</span><span class="cw" id="cw-5-1">gubasho</span></div>
+        <div class="cap-line" id="cap-6"><span class="cw" id="cw-6-0">gabow</span><span class="cw" id="cw-6-1">hore</span></div>
+        <div class="cap-line" id="cap-7"><span class="cw" id="cw-7-0">iyo</span><span class="cw" id="cw-7-1">kansarka</span><span class="cw" id="cw-7-2">maqaarka</span></div>
+        <div class="cap-line" id="cap-8"><span class="cw" id="cw-8-0">Tallaabada</span><span class="cw" id="cw-8-1">koowaad</span></div>
+        <div class="cap-line" id="cap-9"><span class="cw" id="cw-9-0">dooro</span><span class="cw" id="cw-9-1">kareemka</span><span class="cw" id="cw-9-2">qorraxda</span></div>
+        <div class="cap-line" id="cap-10"><span class="cw" id="cw-10-0">oo</span><span class="cw" id="cw-10-1">SPF</span><span class="cw" id="cw-10-2">soddon</span></div>
+        <div class="cap-line" id="cap-11"><span class="cw" id="cw-11-0">ama</span><span class="cw" id="cw-11-1">ka</span><span class="cw" id="cw-11-2">badan</span></div>
+        <div class="cap-line" id="cap-12"><span class="cw" id="cw-12-0">ah</span></div>
+        <div class="cap-line" id="cap-13"><span class="cw" id="cw-13-0">Tallaabada</span><span class="cw" id="cw-13-1">labaad</span></div>
+        <div class="cap-line" id="cap-14"><span class="cw" id="cw-14-0">mari</span><span class="cw" id="cw-14-1">qadar</span><span class="cw" id="cw-14-2">ku</span></div>
+        <div class="cap-line" id="cap-15"><span class="cw" id="cw-15-0">filan</span></div>
+        <div class="cap-line" id="cap-16"><span class="cw" id="cw-16-0">qiyaastii</span><span class="cw" id="cw-16-1">laba</span><span class="cw" id="cw-16-2">farood</span></div>
+        <div class="cap-line" id="cap-17"><span class="cw" id="cw-17-0">wejiga</span><span class="cw" id="cw-17-1">iyo</span><span class="cw" id="cw-17-2">qoorta</span></div>
+        <div class="cap-line" id="cap-18"><span class="cw" id="cw-18-0">Tallaabada</span><span class="cw" id="cw-18-1">saddexaad</span></div>
+        <div class="cap-line" id="cap-19"><span class="cw" id="cw-19-0">mari</span><span class="cw" id="cw-19-1">shan</span><span class="cw" id="cw-19-2">iyo</span></div>
+        <div class="cap-line" id="cap-20"><span class="cw" id="cw-20-0">toban</span><span class="cw" id="cw-20-1">daqiiqo</span><span class="cw" id="cw-20-2">ka</span></div>
+        <div class="cap-line" id="cap-21"><span class="cw" id="cw-21-0">hor</span><span class="cw" id="cw-21-1">intaadan</span><span class="cw" id="cw-21-2">bannaanka</span></div>
+        <div class="cap-line" id="cap-22"><span class="cw" id="cw-22-0">u</span><span class="cw" id="cw-22-1">bixin</span></div>
+        <div class="cap-line" id="cap-23"><span class="cw" id="cw-23-0">Ha</span><span class="cw" id="cw-23-1">illoobin</span><span class="cw" id="cw-23-2">dhegaha</span></div>
+        <div class="cap-line" id="cap-24"><span class="cw" id="cw-24-0">qoorta</span></div>
+        <div class="cap-line" id="cap-25"><span class="cw" id="cw-25-0">gacmaha</span><span class="cw" id="cw-25-1">dushooda</span></div>
+        <div class="cap-line" id="cap-26"><span class="cw" id="cw-26-0">iyo</span><span class="cw" id="cw-26-1">cagaha</span></div>
+        <div class="cap-line" id="cap-27"><span class="cw" id="cw-27-0">Dib</span><span class="cw" id="cw-27-1">u</span><span class="cw" id="cw-27-2">mari</span></div>
+        <div class="cap-line" id="cap-28"><span class="cw" id="cw-28-0">labadii</span><span class="cw" id="cw-28-1">saacadoodba</span><span class="cw" id="cw-28-2">mar</span></div>
+        <div class="cap-line" id="cap-29"><span class="cw" id="cw-29-0">iyo</span><span class="cw" id="cw-29-1">mar</span><span class="cw" id="cw-29-2">kasta</span></div>
+        <div class="cap-line" id="cap-30"><span class="cw" id="cw-30-0">oo</span><span class="cw" id="cw-30-1">aad</span><span class="cw" id="cw-30-2">dabaalato</span></div>
+        <div class="cap-line" id="cap-31"><span class="cw" id="cw-31-0">ama</span><span class="cw" id="cw-31-1">dhididdo</span></div>
+        <div class="cap-line" id="cap-32"><span class="cw" id="cw-32-0">Maqaarka</span><span class="cw" id="cw-32-1">madow</span><span class="cw" id="cw-32-2">sidoo</span></div>
+        <div class="cap-line" id="cap-33"><span class="cw" id="cw-33-0">kale</span><span class="cw" id="cw-33-1">wuu</span><span class="cw" id="cw-33-2">gubtaa</span></div>
+        <div class="cap-line" id="cap-34"><span class="cw" id="cw-34-0">Qof</span><span class="cw" id="cw-34-1">kasta</span><span class="cw" id="cw-34-2">wuxuu</span></div>
+        <div class="cap-line" id="cap-35"><span class="cw" id="cw-35-0">u</span><span class="cw" id="cw-35-1">baahan</span><span class="cw" id="cw-35-2">yahay</span></div>
+        <div class="cap-line" id="cap-36"><span class="cw" id="cw-36-0">ilaalin</span></div>
+        <div class="cap-line" id="cap-37"><span class="cw" id="cw-37-0">Maanta</span><span class="cw" id="cw-37-1">bilow</span></div>
+        <div class="cap-line" id="cap-38"><span class="cw" id="cw-38-0">maqaarkaaga</span><span class="cw" id="cw-38-1">ilaali</span></div>
+        <div class="cap-line" id="cap-39"><span class="cw" id="cw-39-0">U</span><span class="cw" id="cw-39-1">dir</span><span class="cw" id="cw-39-2">qof</span></div>
+        <div class="cap-line" id="cap-40"><span class="cw" id="cw-40-0">aad</span><span class="cw" id="cw-40-1">jeceshahay</span></div>
+      </div>
+      <div id="flash"></div>
+
+    <audio id="vo" src="assets/audio/vo_tight.mp3" data-start="0" data-duration="44.17" data-track-index="10" data-volume="1"></audio>
+    <audio id="bgm" src="assets/audio/bgm.mp3" data-start="0" data-duration="45" data-track-index="11" data-volume="0.22" data-fade-out="1.2"></audio>
+    <audio id="sfx-whoosh-1" src="assets/audio/whoosh.mp3" data-start="4.129" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-2" src="assets/audio/whoosh.mp3" data-start="9.329" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-3" src="assets/audio/whoosh.mp3" data-start="14.451" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-4" src="assets/audio/whoosh.mp3" data-start="19.734" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-5" src="assets/audio/whoosh.mp3" data-start="25.127" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-6" src="assets/audio/whoosh.mp3" data-start="29.727" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-7" src="assets/audio/whoosh.mp3" data-start="34.787" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-8" src="assets/audio/whoosh.mp3" data-start="39.544" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-pop-0" src="assets/audio/pop.mp3" data-start="6.248" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-1" src="assets/audio/pop.mp3" data-start="7.075" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-2" src="assets/audio/pop.mp3" data-start="8.233" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-3" src="assets/audio/pop.mp3" data-start="15.193" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-4" src="assets/audio/pop.mp3" data-start="18.590" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-5" src="assets/audio/pop.mp3" data-start="26.100" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-6" src="assets/audio/pop.mp3" data-start="26.965" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-7" src="assets/audio/pop.mp3" data-start="27.696" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-8" src="assets/audio/pop.mp3" data-start="29.196" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-9" src="assets/audio/pop.mp3" data-start="33.393" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-10" src="assets/audio/pop.mp3" data-start="34.284" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-ding-0" src="assets/audio/ding.mp3" data-start="12.716" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    <audio id="sfx-ding-1" src="assets/audio/ding.mp3" data-start="24.051" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    <audio id="sfx-ding-2" src="assets/audio/ding.mp3" data-start="37.200" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    <audio id="sfx-ding-3" src="assets/audio/ding.mp3" data-start="40.817" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    </div>
+    <script>
+      const D = {"scenes": [{"id": "hook", "start": 0.0, "dur": 4.329}, {"id": "uv", "start": 4.329, "dur": 5.2}, {"id": "spf", "start": 9.529, "dur": 5.122}, {"id": "amount", "start": 14.651, "dur": 5.283}, {"id": "time", "start": 19.934, "dur": 5.393}, {"id": "spots", "start": 25.327, "dur": 4.6}, {"id": "reapply", "start": 29.927, "dur": 5.06}, {"id": "myth", "start": 34.987, "dur": 4.757}, {"id": "cta", "start": 39.744, "dur": 5.256}], "beats": {"cloud": 2.74, "burn": 6.248, "age": 7.075, "cancer": 8.233, "spf": 12.716, "more": 13.543, "fingers": 15.193, "face": 18.59, "fifteen": 21.884, "outside": 24.051, "ears": 26.1, "neck": 26.965, "hands": 27.696, "feet": 29.196, "two": 30.7, "swim": 33.393, "sweat": 34.284, "everyone": 37.2, "protect": 40.817, "share": 42.509}, "caps": [{"s": 0.24, "e": 1.753, "w": [{"t": "Qorraxdu", "s": 0.24}, {"t": "waxay", "s": 0.837}, {"t": "dhaawacdaa", "s": 1.125}]}, {"s": 1.753, "e": 2.74, "w": [{"t": "maqaarkaaga", "s": 1.753}]}, {"s": 2.74, "e": 3.971, "w": [{"t": "xitaa", "s": 2.74}, {"t": "maalmaha", "s": 3.137}, {"t": "daruurta", "s": 3.587}]}, {"s": 3.971, "e": 4.429, "w": [{"t": "leh", "s": 3.971}]}, {"s": 4.429, "e": 5.848, "w": [{"t": "Shucaaca", "s": 4.429}, {"t": "UV-ga", "s": 5.069}, {"t": "wuxuu", "s": 5.518}]}, {"s": 5.848, "e": 7.075, "w": [{"t": "keenaa", "s": 5.848}, {"t": "gubasho", "s": 6.248}]}, {"s": 7.075, "e": 8.056, "w": [{"t": "gabow", "s": 7.075}, {"t": "hore", "s": 7.402}]}, {"s": 8.056, "e": 9.629, "w": [{"t": "iyo", "s": 8.056}, {"t": "kansarka", "s": 8.233}, {"t": "maqaarka", "s": 8.761}]}, {"s": 9.629, "e": 11.108, "w": [{"t": "Tallaabada", "s": 9.629}, {"t": "koowaad", "s": 10.139}]}, {"s": 11.108, "e": 12.396, "w": [{"t": "dooro", "s": 11.108}, {"t": "kareemka", "s": 11.408}, {"t": "qorraxda", "s": 11.87}]}, {"s": 12.396, "e": 13.543, "w": [{"t": "oo", "s": 12.396}, {"t": "SPF", "s": 12.716}, {"t": "soddon", "s": 13.139}]}, {"s": 13.543, "e": 14.267, "w": [{"t": "ama", "s": 13.543}, {"t": "ka", "s": 13.882}, {"t": "badan", "s": 14.024}]}, {"s": 14.267, "e": 14.751, "w": [{"t": "ah", "s": 14.267}]}, {"s": 14.751, "e": 15.755, "w": [{"t": "Tallaabada", "s": 14.751}, {"t": "labaad", "s": 15.193}]}, {"s": 15.755, "e": 16.751, "w": [{"t": "mari", "s": 15.755}, {"t": "qadar", "s": 16.347}, {"t": "ku", "s": 16.59}]}, {"s": 16.751, "e": 17.282, "w": [{"t": "filan", "s": 16.751}]}, {"s": 17.282, "e": 18.59, "w": [{"t": "qiyaastii", "s": 17.282}, {"t": "laba", "s": 17.905}, {"t": "farood", "s": 18.222}]}, {"s": 18.59, "e": 20.034, "w": [{"t": "wejiga", "s": 18.59}, {"t": "iyo", "s": 19.116}, {"t": "qoorta", "s": 19.347}]}, {"s": 20.034, "e": 21.612, "w": [{"t": "Tallaabada", "s": 20.034}, {"t": "saddexaad", "s": 20.52}]}, {"s": 21.612, "e": 22.397, "w": [{"t": "mari", "s": 21.612}, {"t": "shan", "s": 21.884}, {"t": "iyo", "s": 22.166}]}, {"s": 22.397, "e": 23.358, "w": [{"t": "toban", "s": 22.397}, {"t": "daqiiqo", "s": 22.755}, {"t": "ka", "s": 23.269}]}, {"s": 23.358, "e": 24.627, "w": [{"t": "hor", "s": 23.358}, {"t": "intaadan", "s": 23.531}, {"t": "bannaanka", "s": 24.051}]}, {"s": 24.627, "e": 25.427, "w": [{"t": "u", "s": 24.627}, {"t": "bixin", "s": 24.781}]}, {"s": 25.427, "e": 26.965, "w": [{"t": "Ha", "s": 25.427}, {"t": "illoobin", "s": 25.631}, {"t": "dhegaha", "s": 26.1}]}, {"s": 26.965, "e": 27.696, "w": [{"t": "qoorta", "s": 26.965}]}, {"s": 27.696, "e": 29.003, "w": [{"t": "gacmaha", "s": 27.696}, {"t": "dushooda", "s": 28.253}]}, {"s": 29.003, "e": 30.027, "w": [{"t": "iyo", "s": 29.003}, {"t": "cagaha", "s": 29.196}]}, {"s": 30.027, "e": 30.7, "w": [{"t": "Dib", "s": 30.027}, {"t": "u", "s": 30.335}, {"t": "mari", "s": 30.458}]}, {"s": 30.7, "e": 32.22, "w": [{"t": "labadii", "s": 30.7}, {"t": "saacadoodba", "s": 31.181}, {"t": "mar", "s": 31.777}]}, {"s": 32.22, "e": 33.001, "w": [{"t": "iyo", "s": 32.22}, {"t": "mar", "s": 32.393}, {"t": "kasta", "s": 32.604}]}, {"s": 33.001, "e": 34.027, "w": [{"t": "oo", "s": 33.001}, {"t": "aad", "s": 33.143}, {"t": "dabaalato", "s": 33.393}]}, {"s": 34.027, "e": 35.087, "w": [{"t": "ama", "s": 34.027}, {"t": "dhididdo", "s": 34.284}]}, {"s": 35.087, "e": 36.131, "w": [{"t": "Maqaarka", "s": 35.087}, {"t": "madow", "s": 35.527}, {"t": "sidoo", "s": 35.835}]}, {"s": 36.131, "e": 37.2, "w": [{"t": "kale", "s": 36.131}, {"t": "wuu", "s": 36.354}, {"t": "gubtaa", "s": 36.508}]}, {"s": 37.2, "e": 38.277, "w": [{"t": "Qof", "s": 37.2}, {"t": "kasta", "s": 37.662}, {"t": "wuxuu", "s": 37.969}]}, {"s": 38.277, "e": 39.059, "w": [{"t": "u", "s": 38.277}, {"t": "baahan", "s": 38.366}, {"t": "yahay", "s": 38.739}]}, {"s": 39.059, "e": 39.844, "w": [{"t": "ilaalin", "s": 39.059}]}, {"s": 39.844, "e": 40.817, "w": [{"t": "Maanta", "s": 39.844}, {"t": "bilow", "s": 40.182}]}, {"s": 40.817, "e": 42.509, "w": [{"t": "maqaarkaaga", "s": 40.817}, {"t": "ilaali", "s": 41.586}]}, {"s": 42.509, "e": 43.278, "w": [{"t": "U", "s": 42.509}, {"t": "dir", "s": 42.72}, {"t": "qof", "s": 42.97}]}, {"s": 43.278, "e": 44.6, "w": [{"t": "aad", "s": 43.278}, {"t": "jeceshahay", "s": 43.47}]}]};
+      const tl = gsap.timeline({ paused: true });
+      const S = {};
+      D.scenes.forEach((s) => (S[s.id] = s));
+      const B = D.beats;
+      const q = (sel) => document.querySelector(sel);
+      const qa = (sel) => document.querySelectorAll(sel);
+
+      // persistent theme motion
+      tl.fromTo("#rays", { rotation: 0 }, { rotation: 40, duration: 45, ease: "none" }, 0);
+      tl.fromTo("#prog-fill", { scaleX: 0 }, { scaleX: 1, duration: 45, ease: "none" }, 0);
+
+      // every scene: hard cut + flash, punch-in landing, a mid-scene jump-cut zoom
+      D.scenes.forEach((s, i) => {
+        const el = q("#s-" + s.id);
+        const stage = el.querySelector(".stage");
+        const dir = i % 2 ? -1 : 1;
+        tl.fromTo(stage, { scale: 1.16, x: 90 * dir }, { scale: 1, x: 0, duration: 0.38, ease: "power3.out" }, s.start);
+        const jump = s.start + s.dur * 0.56;
+        tl.set(stage, { scale: 1.07 }, jump);
+        tl.to(stage, { scale: 1.1, duration: s.dur * 0.44 - 0.02, ease: "none" }, jump + 0.01);
+        if (i > 0) {
+          tl.set("#flash", { opacity: 0.85 }, s.start);
+          tl.to("#flash", { opacity: 0, duration: 0.16, ease: "power2.out" }, s.start + 0.001);
+        }
+        tl.fromTo(el.querySelector(".chip"), { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(3)" }, s.start + 0.05);
+        tl.fromTo(el.querySelectorAll(".hw"), { yPercent: 105 }, { yPercent: 0, duration: 0.42, stagger: 0.06, ease: "power4.out" }, s.start + 0.08);
+      });
+
+      // 1 hook
+      tl.fromTo("#sun", { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.8)" }, S.hook.start + 0.1);
+      tl.fromTo("#sun-rays", { rotation: 0, svgOrigin: "250 250" }, { rotation: 90, svgOrigin: "250 250", duration: S.hook.dur, ease: "none" }, S.hook.start);
+      tl.fromTo("#skin-bar", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out" }, S.hook.start + 0.4);
+      tl.fromTo("#cloud", { x: -760 }, { x: 0, duration: 0.5, ease: "power3.out" }, B.cloud - 0.15);
+      tl.fromTo(".uv", { strokeDasharray: 400, strokeDashoffset: 400 }, { strokeDashoffset: 0, duration: 0.5, stagger: 0.08, ease: "power2.in" }, B.cloud + 0.25);
+      tl.to("#skin-bar", { boxShadow: "0 0 60px rgba(255,90,60,0.95)", background: "linear-gradient(90deg,#b8442c,#ff5a3c,#ff8a5c)", duration: 0.3 }, B.cloud + 0.7);
+      tl.fromTo("#hook-sticker", { scale: 0, rotation: -20 }, { scale: 1, rotation: -6, duration: 0.35, ease: "back.out(2.5)" }, B.cloud + 0.3);
+
+      // 2 uv
+      [["#c-burn", B.burn], ["#c-age", B.age], ["#c-cancer", B.cancer]].forEach(([sel, t], i) => {
+        tl.fromTo(sel, { x: i % 2 ? -900 : 900, opacity: 0 }, { x: 0, opacity: 1, duration: 0.32, ease: "power4.out" }, t - 0.08);
+        tl.fromTo(sel + " .ic", { scale: 0.3 }, { scale: 1, duration: 0.4, ease: "back.out(3)" }, t + 0.05);
+      });
+
+      // 3 spf
+      tl.fromTo("#tube", { y: 700, rotation: 25 }, { y: 0, rotation: -10, duration: 0.55, ease: "back.out(1.4)" }, S.spf.start + 0.25);
+      tl.fromTo("#stamp", { scale: 3, opacity: 0, rotation: 12 }, { scale: 1, opacity: 1, rotation: -4, duration: 0.25, ease: "power4.in" }, B.spf - 0.2);
+      tl.fromTo("#s-spf .visual", { y: 0 }, { y: 14, duration: 0.05, yoyo: true, repeat: 3, ease: "none" }, B.spf + 0.05);
+      tl.fromTo("#spf-more", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2.5)" }, B.more);
+
+      // 4 amount
+      tl.fromTo("#f1", { y: 700 }, { y: 0, duration: 0.45, ease: "power3.out" }, S.amount.start + 0.25);
+      tl.fromTo("#f2", { y: 700 }, { y: 0, duration: 0.45, ease: "power3.out" }, S.amount.start + 0.35);
+      tl.fromTo(".finger .cream", { scaleY: 0 }, { scaleY: 1, duration: 0.55, stagger: 0.18, ease: "power2.out" }, B.fingers - 0.3);
+      tl.fromTo("#two-f", { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2.2)" }, B.fingers);
+      tl.fromTo("#face-eq", { x: 300, opacity: 0 }, { x: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, B.face);
+
+      // 5 time
+      tl.fromTo("#timer", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(1.8)" }, S.time.start + 0.2);
+      const cd = { v: 15 };
+      tl.fromTo(cd, { v: 15 }, { v: 0, duration: B.outside - B.fifteen, ease: "none", onUpdate: () => (q("#tn").textContent = String(Math.ceil(cd.v))) }, B.fifteen);
+      tl.fromTo("#ring", { strokeDashoffset: 0 }, { strokeDashoffset: 1382.3, duration: B.outside - B.fifteen, ease: "none" }, B.fifteen);
+      tl.fromTo("#go-out", { y: 200, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "back.out(2)" }, B.outside - 0.1);
+
+      // 6 spots
+      tl.fromTo("#body", { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, S.spots.start + 0.2);
+      tl.set(".dot", { opacity: 0 }, S.spots.start);
+      ["ears", "neck", "hands", "feet"].forEach((k) => {
+        tl.fromTo("#sp-" + k, { x: 520, opacity: 0 }, { x: 0, opacity: 1, duration: 0.28, ease: "power4.out" }, B[k] - 0.05);
+        tl.fromTo("#d-" + k, { scale: 0, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1.6, opacity: 1, duration: 0.3, ease: "back.out(4)" }, B[k]);
+      });
+
+      // 7 reapply
+      tl.fromTo("#cycle", { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(1.8)" }, S.reapply.start + 0.2);
+      tl.fromTo("#cycle-arrows", { rotation: 0 }, { rotation: 360, duration: S.reapply.dur, ease: "none" }, S.reapply.start);
+      tl.fromTo("#cycle-num .n", { scale: 1 }, { scale: 1.25, duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out" }, B.two);
+      tl.fromTo("#p-swim", { y: 260, opacity: 0 }, { y: 0, opacity: 1, duration: 0.32, ease: "back.out(2)" }, B.swim - 0.05);
+      tl.fromTo("#p-sweat", { y: 260, opacity: 0 }, { y: 0, opacity: 1, duration: 0.32, ease: "back.out(2)" }, B.sweat - 0.05);
+
+      // 8 myth
+      tl.fromTo(".tone", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, stagger: 0.08, ease: "back.out(2.2)" }, S.myth.start + 0.3);
+      tl.fromTo(".tone .ok", { scale: 0 }, { scale: 1, duration: 0.3, stagger: 0.07, ease: "back.out(3)" }, B.everyone);
+      tl.fromTo("#everyone", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.3, ease: "power4.out" }, B.everyone - 0.05);
+
+      // 9 cta
+      tl.fromTo("#cta-sun", { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.6)" }, S.cta.start + 0.15);
+      tl.fromTo("#cta-rays", { rotation: 0, svgOrigin: "250 250" }, { rotation: 60, svgOrigin: "250 250", duration: S.cta.dur, ease: "none" }, S.cta.start);
+      tl.fromTo("#cta-shield", { y: 400, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "back.out(1.6)" }, B.protect - 0.15);
+      tl.fromTo("#share", { y: 240, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "back.out(2)" }, B.share - 0.1);
+      tl.fromTo("#share-arrow", { x: 0 }, { x: 14, duration: 0.25, yoyo: true, repeat: 5, ease: "sine.inOut" }, B.share + 0.3);
+
+      // captions: word-by-word karaoke in Somali
+      D.caps.forEach((g, gi) => {
+        const line = "#cap-" + gi;
+        tl.set(line, { opacity: 1 }, g.s);
+        tl.fromTo(line, { scale: 0.86 }, { scale: 1, duration: 0.12, ease: "back.out(3)", immediateRender: false }, g.s);
+        tl.set(line, { opacity: 0 }, g.e);
+        g.w.forEach((w, wi) => {
+          const id = "#cw-" + gi + "-" + wi;
+          tl.set(id, { color: "#ffc933" }, w.s);
+          if (wi + 1 < g.w.length) tl.set(id, { color: "#fff4dc" }, g.w[wi + 1].s);
+        });
+      });
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
