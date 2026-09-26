@@ -112,3 +112,21 @@ pilot of the incident format. Owner wants Claude to make the creative calls and 
   write (lines per incident are in `incidents.py`).
 - Next: collect batch 2, retry B1, incident previews, scene1_v1 assembly after the render,
   narration part 3, voices once the key is fixed.
+
+## Session 4 (parallel to session 3's wrap-up; merged)
+- **ElevenLabs works now** (restricted key: TTS + voices/models only; no user_read,
+  speech_to_text or speech_to_speech; `pcm_44100` needs Pro, so `tts.py` uses `mp3_44100_192`).
+  Scene-1 lines generated, 866 chars + 134 for an alternate, all logged: casting in `tts.py`
+  ROLES — Brian (NARR), Chris (GRID), Sarah (GNN); `NARR1_george.wav` = alternate narrator
+  for the owner to compare. Checkpoint 2 is ready to show once rebuilt (`build/audio/vo/`).
+- `radio_fx.py --max-gap 0.22 --cut -0.12` → `grid_radio.wav` 10.94 s. Scene re-timed to the
+  real takes (`timeline.VO`): radio 42.2–53.2, reporter 53.2–65 (M1 5.04 s, then M2 at 0.6×
+  under the rest of her report, voice running into the pull-back), NARR4 at 67.4.
+  Blender: the top view now needs frames to 1596 (`render 19.5 53.2 ...`); the camera drift
+  is pinned to end at 50 s (`DRIFT_END`) so frames already rendered stay valid.
+- `clip_fix.py mic_flag M1.mp4 M1_clean.mp4` paints a fictional GNN flag over M1's logo flag
+  (checked frame by frame) — M1 no longer needs trimming or a redo.
+- `reporter.py` (untested; stopped before its first run): reporter picture + checkpoint-4
+  variants A (Seedance voice on camera) / C (ElevenLabs voice phrase-fitted to her lips) →
+  `build/preview/cp4_lipsync.mp4`. Variant B (speech-to-speech re-voice) needs the key's
+  speech_to_speech permission.
