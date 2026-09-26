@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="so" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Qurxinta Iska Saar</title>
+    <script src="assets/js/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Dancing Script"; src: url("assets/fonts/dancing-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-900.woff2") format("woff2"); font-weight: 900; }
+      @font-face { font-family: "Lora"; src: url("assets/fonts/lora-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Lora"; src: url("assets/fonts/lora-600i.woff2") format("woff2"); font-weight: 600; font-style: italic; }
+      :root {
+        --paper: #fbf7f0;
+        --sand: #efe4d2;
+        --sand2: #f6eee1;
+        --gold: #c9a24b;
+        --gold2: #e3c173;
+        --brown: #4a2e1a;
+        --brown2: #8a5a36;
+        --blue: #2f6fd0;
+        --navy: #1c3f86;
+        --terra: #b8452f;
+        --skin: #8d5a3b;
+        --sticker: drop-shadow(6px 0 0 #fff) drop-shadow(-6px 0 0 #fff) drop-shadow(0 6px 0 #fff) drop-shadow(0 -6px 0 #fff) drop-shadow(0 14px 14px rgba(74, 46, 26, 0.22));
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Lora", serif; color: var(--brown); background: var(--paper); }
+
+      /* persistent heritage theme: warm paper, woven diamond lattice, patterned band */
+      #bg { position: absolute; inset: 0; background: radial-gradient(1000px 900px at 50% 30%, #ffffff 0%, var(--paper) 55%, var(--sand2) 100%); }
+      #weave { position: absolute; inset: 0; opacity: 0.55;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><path d='M60 6 L114 60 L60 114 L6 60 Z' fill='none' stroke='%23e3c173' stroke-width='2' opacity='.45'/><path d='M60 48 L72 60 L60 72 L48 60 Z' fill='%23c9a24b' opacity='.28'/></svg>");
+        background-size: 120px 120px; }
+      #band { position: absolute; left: 0; top: 0; width: 1080px; height: 30px;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='30'><rect width='60' height='30' fill='%231c3f86'/><path d='M0 30 L15 6 L30 30Z' fill='%23c9a24b'/><path d='M30 30 L45 6 L60 30Z' fill='%23b8452f'/><path d='M15 0 L30 18 L45 0Z' fill='%23fbf7f0'/></svg>");
+        background-size: 60px 30px; }
+      #brand { position: absolute; left: 60px; top: 66px; display: flex; align-items: center; gap: 14px; font-family: "Cinzel"; font-weight: 700; font-size: 28px; letter-spacing: 0.16em; color: var(--brown); }
+      #brand svg { display: block; }
+      #prog { position: absolute; left: 60px; top: 118px; width: 820px; height: 10px; border-radius: 6px; background: var(--sand); overflow: hidden; }
+      #prog-fill { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold2)); transform-origin: left center; }
+      #flash { position: absolute; inset: 0; background: var(--gold2); opacity: 0; pointer-events: none; }
+
+      /* scenes */
+      .clip { position: absolute; inset: 0; }
+      .stage { position: absolute; inset: 0; transform-origin: 470px 900px; }
+      .stk { filter: var(--sticker); }
+      .chip { position: absolute; left: 60px; top: 190px; height: 66px; padding: 0 26px; border-radius: 33px; background: #fff; border: 3px solid var(--gold); color: var(--brown);
+        font-family: "Cinzel"; font-weight: 900; font-size: 30px; letter-spacing: 0.12em; display: flex; align-items: center; gap: 14px; box-shadow: 0 8px 14px rgba(74, 46, 26, 0.15); }
+      .chip i { display: block; width: 14px; height: 14px; background: var(--gold); transform: rotate(45deg); }
+      .chip.alt { background: var(--blue); border-color: #fff; color: #fff; }
+      .chip.alt i { background: #fff; }
+      .headline { position: absolute; left: 60px; top: 285px; width: 860px; font-family: "Cinzel"; font-weight: 900; font-size: 88px; line-height: 1.08; text-transform: uppercase; color: var(--brown); }
+      .headline .hl { display: block; overflow: hidden; padding-bottom: 8px; }
+      .headline .hw { display: inline-block; }
+      .headline .y { font-family: "Dancing Script"; font-weight: 700; font-size: 1.62em; line-height: 0.95; text-transform: none; color: var(--blue); }
+      .headline .sm { font-size: 62px; letter-spacing: 0.04em; color: var(--brown2); }
+      .visual { position: absolute; left: 40px; top: 690px; width: 880px; height: 640px; }
+      .center { display: flex; align-items: center; justify-content: center; }
+
+      .sticker { position: absolute; padding: 10px 40px 18px; border-radius: 26px; background: var(--terra); color: #fff; font-family: "Dancing Script"; font-weight: 700; font-size: 84px; line-height: 1.1; }
+      .lab { display: flex; align-items: center; gap: 22px; height: 70px; white-space: nowrap; padding: 0 28px; border-radius: 38px; background: #fff; border: 3px solid var(--gold2); box-shadow: 0 10px 16px rgba(74, 46, 26, 0.13);
+        font-family: "Cinzel"; font-weight: 900; font-size: 40px; text-transform: uppercase; color: var(--brown); }
+      .lab i { display: block; width: 38px; height: 38px; border-radius: 50%; }
+      .tag { position: absolute; }
+      .face { position: absolute; width: 360px; height: 440px; }
+      .pump { position: absolute; width: 240px; height: 560px; }
+      .jar { position: absolute; width: 330px; height: 300px; }
+
+      /* 1 question: sleeping in makeup */
+      #q-face { left: 220px; top: 60px; width: 420px; height: 520px; }
+      #q-moon { position: absolute; left: 20px; top: 0; width: 200px; height: 200px; }
+      #q-z { position: absolute; left: 640px; top: 40px; width: 220px; font-family: "Dancing Script"; font-weight: 700; font-size: 110px; line-height: 0.8; color: var(--navy); }
+
+      /* 2 tired: bed + remove */
+      #bed { position: absolute; left: 60px; top: 140px; width: 760px; height: 380px; }
+      #t-tired { left: 20px; top: 0; } #t-off { left: 440px; top: 540px; }
+
+      /* 3 pores */
+      .xsec { position: absolute; left: 40px; top: 20px; width: 800px; height: 330px; }
+      #p-clog { left: 20px; top: 400px; } #p-zit { left: 560px; top: 400px; }
+
+      /* 4 remove: cotton pad over the made-up face */
+      #r-face { left: 60px; top: 40px; width: 420px; height: 520px; }
+      #pad { position: absolute; left: 180px; top: 150px; width: 150px; height: 150px; border-radius: 50%; background: #fff; border: 4px solid var(--sand); box-shadow: 0 10px 16px rgba(74, 46, 26, 0.2); }
+      #r-f { left: 520px; top: 150px; } #r-e { left: 520px; top: 270px; }
+
+      /* 5 wash */
+      #w-pump { left: 60px; top: 20px; }
+      #w-drop { position: absolute; left: 380px; top: 80px; width: 250px; height: 320px; }
+      #w-temp { position: absolute; left: 650px; top: 90px; width: 110px; height: 300px; }
+      #w-c { left: 330px; top: 440px; } #w-b { left: 330px; top: 540px; }
+
+      /* 6 fingers vs scrub */
+      .vs { position: absolute; top: 20px; width: 400px; display: flex; flex-direction: column; align-items: center; gap: 26px; }
+      .vs svg { display: block; width: 340px; height: 340px; }
+      #v-yes { left: 10px; } #v-no { left: 470px; }
+
+      /* 7 pat dry */
+      #towel { position: absolute; left: 200px; top: 30px; width: 480px; height: 360px; }
+      #pat-skin { position: absolute; left: 290px; top: 360px; width: 300px; height: 90px; border-radius: 45px; background: linear-gradient(90deg, #8d5a3b, #a86f4a, #c99470); }
+      #pt-t { left: 20px; top: 500px; } #pt-d { left: 500px; top: 500px; }
+
+      /* 8 moisturize */
+      #m-jar { left: 275px; top: 110px; }
+      #m-drops { position: absolute; left: 350px; top: 0; width: 180px; height: 120px; }
+      #m-c { left: 220px; top: 440px; } #m-p { left: 120px; top: 530px; }
+
+      /* 9 don't share tools */
+      #tools { position: absolute; left: 180px; top: 20px; width: 520px; height: 480px; }
+      #s-no { left: 250px; top: 540px; }
+
+      /* 10 cta */
+      #cta-moon { position: absolute; left: 250px; top: 20px; width: 380px; height: 380px; }
+      #share { position: absolute; left: 20px; top: 470px; width: 840px; height: 130px; border-radius: 65px; background: var(--blue); gap: 20px; color: #fff; font-family: "Cinzel"; font-weight: 900; font-size: 36px; letter-spacing: 0.04em; text-transform: uppercase; }
+      #share-arrow { display: block; width: 64px; height: 64px; }
+      #tiktok { display: block; flex: 0 0 76px; width: 76px; height: 76px; border-radius: 17px; box-shadow: 0 0 0 4px #fff; }
+
+      /* captions: word-by-word, on a white sticker label */
+      #caps { position: absolute; left: 60px; top: 1370px; width: 840px; height: 190px; }
+      .cap-line { position: absolute; left: 0; top: 0; width: 840px; text-align: center; opacity: 0; }
+      .cap-pill { display: inline-block; max-width: 840px; padding: 14px 30px 18px; border-radius: 30px; background: #fff; border: 3px solid var(--gold2); box-shadow: 0 10px 18px rgba(74, 46, 26, 0.16);
+        font-weight: 700; font-size: 60px; line-height: 1.15; }
+      .cw { display: inline-block; margin: 0 8px; color: var(--brown); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="40.5" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="weave"></div>
+      <div id="band"></div>
+      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <radialGradient id="skin-g" cx="40%" cy="35%"><stop offset="0" stop-color="#c99470" /><stop offset=".7" stop-color="#a86f4a" /><stop offset="1" stop-color="#8d5a3b" /></radialGradient>
+          <radialGradient id="zit-g" cx="45%" cy="40%"><stop offset="0" stop-color="#fff6e6" /><stop offset=".28" stop-color="#fff0d6" /><stop offset=".32" stop-color="#d9745a" /><stop offset="1" stop-color="#b8452f" /></radialGradient>
+          <radialGradient id="crater-g" cx="50%" cy="45%"><stop offset="0" stop-color="#5c3520" /><stop offset=".6" stop-color="#7a4a2f" /><stop offset=".85" stop-color="#9a6444" /><stop offset="1" stop-color="#c99470" /></radialGradient>
+          <radialGradient id="swell-g"><stop offset="0" stop-color="#b8452f" stop-opacity=".75" /><stop offset="1" stop-color="#b8452f" stop-opacity="0" /></radialGradient>
+          <filter id="soft"><feGaussianBlur stdDeviation="9" /></filter>
+        </defs>
+      </svg>
+      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <symbol id="pump-art" viewBox="0 0 240 560">
+            <rect x="104" y="0" width="84" height="22" rx="8" fill="#1c3f86" />
+            <rect x="110" y="18" width="20" height="60" fill="#1c3f86" />
+            <rect x="80" y="70" width="80" height="40" rx="10" fill="#1c3f86" />
+            <rect x="96" y="108" width="48" height="36" fill="#e3c173" />
+            <path d="M40 150 Q40 140 60 140 H180 Q200 140 200 150 V520 Q200 550 170 550 H70 Q40 550 40 520 Z" fill="#fffaf1" stroke="#efe4d2" stroke-width="4" />
+            <rect x="40" y="240" width="160" height="190" fill="#2f6fd0" />
+            <path d="M120 256 l7 21 h22 l-18 13 7 21 -18 -13 -18 13 7 -21 -18 -13 h22 z" fill="#ffffff" />
+            <text x="120" y="360" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="36" fill="#ffffff">JIRKA</text>
+            <path d="M60 400 H180" stroke="#e3c173" stroke-width="4" />
+            <path d="M60 470 H180 M60 490 H180" stroke="#c9a24b" stroke-width="4" />
+          </symbol>
+          <symbol id="cleanser-art" viewBox="0 0 240 560">
+            <rect x="104" y="0" width="84" height="22" rx="8" fill="#1c3f86" />
+            <rect x="110" y="18" width="20" height="60" fill="#1c3f86" />
+            <rect x="80" y="70" width="80" height="40" rx="10" fill="#1c3f86" />
+            <rect x="96" y="108" width="48" height="36" fill="#e3c173" />
+            <path d="M40 150 Q40 140 60 140 H180 Q200 140 200 150 V520 Q200 550 170 550 H70 Q40 550 40 520 Z" fill="#fffaf1" stroke="#efe4d2" stroke-width="4" />
+            <rect x="40" y="240" width="160" height="190" fill="#1c3f86" />
+            <path d="M120 256 l7 21 h22 l-18 13 7 21 -18 -13 -18 13 7 -21 -18 -13 h22 z" fill="#ffffff" />
+            <text x="120" y="358" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="25" fill="#ffffff">NADIIFIYE</text>
+            <path d="M60 400 H180" stroke="#e3c173" stroke-width="4" />
+            <path d="M60 470 H180 M60 490 H180" stroke="#c9a24b" stroke-width="4" />
+          </symbol>
+          <symbol id="jar-art" viewBox="0 0 330 300">
+            <rect x="30" y="20" width="270" height="80" rx="22" fill="#c9a24b" />
+            <path d="M40 40 H290" stroke="#e3c173" stroke-width="6" />
+            <rect x="20" y="96" width="290" height="190" rx="36" fill="#fffaf1" stroke="#efe4d2" stroke-width="4" />
+            <rect x="20" y="140" width="290" height="100" fill="#2f6fd0" />
+            <text x="165" y="206" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="46" fill="#ffffff">WEJIGA</text>
+            <path d="M150 256 L165 271 L180 256 L165 241 Z" fill="#b8452f" />
+          </symbol>
+          <symbol id="face-art" viewBox="0 0 460 560">
+            <ellipse cx="230" cy="290" rx="200" ry="250" fill="url(#skin-g)" />
+            <path d="M40 230 Q40 40 230 36 Q420 40 420 230 Q380 120 230 118 Q80 120 40 230Z" fill="#2a1a10" />
+            <ellipse cx="160" cy="280" rx="18" ry="22" fill="#2a1a10" /><ellipse cx="300" cy="280" rx="18" ry="22" fill="#2a1a10" />
+            <path d="M230 300 Q222 350 236 362" fill="none" stroke="#7a4a2f" stroke-width="6" stroke-linecap="round" />
+            <path d="M180 420 Q230 452 280 420" fill="none" stroke="#7a4a2f" stroke-width="8" stroke-linecap="round" />
+          </symbol>
+        </defs>
+      </svg>
+      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <symbol id="makeup-art" viewBox="0 0 460 560">
+            <path d="M120 250 Q160 222 200 250" fill="none" stroke="#2f6fd0" stroke-width="16" stroke-linecap="round" opacity=".75" />
+            <path d="M260 250 Q300 222 340 250" fill="none" stroke="#2f6fd0" stroke-width="16" stroke-linecap="round" opacity=".75" />
+            <circle cx="130" cy="350" r="34" fill="#e0707a" opacity=".45" /><circle cx="330" cy="350" r="34" fill="#e0707a" opacity=".45" />
+            <path d="M184 418 Q230 400 276 418 Q230 456 184 418Z" fill="#c0283c" />
+          </symbol>
+          <symbol id="sleep-eyes" viewBox="0 0 460 560">
+            <rect x="130" y="266" width="64" height="30" fill="url(#skin-g)" /><rect x="268" y="266" width="64" height="30" fill="url(#skin-g)" />
+            <path d="M136 282 Q160 298 186 282 M274 282 Q298 298 324 282" fill="none" stroke="#2a1a10" stroke-width="7" stroke-linecap="round" />
+          </symbol>
+        </defs>
+      </svg>
+
+      <!-- 1. QUESTION -->
+      <section id="s-q" class="clip" data-start="0.000" data-duration="2.987" data-track-index="1">
+        <div class="stage">
+          <div class="chip alt"><i></i>SU'AAL<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Qurxin</span></span><span class="hl sm"><span class="hw">ma</span> <span class="hw">ku</span> <span class="hw">seexataa?</span></span></div>
+          <div class="visual">
+            <svg id="q-moon" class="stk" viewBox="0 0 200 200"><path d="M130 20 A80 80 0 1 0 180 130 A64 64 0 1 1 130 20Z" fill="#1c3f86" /><path d="M150 40 l5 12 12 5 -12 5 -5 12 -5 -12 -12 -5 12 -5z" fill="#e3c173" /></svg>
+            <svg class="face stk" id="q-face" viewBox="0 0 460 560"><use href="#face-art" width="460" height="560" /><use href="#makeup-art" width="460" height="560" /><use id="q-shut" href="#sleep-eyes" width="460" height="560" /></svg>
+            <div id="q-z"><span class="z">Z</span><span class="z" style="font-size: 80px">z</span><span class="z" style="font-size: 60px">z</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. TIRED -->
+      <section id="s-tired" class="clip" data-start="2.987" data-duration="3.315" data-track-index="1">
+        <div class="stage">
+          <div class="chip alt"><i></i>DIGNIIN<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Iska</span> <span class="hw y">saar</span></span><span class="hl sm"><span class="hw">ka</span> <span class="hw">hor</span> <span class="hw">hurdada</span></span></div>
+          <div class="visual">
+            <svg id="bed" class="stk" viewBox="0 0 760 380"><rect x="20" y="120" width="720" height="170" rx="30" fill="#ffffff" /><rect x="20" y="210" width="720" height="80" rx="20" fill="#2f6fd0" /><path d="M20 250 H740" stroke="#e3c173" stroke-width="6" /><path d="M60 250 L90 225 L120 250 L150 225 L180 250 L210 225 L240 250 L270 225 L300 250 L330 225 L360 250 L390 225 L420 250 L450 225 L480 250 L510 225 L540 250 L570 225 L600 250 L630 225 L660 250 L690 225 L720 250" fill="none" stroke="#c9a24b" stroke-width="5" /><rect x="60" y="70" width="220" height="110" rx="40" fill="#fffaf1" stroke="#efe4d2" stroke-width="4" /><rect x="0" y="40" width="40" height="330" rx="14" fill="#8a5a36" /><rect x="720" y="160" width="40" height="210" rx="14" fill="#8a5a36" /></svg>
+            <div class="lab tag" id="t-tired"><i style="background: var(--navy)"></i>Daalan?</div>
+            <div class="lab tag" id="t-off"><i style="background: var(--blue)"></i>Iska saar</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. PORES -->
+      <section id="s-pores" class="clip" data-start="6.302" data-duration="5.673" data-track-index="1">
+        <div class="stage">
+          <div class="chip alt"><i></i>KHATAR<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Daloolo</span> <span class="hw y">xiran</span></span><span class="hl sm"><span class="hw">iyo</span> <span class="hw">finan</span></span></div>
+          <div class="visual">
+            <svg class="xsec stk" viewBox="0 0 800 330">
+              <rect x="0" y="60" width="800" height="270" rx="30" fill="#f2c9b3" />
+              <path d="M0 90 Q0 60 30 60 H330 Q360 60 368 40 Q400 -10 432 40 Q440 60 470 60 H770 Q800 60 800 90 V110 H0 Z" fill="#c98a62" />
+              <path d="M372 40 Q400 20 428 40 L440 200 Q470 250 440 290 Q400 320 360 290 Q330 250 360 200 Z" fill="#e8a98e" />
+              <path d="M384 48 Q400 36 416 48 L424 205 Q448 245 424 272 Q400 292 376 272 Q352 245 376 205 Z" fill="#f7e3c4" />
+              <path id="mk-layer" d="M0 70 Q0 44 30 44 H800 V78 H0 Z" fill="#e0a8a0" opacity=".9" />
+              <g id="bump"><circle cx="400" cy="150" r="80" fill="url(#swell-g)" /><ellipse cx="400" cy="34" rx="30" ry="24" fill="url(#zit-g)" /></g>
+            </svg>
+            <div class="lab tag" id="p-clog"><i style="background: #e0a8a0"></i>Daloolo xiran</div>
+            <div class="lab tag" id="p-zit"><i style="background: var(--terra)"></i>Finan</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. REMOVE -->
+      <section id="s-remove" class="clip" data-start="11.975" data-duration="3.922" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>TALLAABO 1<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Si</span> <span class="hw y">tartiib</span> <span class="hw y">ah</span></span><span class="hl sm"><span class="hw">uga</span> <span class="hw">saar</span></span></div>
+          <div class="visual">
+            <svg class="face stk" id="r-face" viewBox="0 0 460 560"><use href="#face-art" width="460" height="560" /><g id="r-mk"><use href="#makeup-art" width="460" height="560" /></g></svg>
+            <div id="pad"></div>
+            <div class="lab tag" id="r-f"><i style="background: var(--blue)"></i>Wejiga</div>
+            <div class="lab tag" id="r-e"><i style="background: var(--blue)"></i>Indhaha</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. WASH -->
+      <section id="s-wash" class="clip" data-start="15.897" data-duration="3.569" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>TALLAABO 2<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Ku</span> <span class="hw y">dhaq</span></span><span class="hl sm"><span class="hw">biyo</span> <span class="hw">diirran</span></span></div>
+          <div class="visual">
+            <svg class="pump stk" id="w-pump" viewBox="0 0 240 560"><use href="#cleanser-art" width="240" height="560" /></svg>
+            <svg id="w-drop" class="stk" viewBox="0 0 250 320"><path d="M125 10 C160 80 230 130 230 200 C230 264 182 310 125 310 C68 310 20 264 20 200 C20 130 90 80 125 10Z" fill="#6fa4e8" /><path d="M70 210 C70 175 90 150 110 130" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" opacity=".7" /></svg>
+            <svg id="w-temp" class="stk" viewBox="0 0 110 300"><rect x="35" y="10" width="40" height="220" rx="20" fill="#ffffff" stroke="#efe4d2" stroke-width="4" /><circle cx="55" cy="245" r="42" fill="#e3a23b" /><rect id="w-level" x="45" y="110" width="20" height="140" rx="10" fill="#e3a23b" /></svg>
+            <div class="lab tag" id="w-c"><i style="background: var(--blue)"></i>Nadiifiye jilicsan</div>
+            <div class="lab tag" id="w-b"><i style="background: #e3a23b"></i>Biyo diirran</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. FINGERS -->
+      <section id="s-fingers" class="clip" data-start="19.466" data-duration="2.809" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>TALLAABO 3<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Farahaaga</span></span><span class="hl sm"><span class="hw">ha</span> <span class="hw">xoqin</span></span></div>
+          <div class="visual">
+            <div class="vs" id="v-yes">
+              <svg class="stk" viewBox="0 0 340 340"><circle cx="170" cy="170" r="165" fill="#ffffff" /><g fill="#a86f4a"><rect x="110" y="70" width="40" height="160" rx="20" /><rect x="156" y="50" width="40" height="176" rx="20" /><rect x="202" y="80" width="38" height="150" rx="19" /><path d="M104 190 H244 V250 C244 290 214 310 176 310 C136 310 104 290 104 256Z" /></g><path id="circ" d="M60 170 A110 110 0 1 1 90 246" fill="none" stroke="#2f6fd0" stroke-width="12" stroke-linecap="round" /><path d="M72 222 L90 250 L116 232" fill="none" stroke="#2f6fd0" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <div class="lab"><i style="background: var(--blue)"></i>Farahaaga</div>
+            </div>
+            <div class="vs" id="v-no">
+              <svg class="stk" viewBox="0 0 340 340"><circle cx="170" cy="170" r="165" fill="#ffffff" /><rect x="70" y="150" width="200" height="60" rx="20" fill="#8a5a36" /><g stroke="#e3c173" stroke-width="8" stroke-linecap="round"><path d="M90 150 V110 M120 150 V104 M150 150 V110 M180 150 V104 M210 150 V110 M240 150 V104" /></g><g id="no-ban" fill="none" stroke="#b8452f" stroke-width="22"><circle cx="170" cy="170" r="140" /><path d="M71 71 L269 269" /></g></svg>
+              <div class="lab"><i style="background: var(--terra)"></i>Ha xoqin</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. PAT DRY -->
+      <section id="s-pat" class="clip" data-start="22.275" data-duration="2.935" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>TALLAABO 4<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Ku</span> <span class="hw y">qalaji</span></span><span class="hl sm"><span class="hw">tuwaal</span> <span class="hw">nadiif</span> <span class="hw">ah</span></span></div>
+          <div class="visual">
+            <svg id="towel" class="stk" viewBox="0 0 480 360"><rect x="40" y="40" width="400" height="280" rx="30" fill="#fffaf1" stroke="#efe4d2" stroke-width="4" /><rect x="40" y="240" width="400" height="40" fill="#2f6fd0" /><rect x="40" y="290" width="400" height="12" fill="#c9a24b" /><path d="M60 240 L80 220 L100 240 L120 220 L140 240 L160 220 L180 240 L200 220 L220 240 L240 220 L260 240 L280 220 L300 240 L320 220 L340 240 L360 220 L380 240 L400 220 L420 240" fill="none" stroke="#b8452f" stroke-width="5" /><g stroke="#efe4d2" stroke-width="3"><path d="M80 80 H400 M80 110 H400 M80 140 H400 M80 170 H400" /></g></svg>
+            <div id="pat-skin"></div>
+            <div class="lab tag" id="pt-t"><i style="background: var(--blue)"></i>Tuwaal nadiif</div>
+            <div class="lab tag" id="pt-d"><i style="background: var(--gold)"></i>Si tartiib ah</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. MOISTURIZE -->
+      <section id="s-moist" class="clip" data-start="25.210" data-duration="4.264" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>TALLAABO 5<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Qoyaan</span></span><span class="hl sm"><span class="hw">siiya</span> <span class="hw">maqaarkaaga</span></span></div>
+          <div class="visual">
+            <svg id="m-drops" viewBox="0 0 180 120"><g fill="#6fa4e8"><path class="md" d="M40 10 C50 34 66 46 66 64 C66 80 54 90 40 90 C26 90 14 80 14 64 C14 46 30 34 40 10Z" /><path class="md" d="M100 30 C108 48 120 58 120 72 C120 84 111 92 100 92 C89 92 80 84 80 72 C80 58 92 48 100 30Z" /><path class="md" d="M150 6 C157 22 168 31 168 44 C168 55 160 62 150 62 C140 62 132 55 132 44 C132 31 143 22 150 6Z" /></g></svg>
+            <svg class="jar stk" id="m-jar" viewBox="0 0 330 300"><use href="#jar-art" width="330" height="300" /></svg>
+            <div class="lab tag" id="m-c"><i style="background: var(--blue)"></i>Kareem qoyaan</div>
+            <div class="lab tag" id="m-p"><i style="background: var(--gold)"></i>Aan xirin daloolada</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. DON'T SHARE -->
+      <section id="s-share" class="clip" data-start="29.474" data-duration="3.427" data-track-index="1">
+        <div class="stage">
+          <div class="chip alt"><i></i>DIGNIIN<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Ha</span> <span class="hw y">wadaagin</span></span><span class="hl sm"><span class="hw">burushyada</span> <span class="hw">qurxinta</span></span></div>
+          <div class="visual">
+            <svg id="tools" class="stk" viewBox="0 0 520 480">
+              <circle cx="260" cy="240" r="230" fill="#ffffff" />
+              <g transform="rotate(-25 180 250)"><rect x="165" y="170" width="30" height="220" rx="12" fill="#8a5a36" /><rect x="160" y="140" width="40" height="40" fill="#c9a24b" /><path d="M160 142 Q150 70 180 40 Q210 70 200 142Z" fill="#4a2e1a" /></g>
+              <g transform="rotate(20 300 250)"><rect x="286" y="190" width="28" height="200" rx="12" fill="#1c3f86" /><rect x="282" y="160" width="36" height="36" fill="#c9a24b" /><path d="M282 162 Q276 110 300 80 Q324 110 318 162Z" fill="#e0a8a0" /></g>
+              <g transform="rotate(8 390 300)"><rect x="370" y="250" width="44" height="120" rx="8" fill="#c9a24b" /><rect x="376" y="200" width="32" height="56" rx="6" fill="#ffffff" stroke="#efe4d2" stroke-width="3" /><path d="M376 204 L408 180 V204Z" fill="#c0283c" /></g>
+              <g id="t-ban" fill="none" stroke="#b8452f" stroke-width="26"><circle cx="260" cy="240" r="200" /><path d="M119 99 L401 381" /></g>
+            </svg>
+            <div class="lab tag" id="s-no"><i style="background: var(--terra)"></i>Ha wadaagin</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 10. CTA -->
+      <section id="s-cta" class="clip" data-start="32.901" data-duration="7.599" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>CAAWA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Caawa</span> <span class="hw y">bilow!</span></span><span class="hl sm"><span class="hw">wejigaaga</span> <span class="hw">daryeel</span></span></div>
+          <div class="visual">
+            <svg id="cta-moon" class="stk" viewBox="0 0 380 380"><circle cx="190" cy="190" r="180" fill="#1c3f86" /><path d="M230 70 A120 120 0 1 0 310 230 A96 96 0 1 1 230 70Z" fill="#e3c173" /><path d="M150 140 l12 36 h38 l-31 22 12 36 -31 -22 -31 22 12 -36 -31 -22 h38z" fill="#ffffff" /><g fill="#ffffff"><circle cx="300" cy="100" r="5" /><circle cx="90" cy="280" r="4" /><circle cx="280" cy="300" r="3" /></g></svg>
+            <div id="share" class="center stk"><svg id="tiktok" viewBox="0 0 48 48"><rect width="48" height="48" rx="11" fill="#000000" /><g transform="translate(7.8 7.8) scale(1.35)"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.650-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" fill="#25f4ee" transform="translate(-0.9 -0.9)" /><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.650-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" fill="#fe2c55" transform="translate(0.9 0.9)" /><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.650-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" fill="#ffffff" /></g></svg><span>U dir qof aad jeceshahay</span><svg id="share-arrow" viewBox="0 0 64 64"><path d="M36 10 L58 30 L36 50 V38 C22 38 12 42 6 54 C8 34 18 24 36 22 Z" fill="#ffffff" /></svg></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- persistent chrome above scenes -->
+      <div id="brand"><svg width="30" height="28" viewBox="0 0 46 42"><path d="M23 40 C8 28 2 20 2 12 C2 6 7 2 12 2 C17 2 21 5 23 9 C25 5 29 2 34 2 C39 2 44 6 44 12 C44 20 38 28 23 40Z" fill="#2f6fd0" /></svg>QURXINTA &amp; MAQAARKA</div>
+      <div id="prog"><span id="prog-fill"></span></div>
+      <div id="caps">
+        <div class="cap-line" id="cap-0"><span class="cap-pill"><span class="cw" id="cw-0-0">Adigoo</span><span class="cw" id="cw-0-1">wejiga</span><span class="cw" id="cw-0-2">qurxin</span></span></div>
+        <div class="cap-line" id="cap-1"><span class="cap-pill"><span class="cw" id="cw-1-0">ku</span><span class="cw" id="cw-1-1">leh</span><span class="cw" id="cw-1-2">ma</span></span></div>
+        <div class="cap-line" id="cap-2"><span class="cap-pill"><span class="cw" id="cw-2-0">seexataa</span></span></div>
+        <div class="cap-line" id="cap-3"><span class="cap-pill"><span class="cw" id="cw-3-0">Xitaa</span><span class="cw" id="cw-3-1">haddii</span><span class="cw" id="cw-3-2">aad</span></span></div>
+        <div class="cap-line" id="cap-4"><span class="cap-pill"><span class="cw" id="cw-4-0">daalan</span><span class="cw" id="cw-4-1">tahay</span></span></div>
+        <div class="cap-line" id="cap-5"><span class="cap-pill"><span class="cw" id="cw-5-0">iska</span><span class="cw" id="cw-5-1">saar</span><span class="cw" id="cw-5-2">ka</span></span></div>
+        <div class="cap-line" id="cap-6"><span class="cap-pill"><span class="cw" id="cw-6-0">hor</span><span class="cw" id="cw-6-1">hurdada</span></span></div>
+        <div class="cap-line" id="cap-7"><span class="cap-pill"><span class="cw" id="cw-7-0">Qurxinta</span><span class="cw" id="cw-7-1">habeenkii</span><span class="cw" id="cw-7-2">wejiga</span></span></div>
+        <div class="cap-line" id="cap-8"><span class="cap-pill"><span class="cw" id="cw-8-0">ku</span><span class="cw" id="cw-8-1">hartaa</span><span class="cw" id="cw-8-2">waxay</span></span></div>
+        <div class="cap-line" id="cap-9"><span class="cap-pill"><span class="cw" id="cw-9-0">xiri</span><span class="cw" id="cw-9-1">kartaa</span><span class="cw" id="cw-9-2">daloolada</span></span></div>
+        <div class="cap-line" id="cap-10"><span class="cap-pill"><span class="cw" id="cw-10-0">maqaarka</span></span></div>
+        <div class="cap-line" id="cap-11"><span class="cap-pill"><span class="cw" id="cw-11-0">waxayna</span><span class="cw" id="cw-11-1">keeni</span><span class="cw" id="cw-11-2">kartaa</span></span></div>
+        <div class="cap-line" id="cap-12"><span class="cap-pill"><span class="cw" id="cw-12-0">finan</span></span></div>
+        <div class="cap-line" id="cap-13"><span class="cap-pill"><span class="cw" id="cw-13-0">Marka</span><span class="cw" id="cw-13-1">hore</span></span></div>
+        <div class="cap-line" id="cap-14"><span class="cap-pill"><span class="cw" id="cw-14-0">si</span><span class="cw" id="cw-14-1">tartiib</span><span class="cw" id="cw-14-2">ah</span></span></div>
+        <div class="cap-line" id="cap-15"><span class="cap-pill"><span class="cw" id="cw-15-0">uga</span><span class="cw" id="cw-15-1">saar</span><span class="cw" id="cw-15-2">qurxinta</span></span></div>
+        <div class="cap-line" id="cap-16"><span class="cap-pill"><span class="cw" id="cw-16-0">wejiga</span><span class="cw" id="cw-16-1">iyo</span><span class="cw" id="cw-16-2">indhaha</span></span></div>
+        <div class="cap-line" id="cap-17"><span class="cap-pill"><span class="cw" id="cw-17-0">Kadib</span><span class="cw" id="cw-17-1">wejiga</span><span class="cw" id="cw-17-2">ku</span></span></div>
+        <div class="cap-line" id="cap-18"><span class="cap-pill"><span class="cw" id="cw-18-0">dhaq</span><span class="cw" id="cw-18-1">nadiifiye</span><span class="cw" id="cw-18-2">jilicsan</span></span></div>
+        <div class="cap-line" id="cap-19"><span class="cap-pill"><span class="cw" id="cw-19-0">iyo</span><span class="cw" id="cw-19-1">biyo</span><span class="cw" id="cw-19-2">diirran</span></span></div>
+        <div class="cap-line" id="cap-20"><span class="cap-pill"><span class="cw" id="cw-20-0">Farahaaga</span><span class="cw" id="cw-20-1">isticmaal</span></span></div>
+        <div class="cap-line" id="cap-21"><span class="cap-pill"><span class="cw" id="cw-21-0">hana</span><span class="cw" id="cw-21-1">xoqin</span><span class="cw" id="cw-21-2">maqaarka</span></span></div>
+        <div class="cap-line" id="cap-22"><span class="cap-pill"><span class="cw" id="cw-22-0">Tuwaal</span><span class="cw" id="cw-22-1">nadiif</span><span class="cw" id="cw-22-2">ah</span></span></div>
+        <div class="cap-line" id="cap-23"><span class="cap-pill"><span class="cw" id="cw-23-0">si</span><span class="cw" id="cw-23-1">tartiib</span><span class="cw" id="cw-23-2">ah</span></span></div>
+        <div class="cap-line" id="cap-24"><span class="cap-pill"><span class="cw" id="cw-24-0">ugu</span><span class="cw" id="cw-24-1">qalaji</span></span></div>
+        <div class="cap-line" id="cap-25"><span class="cap-pill"><span class="cw" id="cw-25-0">Ugu</span><span class="cw" id="cw-25-1">dambayn</span></span></div>
+        <div class="cap-line" id="cap-26"><span class="cap-pill"><span class="cw" id="cw-26-0">mari</span><span class="cw" id="cw-26-1">kareem</span><span class="cw" id="cw-26-2">qoyaan</span></span></div>
+        <div class="cap-line" id="cap-27"><span class="cap-pill"><span class="cw" id="cw-27-0">siiya</span><span class="cw" id="cw-27-1">maqaarkaaga</span><span class="cw" id="cw-27-2">oo</span></span></div>
+        <div class="cap-line" id="cap-28"><span class="cap-pill"><span class="cw" id="cw-28-0">aan</span><span class="cw" id="cw-28-1">daloolada</span><span class="cw" id="cw-28-2">xirin</span></span></div>
+        <div class="cap-line" id="cap-29"><span class="cap-pill"><span class="cw" id="cw-29-0">Alaabta</span><span class="cw" id="cw-29-1">qurxinta</span><span class="cw" id="cw-29-2">iyo</span></span></div>
+        <div class="cap-line" id="cap-30"><span class="cap-pill"><span class="cw" id="cw-30-0">burushyada</span><span class="cw" id="cw-30-1">dadka</span><span class="cw" id="cw-30-2">kale</span></span></div>
+        <div class="cap-line" id="cap-31"><span class="cap-pill"><span class="cw" id="cw-31-0">ha</span><span class="cw" id="cw-31-1">la</span><span class="cw" id="cw-31-2">wadaagin</span></span></div>
+        <div class="cap-line" id="cap-32"><span class="cap-pill"><span class="cw" id="cw-32-0">Caawa</span><span class="cw" id="cw-32-1">caado</span><span class="cw" id="cw-32-2">fiican</span></span></div>
+        <div class="cap-line" id="cap-33"><span class="cap-pill"><span class="cw" id="cw-33-0">bilow</span></span></div>
+        <div class="cap-line" id="cap-34"><span class="cap-pill"><span class="cw" id="cw-34-0">qurxinta</span><span class="cw" id="cw-34-1">iska</span><span class="cw" id="cw-34-2">saar</span></span></div>
+        <div class="cap-line" id="cap-35"><span class="cap-pill"><span class="cw" id="cw-35-0">wejigaagana</span><span class="cw" id="cw-35-1">daryeel</span></span></div>
+        <div class="cap-line" id="cap-36"><span class="cap-pill"><span class="cw" id="cw-36-0">U</span><span class="cw" id="cw-36-1">dir</span><span class="cw" id="cw-36-2">qof</span></span></div>
+        <div class="cap-line" id="cap-37"><span class="cap-pill"><span class="cw" id="cw-37-0">aad</span><span class="cw" id="cw-37-1">jeceshahay</span></span></div>
+      </div>
+      <div id="flash"></div>
+
+    <audio id="vo" src="assets/audio/vo.mp3" data-start="0" data-duration="39.16" data-track-index="10" data-volume="1"></audio>
+    <audio id="bgm" src="assets/audio/bgm.mp3" data-start="0" data-duration="40.5" data-track-index="11" data-volume="0.22" data-fade-out="1.2"></audio>
+    <audio id="sfx-whoosh-1" src="assets/audio/whoosh.mp3" data-start="2.787" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-2" src="assets/audio/whoosh.mp3" data-start="6.102" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-3" src="assets/audio/whoosh.mp3" data-start="11.775" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-4" src="assets/audio/whoosh.mp3" data-start="15.697" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-5" src="assets/audio/whoosh.mp3" data-start="19.266" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-6" src="assets/audio/whoosh.mp3" data-start="22.075" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-7" src="assets/audio/whoosh.mp3" data-start="25.010" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-8" src="assets/audio/whoosh.mp3" data-start="29.274" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-9" src="assets/audio/whoosh.mp3" data-start="32.701" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-pop-0" src="assets/audio/pop.mp3" data-start="8.926" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-1" src="assets/audio/pop.mp3" data-start="11.025" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-2" src="assets/audio/pop.mp3" data-start="14.151" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-3" src="assets/audio/pop.mp3" data-start="14.816" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-4" src="assets/audio/pop.mp3" data-start="16.964" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-5" src="assets/audio/pop.mp3" data-start="18.178" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-6" src="assets/audio/pop.mp3" data-start="20.860" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-7" src="assets/audio/pop.mp3" data-start="24.128" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-8" src="assets/audio/pop.mp3" data-start="27.999" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-9" src="assets/audio/pop.mp3" data-start="31.807" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-ding-0" src="assets/audio/ding.mp3" data-start="1.813" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    <audio id="sfx-ding-1" src="assets/audio/ding.mp3" data-start="26.079" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    <audio id="sfx-ding-2" src="assets/audio/ding.mp3" data-start="36.077" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    <audio id="sfx-ding-3" src="assets/audio/ding.mp3" data-start="36.941" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    </div>
+    <script>
+      const D = {"total": 40.5, "scenes": [{"id": "q", "start": 0.0, "dur": 2.987}, {"id": "tired", "start": 2.987, "dur": 3.315}, {"id": "pores", "start": 6.302, "dur": 5.673}, {"id": "remove", "start": 11.975, "dur": 3.922}, {"id": "wash", "start": 15.897, "dur": 3.569}, {"id": "fingers", "start": 19.466, "dur": 2.809}, {"id": "pat", "start": 22.275, "dur": 2.935}, {"id": "moist", "start": 25.21, "dur": 4.264}, {"id": "share", "start": 29.474, "dur": 3.427}, {"id": "cta", "start": 32.901, "dur": 7.599}], "beats": {"makeup": 1.101, "sleep": 1.813, "tired": 3.916, "off": 4.745, "clog": 8.926, "zit": 11.025, "face": 14.151, "eyes": 14.816, "cleanser": 16.964, "water": 18.178, "fingers": 19.566, "scrub": 20.86, "towel": 22.375, "dry": 24.128, "cream": 26.079, "nopore": 27.999, "brushes": 30.575, "noshare": 31.807, "tonight": 33.001, "care": 36.077, "share": 36.941}, "caps": [{"s": 0.3, "e": 1.363, "w": [{"t": "Adigoo", "s": 0.3}, {"t": "wejiga", "s": 0.728}, {"t": "qurxin", "s": 1.101}]}, {"s": 1.363, "e": 1.813, "w": [{"t": "ku", "s": 1.363}, {"t": "leh", "s": 1.513}, {"t": "ma", "s": 1.663}]}, {"s": 1.813, "e": 2.797, "w": [{"t": "seexataa", "s": 1.813}]}, {"s": 3.087, "e": 3.916, "w": [{"t": "Xitaa", "s": 3.087}, {"t": "haddii", "s": 3.4}, {"t": "aad", "s": 3.713}]}, {"s": 3.916, "e": 4.487, "w": [{"t": "daalan", "s": 3.916}, {"t": "tahay", "s": 4.229}]}, {"s": 4.487, "e": 5.096, "w": [{"t": "iska", "s": 4.487}, {"t": "saar", "s": 4.745}, {"t": "ka", "s": 4.948}]}, {"s": 5.096, "e": 6.112, "w": [{"t": "hor", "s": 5.096}, {"t": "hurdada", "s": 5.244}]}, {"s": 6.402, "e": 7.625, "w": [{"t": "Qurxinta", "s": 6.402}, {"t": "habeenkii", "s": 6.773}, {"t": "wejiga", "s": 7.254}]}, {"s": 7.625, "e": 8.351, "w": [{"t": "ku", "s": 7.625}, {"t": "hartaa", "s": 7.775}, {"t": "waxay", "s": 8.09}]}, {"s": 8.351, "e": 9.463, "w": [{"t": "xiri", "s": 8.351}, {"t": "kartaa", "s": 8.611}, {"t": "daloolada", "s": 8.926}]}, {"s": 9.463, "e": 10.025, "w": [{"t": "maqaarka", "s": 9.463}]}, {"s": 10.025, "e": 11.025, "w": [{"t": "waxayna", "s": 10.025}, {"t": "keeni", "s": 10.395}, {"t": "kartaa", "s": 10.71}]}, {"s": 11.025, "e": 11.785, "w": [{"t": "finan", "s": 11.025}]}, {"s": 12.075, "e": 12.623, "w": [{"t": "Marka", "s": 12.075}, {"t": "hore", "s": 12.349}]}, {"s": 12.623, "e": 13.271, "w": [{"t": "si", "s": 12.623}, {"t": "tartiib", "s": 12.781}, {"t": "ah", "s": 13.113}]}, {"s": 13.271, "e": 14.151, "w": [{"t": "uga", "s": 13.271}, {"t": "saar", "s": 13.545}, {"t": "qurxinta", "s": 13.761}]}, {"s": 14.151, "e": 15.707, "w": [{"t": "wejiga", "s": 14.151}, {"t": "iyo", "s": 14.542}, {"t": "indhaha", "s": 14.816}]}, {"s": 15.997, "e": 16.808, "w": [{"t": "Kadib", "s": 15.997}, {"t": "wejiga", "s": 16.267}, {"t": "ku", "s": 16.653}]}, {"s": 16.808, "e": 17.908, "w": [{"t": "dhaq", "s": 16.808}, {"t": "nadiifiye", "s": 16.964}, {"t": "jilicsan", "s": 17.522}]}, {"s": 17.908, "e": 19.276, "w": [{"t": "iyo", "s": 17.908}, {"t": "biyo", "s": 18.178}, {"t": "diirran", "s": 18.448}]}, {"s": 19.566, "e": 20.585, "w": [{"t": "Farahaaga", "s": 19.566}, {"t": "isticmaal", "s": 20.134}]}, {"s": 20.585, "e": 22.085, "w": [{"t": "hana", "s": 20.585}, {"t": "xoqin", "s": 20.86}, {"t": "maqaarka", "s": 21.135}]}, {"s": 22.375, "e": 23.202, "w": [{"t": "Tuwaal", "s": 22.375}, {"t": "nadiif", "s": 22.709}, {"t": "ah", "s": 23.043}]}, {"s": 23.202, "e": 23.852, "w": [{"t": "si", "s": 23.202}, {"t": "tartiib", "s": 23.36}, {"t": "ah", "s": 23.694}]}, {"s": 23.852, "e": 25.02, "w": [{"t": "ugu", "s": 23.852}, {"t": "qalaji", "s": 24.128}]}, {"s": 25.31, "e": 25.823, "w": [{"t": "Ugu", "s": 25.31}, {"t": "dambayn", "s": 25.567}]}, {"s": 25.823, "e": 26.701, "w": [{"t": "mari", "s": 25.823}, {"t": "kareem", "s": 26.079}, {"t": "qoyaan", "s": 26.39}]}, {"s": 26.701, "e": 27.797, "w": [{"t": "siiya", "s": 26.701}, {"t": "maqaarkaaga", "s": 27.012}, {"t": "oo", "s": 27.595}]}, {"s": 27.797, "e": 29.284, "w": [{"t": "aan", "s": 27.797}, {"t": "daloolada", "s": 27.999}, {"t": "xirin", "s": 28.528}]}, {"s": 29.574, "e": 30.575, "w": [{"t": "Alaabta", "s": 29.574}, {"t": "qurxinta", "s": 29.978}, {"t": "iyo", "s": 30.329}]}, {"s": 30.575, "e": 31.524, "w": [{"t": "burushyada", "s": 30.575}, {"t": "dadka", "s": 31.031}, {"t": "kale", "s": 31.278}]}, {"s": 31.524, "e": 32.711, "w": [{"t": "ha", "s": 31.524}, {"t": "la", "s": 31.665}, {"t": "wadaagin", "s": 31.807}]}, {"s": 33.001, "e": 34.003, "w": [{"t": "Caawa", "s": 33.001}, {"t": "caado", "s": 33.335}, {"t": "fiican", "s": 33.669}]}, {"s": 34.003, "e": 34.423, "w": [{"t": "bilow", "s": 34.003}]}, {"s": 34.423, "e": 35.412, "w": [{"t": "qurxinta", "s": 34.423}, {"t": "iska", "s": 34.792}, {"t": "saar", "s": 35.05}]}, {"s": 35.412, "e": 36.901, "w": [{"t": "wejigaagana", "s": 35.412}, {"t": "daryeel", "s": 36.077}]}, {"s": 36.941, "e": 37.824, "w": [{"t": "U", "s": 36.941}, {"t": "dir", "s": 37.235}, {"t": "qof", "s": 37.53}]}, {"s": 37.824, "e": 39.677, "w": [{"t": "aad", "s": 37.824}, {"t": "jeceshahay", "s": 38.228}]}]};
+      const tl = gsap.timeline({ paused: true });
+      const S = {};
+      D.scenes.forEach((s) => (S[s.id] = s));
+      const B = D.beats;
+      const q = (sel) => document.querySelector(sel);
+      const pop = (sel, t, from = 0.3) => tl.fromTo(sel, { scale: from, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2.4)" }, t);
+
+      // persistent theme motion: the woven lattice and patterned band drift slowly, progress fills
+      tl.fromTo("#weave", { backgroundPosition: "0px 0px" }, { backgroundPosition: "0px 220px", duration: D.total, ease: "none" }, 0);
+      tl.fromTo("#band", { backgroundPosition: "0px 0px" }, { backgroundPosition: "220px 0px", duration: D.total, ease: "none" }, 0);
+      tl.fromTo("#prog-fill", { scaleX: 0 }, { scaleX: 1, duration: D.total, ease: "none" }, 0);
+
+      // every scene: hard cut + gold flash, punch-in landing, a mid-scene jump-cut zoom
+      D.scenes.forEach((s, i) => {
+        const el = q("#s-" + s.id);
+        const stage = el.querySelector(".stage");
+        const dir = i % 2 ? -1 : 1;
+        tl.fromTo(stage, { scale: 1.16, x: 90 * dir }, { scale: 1, x: 0, duration: 0.38, ease: "power3.out" }, s.start);
+        const jump = s.start + s.dur * 0.56;
+        tl.set(stage, { scale: 1.07 }, jump);
+        tl.to(stage, { scale: 1.1, duration: s.dur * 0.44 - 0.02, ease: "none" }, jump + 0.01);
+        if (i > 0) {
+          tl.set("#flash", { opacity: 0.55 }, s.start);
+          tl.to("#flash", { opacity: 0, duration: 0.16, ease: "power2.out" }, s.start + 0.001);
+        }
+        tl.fromTo(el.querySelector(".chip"), { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(3)" }, s.start + 0.05);
+        tl.fromTo(el.querySelectorAll(".hw"), { yPercent: 105 }, { yPercent: 0, duration: 0.42, stagger: 0.06, ease: "power4.out" }, s.start + 0.08);
+      });
+
+      // 1 question: made-up face drifts to sleep
+      pop("#q-moon", S.q.start + 0.1);
+      pop("#q-face", S.q.start + 0.2);
+      tl.fromTo("#q-shut", { opacity: 0 }, { opacity: 1, duration: 0.2 }, B.sleep - 0.1);
+      tl.fromTo("#q-z .z", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, stagger: 0.15, ease: "power2.out" }, B.sleep);
+
+      // 2 tired: bed, then "take it off"
+      tl.fromTo("#bed", { y: 400, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, S.tired.start + 0.15);
+      pop("#t-tired", B.tired - 0.05);
+      pop("#t-off", B.off - 0.05);
+
+      // 3 pores: makeup layer seals the pore, a pimple swells
+      tl.fromTo("#s-pores .xsec", { y: 300, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, S.pores.start + 0.15);
+      tl.fromTo("#mk-layer", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.6, ease: "power2.out" }, S.pores.start + 0.6);
+      tl.set("#bump", { opacity: 0 }, S.pores.start);
+      pop("#p-clog", B.clog - 0.05);
+      tl.fromTo("#bump", { opacity: 0, scale: 0.3, transformOrigin: "400px 60px" }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2.5)" }, B.zit);
+      pop("#p-zit", B.zit + 0.05);
+
+      // 4 remove: cotton pad wipes, makeup fades (face first, then eyes)
+      pop("#r-face", S.remove.start + 0.15);
+      tl.fromTo("#pad", { x: -40, y: 180, opacity: 0 }, { x: 60, y: 160, opacity: 1, duration: 0.3 }, B.face - 0.2);
+      tl.to("#pad", { x: 0, y: 60, duration: 0.45, ease: "sine.inOut" }, B.face + 0.1);
+      tl.to("#pad", { x: 120, y: 60, duration: 0.45, ease: "sine.inOut" }, B.eyes);
+      tl.fromTo("#r-mk", { opacity: 1 }, { opacity: 0, duration: 1.0, ease: "none" }, B.face);
+      pop("#r-f", B.face);
+      pop("#r-e", B.eyes);
+
+      // 5 wash: gentle cleanser + lukewarm water (thermometer settles mid-way)
+      tl.fromTo("#w-pump", { y: 600 }, { y: 0, duration: 0.45, ease: "back.out(1.4)" }, S.wash.start + 0.15);
+      pop("#w-c", B.cleanser);
+      pop("#w-drop", B.water - 0.1);
+      pop("#w-temp", B.water);
+      tl.fromTo("#w-level", { scaleY: 0.1, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.6, ease: "power2.out" }, B.water + 0.2);
+      pop("#w-b", B.water + 0.2);
+
+      // 6 fingers yes, scrub no
+      pop("#v-yes", B.fingers);
+      tl.fromTo("#circ", { rotation: 0, svgOrigin: "170 170" }, { rotation: 360, svgOrigin: "170 170", duration: 1.6, ease: "none" }, B.fingers + 0.2);
+      pop("#v-no", B.scrub - 0.1);
+      tl.fromTo("#no-ban", { opacity: 0, scale: 1.5, transformOrigin: "170px 170px" }, { opacity: 1, scale: 1, duration: 0.25, ease: "power4.in" }, B.scrub + 0.15);
+
+      // 7 pat dry: towel taps down onto skin
+      pop("#towel", B.towel);
+      pop("#pat-skin", S.pat.start + 0.2);
+      tl.fromTo("#towel", { y: 0 }, { y: 40, duration: 0.18, yoyo: true, repeat: 5, ease: "sine.inOut" }, B.dry - 0.3);
+      pop("#pt-t", B.towel + 0.2);
+      pop("#pt-d", B.dry);
+
+      // 8 moisturize
+      tl.fromTo("#m-jar", { y: 400, rotation: -10 }, { y: 0, rotation: -3, duration: 0.5, ease: "back.out(1.5)" }, S.moist.start + 0.15);
+      tl.fromTo(".md", { y: -60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, stagger: 0.12, ease: "bounce.out" }, B.cream);
+      pop("#m-c", B.cream);
+      pop("#m-p", B.nopore);
+
+      // 9 don't share brushes
+      pop("#tools", B.brushes - 0.1);
+      tl.set("#t-ban", { opacity: 0 }, S.share.start);
+      tl.fromTo("#t-ban", { opacity: 0, scale: 1.5, transformOrigin: "260px 240px" }, { opacity: 1, scale: 1, duration: 0.25, ease: "power4.in" }, B.noshare - 0.1);
+      pop("#s-no", B.noshare);
+
+      // 10 cta
+      pop("#cta-moon", S.cta.start + 0.15);
+      tl.fromTo("#cta-moon", { rotation: 0 }, { rotation: 5, duration: 0.3, yoyo: true, repeat: 3, ease: "sine.inOut" }, B.care);
+      tl.fromTo("#share", { y: 240, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "back.out(2)" }, B.share - 0.1);
+      tl.fromTo("#tiktok", { scale: 0, rotation: -30 }, { scale: 1, rotation: 0, duration: 0.4, ease: "back.out(3)" }, B.share + 0.05);
+      tl.fromTo("#share-arrow", { x: 0 }, { x: 14, duration: 0.25, yoyo: true, repeat: 3, ease: "sine.inOut" }, B.share + 0.3);
+
+      // captions: word-by-word karaoke in Somali (active word in Somali blue)
+      D.caps.forEach((g, gi) => {
+        const line = "#cap-" + gi;
+        tl.set(line, { opacity: 1 }, g.s);
+        tl.fromTo(line, { scale: 0.86 }, { scale: 1, duration: 0.12, ease: "back.out(3)", immediateRender: false }, g.s);
+        tl.set(line, { opacity: 0 }, g.e);
+        g.w.forEach((w, wi) => {
+          const id = "#cw-" + gi + "-" + wi;
+          tl.set(id, { color: "#2f6fd0" }, w.s);
+          if (wi + 1 < g.w.length) tl.set(id, { color: "#4a2e1a" }, g.w[wi + 1].s);
+        });
+      });
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
