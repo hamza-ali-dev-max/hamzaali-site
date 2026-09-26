@@ -67,6 +67,8 @@
       /* real product photos in heritage frames */
       .photo { position: absolute; overflow: hidden; background: #fff; border: 10px solid #fff; box-shadow: 0 0 0 5px var(--gold), 0 18px 28px rgba(74, 46, 26, 0.28); }
       .photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      .cut { position: absolute; filter: var(--sticker); }
+      .cut img { display: block; width: 100%; height: 100%; object-fit: contain; }
       .arch { border-radius: 220px 220px 30px 30px; }
       .round { border-radius: 50%; }
       .disc2 { position: absolute; border-radius: 50%; background: #fff; box-shadow: 0 14px 20px rgba(74, 46, 26, 0.16); display: flex; align-items: center; justify-content: center; }
@@ -166,7 +168,7 @@
           <div class="chip alt"><i></i>AL MAJED OUD<i></i></div>
           <div class="headline"><span class="hl"><span class="hw y">Udgoon</span> <span class="hw y">Carabeed</span></span><span class="hl sm"><span class="hw">gurigaaga</span> <span class="hw">u</span> <span class="hw">keen</span></span></div>
           <div class="visual">
-            <div class="photo arch" id="h-jar"><img src="assets/photos/jar.jpg" alt="" /></div>
+            <div class="cut" id="h-jar"><img src="assets/photos/white-bottle.png" alt="" /></div>
             <svg id="smoke1" viewBox="0 0 300 260"><use href="#smoke-art" width="300" height="260" /></svg>
             <svg id="h-spark" viewBox="0 0 640 560"><g fill="#c9a24b"><path class="hs" d="M40 120 l10 24 24 10 -24 10 -10 24 -10 -24 -24 -10 24 -10z" /><path class="hs" d="M590 90 l8 18 18 8 -18 8 -8 18 -8 -18 -18 -8 18 -8z" /><path class="hs" d="M600 420 l10 24 24 10 -24 10 -10 24 -10 -24 -24 -10 24 -10z" /><path class="hs" d="M30 440 l7 16 16 7 -16 7 -7 16 -7 -16 -16 -7 16 -7z" /></g></svg>
           </div>
@@ -179,7 +181,7 @@
           <div class="chip"><i></i>MAXAA KU JIRA?<i></i></div>
           <div class="headline"><span class="hl"><span class="hw y">Cuud</span> <span class="hw y">+</span> <span class="hw y">saliid</span></span><span class="hl sm"><span class="hw">jajab</span> <span class="hw">qori</span> <span class="hw">cuud</span></span></div>
           <div class="visual">
-            <div class="photo round" id="w-label"><img src="assets/photos/label.jpg" alt="" /></div>
+            <div class="cut" id="w-label"><img src="assets/photos/white-set.png" alt="" /></div>
             <div class="lab tag" id="w-1"><i style="background: #3a2214"></i>Jajab cuud</div>
             <div class="lab tag" id="w-2"><i style="background: var(--gold)"></i>Saliid udgoon</div>
             <svg id="w-chips" viewBox="0 0 280 180"><g fill="#2a1a10"><path d="M20 140 L80 90 L110 120 L60 170Z" /><path d="M110 150 L150 70 L190 90 L150 170Z" fill="#3a2214" /><path d="M180 160 L230 100 L262 130 L210 176Z" /></g><g fill="#c9a24b" opacity=".85"><circle cx="70" cy="120" r="5" /><circle cx="160" cy="110" r="5" /><circle cx="226" cy="132" r="5" /></g></svg>
@@ -193,8 +195,8 @@
           <div class="chip"><i></i>SAMAYSKA<i></i></div>
           <div class="headline"><span class="hl"><span class="hw y">Riyaad</span></span><span class="hl sm"><span class="hw">Sacuudiga</span></span></div>
           <div class="visual">
-            <div class="photo round" id="m-lid"><img src="assets/photos/lid.jpg" alt="" /></div>
-            <div class="photo arch" id="m-jar"><img src="assets/photos/jar.jpg" alt="" /></div>
+            <div class="cut" id="m-lid"><img src="assets/photos/white-box.png" alt="" /></div>
+            <div class="cut" id="m-jar"><img src="assets/photos/white-bottle.png" alt="" /></div>
             <div class="lab tag" id="m-1"><i style="background: #c9a24b"></i>Dabool alwaax</div>
             <div class="lab tag" id="m-2"><i style="background: #9fc4e8"></i>Quraarad</div>
           </div>
@@ -225,7 +227,7 @@
             <div class="when" id="wh2"><div class="disc"><svg width="120" height="120" viewBox="0 0 120 120"><path d="M20 100 V70 Q60 30 100 70 V100Z" fill="#2f6fd0" /><rect x="50" y="20" width="20" height="30" fill="#2f6fd0" /><path d="M60 8 A10 10 0 1 0 68 20 A8 8 0 1 1 60 8Z" fill="#c9a24b" /><rect x="10" y="100" width="100" height="8" rx="4" fill="#1c3f86" /></svg></div><div class="lab"><i style="background: var(--blue)"></i>Jimcaha</div></div>
             <div class="when" id="wh3"><div class="disc"><svg width="110" height="110" viewBox="0 0 110 110"><path d="M70 12 A44 44 0 1 0 98 74 A34 34 0 1 1 70 12Z" fill="#c9a24b" /><path d="M78 40 l5 12 12 5 -12 5 -5 12 -5 -12 -12 -5 12 -5z" fill="#2f6fd0" /></svg></div><div class="lab"><i style="background: var(--gold)"></i>Ciidaha</div></div>
             <div class="when" id="wh4"><div class="disc"><svg width="120" height="110" viewBox="0 0 120 110"><circle cx="46" cy="60" r="30" fill="none" stroke="#c9a24b" stroke-width="10" /><circle cx="76" cy="60" r="30" fill="none" stroke="#e3c173" stroke-width="10" /><path d="M70 18 l6 -12 6 12z" fill="#9fc4e8" /></svg></div><div class="lab"><i style="background: var(--terra)"></i>Aroosyada</div></div>
-            <div class="photo arch" id="wh-jar"><img src="assets/photos/jar.jpg" alt="" /></div>
+            <div class="cut" id="wh-jar"><img src="assets/photos/white-bottle.png" alt="" /></div>
           </div>
         </div>
       </section>
@@ -239,7 +241,7 @@
             <svg id="window" class="stk" viewBox="0 0 400 480"><rect x="20" y="20" width="360" height="440" rx="180" ry="30" fill="#ffffff" /><path d="M40 200 Q40 40 200 40 Q360 40 360 200 V440 H40 Z" fill="#bfe0ff" /><path d="M40 200 Q40 40 200 40 Q360 40 360 200 V440 H40 Z" fill="none" stroke="#c9a24b" stroke-width="12" /><g id="pane-l"><path d="M40 200 Q40 40 200 40 V440 H40 Z" fill="#8fc0ff" opacity=".55" stroke="#c9a24b" stroke-width="8" /></g><g id="pane-r"><path d="M200 40 Q360 40 360 200 V440 H200 Z" fill="#8fc0ff" opacity=".55" stroke="#c9a24b" stroke-width="8" /></g><g fill="#ffffff" opacity=".8"><ellipse cx="140" cy="140" rx="46" ry="18" /><ellipse cx="270" cy="110" rx="36" ry="14" /></g><use href="#smoke-art" x="60" y="200" width="280" height="240" /></svg>
             <div class="lab tag" id="a-1"><i style="background: #9fc4e8"></i>Daaqadda fur</div>
             <div class="lab tag" id="a-2"><i style="background: var(--gold)"></i>Wax yar</div>
-            <div class="photo arch" id="a-jar"><img src="assets/photos/jar.jpg" alt="" /></div>
+            <div class="cut" id="a-jar"><img src="assets/photos/white-bottle.png" alt="" /></div>
           </div>
         </div>
       </section>
@@ -256,7 +258,7 @@
             <div class="lab tag" id="s-1"><i style="background: #2f6fd0"></i>Meel fog</div>
             <div class="lab tag" id="s-2"><i style="background: var(--terra)"></i>Indhaha</div>
             <div class="lab tag" id="s-3"><i style="background: var(--terra)"></i>Carruurta</div>
-            <div class="photo" id="s-labelphoto"><img src="assets/photos/label.jpg" alt="" style="object-position: 50% 62%" /></div>
+            <div class="cut" id="s-labelphoto"><img src="assets/photos/white-set.png" alt="" /></div>
           </div>
         </div>
       </section>
@@ -267,7 +269,7 @@
           <div class="chip"><i></i>HADDA<i></i></div>
           <div class="headline"><span class="hl"><span class="hw y">Udgoonka</span></span><span class="hl sm"><span class="hw">gurigaaga</span></span></div>
           <div class="visual">
-            <div class="photo arch" id="c-jar"><img src="assets/photos/jar.jpg" alt="" /></div>
+            <div class="cut" id="c-jar"><img src="assets/photos/white-bottle.png" alt="" /></div>
             <div id="c-name">Al Majed Oud</div>
             <div id="c-ar">الماجد للعود</div>
             <div id="c-buy" class="center stk">HADDA RAADSO</div>
@@ -316,7 +318,7 @@
         tl.fromTo(el.querySelector(".chip"), { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(3)" }, s.start + 0.05);
         tl.fromTo(el.querySelectorAll(".hw"), { yPercent: 105 }, { yPercent: 0, duration: 0.42, stagger: 0.06, ease: "power4.out" }, s.start + 0.08);
         // slow Ken Burns on every real photo in the scene
-        el.querySelectorAll(".photo img").forEach((img) => tl.fromTo(img, { scale: 1.02 }, { scale: 1.14, duration: s.dur, ease: "none" }, s.start));
+        el.querySelectorAll(".photo img, .cut img").forEach((img) => tl.fromTo(img, { scale: 1.02 }, { scale: 1.14, duration: s.dur, ease: "none" }, s.start));
       });
 
       // 1 hook: the real jar, smoke curling up, sparkles
