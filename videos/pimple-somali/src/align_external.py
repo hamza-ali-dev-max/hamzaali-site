@@ -47,7 +47,7 @@ for li, ln in enumerate(lines):
 total = duration(src)
 # sentence pauses: take the longest pauses (>=0.3s) that match the sentence count,
 # kept in time order; short ?/! pauses from the TTS still count this way
-cands = [s for s in silences(src, -35, 0.3) if s[0] > 0.05 and s[1] < total - 0.05]
+cands = [s for s in silences(src, -35, 0.3) if s[0] > 0.05 and s[1] < total - 0.15]  # skip lead-in/tail silence
 if len(cands) < len(chunks) - 1:
     sys.exit(f"expected {len(chunks) - 1} sentence pauses, found {len(cands)}: {cands}")
 long_sil = sorted(sorted(cands, key=lambda p: p[1] - p[0])[-(len(chunks) - 1):])
