@@ -6,154 +6,169 @@
     <title>Kareemka Qorraxda</title>
     <script src="assets/js/gsap.min.js"></script>
     <style>
-      @font-face { font-family: "Anton"; src: url("assets/fonts/anton.woff2") format("woff2"); font-weight: 400; }
-      @font-face { font-family: "Poppins"; src: url("assets/fonts/poppins-600.woff2") format("woff2"); font-weight: 600; }
-      @font-face { font-family: "Poppins"; src: url("assets/fonts/poppins-800.woff2") format("woff2"); font-weight: 800; }
-      @font-face { font-family: "Poppins"; src: url("assets/fonts/poppins-900.woff2") format("woff2"); font-weight: 900; }
+      @font-face { font-family: "Dancing Script"; src: url("assets/fonts/dancing-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-900.woff2") format("woff2"); font-weight: 900; }
+      @font-face { font-family: "Lora"; src: url("assets/fonts/lora-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Lora"; src: url("assets/fonts/lora-600i.woff2") format("woff2"); font-weight: 600; font-style: italic; }
       :root {
-        --navy: #0f1e45;
-        --navy2: #1a2f66;
-        --navy3: #243f82;
-        --sun: #ffc933;
-        --sun2: #ff9f1c;
-        --coral: #ff5a3c;
-        --cream: #fff4dc;
-        --sky: #6fd3ff;
+        --paper: #fbf7f0;
+        --sand: #efe4d2;
+        --sand2: #f6eee1;
+        --gold: #c9a24b;
+        --gold2: #e3c173;
+        --brown: #4a2e1a;
+        --brown2: #8a5a36;
+        --blue: #2f6fd0;
+        --navy: #1c3f86;
+        --terra: #b8452f;
         --skin: #8d5a3b;
+        --sticker: drop-shadow(6px 0 0 #fff) drop-shadow(-6px 0 0 #fff) drop-shadow(0 6px 0 #fff) drop-shadow(0 -6px 0 #fff) drop-shadow(0 14px 14px rgba(74, 46, 26, 0.22));
       }
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--navy); }
-      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Poppins", sans-serif; color: var(--cream); background: var(--navy); }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Lora", serif; color: var(--brown); background: var(--paper); }
 
-      /* persistent theme layers */
-      #bg { position: absolute; inset: 0; background: radial-gradient(1100px 1100px at 85% 8%, #2b3f86 0%, var(--navy) 60%); }
-      #rays { position: absolute; left: -460px; top: -1060px; width: 2000px; height: 2000px; opacity: 0.1;
-        background: repeating-conic-gradient(from 0deg, var(--sun) 0deg 6deg, transparent 6deg 18deg);
-        -webkit-mask: radial-gradient(circle, #000 0%, transparent 70%); mask: radial-gradient(circle, #000 0%, transparent 70%); }
-      #dots { position: absolute; inset: 0; opacity: 0.08; background-image: radial-gradient(var(--cream) 2px, transparent 2.5px); background-size: 36px 36px; }
-      #brand { position: absolute; left: 60px; top: 70px; display: flex; align-items: center; gap: 14px; font-weight: 800; font-size: 30px; letter-spacing: 0.08em; }
-      #brand i { display: block; width: 30px; height: 30px; border-radius: 50%; background: var(--sun); box-shadow: 0 0 0 6px rgba(255, 201, 51, 0.25); }
-      #prog { position: absolute; left: 60px; top: 128px; width: 820px; height: 10px; border-radius: 6px; background: rgba(255, 244, 220, 0.15); overflow: hidden; }
-      #prog-fill { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, var(--sun2), var(--sun)); transform-origin: left center; }
-      #flash { position: absolute; inset: 0; background: var(--sun); opacity: 0; pointer-events: none; }
+      /* persistent heritage theme: warm paper, woven diamond lattice, patterned band */
+      #bg { position: absolute; inset: 0; background: radial-gradient(1000px 900px at 50% 30%, #ffffff 0%, var(--paper) 55%, var(--sand2) 100%); }
+      #weave { position: absolute; inset: 0; opacity: 0.55;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><path d='M60 6 L114 60 L60 114 L6 60 Z' fill='none' stroke='%23e3c173' stroke-width='2' opacity='.45'/><path d='M60 48 L72 60 L60 72 L48 60 Z' fill='%23c9a24b' opacity='.28'/></svg>");
+        background-size: 120px 120px; }
+      #band { position: absolute; left: 0; top: 0; width: 1080px; height: 30px;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='30'><rect width='60' height='30' fill='%231c3f86'/><path d='M0 30 L15 6 L30 30Z' fill='%23c9a24b'/><path d='M30 30 L45 6 L60 30Z' fill='%23b8452f'/><path d='M15 0 L30 18 L45 0Z' fill='%23fbf7f0'/></svg>");
+        background-size: 60px 30px; }
+      #brand { position: absolute; left: 60px; top: 66px; display: flex; align-items: center; gap: 14px; font-family: "Cinzel"; font-weight: 700; font-size: 28px; letter-spacing: 0.16em; color: var(--brown); }
+      #brand svg { display: block; }
+      #prog { position: absolute; left: 60px; top: 118px; width: 820px; height: 10px; border-radius: 6px; background: var(--sand); overflow: hidden; }
+      #prog-fill { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold2)); transform-origin: left center; }
+      #flash { position: absolute; inset: 0; background: var(--gold2); opacity: 0; pointer-events: none; }
 
       /* scenes */
       .clip { position: absolute; inset: 0; }
       .stage { position: absolute; inset: 0; transform-origin: 470px 900px; }
-      .chip { position: absolute; left: 60px; top: 205px; height: 64px; padding: 0 28px; border-radius: 32px; background: var(--sun); color: var(--navy);
-        font-weight: 900; font-size: 32px; letter-spacing: 0.06em; display: flex; align-items: center; }
-      .chip.coral { background: var(--coral); color: var(--cream); }
-      .headline { position: absolute; left: 60px; top: 300px; width: 860px; font-family: "Anton", sans-serif; font-size: 132px; line-height: 1.02; text-transform: uppercase; }
-      .headline .hl { display: block; overflow: hidden; padding-bottom: 6px; }
+      .stk { filter: var(--sticker); }
+      .chip { position: absolute; left: 60px; top: 190px; height: 66px; padding: 0 26px; border-radius: 33px; background: #fff; border: 3px solid var(--gold); color: var(--brown);
+        font-family: "Cinzel"; font-weight: 900; font-size: 30px; letter-spacing: 0.12em; display: flex; align-items: center; gap: 14px; box-shadow: 0 8px 14px rgba(74, 46, 26, 0.15); }
+      .chip i { display: block; width: 14px; height: 14px; background: var(--gold); transform: rotate(45deg); }
+      .chip.alt { background: var(--blue); border-color: #fff; color: #fff; }
+      .chip.alt i { background: #fff; }
+      .headline { position: absolute; left: 60px; top: 285px; width: 860px; font-family: "Cinzel"; font-weight: 900; font-size: 88px; line-height: 1.08; text-transform: uppercase; color: var(--brown); }
+      .headline .hl { display: block; overflow: hidden; padding-bottom: 8px; }
       .headline .hw { display: inline-block; }
-      .headline .y { color: var(--sun); }
-      .headline .sm { font-size: 92px; }
+      .headline .y { font-family: "Dancing Script"; font-weight: 700; font-size: 1.62em; line-height: 0.95; text-transform: none; color: var(--blue); }
+      .headline .sm { font-size: 62px; letter-spacing: 0.04em; color: var(--brown2); }
       .visual { position: absolute; left: 40px; top: 690px; width: 880px; height: 640px; }
       .center { display: flex; align-items: center; justify-content: center; }
 
       /* hook */
       #sun { position: absolute; left: 190px; top: 10px; width: 500px; height: 500px; }
-            #cloud { position: absolute; left: 120px; top: 180px; width: 560px; height: 280px; }
+      #cloud { position: absolute; left: 120px; top: 180px; width: 560px; height: 280px; }
       #uv-lines { position: absolute; left: 0; top: 330px; width: 880px; height: 300px; }
-      #skin-bar { position: absolute; left: 120px; top: 600px; width: 640px; height: 36px; border-radius: 18px; background: linear-gradient(90deg, #6b3f27, var(--skin), #b5774f); box-shadow: 0 0 40px rgba(255, 90, 60, 0.0); }
-      .sticker { position: absolute; padding: 18px 34px; border-radius: 20px; background: var(--coral); color: var(--cream); font-family: "Anton"; font-size: 76px; text-transform: uppercase; box-shadow: 0 16px 0 rgba(0, 0, 0, 0.25); }
-      #hook-sticker { left: 330px; top: 40px; }
+      #skin-bar { position: absolute; left: 120px; top: 600px; width: 640px; height: 36px; border-radius: 18px; background: linear-gradient(90deg, #6b3f27, var(--skin), #b5774f); }
+      .sticker { position: absolute; padding: 10px 40px 18px; border-radius: 26px; background: var(--terra); color: #fff; font-family: "Dancing Script"; font-weight: 700; font-size: 84px; line-height: 1.1; }
+      #hook-sticker { left: 330px; top: 30px; }
 
       /* uv cards */
       .cards { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; gap: 34px; }
-      .card { display: flex; align-items: center; gap: 34px; width: 840px; height: 160px; padding: 0 34px; border-radius: 34px; background: var(--navy2); border: 4px solid rgba(255, 244, 220, 0.12); }
-      .card .ic { display: flex; align-items: center; justify-content: center; flex: 0 0 110px; width: 110px; height: 110px; border-radius: 50%; background: var(--navy); }
-      .card .lb { font-family: "Anton"; font-size: 84px; text-transform: uppercase; line-height: 1; }
-      .card .lb.sm { font-size: 66px; }
+      .card { display: flex; align-items: center; gap: 34px; width: 840px; height: 160px; padding: 0 34px; border-radius: 34px; background: #fff; border: 3px solid var(--gold2); box-shadow: 0 12px 20px rgba(74, 46, 26, 0.14); }
+      .card .ic { display: flex; align-items: center; justify-content: center; flex: 0 0 110px; width: 110px; height: 110px; border-radius: 50%; background: var(--sand2); border: 3px solid var(--gold2); }
+      .card .lb { font-family: "Cinzel"; font-weight: 900; font-size: 62px; line-height: 1; color: var(--brown); text-transform: uppercase; }
+      .card .lb.sm { font-size: 46px; }
 
       /* spf */
       #tube { position: absolute; left: 70px; top: 40px; width: 260px; height: 580px; }
-      #stamp { position: absolute; left: 330px; top: 110px; width: 540px; font-family: "Anton"; font-size: 250px; line-height: 0.9; color: var(--sun); text-align: center; text-shadow: 0 14px 0 rgba(0, 0, 0, 0.25); }
-      #spf-more { position: absolute; left: 380px; top: 470px; width: 440px; height: 100px; border-radius: 50px; background: var(--cream); color: var(--navy); font-weight: 900; font-size: 50px; }
+      #stamp { position: absolute; left: 330px; top: 120px; width: 540px; font-family: "Cinzel"; font-weight: 900; font-size: 190px; line-height: 0.95; color: var(--blue); text-align: center; }
+      #spf-more { position: absolute; left: 380px; top: 480px; width: 440px; height: 100px; border-radius: 50px; background: #fff; border: 3px solid var(--gold); color: var(--brown); font-style: italic; font-weight: 600; font-size: 50px; }
 
       /* amount */
       .finger { position: absolute; top: 90px; width: 150px; height: 500px; border-radius: 75px 75px 30px 30px; background: linear-gradient(90deg, #7a4a2f, var(--skin) 45%, #a06a48); }
       .finger .nail { position: absolute; left: 30px; top: 18px; width: 90px; height: 100px; border-radius: 45px 45px 30px 30px; background: #c99277; }
-      .finger .cream { position: absolute; left: 35px; top: 60px; width: 80px; height: 420px; border-radius: 40px; background: linear-gradient(90deg, #ffffff, var(--cream)); box-shadow: 0 0 24px rgba(255, 255, 255, 0.35); transform-origin: 50% 100%; }
+      .finger .cream { position: absolute; left: 35px; top: 60px; width: 80px; height: 420px; border-radius: 40px; background: linear-gradient(90deg, #ffffff, #fff6e6); box-shadow: 0 0 18px rgba(255, 255, 255, 0.8); transform-origin: 50% 100%; }
       #f1 { left: 90px; } #f2 { left: 270px; top: 60px; }
-      #two-f { position: absolute; left: 480px; top: 120px; width: 400px; font-family: "Anton"; font-size: 150px; line-height: 0.95; color: var(--sun); text-transform: uppercase; }
-      #two-f .s { display: block; font-size: 90px; color: var(--cream); }
-      #face-eq { position: absolute; left: 480px; top: 430px; width: 400px; font-weight: 900; font-size: 48px; line-height: 1.2; text-transform: uppercase; }
-      #face-eq b { display: block; color: var(--sun); }
+      #two-f { position: absolute; left: 480px; top: 90px; width: 400px; font-family: "Dancing Script"; font-weight: 700; font-size: 230px; line-height: 0.9; color: var(--blue); }
+      #two-f .s { display: block; font-family: "Cinzel"; font-weight: 900; font-size: 76px; color: var(--brown); text-transform: uppercase; }
+      #face-eq { position: absolute; left: 480px; top: 440px; width: 400px; font-family: "Cinzel"; font-weight: 900; font-size: 44px; line-height: 1.25; text-transform: uppercase; color: var(--brown2); }
+      #face-eq b { display: block; color: var(--terra); }
 
       /* timer */
       #timer { position: absolute; left: 180px; top: 20px; width: 520px; height: 520px; }
       #timer svg { position: absolute; inset: 0; }
       #timer-num { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-      #timer-num .n { font-family: "Anton"; font-size: 230px; line-height: 1; color: var(--sun); }
-      #timer-num .u { font-weight: 900; font-size: 44px; letter-spacing: 0.1em; margin-top: -8px; }
-      #go-out { position: absolute; left: 190px; top: 560px; width: 500px; height: 90px; border-radius: 45px; background: var(--coral); font-weight: 900; font-size: 46px; gap: 18px; }
+      #timer-num .n { font-family: "Cinzel"; font-weight: 900; font-size: 200px; line-height: 1; color: var(--blue); }
+      #timer-num .u { font-style: italic; font-weight: 600; font-size: 46px; color: var(--brown2); }
+      #go-out { position: absolute; left: 190px; top: 560px; width: 500px; height: 90px; border-radius: 45px; background: var(--blue); color: #fff; font-family: "Cinzel"; font-weight: 900; font-size: 40px; letter-spacing: 0.06em; gap: 18px; text-transform: uppercase; }
 
       /* spots */
       #body { position: absolute; left: 20px; top: 0; width: 360px; height: 640px; }
       .spot-list { position: absolute; left: 400px; top: 40px; width: 480px; display: flex; flex-direction: column; gap: 26px; }
-      .spot { display: flex; align-items: center; gap: 22px; height: 120px; padding: 0 26px; border-radius: 28px; background: var(--navy2); font-family: "Anton"; font-size: 58px; line-height: 1; text-transform: uppercase; }
-      .spot .num { display: flex; align-items: center; justify-content: center; flex: 0 0 64px; height: 64px; border-radius: 50%; background: var(--sun); color: var(--navy); font-size: 40px; }
-      .spot .t2 { font-size: 46px; }
+      .spot { display: flex; align-items: center; gap: 22px; height: 120px; padding: 0 26px; border-radius: 28px; background: #fff; border: 3px solid var(--gold2); box-shadow: 0 10px 18px rgba(74, 46, 26, 0.14);
+        font-family: "Cinzel"; font-weight: 900; font-size: 44px; line-height: 1.05; text-transform: uppercase; color: var(--brown); }
+      .spot .num { display: flex; align-items: center; justify-content: center; flex: 0 0 64px; height: 64px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 36px; }
+      .spot .t2 { font-size: 34px; }
 
       /* reapply */
       #cycle { position: absolute; left: 200px; top: -30px; width: 480px; height: 480px; }
       #cycle-arrows { position: absolute; inset: 0; transform-origin: 240px 240px; }
-      #cycle-num { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-      #cycle-num .n { font-family: "Anton"; font-size: 170px; line-height: 1; color: var(--sun); }
-      #cycle-num .u { font-weight: 900; font-size: 32px; letter-spacing: 0.08em; }
-      .pill { position: absolute; top: 470px; width: 390px; height: 130px; border-radius: 65px; background: var(--navy2); border: 4px solid var(--sky); gap: 20px; font-family: "Anton"; font-size: 64px; text-transform: uppercase; }
+      #cycle-num { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-bottom: 60px; }
+      #cycle-num .n { font-family: "Dancing Script"; font-weight: 700; font-size: 220px; line-height: 0.95; color: var(--blue); }
+      #cycle-num .u { font-family: "Cinzel"; font-weight: 900; font-size: 30px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brown); }
+      .pill { position: absolute; top: 470px; width: 390px; height: 130px; border-radius: 65px; background: #fff; border: 4px solid var(--blue); gap: 20px; font-family: "Cinzel"; font-weight: 900; font-size: 50px; text-transform: uppercase; color: var(--brown); }
       #p-swim { left: 30px; } #p-sweat { left: 460px; }
 
       /* myth */
-      .tones { position: absolute; left: 20px; top: 120px; width: 840px; display: flex; justify-content: space-between; }
-      .tone { position: relative; width: 150px; height: 150px; border-radius: 50%; border: 6px solid rgba(255, 244, 220, 0.25); }
-      .tone .ok { position: absolute; right: -14px; bottom: -14px; width: 70px; height: 70px; border-radius: 50%; background: var(--sun); display: flex; align-items: center; justify-content: center; }
-      #everyone { position: absolute; left: 60px; top: 380px; width: 760px; height: 170px; border-radius: 40px; background: var(--sun); color: var(--navy); font-family: "Anton"; font-size: 110px; text-transform: uppercase; }
+      .tones { position: absolute; left: 20px; top: 110px; width: 840px; display: flex; justify-content: space-between; }
+      .tone { position: relative; width: 150px; height: 150px; border-radius: 50%; border: 8px solid #fff; box-shadow: 0 12px 18px rgba(74, 46, 26, 0.22); }
+      .tone .ok { position: absolute; right: -16px; bottom: -16px; width: 70px; height: 70px; border-radius: 50%; background: var(--blue); border: 5px solid #fff; display: flex; align-items: center; justify-content: center; }
+      #everyone { position: absolute; left: 60px; top: 370px; width: 760px; height: 190px; border-radius: 40px; background: #fff; border: 4px solid var(--gold); box-shadow: 0 14px 22px rgba(74, 46, 26, 0.18);
+        font-family: "Dancing Script"; font-weight: 700; font-size: 130px; color: var(--blue); gap: 26px; }
+      #everyone svg { display: block; }
 
       /* cta */
       #cta-sun { position: absolute; left: 240px; top: 0; width: 400px; height: 400px; }
-      #cta-shield { position: absolute; left: 335px; top: 100px; width: 210px; height: 250px; }
-      #share { position: absolute; left: 40px; top: 470px; width: 800px; height: 130px; border-radius: 65px; background: var(--coral); gap: 24px; font-weight: 900; font-size: 48px; text-transform: uppercase; }
+      #cta-shield { position: absolute; left: 335px; top: 90px; width: 210px; height: 250px; }
+      #share { position: absolute; left: 20px; top: 470px; width: 840px; height: 130px; border-radius: 65px; background: var(--blue); gap: 20px; color: #fff; font-family: "Cinzel"; font-weight: 900; font-size: 36px; letter-spacing: 0.04em; text-transform: uppercase; }
       #share-arrow { display: block; width: 64px; height: 64px; }
+      #tiktok { display: block; flex: 0 0 76px; width: 76px; height: 76px; border-radius: 17px; box-shadow: 0 0 0 4px #fff; }
 
-      /* captions */
-      #caps { position: absolute; left: 60px; top: 1380px; width: 840px; height: 170px; }
-      .cap-line { position: absolute; left: 0; top: 0; width: 840px; text-align: center; opacity: 0; font-weight: 900; font-size: 64px; line-height: 1.15;
-        text-shadow: 0 5px 0 rgba(0, 0, 0, 0.55), 0 0 18px rgba(0, 0, 0, 0.45); }
-      .cw { display: inline-block; margin: 0 10px; color: var(--cream); }
+      /* captions: word-by-word, on a white sticker label */
+      #caps { position: absolute; left: 60px; top: 1370px; width: 840px; height: 190px; }
+      .cap-line { position: absolute; left: 0; top: 0; width: 840px; text-align: center; opacity: 0; }
+      .cap-pill { display: inline-block; max-width: 840px; padding: 14px 30px 18px; border-radius: 30px; background: #fff; border: 3px solid var(--gold2); box-shadow: 0 10px 18px rgba(74, 46, 26, 0.16);
+        font-weight: 700; font-size: 60px; line-height: 1.15; }
+      .cw { display: inline-block; margin: 0 8px; color: var(--brown); }
     </style>
   </head>
   <body>
     <div id="root" data-composition-id="main" data-start="0" data-duration="45" data-width="1080" data-height="1920">
       <div id="bg"></div>
-      <div id="rays"></div>
-      <div id="dots"></div>
+      <div id="weave"></div>
+      <div id="band"></div>
 
       <!-- 1. HOOK -->
       <section id="s-hook" class="clip" data-start="%hook.start%" data-duration="%hook.dur%" data-track-index="1">
         <div class="stage">
-          <div class="chip coral">DIGNIIN</div>
+          <div class="chip alt"><i></i>DIGNIIN<i></i></div>
           <div class="headline"><span class="hl"><span class="hw y">Qorraxdu</span></span><span class="hl sm"><span class="hw">maqaarkaaga</span> <span class="hw">way</span> <span class="hw">dhaawacdaa</span></span></div>
           <div class="visual">
-            <svg id="sun" viewBox="0 0 500 500">
-              <defs><radialGradient id="sg" cx="40%" cy="38%"><stop offset="0" stop-color="#fff1a8" /><stop offset=".55" stop-color="#ffc933" /><stop offset="1" stop-color="#ff9f1c" /></radialGradient></defs>
-              <g id="sun-rays" fill="#ffc933">
+            <svg id="sun" class="stk" viewBox="0 0 500 500">
+              <defs><radialGradient id="sg" cx="40%" cy="38%"><stop offset="0" stop-color="#fbe3a0" /><stop offset=".55" stop-color="#e3c173" /><stop offset="1" stop-color="#c9a24b" /></radialGradient></defs>
+              <g id="sun-rays" fill="#c9a24b">
                 <rect x="238" y="0" width="24" height="80" rx="12" /><rect x="238" y="420" width="24" height="80" rx="12" />
                 <rect x="0" y="238" width="80" height="24" rx="12" /><rect x="420" y="238" width="80" height="24" rx="12" />
                 <rect x="238" y="0" width="24" height="80" rx="12" transform="rotate(45 250 250)" /><rect x="238" y="420" width="24" height="80" rx="12" transform="rotate(45 250 250)" />
                 <rect x="0" y="238" width="80" height="24" rx="12" transform="rotate(45 250 250)" /><rect x="420" y="238" width="80" height="24" rx="12" transform="rotate(45 250 250)" />
               </g>
               <circle cx="250" cy="250" r="140" fill="url(#sg)" />
+              <g fill="none" stroke="#b8452f" stroke-width="5" opacity=".55"><path d="M250 160 L290 250 L250 340 L210 250 Z" /><path d="M250 200 L270 250 L250 300 L230 250 Z" /></g>
             </svg>
-            <svg id="uv-lines" viewBox="0 0 880 300" fill="none" stroke="#b58cff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+            <svg id="uv-lines" viewBox="0 0 880 300" fill="none" stroke="#2f6fd0" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
               <path class="uv" d="M300 0 L330 60 L280 120 L330 180 L280 240 L310 290" />
               <path class="uv" d="M440 0 L470 60 L420 120 L470 180 L420 240 L450 290" />
               <path class="uv" d="M580 0 L610 60 L560 120 L610 180 L560 240 L590 290" />
             </svg>
-            <svg id="cloud" viewBox="0 0 560 280"><path fill="#e8eefc" d="M120 250 C50 250 20 200 40 160 C55 125 95 115 125 125 C130 70 180 35 240 40 C300 45 335 85 345 120 C370 95 420 95 450 120 C480 145 480 175 470 190 C520 195 540 225 525 245 C520 250 510 250 500 250 Z" /><path fill="#c9d4f2" d="M120 250 L500 250 C510 250 520 250 525 245 C500 262 150 268 120 250Z" /></svg>
-            <div id="skin-bar"></div>
-            <div id="hook-sticker" class="sticker">xitaa daruur!</div>
+            <svg id="cloud" class="stk" viewBox="0 0 560 280"><path fill="#ffffff" stroke="#d9e3f2" stroke-width="4" d="M120 250 C50 250 20 200 40 160 C55 125 95 115 125 125 C130 70 180 35 240 40 C300 45 335 85 345 120 C370 95 420 95 450 120 C480 145 480 175 470 190 C520 195 540 225 525 245 C520 250 510 250 500 250 Z" /><path fill="#e6edf8" d="M120 250 L500 250 C510 250 520 250 525 245 C500 262 150 268 120 250Z" /></svg>
+            <div id="skin-bar" class="stk"></div>
+            <div id="hook-sticker" class="sticker stk">xitaa daruur!</div>
           </div>
         </div>
       </section>
@@ -161,13 +176,13 @@
       <!-- 2. UV -->
       <section id="s-uv" class="clip" data-start="%uv.start%" data-duration="%uv.dur%" data-track-index="1">
         <div class="stage">
-          <div class="chip">UV</div>
+          <div class="chip"><i></i>UV<i></i></div>
           <div class="headline"><span class="hl"><span class="hw">Shucaaca</span></span><span class="hl"><span class="hw y">UV-ga</span> <span class="hw">wuxuu</span> <span class="hw">keenaa</span></span></div>
           <div class="visual">
             <div class="cards">
-              <div class="card" id="c-burn"><div class="ic"><svg width="70" height="80" viewBox="0 0 100 110"><path fill="#ff5a3c" d="M50 4 C62 30 88 42 84 72 C81 94 64 106 50 106 C32 106 16 94 16 72 C16 52 32 46 36 28 C44 40 48 46 50 54 C56 38 54 20 50 4Z" /><path fill="#ffc933" d="M50 56 C58 70 68 76 66 88 C64 98 56 102 50 102 C42 102 34 96 34 86 C34 76 44 72 50 56Z" /></svg></div><div class="lb">Gubasho</div></div>
-              <div class="card" id="c-age"><div class="ic"><svg width="64" height="84" viewBox="0 0 64 84"><rect x="4" y="2" width="56" height="8" rx="4" fill="#fff4dc" /><rect x="4" y="74" width="56" height="8" rx="4" fill="#fff4dc" /><path d="M10 12 H54 L34 42 L54 72 H10 L30 42 Z" fill="none" stroke="#fff4dc" stroke-width="5" stroke-linejoin="round" /><path d="M18 66 H46 L32 50 Z" fill="#ffc933" /></svg></div><div class="lb">Gabow hore</div></div>
-              <div class="card" id="c-cancer"><div class="ic"><svg width="80" height="72" viewBox="0 0 80 72"><path d="M40 4 L76 68 H4 Z" fill="#ffc933" stroke="#ffc933" stroke-width="6" stroke-linejoin="round" /><rect x="36" y="24" width="8" height="24" rx="4" fill="#0f1e45" /><circle cx="40" cy="57" r="5" fill="#0f1e45" /></svg></div><div class="lb sm">Kansarka maqaarka</div></div>
+              <div class="card" id="c-burn"><div class="ic"><svg width="70" height="80" viewBox="0 0 100 110"><path fill="#b8452f" d="M50 4 C62 30 88 42 84 72 C81 94 64 106 50 106 C32 106 16 94 16 72 C16 52 32 46 36 28 C44 40 48 46 50 54 C56 38 54 20 50 4Z" /><path fill="#e3c173" d="M50 56 C58 70 68 76 66 88 C64 98 56 102 50 102 C42 102 34 96 34 86 C34 76 44 72 50 56Z" /></svg></div><div class="lb">Gubasho</div></div>
+              <div class="card" id="c-age"><div class="ic"><svg width="64" height="84" viewBox="0 0 64 84"><rect x="4" y="2" width="56" height="8" rx="4" fill="#8a5a36" /><rect x="4" y="74" width="56" height="8" rx="4" fill="#8a5a36" /><path d="M10 12 H54 L34 42 L54 72 H10 L30 42 Z" fill="none" stroke="#4a2e1a" stroke-width="5" stroke-linejoin="round" /><path d="M18 66 H46 L32 50 Z" fill="#c9a24b" /></svg></div><div class="lb">Gabow hore</div></div>
+              <div class="card" id="c-cancer"><div class="ic"><svg width="80" height="72" viewBox="0 0 80 72"><path d="M40 4 L76 68 H4 Z" fill="#c9a24b" stroke="#c9a24b" stroke-width="6" stroke-linejoin="round" /><rect x="36" y="24" width="8" height="24" rx="4" fill="#4a2e1a" /><circle cx="40" cy="57" r="5" fill="#4a2e1a" /></svg></div><div class="lb sm">Kansarka maqaarka</div></div>
             </div>
           </div>
         </div>
@@ -176,19 +191,21 @@
       <!-- 3. SPF -->
       <section id="s-spf" class="clip" data-start="%spf.start%" data-duration="%spf.dur%" data-track-index="1">
         <div class="stage">
-          <div class="chip">TALLAABO 1</div>
+          <div class="chip"><i></i>TALLAABO 1<i></i></div>
           <div class="headline"><span class="hl"><span class="hw y">Dooro</span></span><span class="hl sm"><span class="hw">kareemka</span> <span class="hw">qorraxda</span></span></div>
           <div class="visual">
-            <svg id="tube" viewBox="0 0 260 580">
-              <rect x="40" y="10" width="180" height="40" rx="8" fill="#e6d8b8" />
-              <path d="M40 40 H220 L236 470 C236 490 220 500 200 500 H60 C40 500 24 490 24 470 Z" fill="#fff4dc" />
-              <rect x="40" y="150" width="190" height="170" fill="#ffc933" />
-              <text x="135" y="225" text-anchor="middle" font-family="Anton" font-size="62" fill="#0f1e45">SPF</text>
-              <text x="135" y="295" text-anchor="middle" font-family="Anton" font-size="62" fill="#0f1e45">30+</text>
-              <circle cx="135" cy="390" r="34" fill="#ff9f1c" />
-              <rect x="80" y="500" width="100" height="72" rx="14" fill="#ff5a3c" />
+            <svg id="tube" class="stk" viewBox="0 0 260 580">
+              <rect x="40" y="10" width="180" height="40" rx="8" fill="#e3c173" />
+              <path d="M40 40 H220 L236 470 C236 490 220 500 200 500 H60 C40 500 24 490 24 470 Z" fill="#fffaf1" stroke="#efe4d2" stroke-width="4" />
+              <rect x="38" y="150" width="192" height="170" fill="#2f6fd0" />
+              <path d="M134 162 l7 21 h22 l-18 13 7 21 -18 -13 -18 13 7 -21 -18 -13 h22 z" fill="#ffffff" />
+              <text x="135" y="262" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="44" fill="#ffffff">SPF</text>
+              <text x="135" y="306" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="44" fill="#ffffff">30+</text>
+              <path d="M60 350 H210 M60 372 H210" stroke="#c9a24b" stroke-width="4" />
+              <path d="M135 392 L150 407 L135 422 L120 407 Z" fill="#b8452f" />
+              <rect x="80" y="500" width="100" height="72" rx="14" fill="#1c3f86" />
             </svg>
-            <div id="stamp">SPF 30+</div>
+            <div id="stamp" class="stk">SPF 30+</div>
             <div id="spf-more" class="center">ama ka badan</div>
           </div>
         </div>
@@ -197,11 +214,11 @@
       <!-- 4. AMOUNT -->
       <section id="s-amount" class="clip" data-start="%amount.start%" data-duration="%amount.dur%" data-track-index="1">
         <div class="stage">
-          <div class="chip">TALLAABO 2</div>
+          <div class="chip"><i></i>TALLAABO 2<i></i></div>
           <div class="headline"><span class="hl"><span class="hw">Qadar</span></span><span class="hl"><span class="hw y">ku</span> <span class="hw y">filan</span></span></div>
           <div class="visual">
-            <div class="finger" id="f1"><div class="nail"></div><div class="cream"></div></div>
-            <div class="finger" id="f2"><div class="nail"></div><div class="cream"></div></div>
+            <div class="finger stk" id="f1"><div class="nail"></div><div class="cream"></div></div>
+            <div class="finger stk" id="f2"><div class="nail"></div><div class="cream"></div></div>
             <div id="two-f">2<span class="s">farood</span></div>
             <div id="face-eq"><b>= wejiga</b>+ qoorta</div>
           </div>
@@ -211,14 +228,14 @@
       <!-- 5. TIME -->
       <section id="s-time" class="clip" data-start="%time.start%" data-duration="%time.dur%" data-track-index="1">
         <div class="stage">
-          <div class="chip">TALLAABO 3</div>
+          <div class="chip"><i></i>TALLAABO 3<i></i></div>
           <div class="headline"><span class="hl"><span class="hw y">15</span> <span class="hw">daqiiqo</span></span><span class="hl"><span class="hw">ka</span> <span class="hw">hor</span></span></div>
           <div class="visual">
-            <div id="timer">
-              <svg viewBox="0 0 520 520"><circle cx="260" cy="260" r="220" fill="none" stroke="#1a2f66" stroke-width="40" /><circle id="ring" cx="260" cy="260" r="220" fill="none" stroke="#ffc933" stroke-width="40" stroke-linecap="round" stroke-dasharray="1382.3" stroke-dashoffset="0" transform="rotate(-90 260 260)" /></svg>
+            <div id="timer" class="stk">
+              <svg viewBox="0 0 520 520"><circle cx="260" cy="260" r="244" fill="#ffffff" /><circle cx="260" cy="260" r="220" fill="none" stroke="#efe4d2" stroke-width="40" /><circle id="ring" cx="260" cy="260" r="220" fill="none" stroke="#c9a24b" stroke-width="40" stroke-linecap="round" stroke-dasharray="1382.3" stroke-dashoffset="0" transform="rotate(-90 260 260)" /></svg>
               <div id="timer-num"><div class="n" id="tn">15</div><div class="u">daqiiqo</div></div>
             </div>
-            <div id="go-out" class="center"><span>bannaanka</span><svg width="56" height="40" viewBox="0 0 56 40"><path d="M4 20 H46 M32 6 L48 20 L32 34" fill="none" stroke="#fff4dc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div>
+            <div id="go-out" class="center stk"><span>bannaanka</span><svg width="56" height="40" viewBox="0 0 56 40"><path d="M4 20 H46 M32 6 L48 20 L32 34" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div>
           </div>
         </div>
       </section>
@@ -226,11 +243,11 @@
       <!-- 6. SPOTS -->
       <section id="s-spots" class="clip" data-start="%spots.start%" data-duration="%spots.dur%" data-track-index="1">
         <div class="stage">
-          <div class="chip coral">TALLAABO 4</div>
+          <div class="chip alt"><i></i>TALLAABO 4<i></i></div>
           <div class="headline"><span class="hl"><span class="hw">Ha</span></span><span class="hl"><span class="hw y">illoobin!</span></span></div>
           <div class="visual">
-            <svg id="body" viewBox="0 0 360 640">
-              <g fill="#1a2f66" stroke="#fff4dc" stroke-opacity=".35" stroke-width="4">
+            <svg id="body" class="stk" viewBox="0 0 360 640">
+              <g fill="#f6eee1" stroke="#8a5a36" stroke-width="4">
                 <ellipse cx="124" cy="92" rx="16" ry="26" /><ellipse cx="236" cy="92" rx="16" ry="26" />
                 <circle cx="180" cy="86" r="58" />
                 <rect x="158" y="138" width="44" height="40" rx="10" />
@@ -239,11 +256,12 @@
                 <ellipse cx="116" cy="608" rx="34" ry="16" /><ellipse cx="244" cy="608" rx="34" ry="16" />
                 <circle cx="62" cy="388" r="20" /><circle cx="298" cy="388" r="20" />
               </g>
-              <g fill="#ffc933">
-                <circle class="dot" id="d-ears" cx="236" cy="92" r="14" />
-                <circle class="dot" id="d-neck" cx="180" cy="160" r="14" />
-                <circle class="dot" id="d-hands" cx="298" cy="388" r="14" />
-                <circle class="dot" id="d-feet" cx="244" cy="608" r="14" />
+              <g fill="none" stroke="#c9a24b" stroke-width="3" opacity=".8"><path d="M140 230 L180 270 L220 230 M140 300 L180 340 L220 300" /></g>
+              <g fill="#2f6fd0" stroke="#ffffff" stroke-width="4">
+                <circle class="dot" id="d-ears" cx="236" cy="92" r="15" />
+                <circle class="dot" id="d-neck" cx="180" cy="160" r="15" />
+                <circle class="dot" id="d-hands" cx="298" cy="388" r="15" />
+                <circle class="dot" id="d-feet" cx="244" cy="608" r="15" />
               </g>
             </svg>
             <div class="spot-list">
@@ -259,18 +277,18 @@
       <!-- 7. REAPPLY -->
       <section id="s-reapply" class="clip" data-start="%reapply.start%" data-duration="%reapply.dur%" data-track-index="1">
         <div class="stage">
-          <div class="chip">TALLAABO 5</div>
+          <div class="chip"><i></i>TALLAABO 5<i></i></div>
           <div class="headline"><span class="hl"><span class="hw">Dib</span> <span class="hw">u</span> <span class="hw y">mari</span></span></div>
           <div class="visual">
             <div id="cycle">
-              <svg id="cycle-arrows" viewBox="0 0 420 420" fill="none" stroke="#ffc933" stroke-width="22" stroke-linecap="round">
+              <svg id="cycle-arrows" viewBox="0 0 420 420" fill="none" stroke="#2f6fd0" stroke-width="22" stroke-linecap="round">
                 <path d="M60 210 A150 150 0 0 1 300 90" /><path d="M285 55 L318 98 L266 112" stroke-linejoin="round" />
-                <path d="M360 210 A150 150 0 0 1 120 330" /><path d="M135 365 L102 322 L154 308" stroke-linejoin="round" />
+                <path d="M360 210 A150 150 0 0 1 120 330" stroke="#c9a24b" /><path d="M135 365 L102 322 L154 308" stroke="#c9a24b" stroke-linejoin="round" />
               </svg>
               <div id="cycle-num"><div class="n">2</div><div class="u">saacadood</div></div>
             </div>
-            <div class="pill center" id="p-swim"><svg width="70" height="44" viewBox="0 0 70 44" fill="none" stroke="#6fd3ff" stroke-width="7" stroke-linecap="round"><path d="M4 14 Q14 4 24 14 T44 14 T66 14" /><path d="M4 32 Q14 22 24 32 T44 32 T66 32" /></svg>dabaal</div>
-            <div class="pill center" id="p-sweat"><svg width="44" height="60" viewBox="0 0 44 60"><path d="M22 4 C30 20 40 30 40 40 C40 51 32 58 22 58 C12 58 4 51 4 40 C4 30 14 20 22 4Z" fill="#6fd3ff" /></svg>dhidid</div>
+            <div class="pill center" id="p-swim"><svg width="70" height="44" viewBox="0 0 70 44" fill="none" stroke="#2f6fd0" stroke-width="7" stroke-linecap="round"><path d="M4 14 Q14 4 24 14 T44 14 T66 14" /><path d="M4 32 Q14 22 24 32 T44 32 T66 32" /></svg>dabaal</div>
+            <div class="pill center" id="p-sweat"><svg width="44" height="60" viewBox="0 0 44 60"><path d="M22 4 C30 20 40 30 40 40 C40 51 32 58 22 58 C12 58 4 51 4 40 C4 30 14 20 22 4Z" fill="#2f6fd0" /></svg>dhidid</div>
           </div>
         </div>
       </section>
@@ -278,17 +296,17 @@
       <!-- 8. MYTH -->
       <section id="s-myth" class="clip" data-start="%myth.start%" data-duration="%myth.dur%" data-track-index="1">
         <div class="stage">
-          <div class="chip coral">XAQIIQ</div>
+          <div class="chip alt"><i></i>XAQIIQ<i></i></div>
           <div class="headline"><span class="hl"><span class="hw y">Maqaarka</span> <span class="hw y">madow</span></span><span class="hl sm"><span class="hw">sidoo</span> <span class="hw">kale</span> <span class="hw">wuu</span> <span class="hw">gubtaa</span></span></div>
           <div class="visual">
             <div class="tones">
-              <div class="tone" style="background: #f3d2b3"><div class="ok"><svg width="38" height="30" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#0f1e45" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
-              <div class="tone" style="background: #d9a47c"><div class="ok"><svg width="38" height="30" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#0f1e45" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
-              <div class="tone" style="background: #a86f4a"><div class="ok"><svg width="38" height="30" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#0f1e45" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
-              <div class="tone" style="background: #7a4a2f"><div class="ok"><svg width="38" height="30" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#0f1e45" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
-              <div class="tone" style="background: #4a2a1a"><div class="ok"><svg width="38" height="30" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#0f1e45" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+              <div class="tone" style="background: #f3d2b3"><div class="ok"><svg width="36" height="28" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+              <div class="tone" style="background: #d9a47c"><div class="ok"><svg width="36" height="28" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+              <div class="tone" style="background: #a86f4a"><div class="ok"><svg width="36" height="28" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+              <div class="tone" style="background: #7a4a2f"><div class="ok"><svg width="36" height="28" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+              <div class="tone" style="background: #4a2a1a"><div class="ok"><svg width="36" height="28" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
             </div>
-            <div id="everyone" class="center">Qof kasta</div>
+            <div id="everyone" class="center"><svg width="46" height="42" viewBox="0 0 46 42"><path d="M23 40 C8 28 2 20 2 12 C2 6 7 2 12 2 C17 2 21 5 23 9 C25 5 29 2 34 2 C39 2 44 6 44 12 C44 20 38 28 23 40Z" fill="#b8452f" /></svg><span>Qof kasta</span><svg width="46" height="42" viewBox="0 0 46 42"><path d="M23 40 C8 28 2 20 2 12 C2 6 7 2 12 2 C17 2 21 5 23 9 C25 5 29 2 34 2 C39 2 44 6 44 12 C44 20 38 28 23 40Z" fill="#b8452f" /></svg></div>
           </div>
         </div>
       </section>
@@ -296,18 +314,18 @@
       <!-- 9. CTA -->
       <section id="s-cta" class="clip" data-start="%cta.start%" data-duration="%cta.dur%" data-track-index="1">
         <div class="stage">
-          <div class="chip">MAANTA</div>
+          <div class="chip"><i></i>MAANTA<i></i></div>
           <div class="headline"><span class="hl"><span class="hw">Maanta</span> <span class="hw y">bilow!</span></span><span class="hl sm" id="cta-sub"><span class="hw">maqaarkaaga</span> <span class="hw y">ilaali</span></span></div>
           <div class="visual">
-            <svg id="cta-sun" viewBox="0 0 500 500"><g id="cta-rays" fill="#ffc933" style="transform-origin: 250px 250px"><rect x="238" y="0" width="24" height="80" rx="12" /><rect x="238" y="420" width="24" height="80" rx="12" /><rect x="0" y="238" width="80" height="24" rx="12" /><rect x="420" y="238" width="80" height="24" rx="12" /><rect x="238" y="0" width="24" height="80" rx="12" transform="rotate(45 250 250)" /><rect x="238" y="420" width="24" height="80" rx="12" transform="rotate(45 250 250)" /><rect x="0" y="238" width="80" height="24" rx="12" transform="rotate(45 250 250)" /><rect x="420" y="238" width="80" height="24" rx="12" transform="rotate(45 250 250)" /></g><circle cx="250" cy="250" r="140" fill="url(#sg)" /></svg>
-            <svg id="cta-shield" viewBox="0 0 210 250"><path d="M105 6 L200 40 V120 C200 185 160 225 105 244 C50 225 10 185 10 120 V40 Z" fill="#0f1e45" stroke="#fff4dc" stroke-width="10" stroke-linejoin="round" /><path d="M58 128 L92 162 L154 96" fill="none" stroke="#ffc933" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" /></svg>
-            <div id="share" class="center"><span>U dir qof aad jeceshahay</span><svg id="share-arrow" viewBox="0 0 64 64"><path d="M36 10 L58 30 L36 50 V38 C22 38 12 42 6 54 C8 34 18 24 36 22 Z" fill="#fff4dc" /></svg></div>
+            <svg id="cta-sun" class="stk" viewBox="0 0 500 500"><g id="cta-rays" fill="#c9a24b"><rect x="238" y="0" width="24" height="80" rx="12" /><rect x="238" y="420" width="24" height="80" rx="12" /><rect x="0" y="238" width="80" height="24" rx="12" /><rect x="420" y="238" width="80" height="24" rx="12" /><rect x="238" y="0" width="24" height="80" rx="12" transform="rotate(45 250 250)" /><rect x="238" y="420" width="24" height="80" rx="12" transform="rotate(45 250 250)" /><rect x="0" y="238" width="80" height="24" rx="12" transform="rotate(45 250 250)" /><rect x="420" y="238" width="80" height="24" rx="12" transform="rotate(45 250 250)" /></g><circle cx="250" cy="250" r="140" fill="url(#sg)" /></svg>
+            <svg id="cta-shield" class="stk" viewBox="0 0 210 250"><path d="M105 6 L200 40 V120 C200 185 160 225 105 244 C50 225 10 185 10 120 V40 Z" fill="#2f6fd0" stroke="#c9a24b" stroke-width="10" stroke-linejoin="round" /><path d="M105 72 l14 42 h44 l-36 26 14 42 -36 -26 -36 26 14 -42 -36 -26 h44 z" fill="#ffffff" /></svg>
+            <div id="share" class="center stk"><svg id="tiktok" viewBox="0 0 48 48"><rect width="48" height="48" rx="11" fill="#000000" /><g transform="translate(7.8 7.8) scale(1.35)"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.650-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" fill="#25f4ee" transform="translate(-0.9 -0.9)" /><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.650-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" fill="#fe2c55" transform="translate(0.9 0.9)" /><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.650-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" fill="#ffffff" /></g></svg><span>U dir qof aad jeceshahay</span><svg id="share-arrow" viewBox="0 0 64 64"><path d="M36 10 L58 30 L36 50 V38 C22 38 12 42 6 54 C8 34 18 24 36 22 Z" fill="#ffffff" /></svg></div>
           </div>
         </div>
       </section>
 
       <!-- persistent chrome above scenes -->
-      <div id="brand"><i></i>QORRAXDA &amp; MAQAARKA</div>
+      <div id="brand"><svg width="30" height="28" viewBox="0 0 46 42"><path d="M23 40 C8 28 2 20 2 12 C2 6 7 2 12 2 C17 2 21 5 23 9 C25 5 29 2 34 2 C39 2 44 6 44 12 C44 20 38 28 23 40Z" fill="#2f6fd0" /></svg>QORRAXDA &amp; MAQAARKA</div>
       <div id="prog"><span id="prog-fill"></span></div>
       <div id="caps">
         %CAPTIONS%
@@ -323,13 +341,13 @@
       D.scenes.forEach((s) => (S[s.id] = s));
       const B = D.beats;
       const q = (sel) => document.querySelector(sel);
-      const qa = (sel) => document.querySelectorAll(sel);
 
-      // persistent theme motion
-      tl.fromTo("#rays", { rotation: 0 }, { rotation: 40, duration: 45, ease: "none" }, 0);
+      // persistent theme motion: the woven lattice and patterned band drift slowly, progress fills
+      tl.fromTo("#weave", { backgroundPosition: "0px 0px" }, { backgroundPosition: "0px 240px", duration: 45, ease: "none" }, 0);
+      tl.fromTo("#band", { backgroundPosition: "0px 0px" }, { backgroundPosition: "240px 0px", duration: 45, ease: "none" }, 0);
       tl.fromTo("#prog-fill", { scaleX: 0 }, { scaleX: 1, duration: 45, ease: "none" }, 0);
 
-      // every scene: hard cut + flash, punch-in landing, a mid-scene jump-cut zoom
+      // every scene: hard cut + gold flash, punch-in landing, a mid-scene jump-cut zoom
       D.scenes.forEach((s, i) => {
         const el = q("#s-" + s.id);
         const stage = el.querySelector(".stage");
@@ -339,7 +357,7 @@
         tl.set(stage, { scale: 1.07 }, jump);
         tl.to(stage, { scale: 1.1, duration: s.dur * 0.44 - 0.02, ease: "none" }, jump + 0.01);
         if (i > 0) {
-          tl.set("#flash", { opacity: 0.85 }, s.start);
+          tl.set("#flash", { opacity: 0.55 }, s.start);
           tl.to("#flash", { opacity: 0, duration: 0.16, ease: "power2.out" }, s.start + 0.001);
         }
         tl.fromTo(el.querySelector(".chip"), { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(3)" }, s.start + 0.05);
@@ -352,7 +370,7 @@
       tl.fromTo("#skin-bar", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out" }, S.hook.start + 0.4);
       tl.fromTo("#cloud", { x: -760 }, { x: 0, duration: 0.5, ease: "power3.out" }, B.cloud - 0.15);
       tl.fromTo(".uv", { strokeDasharray: 400, strokeDashoffset: 400 }, { strokeDashoffset: 0, duration: 0.5, stagger: 0.08, ease: "power2.in" }, B.cloud + 0.25);
-      tl.to("#skin-bar", { boxShadow: "0 0 60px rgba(255,90,60,0.95)", background: "linear-gradient(90deg,#b8442c,#ff5a3c,#ff8a5c)", duration: 0.3 }, B.cloud + 0.7);
+      tl.to("#skin-bar", { background: "linear-gradient(90deg,#8e2f1e,#b8452f,#d9745a)", duration: 0.3 }, B.cloud + 0.7);
       tl.fromTo("#hook-sticker", { scale: 0, rotation: -20 }, { scale: 1, rotation: -6, duration: 0.35, ease: "back.out(2.5)" }, B.cloud + 0.3);
 
       // 2 uv
@@ -386,7 +404,7 @@
       tl.set(".dot", { opacity: 0 }, S.spots.start);
       ["ears", "neck", "hands", "feet"].forEach((k) => {
         tl.fromTo("#sp-" + k, { x: 520, opacity: 0 }, { x: 0, opacity: 1, duration: 0.28, ease: "power4.out" }, B[k] - 0.05);
-        tl.fromTo("#d-" + k, { scale: 0, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1.6, opacity: 1, duration: 0.3, ease: "back.out(4)" }, B[k]);
+        tl.fromTo("#d-" + k, { scale: 0, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1.5, opacity: 1, duration: 0.3, ease: "back.out(4)" }, B[k]);
       });
 
       // 7 reapply
@@ -406,9 +424,10 @@
       tl.fromTo("#cta-rays", { rotation: 0, svgOrigin: "250 250" }, { rotation: 60, svgOrigin: "250 250", duration: S.cta.dur, ease: "none" }, S.cta.start);
       tl.fromTo("#cta-shield", { y: 400, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "back.out(1.6)" }, B.protect - 0.15);
       tl.fromTo("#share", { y: 240, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "back.out(2)" }, B.share - 0.1);
+      tl.fromTo("#tiktok", { scale: 0, rotation: -30 }, { scale: 1, rotation: 0, duration: 0.4, ease: "back.out(3)" }, B.share + 0.05);
       tl.fromTo("#share-arrow", { x: 0 }, { x: 14, duration: 0.25, yoyo: true, repeat: 5, ease: "sine.inOut" }, B.share + 0.3);
 
-      // captions: word-by-word karaoke in Somali
+      // captions: word-by-word karaoke in Somali (active word in Somali blue)
       D.caps.forEach((g, gi) => {
         const line = "#cap-" + gi;
         tl.set(line, { opacity: 1 }, g.s);
@@ -416,8 +435,8 @@
         tl.set(line, { opacity: 0 }, g.e);
         g.w.forEach((w, wi) => {
           const id = "#cw-" + gi + "-" + wi;
-          tl.set(id, { color: "#ffc933" }, w.s);
-          if (wi + 1 < g.w.length) tl.set(id, { color: "#fff4dc" }, g.w[wi + 1].s);
+          tl.set(id, { color: "#2f6fd0" }, w.s);
+          if (wi + 1 < g.w.length) tl.set(id, { color: "#4a2e1a" }, g.w[wi + 1].s);
         });
       });
 

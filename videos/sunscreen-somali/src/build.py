@@ -99,7 +99,7 @@ for gi, g in enumerate(groups):
 cap_html = []
 for gi, g in enumerate(cap_data):
     spans = "".join(f'<span class="cw" id="cw-{gi}-{wi}">{w["t"]}</span>' for wi, w in enumerate(g["w"]))
-    cap_html.append(f'<div class="cap-line" id="cap-{gi}">{spans}</div>')
+    cap_html.append(f'<div class="cap-line" id="cap-{gi}"><span class="cap-pill">{spans}</span></div>')
 
 html = (SRC / "template.html.tmpl").read_text()
 for s in scenes:
