@@ -56,6 +56,66 @@ CLIPS = {   # first batch of the $21 plan (see CLIP_PLAN.md); the rest is added 
                       "electric lights anywhere, realistic, handheld, cinematic, " + NO_TEXT + "."),
 }
 
+# ---- batch 2: the rest of the $21 plan (owner "go all"); prompts carry the batch-1 lessons:
+# no logos on microphones/clothes/vehicles, and blackout scenes are genuinely dark.
+PEOPLE_END = ", realistic, handheld, cinematic, 16:9, no logos on clothing, microphones or vehicles, " + NO_TEXT + "."
+HANDOFF = ("The glowing night map of city lights seen from high above becomes a real photographic aerial view of {city} "
+           "as the camera keeps descending: {what}. Smooth steady descent, realistic, cinematic, " + NO_TEXT + ".")
+ZOOMS = ROOT / "build" / "zooms"
+
+
+def _p(prompt, dur=4, use=""):
+    return dict(kind="text-to-video", duration=dur, resolution="480p", audio=False, use=use, prompt=prompt + PEOPLE_END)
+
+
+def _h(city_dir, city, what, use):
+    return dict(kind="image-to-video", duration=5, resolution="480p", audio=False, use=use,
+                start=ZOOMS / city_dir / "seedance_start.png", prompt=HANDOFF.format(city=city, what=what))
+
+
+CLIPS.update({
+    "B1": _p("Night shift in a dim space-weather operations room: forecasters at desks facing a wall of monitors that show "
+             "glowing orange images of the Sun, one forecaster slowly stands up staring at a screen, the others turn around, tense",
+             use="ch1 Boulder: X-ray flux off the scale (reused for the ch3 Bz beat)"),
+    "B2": _p("An airliner cockpit in bright daylight over the ocean, two pilots in plain uniforms, the first officer presses "
+             "the radio button, listens, frowns and tries again, nothing but static", use="ch1 North Atlantic: HF radio dead"),
+    "B3": _p("Inside a space station, astronauts in plain clothes float quickly one after another through a round hatch into "
+             "a narrow shielded module, amber emergency lighting, urgent but calm", use="ch1 orbit: crew to the shielded module"),
+    "T2": _h("tokyo", "Tokyo at night", "dense towers, elevated expressways with streams of car lights, trains, and a huge "
+             "scramble crossing full of people under giant glowing video screens with no readable text",
+             use="ch2 Tokyo 21:00: the zoom hands over to the real city"),
+    "T3": _p("Night at a huge Tokyo scramble crossing: the crowd stops and looks up at giant video screens with no readable "
+             "text, faces lit by the screens, people raising their phones", use="ch2 Tokyo: crowds stop for the warning"),
+    "N1": _p("Early morning in New York in winter, a long line of people in coats outside a hardware store, people carrying "
+             "packs of bottled water and boxes, steam from street vents, taxis passing", use="ch2 New York: queues"),
+    "N2": _h("new_york", "Manhattan at night", "skyscrapers, avenues full of car headlights, a faint green aurora in the "
+             "sky, then block after block of the city's lights go dark", use="ch4 New York 23:16: Manhattan goes dark"),
+    "L2": _p("Before dawn on a completely dark London street with no streetlights and no lit windows, a British TV reporter "
+             "in a dark coat holds a plain black microphone and looks up; behind her people in coats stand in the road "
+             "under a deep red aurora, lit only by phone torches", use="ch4 London 04:21: reporter (voice-over)"),
+    "N3": _p("Passengers walking in a long line through a dark subway tunnel lit only by phone flashlights, stepping "
+             "carefully beside the rails, a stopped train behind them", use="ch5 New York: stuck subway"),
+    "P1": _p("Dawn in Paris in winter, crowds of commuters walking across a bridge over the Seine, no cars, the traffic "
+             "lights dark, grey light", use="ch5 Paris: no Metro, everyone walks"),
+    "N4": _p("Grey daylight on a New York street in winter, people filling buckets and plastic bottles from an open fire "
+             "hydrant while neighbours wait in line", use="ch6 New York: no water above floor 6"),
+    "L3": _p("A hospital corridor lit only by dim emergency lights, nurses working with head torches, a patient on a "
+             "trolley, calm but strained", use="ch6 London: hospital on diesel"),
+    "G1": _p("Daytime in a busy Lagos street market, shops and stalls running on small petrol generators, people buying, "
+             "talking and laughing in bright sun", use="ch6 Lagos: business as usual"),
+    "V1": _p("A snowy highway in winter: a long convoy of fuel tanker trucks escorted by plain military vehicles, soldiers "
+             "in winter uniforms at a checkpoint waving them through", use="ch7 USA: guarded fuel convoy"),
+    "R1": _p("A huge port crane slowly lifting an enormous electrical power transformer onto a cargo ship, port workers in "
+             "hi-vis jackets watching, grey daylight", use="ch7 Rotterdam: the transformer race"),
+    "W1": _p("A snowy farm in winter, a farmer pours milk from a large steel container into a ditch next to a red barn, "
+             "cows visible inside", use="ch7 Wisconsin: milk dumped"),
+    "M3": _p("At dusk on a snowy Montreal street, the streetlights and shop lights flicker back on and people in winter "
+             "coats cheer and hug", use="ch8 Montreal: the lights come back"),
+    "S1": _h("stockholm", "Stockholm at night in winter", "islands and bridges, snow, trams and cars moving, a huge green "
+             "aurora filling the sky, then the city lights go out", use="ch4 Stockholm 05:24: aurora overhead"),
+})
+
+
 
 def cost(c):
     return round(PRICE[c["resolution"]] * c["duration"], 2)

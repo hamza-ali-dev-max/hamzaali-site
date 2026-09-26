@@ -22,7 +22,8 @@ CITIES = {
     "mumbai": (19.0760, 72.8777), "sydney": (-33.8688, 151.2093), "singapore": (1.2903, 103.8520),
     "shanghai": (31.2304, 121.4737), "sao_paulo": (-23.5505, -46.6333), "dunedin": (-45.8788, 170.5028),
     "johannesburg": (-26.2041, 28.0473), "rotterdam": (51.9244, 4.4777), "ulsan": (35.5384, 129.3114),
-}
+    "boulder": (40.0150, -105.2705), "harrisburg": (40.2732, -76.8867), "madison": (43.0731, -89.4012),
+}   # (Anchorage is west of the AI map's edge at ~132.6 W: its incident stays a map graphic)
 CITY = os.environ.get("SUPERSTORM_CITY", "montreal").lower()
 CENTER = CITIES[CITY]
 

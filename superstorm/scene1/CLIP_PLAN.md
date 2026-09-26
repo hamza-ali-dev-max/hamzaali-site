@@ -3,7 +3,7 @@
 The owner has **$21 of Seedance** (Higgsfield API, token-metered: **480p = $0.206/s**,
 720p = $0.462/s). That buys ~100 s of 480p footage for the full hour, so it goes only where
 real footage matters; every other incident is map zoom + text + audio + graphics. The full
-list (22 clips, $19.16, reserve $1.84) is in `../incidents.py` (`FUNDED`) and
+list (21 clips, $18.33, reserve $2.67) is in `../incidents.py` (`FUNDED`) and
 `../FULL_VIDEO_PLAN.md`. All clips: 16:9, no text, no logos, fictional people.
 
 ## Scene 1 (Montreal impact) — new split

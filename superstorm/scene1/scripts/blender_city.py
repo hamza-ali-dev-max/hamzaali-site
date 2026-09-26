@@ -39,7 +39,7 @@ META = json.loads((REG / "meta.json").read_text())
 KX, KY = META["km_per_deg_lon"] * 1000.0, META["km_per_deg_lat"] * 1000.0   # m per degree
 LAT0, LON0 = MONTREAL
 FPS = T.FPS
-F0, F1 = int(round(T.HANDOFF[0] * FPS)), int(round(T.RADIO[1] * FPS))        # frames 585..1500
+F0, F1 = int(round(T.HANDOFF[0] * FPS)), int(round(T.RADIO[1] * FPS))        # frames 585..1596
 
 # city box (the OSM fetch box), metres
 from osm_fetch import BBOX                                                    # noqa: E402
@@ -65,6 +65,8 @@ WATER_NIGHT = (2, 9, 17)
 # street level). It continues the 2D log zoom straight down, north up, so the map grid and
 # labels stay valid, then keeps easing in over downtown while the city goes dark.
 HFOV0 = HFOV1 = 40.0                # horizontal field of view (deg)
+DRIFT_END = 50.0                     # drift pinned to the old radio end so frames already rendered stay valid;
+                                     # the radio now runs to 53.2 s and the camera holds its last pose
 TILT_START, TILT_END = 21.3, 31.0   # (name kept: the ease from the zoom into the hold)
 TARGET1 = np.array([-500.0, 250.0])  # downtown + Mount Royal in frame
 V_HOLD = 6.2                         # km across at 0:31
@@ -496,7 +498,7 @@ def cam_state(t):
     pitch, heading = w * PITCH1, w * HEADING1
     hfov = HFOV0 + (HFOV1 - HFOV0) * w
     if t > TILT_END:
-        u = float(ease((t - TILT_END) / (T.RADIO[1] - TILT_END)))
+        u = float(ease((t - TILT_END) / (DRIFT_END - TILT_END)))
         logd += u * math.log(DRIFT["dist"])
         heading += u * DRIFT["heading"]
         pitch += u * DRIFT["pitch"]
@@ -1073,6 +1075,8 @@ def render(t0, t1, scale=100, samples=16, out=None, step=1):
     out.mkdir(parents=True, exist_ok=True)
     times = []
     for f in range(int(round(t0 * FPS)), int(round(t1 * FPS)), step):
+        if (out / f"{f:05d}.png").exists():            # resumable: skip frames already rendered
+            continue
         sc.frame_set(f)
         sc.render.filepath = str(out / f"{f:05d}.png")
         s = time.time()

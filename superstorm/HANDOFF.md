@@ -93,3 +93,22 @@ pilot of the incident format. Owner wants Claude to make the creative calls and 
   `cloudfront.net` before generating, or finished clips can't be pulled into the VM.
 - Overpass works but resets ~2 of 3 connections: `osm_fetch.py` fetches 16 tiles with
   retries into `build/osm/tiles/` (cached), ~25 min.
+
+## Session 3 wrap-up (owner: "you do everything, in budget")
+- Seedance: 21-clip $21 plan approved ("go all"). Done: X1 M1 M2 B2 (in `scene1/build/clips/`,
+  git-ignored). Submitted and rendering: B3 T2 T3 N1 N2 L2 N3 P1 N4 L3 G1 V1 R1 W1 M3 S1 —
+  request IDs in `scene1/production_log.csv`; finish/download with
+  `python3 hf_generate.py poll ID=REQUEST_ID ...`. B1 came back "nsfw" (false positive, $0):
+  reword and resubmit. M1 (reporter) has a flagged mic in the first second and lit
+  streetlights: trim, or redo from the reserve. Remaining after batch 2: ~$2.67.
+- CloudFront download host now works; ElevenLabs key is still the key ID (voices blocked).
+- Background jobs at wrap-up (restart if the container was recycled; both resume/skip done
+  work): Blender top view `blender_city.py render 19.5 50 --scale 67 --samples 12` (~7 h),
+  city layers loop for paris … madison (`SUPERSTORM_CITY=x python3 regional.py`).
+- New: `incident_clip.py` (clip → house look + location tag, joined to its zoom),
+  previews `build/preview/london_incident.mp4`, `montreal_reporter.mp4`; zooms for London,
+  Tokyo, New York, Stockholm.
+- Narration v2: `script/v2_part1.md` (ch 0–2), `script/v2_part2.md` (ch 3–5); ch 6–8 still to
+  write (lines per incident are in `incidents.py`).
+- Next: collect batch 2, retry B1, incident previews, scene1_v1 assembly after the render,
+  narration part 3, voices once the key is fixed.
