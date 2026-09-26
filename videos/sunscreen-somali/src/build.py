@@ -24,8 +24,12 @@ for w in T["words"]:
     w["s"] = max(w["s"], by_id[w["scene"]]["s"])
 
 
-def word_time(scene_id, prefix, nth=0):
-    hits = [w for w in T["words"] if w["scene"] == scene_id and w["w"].lower().startswith(prefix.lower())]
+def word_time(scene_id, prefix, nth=0, exact=False):
+    def match(w):
+        word = w["w"].lower().strip(".,:!")
+        return word == prefix.lower() if exact else word.startswith(prefix.lower())
+
+    hits = [w for w in T["words"] if w["scene"] == scene_id and match(w)]
     return hits[nth]["s"]
 
 
@@ -37,7 +41,7 @@ beats = {
     "cancer": word_time("uv", "kansarka"),
     "spf": word_time("spf", "SPF"),
     "more": word_time("spf", "ama"),
-    "fingers": word_time("amount", "laba"),
+    "fingers": word_time("amount", "laba", exact=True),
     "face": word_time("amount", "wejiga"),
     "fifteen": word_time("time", "shan"),
     "outside": word_time("time", "bannaanka"),
@@ -55,7 +59,7 @@ beats = {
 
 # ---- audio: VO + music bed + SFX on every cut and reveal ----
 audio = [
-    '<audio id="vo" src="assets/audio/vo_tight.mp3" data-start="0" data-duration="44.17" data-track-index="10" data-volume="1"></audio>',
+    '<audio id="vo" src="assets/audio/vo_tight.mp3" data-start="0" data-duration="44.12" data-track-index="10" data-volume="1"></audio>',
     '<audio id="bgm" src="assets/audio/bgm.mp3" data-start="0" data-duration="45" data-track-index="11" data-volume="0.22" data-fade-out="1.2"></audio>',
 ]
 for i, c in enumerate(cuts[1:-1], 1):

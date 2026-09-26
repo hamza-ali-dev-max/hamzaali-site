@@ -2,7 +2,7 @@ import json,subprocess,re
 d=json.load(open('alignment.json'));a=d['alignment'];text=d['text']
 s=json.load(open('script.json'))
 # silence ranges
-out=subprocess.run(['ffmpeg','-hide_banner','-i','vo.mp3','-af','silencedetect=n=-40dB:d=0.25','-f','null','-'],capture_output=True,text=True).stderr
+out=subprocess.run(['ffmpeg','-hide_banner','-i','vo.mp3','-af','silencedetect=n=-30dB:d=0.1','-f','null','-'],capture_output=True,text=True).stderr
 ss=[float(x) for x in re.findall(r'silence_start: ([\d.]+)',out)]
 se=[float(x) for x in re.findall(r'silence_end: ([\d.]+)',out)]
 sil=list(zip(ss,se))
@@ -11,7 +11,8 @@ spans=[];i=0
 for x in s:
   spans.append((i,i+len(x['text'])-1)); i+=len(x['text'])+1
 CS=a['character_start_times_seconds'];CE=a['character_end_times_seconds']
-total=48.77
+import sys
+total=float(subprocess.run(['ffprobe','-v','error','-show_entries','format=duration','-of','csv=p=0','vo.mp3'],capture_output=True,text=True).stdout)
 cuts=[]  # boundary silences between sentence k and k+1
 for k in range(len(s)-1):
   b=(CE[spans[k][1]]+CS[spans[k+1][0]])/2
@@ -22,7 +23,7 @@ for k in range(len(s)):
   st=0.0 if k==0 else cuts[k-1][1]-0.04
   en=total if k==len(s)-1 else cuts[k][0]+0.08
   segs.append((st,en))
-GAP=0.2; LEAD=0.25; TEMPO=1.04
+GAP=float(sys.argv[1]); LEAD=float(sys.argv[2]); TEMPO=float(sys.argv[3])
 # build concat list
 files=[];t=LEAD;newstart=[]
 subprocess.run(['ffmpeg','-y','-v','error','-f','lavfi','-i','anullsrc=r=44100:cl=mono','-t',str(GAP),'gap.wav'])
