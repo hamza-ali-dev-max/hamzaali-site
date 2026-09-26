@@ -116,8 +116,8 @@ inc(3, "Sydney", "Australia", -33.869, 151.209, "22:00", "09:00 +1", "Morning in
     ("NARR", "Sydney wakes up to the news first. Its stock market opens four percent down and keeps falling."),
     aerial_desc="Sydney harbour in morning sun, ferries crossing, bridge traffic",
     people_desc="traders in a busy trading room staring at screens (no readable text)")
-inc(3, "Boulder", "USA", 40.015, -105.270, "03:30", "20:30", "Bz turns hard south, 40 minutes out",
-    None, P4, ["UPSTREAM MONITOR: BZ −48 nT", "T−00:40"],
+inc(3, "Boulder", "USA", 40.015, -105.270, "04:00", "21:00", "Bz turns hard south, 12 minutes out (upstream monitor)",
+    None, P4, ["UPSTREAM MONITOR: BZ −48 nT", "T−00:12"],
     ("FORECASTER", "Bz just turned south. Hard south."),
     people_desc="forecaster in a dark operations room, face lit by a monitor, very quiet")
 

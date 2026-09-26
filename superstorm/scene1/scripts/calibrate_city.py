@@ -53,6 +53,8 @@ def lights_shift(img, loc, lat, lon, half=40, max_shift=12):
     n = 2 * half + 1
     lum = cv2.GaussianBlur(cv2.cvtColor(img, cv2.COLOR_RGB2GRAY).astype(np.float32), (0, 0), 1.2)
     pad = max_shift + 2
+    if y0 - pad < 0 or x0 - pad < 0 or y0 + n + pad > lum.shape[0] or x0 + n + pad > lum.shape[1]:
+        return 0.0, 0.0                                              # too close to the map edge
     L = lum[y0 - pad:y0 + n + pad, x0 - pad:x0 + n + pad]
     L = L - cv2.GaussianBlur(L, (0, 0), 8)                           # lights, not the land tint
     P = np.zeros((n, n), np.float32)

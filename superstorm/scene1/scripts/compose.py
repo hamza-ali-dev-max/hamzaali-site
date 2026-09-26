@@ -146,7 +146,10 @@ def radio_bars(t, n=40):
 def compose_city_frame(args):
     import blender_city as BC
     f, t = args
-    img = np.asarray(Image.open(CITY / f"{f:05d}.png").convert("RGB")).astype(np.float32) / 255
+    im = Image.open(CITY / f"{f:05d}.png").convert("RGB")
+    if im.size != (W, H):                            # the top view renders at 720p; upscale here
+        im = im.resize((W, H), Image.LANCZOS)
+    img = np.asarray(im).astype(np.float32) / 255
     if t < timeline.HANDOFF[1]:                     # crossfade from the 2D zoom plate
         a = float(mapcam.smoothstep(timeline.HANDOFF[0], timeline.HANDOFF[1], t))
         bi = f - int(round(G_start("B") * FPS))

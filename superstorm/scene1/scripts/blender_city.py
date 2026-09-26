@@ -1073,6 +1073,8 @@ def render(t0, t1, scale=100, samples=16, out=None, step=1):
     out.mkdir(parents=True, exist_ok=True)
     times = []
     for f in range(int(round(t0 * FPS)), int(round(t1 * FPS)), step):
+        if (out / f"{f:05d}.png").exists():            # resumable: skip frames already rendered
+            continue
         sc.frame_set(f)
         sc.render.filepath = str(out / f"{f:05d}.png")
         s = time.time()
