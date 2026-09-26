@@ -2,11 +2,18 @@
 band-pass 300-3400 Hz, soft clipping, heavy compression, a low static bed from ffmpeg's
 noise source, a squelch beep at the start and a static burst that cuts the last word.
 
-Usage: python3 radio_fx.py in.wav out.wav --cut 7.85
-  --cut  seconds into the input where the static burst chops the voice
+Usage: python3 radio_fx.py in.wav out.wav --cut 7.85 [--max-gap 0.25]
+  --cut      seconds into the input (after tightening) where the static burst chops the voice;
+             negative = that many seconds before the end of the speech
+  --max-gap  shorten every pause longer than this (s) first, so a take fits its radio slot
 """
 import argparse
+import re
 import subprocess
+import tempfile
+
+import numpy as np
+from scipy.io import wavfile
 
 
 def duration(path):
@@ -15,7 +22,52 @@ def duration(path):
     return float(r.stdout.strip())
 
 
-def radio(src, dst, cut=None, lead=0.32, burst=0.85):
+def pauses(path, noise="-38dB", d=0.18):
+    out = subprocess.run(["ffmpeg", "-hide_banner", "-i", path, "-af", f"silencedetect=noise={noise}:d={d}", "-f", "null",
+                          "-"], capture_output=True, text=True).stderr
+    st = [float(x) for x in re.findall(r"silence_start: ([0-9.]+)", out)]
+    en = [float(x) for x in re.findall(r"silence_end: ([0-9.]+)", out)]
+    return list(zip(st, en))
+
+
+def tighten(src, max_gap):
+    """Copy of src with every inner pause cut down to max_gap (short crossfades at the joins)."""
+    sr, x = wavfile.read(src)
+    x = x.astype(np.float32)
+    dur = len(x) / sr
+    keep, t = [], 0.0
+    for a, b in pauses(src):
+        if b >= dur - 0.01 or a <= 0.01:          # leading/trailing silence stays as it is
+            continue
+        if b - a > max_gap:
+            keep.append((t, a + max_gap / 2))
+            t = b - max_gap / 2
+    keep.append((t, dur))
+    fade = int(0.01 * sr)
+    parts = []
+    for a, b in keep:
+        seg = x[int(a * sr):int(b * sr)].copy()
+        ramp = np.linspace(0, 1, fade)
+        seg[:fade] *= ramp if seg.ndim == 1 else ramp[:, None]
+        seg[-fade:] *= ramp[::-1] if seg.ndim == 1 else ramp[::-1, None]
+        parts.append(seg)
+    y = np.concatenate(parts)
+    out = tempfile.NamedTemporaryFile(suffix=".wav", delete=False).name
+    wavfile.write(out, sr, y if x.dtype == np.float32 else y)
+    return out
+
+
+def speech_end(path):
+    p = pauses(path)
+    dur = duration(path)
+    return p[-1][0] if p and p[-1][1] >= dur - 0.01 else dur
+
+
+def radio(src, dst, cut=None, lead=0.32, burst=0.85, max_gap=None):
+    if max_gap:
+        src = tighten(src, max_gap)
+    if cut is not None and cut < 0:
+        cut = speech_end(src) + cut
     dur = duration(src)
     cut = min(cut or dur, dur)
     total = lead + cut + burst
@@ -51,5 +103,6 @@ if __name__ == "__main__":
     ap.add_argument("src")
     ap.add_argument("dst")
     ap.add_argument("--cut", type=float, default=None)
+    ap.add_argument("--max-gap", type=float, default=None)
     a = ap.parse_args()
-    print(f"{a.dst}: {radio(a.src, a.dst, a.cut):.2f} s")
+    print(f"{a.dst}: {radio(a.src, a.dst, a.cut, max_gap=a.max_gap):.2f} s")

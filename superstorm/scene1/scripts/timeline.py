@@ -18,10 +18,22 @@ BLACKOUT_START = 31.0
 N_DISTRICTS = 10
 BLACKOUT_END = 40.0          # last district dies -> power-down thunk
 SILENCE = (40.15, 42.15)     # 2 s of true silence
-RADIO = (42.2, 50.0)
-REPORTER = (50.0, 65.0)
-CROWD_INSERT = (57.0, 61.0)  # 4 s crowd shot cut into the reporter clip
+RADIO = (42.2, 53.2)         # grid_radio.wav: 10.94 s (GRID take, pauses cut to 0.22 s)
+REPORTER = (53.2, 65.0)      # M1 (5.04 s, she speaks on camera) then the crowd under her voice
+CROWD_INSERT = (58.24, 65.0)  # M2 (4.04 s) slowed to 0.6x
 PULLBACK = (65.0, 75.0)
+
+# where each voice take starts on the scene clock (set from the takes' real lengths, session 4)
+VO = {
+    "NARR1": 4.4,            # 9.36 s: right after the impact flash
+    "NARR2": 13.95,          # 3.52 s: "...is Quebec" lands at 16.7 under the QUÉBEC label
+    "NARR3": 17.9,           # 15.28 s: "Tonight..." at 30.95, "it takes nine" as the first district dies
+    "GRID_RADIO": 42.2,      # after the 2 s of silence
+    "GNN_M1": 53.2,          # the reporter's first two sentences, on camera
+    "GNN_REST": 58.35,       # GNN.wav from 4.87 s: "People are pouring..." over the crowd, into the pull-back
+    "NARR4": 67.4,           # 7.2 s
+}
+GNN_SPLIT = 4.87             # GNN.wav: end of the two on-camera sentences
 
 PEOPLE_WITHOUT_POWER = 9_000_000
 

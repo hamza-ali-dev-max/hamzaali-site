@@ -117,9 +117,9 @@ def compose_frame(args):
 
 # ---- Blender city segment (0:19.5-0:50) --------------------------------------------------
 
-RADIO_SUBS = [(42.2, "Grid Control to all stations..."), (44.0, "we've lost the northern lines."),
-              (45.6, "Multiple transformer trips... Montreal is down."),
-              (47.3, "I repeat, we are losing the network... we are losing the—")]
+RADIO_SUBS = [(42.5, "Grid Control to all stations..."), (44.3, "we've lost the northern lines."),
+              (45.95, "Multiple transformer trips... Montreal is down."),
+              (48.75, "I repeat, we are losing the network..."), (51.1, "we are losing the—")]
 
 
 def radio_bars(t, n=40):
