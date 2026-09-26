@@ -19,7 +19,7 @@ A 45-second vertical (1080×1920) TikTok explainer on why you shouldn't pop pimp
 ## Build
 
 1. Generate the voice from `src/somali-vo.txt` (one sentence per line) with `edge-tts --voice so-SO-MuuseNeural -f somali-vo.txt --write-media muuse.mp3`, then save it as `assets/audio/muuse.mp3`.
-2. Run `python3 src/align_external.py assets/audio/muuse.mp3 src/script-somali.json assets/audio/vo.mp3 src/timing.json <scene_gap> 0.45 0.3 1.0`. This retimes the voice and estimates word timings. Pick `scene_gap` so the voiceover ends around 44s.
+2. Run `python3 src/align_external.py assets/audio/muuse.mp3 src/script-somali.json assets/audio/vo.mp3 src/timing.json 0.7 0.45 0.3 1.0`. This retimes the voice (0.7s pause at each scene cut, ending at 43.5s) and estimates word timings.
 3. Run `python3 src/build.py`, then `npx hyperframes render --quality high --output renders/pimple-somali.mp4`.
 
-Until the voice is added, `src/timing.json` holds estimated timings, so the composition can be previewed silently.
+**Final video:** `renders/pimple-somali.mp4`.

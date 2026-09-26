@@ -81,7 +81,14 @@ def align_chunk(text, a, b):
     brk = [i for i, w in enumerate(words[:-1]) if w[-1] in ",:"]
     pauses = [p for p in silences(src, -32, 0.1, a, b) if p[0] > a + 0.05 and p[1] < b - 0.05]
     if len(pauses) > len(brk) and brk:
-        pauses = sorted(sorted(pauses, key=lambda p: p[1] - p[0])[-len(brk):])
+        # keep, for each break, the unused pause nearest where the syllable weights put it
+        tot = sum(weight(w) for w in words)
+        picked = []
+        for i in brk:
+            expect = a + (b - a) * sum(weight(w) for w in words[: i + 1]) / tot
+            best = min((p for p in pauses if p not in picked), key=lambda p: abs((p[0] + p[1]) / 2 - expect))
+            picked.append(best)
+        pauses = sorted(picked)
     phrases, spans = [], []
     if brk and len(pauses) == len(brk):
         starts = [0] + [i + 1 for i in brk]
