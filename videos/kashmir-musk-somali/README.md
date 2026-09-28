@@ -5,3 +5,4 @@
 - Script only for now. The audio, video and captions still need to be created.
 
 - **Needs a corrected recording:** Kashmir Musk is the perfume and Arabian Oud is the brand. `src/somali-vo.txt` (the text of the uploaded audio) reads "Arabian Oud" as the scent name. `src/somali-vo-corrected.txt` fixes that and adds the fragrance notes; record it and replace the audio before building.
+- **New script (sales version):** `src/somali-vo.txt` now points buyers to Falarosa Luxury in Surrey, BC, Canada. The uploaded `assets/audio/muuse.mp3` is the old script and needs re-recording before the video is rebuilt.
