@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="so" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Kashmir Musk</title>
+    <script src="assets/js/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Dancing Script"; src: url("assets/fonts/dancing-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-900.woff2") format("woff2"); font-weight: 900; }
+      @font-face { font-family: "Lora"; src: url("assets/fonts/lora-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Lora"; src: url("assets/fonts/lora-600i.woff2") format("woff2"); font-weight: 600; font-style: italic; }
+      :root {
+        --paper: #fbf7f0;
+        --sand: #efe4d2;
+        --sand2: #f6eee1;
+        --gold: #c9a24b;
+        --gold2: #e3c173;
+        --brown: #4a2e1a;
+        --brown2: #8a5a36;
+        --blue: #2f6fd0;
+        --navy: #1c3f86;
+        --terra: #b8452f;
+        --skin: #8d5a3b;
+        --sticker: drop-shadow(6px 0 0 #fff) drop-shadow(-6px 0 0 #fff) drop-shadow(0 6px 0 #fff) drop-shadow(0 -6px 0 #fff) drop-shadow(0 14px 14px rgba(74, 46, 26, 0.22));
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Lora", serif; color: var(--brown); background: var(--paper); }
+
+      /* persistent heritage theme: warm paper, woven diamond lattice, patterned band */
+      #bg { position: absolute; inset: 0; background: radial-gradient(1000px 900px at 50% 30%, #ffffff 0%, var(--paper) 55%, var(--sand2) 100%); }
+      #weave { position: absolute; inset: 0; opacity: 0.55;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><path d='M60 6 L114 60 L60 114 L6 60 Z' fill='none' stroke='%23e3c173' stroke-width='2' opacity='.45'/><path d='M60 48 L72 60 L60 72 L48 60 Z' fill='%23c9a24b' opacity='.28'/></svg>");
+        background-size: 120px 120px; }
+      #band { position: absolute; left: 0; top: 0; width: 1080px; height: 30px;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='30'><rect width='60' height='30' fill='%231c3f86'/><path d='M0 30 L15 6 L30 30Z' fill='%23c9a24b'/><path d='M30 30 L45 6 L60 30Z' fill='%23b8452f'/><path d='M15 0 L30 18 L45 0Z' fill='%23fbf7f0'/></svg>");
+        background-size: 60px 30px; }
+      #brand { position: absolute; left: 60px; top: 66px; display: flex; align-items: center; gap: 14px; font-family: "Cinzel"; font-weight: 700; font-size: 28px; letter-spacing: 0.16em; color: var(--brown); }
+      #brand svg { display: block; }
+      #prog { position: absolute; left: 60px; top: 118px; width: 820px; height: 10px; border-radius: 6px; background: var(--sand); overflow: hidden; }
+      #prog-fill { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold2)); transform-origin: left center; }
+      #flash { position: absolute; inset: 0; background: var(--gold2); opacity: 0; pointer-events: none; }
+
+      /* scenes */
+      .clip { position: absolute; inset: 0; }
+      .stage { position: absolute; inset: 0; transform-origin: 470px 900px; }
+      .stk { filter: var(--sticker); }
+      .chip { position: absolute; left: 60px; top: 190px; height: 66px; padding: 0 26px; border-radius: 33px; background: #fff; border: 3px solid var(--gold); color: var(--brown);
+        font-family: "Cinzel"; font-weight: 900; font-size: 30px; letter-spacing: 0.12em; display: flex; align-items: center; gap: 14px; box-shadow: 0 8px 14px rgba(74, 46, 26, 0.15); }
+      .chip i { display: block; width: 14px; height: 14px; background: var(--gold); transform: rotate(45deg); }
+      .chip.alt { background: var(--blue); border-color: #fff; color: #fff; }
+      .chip.alt i { background: #fff; }
+      .headline { position: absolute; left: 60px; top: 285px; width: 860px; font-family: "Cinzel"; font-weight: 900; font-size: 88px; line-height: 1.08; text-transform: uppercase; color: var(--brown); }
+      .headline .hl { display: block; overflow: hidden; padding-bottom: 8px; }
+      .headline .hw { display: inline-block; }
+      .headline .y { font-family: "Dancing Script"; font-weight: 700; font-size: 1.62em; line-height: 0.95; text-transform: none; color: var(--blue); }
+      .headline .sm { font-size: 62px; letter-spacing: 0.04em; color: var(--brown2); }
+      .visual { position: absolute; left: 40px; top: 690px; width: 880px; height: 640px; }
+      .center { display: flex; align-items: center; justify-content: center; }
+
+      .lab { display: flex; align-items: center; gap: 22px; height: 70px; white-space: nowrap; padding: 0 28px; border-radius: 38px; background: #fff; border: 3px solid var(--gold2); box-shadow: 0 10px 16px rgba(74, 46, 26, 0.13);
+        font-family: "Cinzel"; font-weight: 900; font-size: 38px; text-transform: uppercase; color: var(--brown); }
+      .lab i { display: block; width: 36px; height: 36px; border-radius: 50%; }
+      .tag { position: absolute; }
+      .photo { position: absolute; overflow: hidden; background: #fff; border: 10px solid #fff; box-shadow: 0 0 0 5px var(--gold), 0 18px 28px rgba(74, 46, 26, 0.28); }
+      .photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      .round { border-radius: 50%; }
+      .cut { position: absolute; filter: drop-shadow(0 18px 18px rgba(74, 46, 26, 0.3)); }
+      .cut img { display: block; width: 100%; height: 100%; object-fit: contain; }
+      .disc2 { position: absolute; border-radius: 50%; background: #fff; box-shadow: 0 14px 20px rgba(74, 46, 26, 0.16); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+      .disc2.col { flex-direction: column; }
+      .banx { position: absolute; inset: 0; width: 100%; height: 100%; }
+      .note { position: absolute; }
+      .note .tier { font-family: "Cinzel"; font-weight: 900; font-size: 26px; letter-spacing: 0.14em; color: var(--brown2); text-transform: uppercase; }
+      .note .nm { font-family: "Dancing Script"; font-weight: 700; font-size: 74px; line-height: 1.05; color: var(--blue); white-space: nowrap; }
+      .shopname { position: absolute; left: 460px; top: 30px; width: 420px; text-align: center; font-family: "Dancing Script"; font-weight: 700; font-size: 110px; line-height: 1; color: var(--blue); }
+      #g-name { position: absolute; left: 450px; top: 20px; width: 430px; text-align: center; font-family: "Dancing Script"; font-weight: 700; font-size: 110px; line-height: 1; color: var(--blue); }
+      #g-ar { position: absolute; left: 450px; top: 260px; width: 430px; text-align: center; font-family: serif; font-weight: 700; font-size: 62px; color: var(--brown); }
+      #g-en { position: absolute; left: 450px; top: 350px; width: 430px; text-align: center; font-family: "Cinzel"; font-weight: 900; font-size: 34px; letter-spacing: 0.12em; color: var(--brown2); }
+      #g-buy { position: absolute; left: 470px; top: 440px; width: 400px; white-space: nowrap; height: 120px; border-radius: 60px; background: linear-gradient(90deg, var(--gold), var(--gold2)); color: var(--brown); font-family: "Cinzel"; font-weight: 900; font-size: 44px; }
+      /* captions: word-by-word, on a white sticker label */
+      #caps { position: absolute; left: 60px; top: 1370px; width: 840px; height: 190px; }
+      .cap-line { position: absolute; left: 0; top: 0; width: 840px; text-align: center; opacity: 0; }
+      .cap-pill { display: inline-block; max-width: 840px; padding: 14px 30px 18px; border-radius: 30px; background: #fff; border: 3px solid var(--gold2); box-shadow: 0 10px 18px rgba(74, 46, 26, 0.16);
+        font-weight: 700; font-size: 60px; line-height: 1.15; }
+      .cw { display: inline-block; margin: 0 8px; color: var(--brown); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="%TOTAL%" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="weave"></div>
+      <div id="band"></div>
+      <section id="s-l1" class="clip" data-start="%l1.start%" data-duration="%l1.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>ARABIAN OUD<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Kashmir</span> <span class="hw y">Musk</span></span><span class="hl sm"><span class="hw">Arabian</span> <span class="hw">Oud</span></span></div>
+          <div class="visual">
+            <div class="cut" id="l1-bottle" style="left:315px;top:0px;width:250px;height:590px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+            <svg id="h-spark" viewBox="0 0 880 640" style="position:absolute;left:0;top:0;width:880px;height:640px"><g fill="#c9a24b"><path class="hs" d="M110 120 l12 28 28 12 -28 12 -12 28 -12 -28 -28 -12 28 -12z" /><path class="hs" d="M770 80 l10 22 22 10 -22 10 -10 22 -10 -22 -22 -10 22 -10z" /><path class="hs" d="M790 440 l12 28 28 12 -28 12 -12 28 -12 -28 -28 -12 28 -12z" /><path class="hs" d="M80 460 l8 18 18 8 -18 8 -8 18 -8 -18 -18 -8 18 -8z" /></g></svg>
+          </div>
+        </div>
+      </section>
+      <section id="s-l2" class="clip" data-start="%l2.start%" data-duration="%l2.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>KASHMIR MUSK<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Misk</span> <span class="hw y">jilicsan</span></span><span class="hl sm"><span class="hw">sida</span> <span class="hw">dhar</span> <span class="hw">kashmir</span></span></div>
+          <div class="visual">
+            <div class="cut" id="l2-p" style="left:40px;top:20px;width:400px;height:430px"><img src="assets/photos/set-cut.png" alt="" /></div>
+            <div class="lab tag" id="l2-t0" style="left:450px;top:60px"><i style="background:#e3c173"></i>Misk jilicsan</div>
+            <div class="lab tag" id="l2-t1" style="left:450px;top:190px"><i style="background:#aab4c0"></i>Kashmir</div>
+            <div class="lab tag" id="l2-t2" style="left:450px;top:320px"><i style="background:#1c3f86"></i>Ragga + dumarka</div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l3" class="clip" data-start="%l3.start%" data-duration="%l3.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>BILOWGA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Bilowga</span></span><span class="hl sm"><span class="hw">pear</span> <span class="hw">·</span> <span class="hw">filfil</span> <span class="hw">·</span> <span class="hw">bergamot</span></span></div>
+          <div class="visual">
+            <div class="disc2" id="l3-n0" style="left:20px;top:10px;width:170px;height:170px"><svg width="110" height="120" viewBox="0 0 110 120"><path d="M55 20 Q70 22 70 44 Q96 66 90 90 Q84 114 55 114 Q26 114 20 90 Q14 66 40 44 Q40 22 55 20Z" fill="#c8d65a" /><path d="M55 20 L58 6" stroke="#6b4a2a" stroke-width="5" /><ellipse cx="68" cy="10" rx="12" ry="5" fill="#4f8a4a" /></svg></div>
+            <div class="note" id="l3-l0" style="left:210px;top:40px"><div class="tier">Bilowga</div><div class="nm">Ubaxa pear</div></div>
+            <div class="disc2" id="l3-n1" style="left:20px;top:210px;width:170px;height:170px"><svg width="120" height="120" viewBox="0 0 120 120"><g fill="#e0607a"><circle cx="40" cy="40" r="13" /><circle cx="74" cy="34" r="13" /><circle cx="58" cy="64" r="13" /><circle cx="30" cy="76" r="13" /><circle cx="84" cy="72" r="13" /><circle cx="56" cy="94" r="13" /></g><g fill="#fff" opacity=".5"><circle cx="36" cy="36" r="4" /><circle cx="70" cy="30" r="4" /><circle cx="54" cy="60" r="4" /><circle cx="26" cy="72" r="4" /><circle cx="80" cy="68" r="4" /><circle cx="52" cy="90" r="4" /></g></svg></div>
+            <div class="note" id="l3-l1" style="left:210px;top:240px"><div class="tier">Bilowga</div><div class="nm">Filfil casaan</div></div>
+            <div class="disc2" id="l3-n2" style="left:20px;top:410px;width:170px;height:170px"><svg width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="48" fill="#b5d64a" stroke="#6f9f2a" stroke-width="8" /><g stroke="#fff4c0" stroke-width="5"><path d="M60 16 V104 M16 60 H104 M29 29 L91 91 M29 91 L91 29" /></g><circle cx="60" cy="60" r="8" fill="#fff4c0" /></svg></div>
+            <div class="note" id="l3-l2" style="left:210px;top:440px"><div class="tier">Bilowga</div><div class="nm">Bergamot</div></div>
+            <div class="cut" id="l3-p" style="left:730px;top:40px;width:150px;height:413px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l4" class="clip" data-start="%l4.start%" data-duration="%l4.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>WADNAHA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Wadnaha</span></span><span class="hl sm"><span class="hw">jasmine</span> <span class="hw">iyo</span> <span class="hw">tuberose</span></span></div>
+          <div class="visual">
+            <div class="disc2" id="l4-n0" style="left:20px;top:60px;width:170px;height:170px"><svg width="120" height="120" viewBox="0 0 120 120"><ellipse cx="60" cy="28" rx="20" ry="32" fill="#ffffff" transform="rotate(0 60 60)" /><ellipse cx="60" cy="28" rx="20" ry="32" fill="#ffffff" transform="rotate(72 60 60)" /><ellipse cx="60" cy="28" rx="20" ry="32" fill="#ffffff" transform="rotate(144 60 60)" /><ellipse cx="60" cy="28" rx="20" ry="32" fill="#ffffff" transform="rotate(216 60 60)" /><ellipse cx="60" cy="28" rx="20" ry="32" fill="#ffffff" transform="rotate(288 60 60)" /><circle cx="60" cy="60" r="14" fill="#ffe08a" /></svg></div>
+            <div class="note" id="l4-l0" style="left:210px;top:90px"><div class="tier">Wadnaha</div><div class="nm">Jasmine</div></div>
+            <div class="disc2" id="l4-n1" style="left:20px;top:310px;width:170px;height:170px"><svg width="120" height="120" viewBox="0 0 120 120"><ellipse cx="60" cy="30" rx="19" ry="30" fill="#fff6ec" transform="rotate(0 60 60)" /><ellipse cx="60" cy="30" rx="19" ry="30" fill="#fff6ec" transform="rotate(60 60 60)" /><ellipse cx="60" cy="30" rx="19" ry="30" fill="#fff6ec" transform="rotate(120 60 60)" /><ellipse cx="60" cy="30" rx="19" ry="30" fill="#fff6ec" transform="rotate(180 60 60)" /><ellipse cx="60" cy="30" rx="19" ry="30" fill="#fff6ec" transform="rotate(240 60 60)" /><ellipse cx="60" cy="30" rx="19" ry="30" fill="#fff6ec" transform="rotate(300 60 60)" /><circle cx="60" cy="60" r="14" fill="#f2c4a0" /></svg></div>
+            <div class="note" id="l4-l1" style="left:210px;top:340px"><div class="tier">Wadnaha</div><div class="nm">Tuberose</div></div>
+            <div class="cut" id="l4-p" style="left:710px;top:40px;width:170px;height:469px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l5" class="clip" data-start="%l5.start%" data-duration="%l5.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>SALKA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Salka</span></span><span class="hl sm"><span class="hw">misk</span> <span class="hw">iyo</span> <span class="hw">patchouli</span></span></div>
+          <div class="visual">
+            <div class="disc2" id="l5-n0" style="left:20px;top:60px;width:170px;height:170px"><svg width="130" height="110" viewBox="0 0 130 110"><path d="M34 88 Q10 88 10 66 Q10 46 32 44 Q38 18 66 18 Q92 18 100 42 Q122 44 122 66 Q122 88 98 88Z" fill="#fff" stroke="#d9cfe8" stroke-width="5" /><g fill="#c9a24b"><circle cx="46" cy="64" r="5" /><circle cx="66" cy="54" r="5" /><circle cx="86" cy="66" r="5" /></g></svg></div>
+            <div class="note" id="l5-l0" style="left:210px;top:90px"><div class="tier">Salka</div><div class="nm">Misk</div></div>
+            <div class="disc2" id="l5-n1" style="left:20px;top:310px;width:170px;height:170px"><svg width="120" height="120" viewBox="0 0 120 120"><path d="M30 108 Q60 60 92 14" stroke="#6b4a2a" stroke-width="5" fill="none" /><g fill="#2f5a2a"><ellipse cx="30" cy="100" rx="6" ry="16" transform="rotate(-50 30 100)" /><ellipse cx="41" cy="85" rx="6" ry="16" transform="rotate(40 41 85)" /><ellipse cx="52" cy="70" rx="6" ry="16" transform="rotate(-50 52 70)" /><ellipse cx="63" cy="55" rx="6" ry="16" transform="rotate(40 63 55)" /><ellipse cx="74" cy="40" rx="6" ry="16" transform="rotate(-50 74 40)" /><ellipse cx="85" cy="25" rx="6" ry="16" transform="rotate(40 85 25)" /></g></svg></div>
+            <div class="note" id="l5-l1" style="left:210px;top:340px"><div class="tier">Salka</div><div class="nm">Patchouli</div></div>
+            <div class="cut" id="l5-p" style="left:710px;top:40px;width:170px;height:469px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l6" class="clip" data-start="%l6.start%" data-duration="%l6.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>ARABIAN OUD<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Riyaad</span></span><span class="hl sm"><span class="hw">laga</span> <span class="hw">bilaabo</span> <span class="hw">1982</span></span></div>
+          <div class="visual">
+            <div class="disc2" id="l6-d0" style="left:30px;top:20px;width:250px;height:250px;background:linear-gradient(135deg,#ecd08c,#c9a24b)"><span style="font-family:Cinzel;font-weight:900;font-size:70px;color:#4a2e1a;line-height:1;text-align:center">1982</span></div>
+            <div class="lab tag" id="l6-t0" style="left:30px;top:300px;font-size:32px"><i style="background:#c9a24b"></i>Sannadka</div>
+            <div class="disc2" id="l6-d1" style="left:320px;top:20px;width:250px;height:250px"><svg width="150" height="100" viewBox="0 0 150 100"><rect width="150" height="100" rx="8" fill="#006c35" /><path d="M40 40 H110" stroke="#fff" stroke-width="5" /><path d="M42 66 H104 L110 60" stroke="#fff" stroke-width="5" fill="none" /></svg></div>
+            <div class="lab tag" id="l6-t1" style="left:320px;top:395px;font-size:32px"><i style="background:#006c35"></i>Riyaad</div>
+            <div class="cut" id="l6-p" style="left:650px;top:60px;width:230px;height:379px"><img src="assets/photos/box-cut.png" alt="" /></div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l7" class="clip" data-start="%l7.start%" data-duration="%l7.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>MAANTA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">1200+</span> <span class="hw y">dukaan</span></span><span class="hl sm"><span class="hw">37</span> <span class="hw">waddan</span></span></div>
+          <div class="visual">
+            <div class="disc2" id="l7-d0" style="left:30px;top:20px;width:250px;height:250px;background:linear-gradient(135deg,#ecd08c,#c9a24b)"><span style="font-family:Cinzel;font-weight:900;font-size:56px;color:#4a2e1a;line-height:1;text-align:center">1200+</span></div>
+            <div class="lab tag" id="l7-t0" style="left:30px;top:300px;font-size:32px"><i style="background:#c9a24b"></i>Dukaan</div>
+            <div class="disc2" id="l7-d1" style="left:320px;top:20px;width:250px;height:250px;background:linear-gradient(135deg,#ecd08c,#c9a24b)"><span style="font-family:Cinzel;font-weight:900;font-size:70px;color:#4a2e1a;line-height:1;text-align:center">37</span></div>
+            <div class="lab tag" id="l7-t1" style="left:320px;top:395px;font-size:32px"><i style="background:#1c3f86"></i>Waddan</div>
+            <div class="cut" id="l7-p" style="left:730px;top:60px;width:150px;height:413px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l8" class="clip" data-start="%l8.start%" data-duration="%l8.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>MEESHA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Falarosa</span></span><span class="hl sm"><span class="hw">Surrey</span> <span class="hw">·</span> <span class="hw">BC</span> <span class="hw">·</span> <span class="hw">Kanada</span></span></div>
+          <div class="visual">
+            <div class="cut" id="l8-store" style="left:20px;top:20px;width:420px;height:400px"><svg viewBox="0 0 400 380" style="width:100%;height:100%"><rect x="30" y="120" width="340" height="240" rx="14" fill="#fffdf6" stroke="#c9a24b" stroke-width="6" />
+<g><path d="M30 70 H98 V130 Q64 160 30 130Z" fill="#1c3f86" /><path d="M98 70 H166 V130 Q132 160 98 130Z" fill="#c9a24b" /><path d="M166 70 H234 V130 Q200 160 166 130Z" fill="#1c3f86" /><path d="M234 70 H302 V130 Q268 160 234 130Z" fill="#c9a24b" /><path d="M302 70 H370 V130 Q336 160 302 130Z" fill="#1c3f86" /></g>
+<rect x="20" y="40" width="360" height="36" rx="10" fill="#4a2e1a" /><text x="200" y="66" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="22" fill="#e3c173" letter-spacing="3">FALAROSA LUXURY</text>
+<rect x="70" y="190" width="120" height="170" rx="8" fill="#e8dcc6" stroke="#c9a24b" stroke-width="4" /><circle cx="170" cy="280" r="6" fill="#c9a24b" />
+<rect x="220" y="190" width="120" height="100" rx="8" fill="#cfe3fb" stroke="#c9a24b" stroke-width="4" />
+<g><rect x="236" y="236" width="18" height="44" rx="4" fill="#b8243a" /><rect x="262" y="226" width="18" height="54" rx="4" fill="#e0b21c" /><rect x="288" y="232" width="18" height="48" rx="4" fill="#1d2f55" /><rect x="313" y="240" width="14" height="40" rx="4" fill="#fff" stroke="#c9a24b" stroke-width="2" /></g></svg></div>
+            <div id="l8-name" class="shopname">Falarosa<br />Luxury</div>
+            <div class="disc2" id="l8-pin" style="left:470px;top:330px;width:150px;height:150px"><svg width="120" height="140" viewBox="0 0 120 140"><path d="M60 132 C30 92 16 72 16 50 A44 44 0 0 1 104 50 C104 72 90 92 60 132Z" fill="#b8452f" /><circle cx="60" cy="50" r="18" fill="#fff" /></svg></div>
+            <div class="lab tag" id="l8-t0" style="left:630px;top:360px;font-size:34px"><i style="background:#b8452f"></i>Surrey, BC</div>
+            <div class="disc2" id="l8-leaf" style="left:470px;top:490px;width:130px;height:130px"><svg width="120" height="120" viewBox="0 0 120 120"><path d="M60 8 L68 30 L82 22 L78 48 L100 38 L94 54 L112 60 L84 76 L90 88 L64 82 L64 112 L56 112 L56 82 L30 88 L36 76 L8 60 L26 54 L20 38 L42 48 L38 22 L52 30Z" fill="#d52b1e" /></svg></div>
+            <div class="lab tag" id="l8-t1" style="left:620px;top:520px;font-size:34px"><i style="background:#d52b1e"></i>Kanada</div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l9" class="clip" data-start="%l9.start%" data-duration="%l9.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>LA XIRIIR<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Nala</span> <span class="hw y">soo</span> <span class="hw y">xiriir</span></span><span class="hl sm"><span class="hw">lambarka</span> <span class="hw">bogga</span></span></div>
+          <div class="visual">
+            <div class="disc2" id="l9-phone" style="left:40px;top:20px;width:300px;height:300px"><svg width="150" height="150" viewBox="0 0 150 150"><rect x="44" y="14" width="62" height="122" rx="12" fill="#1c3f86" /><rect x="50" y="28" width="50" height="86" rx="4" fill="#cfe3fb" /><circle cx="75" cy="124" r="5" fill="#fff" /><g id="rings" fill="none" stroke="#c9a24b" stroke-width="6" stroke-linecap="round"><path d="M116 50 q12 25 0 50" /><path d="M128 38 q20 37 0 74" /><path d="M34 50 q-12 25 0 50" /><path d="M22 38 q-20 37 0 74" /></g></svg></div>
+            <div class="lab tag" id="l9-t0" style="left:390px;top:60px"><i style="background:#2f6fd0"></i>Nala soo xiriir</div>
+            <div class="lab tag" id="l9-t1" style="left:390px;top:180px"><i style="background:#c9a24b"></i>Lambarka bogga</div>
+            <svg id="arrowdn" viewBox="0 0 90 120" style="position:absolute;left:180px;top:380px;width:90px;height:120px"><path d="M45 8 V96 M14 66 L45 100 L76 66" fill="none" stroke="#2f6fd0" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <div class="cut" id="l9-p" style="left:730px;top:290px;width:150px;height:413px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l10" class="clip" data-start="%l10.start%" data-duration="%l10.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>HADDA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Hadda</span> <span class="hw y">dalbo</span></span><span class="hl sm"><span class="hw">Falarosa</span> <span class="hw">Luxury</span></span></div>
+          <div class="visual">
+            <div class="cut" id="l10-p" style="left:40px;top:0px;width:200px;height:551px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+            <div id="g-name">Kashmir<br />Musk</div>
+            <div id="g-ar">العربية للعود</div><div id="g-en">ARABIAN OUD</div>
+            <div id="g-buy" class="center stk">HADDA DALBO</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- persistent chrome above scenes -->
+      <div id="brand"><svg width="30" height="28" viewBox="0 0 46 42"><path d="M23 40 C8 28 2 20 2 12 C2 6 7 2 12 2 C17 2 21 5 23 9 C25 5 29 2 34 2 C39 2 44 6 44 12 C44 20 38 28 23 40Z" fill="#c9a24b" /></svg>ARABIAN OUD · KASHMIR MUSK</div>
+      <div id="prog"><span id="prog-fill"></span></div>
+      <div id="caps">
+        %CAPTIONS%
+      </div>
+      <div id="flash"></div>
+
+    %AUDIO%
+    </div>
+    <script>
+      const D = %DATA%;
+      const tl = gsap.timeline({ paused: true });
+      const S = {};
+      D.scenes.forEach((s) => (S[s.id] = s));
+      const B = D.beats;
+      const q = (sel) => document.querySelector(sel);
+      const pop = (sel, t, from = 0.3) => tl.fromTo(sel, { scale: from, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2.4)" }, t);
+      const drift = (sel, t, dur) => tl.fromTo(sel, { y: 30, opacity: 0 }, { y: -40, opacity: 1, duration: dur, ease: "sine.out" }, t);
+
+      // persistent theme motion
+      tl.fromTo("#weave", { backgroundPosition: "0px 0px" }, { backgroundPosition: "0px 180px", duration: D.total, ease: "none" }, 0);
+      tl.fromTo("#band", { backgroundPosition: "0px 0px" }, { backgroundPosition: "180px 0px", duration: D.total, ease: "none" }, 0);
+      tl.fromTo("#prog-fill", { scaleX: 0 }, { scaleX: 1, duration: D.total, ease: "none" }, 0);
+
+      // every scene: hard cut + gold flash, punch-in landing, a mid-scene jump-cut zoom
+      D.scenes.forEach((s, i) => {
+        const el = q("#s-" + s.id);
+        const stage = el.querySelector(".stage");
+        const dir = i % 2 ? -1 : 1;
+        tl.fromTo(stage, { scale: 1.16, x: 90 * dir }, { scale: 1, x: 0, duration: 0.38, ease: "power3.out" }, s.start);
+        const jump = s.start + s.dur * 0.56;
+        tl.set(stage, { scale: 1.07 }, jump);
+        tl.to(stage, { scale: 1.1, duration: s.dur * 0.44 - 0.02, ease: "none" }, jump + 0.01);
+        if (i > 0) {
+          tl.set("#flash", { opacity: 0.55 }, s.start);
+          tl.to("#flash", { opacity: 0, duration: 0.16, ease: "power2.out" }, s.start + 0.001);
+        }
+        tl.fromTo(el.querySelector(".chip"), { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(3)" }, s.start + 0.05);
+        tl.fromTo(el.querySelectorAll(".hw"), { yPercent: 105 }, { yPercent: 0, duration: 0.42, stagger: 0.06, ease: "power4.out" }, s.start + 0.08);
+        // slow Ken Burns on every real photo in the scene
+        el.querySelectorAll(".photo img, .cut img").forEach((img) => tl.fromTo(img, { scale: 1.02 }, { scale: 1.14, duration: s.dur, ease: "none" }, s.start));
+      });
+
+      // product scenes (generated by adgen.py)
+      tl.fromTo("#l1-bottle", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "back.out(1.4)" }, S.l1.start+0.1);
+      tl.fromTo(".hs", { scale: 0, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1, opacity: 1, duration: 0.3, stagger: 0.12, ease: "back.out(3)" }, B.brand-0.1);
+      pop("#l2-p", S.l2.start+0.1);
+      pop("#l2-t0", B.l2t0);
+      pop("#l2-t1", B.l2t1);
+      pop("#l2-t2", B.l2t2);
+      pop("#l3-p", S.l3.start+0.1);
+      pop("#l3-n0", B.l3n0-0.1);
+      tl.fromTo("#l3-l0", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B.l3n0);
+      pop("#l3-n1", B.l3n1-0.1);
+      tl.fromTo("#l3-l1", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B.l3n1);
+      pop("#l3-n2", B.l3n2-0.1);
+      tl.fromTo("#l3-l2", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B.l3n2);
+      pop("#l4-p", S.l4.start+0.1);
+      pop("#l4-n0", B.l4n0-0.1);
+      tl.fromTo("#l4-l0", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B.l4n0);
+      pop("#l4-n1", B.l4n1-0.1);
+      tl.fromTo("#l4-l1", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B.l4n1);
+      pop("#l5-p", S.l5.start+0.1);
+      pop("#l5-n0", B.l5n0-0.1);
+      tl.fromTo("#l5-l0", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B.l5n0);
+      pop("#l5-n1", B.l5n1-0.1);
+      tl.fromTo("#l5-l1", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B.l5n1);
+      pop("#l6-p", S.l6.start+0.1);
+      pop("#l6-d0", B.l6f0-0.15);
+      pop("#l6-t0", B.l6f0+0.1);
+      pop("#l6-d1", B.l6f1-0.15);
+      pop("#l6-t1", B.l6f1+0.1);
+      pop("#l7-p", S.l7.start+0.1);
+      pop("#l7-d0", B.l7f0-0.15);
+      pop("#l7-t0", B.l7f0+0.1);
+      pop("#l7-d1", B.l7f1-0.15);
+      pop("#l7-t1", B.l7f1+0.1);
+      pop("#l8-store", S.l8.start+0.1);
+      pop("#l8-name", B.shop, 0.6);
+      pop("#l8-pin", B.surrey-0.1);
+      pop("#l8-t0", B.surrey+0.05);
+      pop("#l8-leaf", B.canada-0.1);
+      pop("#l8-t1", B.canada+0.05);
+      pop("#l9-phone", S.l9.start+0.1);
+      tl.fromTo("#rings", { opacity: 0 }, { opacity: 1, duration: 0.12, yoyo: true, repeat: 7 }, S.l9.start+0.3);
+      pop("#l9-t0", B.call);
+      pop("#l9-t1", B.num);
+      tl.fromTo("#arrowdn", { y: -30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }, B.num+0.1); tl.to("#arrowdn", { y: 22, duration: 0.3, yoyo: true, repeat: 5, ease: "sine.inOut" }, B.num+0.1+0.35);
+      pop("#l9-p", S.l9.start+0.4);
+      tl.fromTo("#l10-p", { x: -400, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, S.l10.start+0.1);
+      pop("#g-name", B.cname, 0.6);
+      pop("#g-ar", B.cname+0.4, 0.6);
+      pop("#g-en", B.cname+0.6, 0.6);
+      tl.fromTo("#g-buy", { y: 240, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "back.out(2)" }, B.buy-0.1); tl.fromTo("#g-buy", { scale: 1 }, { scale: 1.06, duration: 0.3, yoyo: true, repeat: 3, ease: "sine.inOut" }, B.buy+0.4);
+
+      // captions: word-by-word karaoke in Somali
+      D.caps.forEach((g, gi) => {
+        const line = "#cap-" + gi;
+        tl.set(line, { opacity: 1 }, g.s);
+        tl.fromTo(line, { scale: 0.86 }, { scale: 1, duration: 0.12, ease: "back.out(3)", immediateRender: false }, g.s);
+        tl.set(line, { opacity: 0 }, g.e);
+        g.w.forEach((w, wi) => {
+          const id = "#cw-" + gi + "-" + wi;
+          tl.set(id, { color: "#2f6fd0" }, w.s);
+          if (wi + 1 < g.w.length) tl.set(id, { color: "#4a2e1a" }, g.w[wi + 1].s);
+        });
+      });
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
