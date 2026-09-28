@@ -1,8 +1,9 @@
 # Kashmir Musk, Arabian Oud: product ad: Somali script
 
-- Script: `src/somali-vo.txt`, one sentence per line (about 35 seconds with so-SO-MuuseNeural).
+- Script: `src/somali-vo.txt`, the latest user-supplied Falarosa Luxury sales version.
 - To generate the audio: `edge-tts --voice so-SO-MuuseNeural -f src/somali-vo.txt --write-media assets/audio/muuse.mp3`.
-- Script only for now. The audio, video and captions still need to be created.
 
-- **Needs a corrected recording:** Kashmir Musk is the perfume and Arabian Oud is the brand. `src/somali-vo.txt` (the text of the uploaded audio) reads "Arabian Oud" as the scent name. `src/somali-vo-corrected.txt` fixes that and adds the fragrance notes; record it and replace the audio before building.
-- **New script (sales version):** `src/somali-vo.txt` now points buyers to Falarosa Luxury in Surrey, BC, Canada. The uploaded `assets/audio/muuse.mp3` is the old script and needs re-recording before the video is rebuilt.
+
+- **Current audio:** `assets/audio/muuse.mp3`, Microsoft `so-SO-MuuseNeural`, 43.152 seconds at natural synthesis pace. Recorded 2026-09-28 from the exact supplied sales script, including Falarosa Luxury, Surrey, BC, Kanada and the contact call to action.
+- Retiming, captions and video rendering must use this updated script and audio. Any existing rendered video uses the previous narration.
+- `src/somali-vo-corrected.txt` is an older revision; the current narration source is `src/somali-vo.txt`.
