@@ -69,8 +69,13 @@
       .round { border-radius: 50%; }
       .cut { position: absolute; filter: drop-shadow(0 18px 18px rgba(74, 46, 26, 0.3)); }
       .cut img { display: block; width: 100%; height: 100%; object-fit: contain; }
-      .disc2 { position: absolute; border-radius: 50%; background: #fff; box-shadow: 0 14px 20px rgba(74, 46, 26, 0.16); display: flex; align-items: center; justify-content: center; }
+      .disc2 { position: absolute; border-radius: 50%; background: #fff; box-shadow: 0 14px 20px rgba(74, 46, 26, 0.16); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+      .disc2.col { flex-direction: column; }
       .banx { position: absolute; inset: 0; width: 100%; height: 100%; }
+      .note { position: absolute; }
+      .note .tier { font-family: "Cinzel"; font-weight: 900; font-size: 26px; letter-spacing: 0.14em; color: var(--brown2); text-transform: uppercase; }
+      .note .nm { font-family: "Dancing Script"; font-weight: 700; font-size: 74px; line-height: 1.05; color: var(--blue); white-space: nowrap; }
+      .shopname { position: absolute; left: 460px; top: 30px; width: 420px; text-align: center; font-family: "Dancing Script"; font-weight: 700; font-size: 110px; line-height: 1; color: var(--blue); }
       #g-name { position: absolute; left: 450px; top: 20px; width: 430px; text-align: center; font-family: "Dancing Script"; font-weight: 700; font-size: 110px; line-height: 1; color: var(--blue); }
       #g-ar { position: absolute; left: 450px; top: 260px; width: 430px; text-align: center; font-family: serif; font-weight: 700; font-size: 62px; color: var(--brown); }
       #g-en { position: absolute; left: 450px; top: 350px; width: 430px; text-align: center; font-family: "Cinzel"; font-weight: 900; font-size: 34px; letter-spacing: 0.12em; color: var(--brown2); }
@@ -88,112 +93,143 @@
       <div id="bg"></div>
       <div id="weave"></div>
       <div id="band"></div>
-      <section id="s-hook" class="clip" data-start="%hook.start%" data-duration="%hook.dur%" data-track-index="1">
+      <section id="s-l1" class="clip" data-start="%l1.start%" data-duration="%l1.dur%" data-track-index="1">
         <div class="stage">
           <div class="chip"><i></i>TAIF AL EMARAT<i></i></div>
-          <div class="headline"><span class="hl"><span class="hw y">Romance</span> <span class="hw y">N°3</span></span><span class="hl sm"><span class="hw">ururka</span> <span class="hw">Romance</span></span></div>
+          <div class="headline"><span class="hl"><span class="hw y">Romance</span></span><span class="hl sm"><span class="hw">ururka</span> <span class="hw">Taif</span> <span class="hw">Al</span> <span class="hw">Emarat</span></span></div>
           <div class="visual">
-            <div class="cut" id="h-bottle" style="left:250px;top:0px;width:400px;height:575px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
-            <svg id="h-spark" viewBox="0 0 880 640" style="position:absolute;left:0;top:0;width:880px;height:640px"><g fill="#c9a24b"><path class="hs" d="M150 120 l12 28 28 12 -28 12 -12 28 -12 -28 -28 -12 28 -12z" /><path class="hs" d="M740 80 l10 22 22 10 -22 10 -10 22 -10 -22 -22 -10 22 -10z" /><path class="hs" d="M760 420 l12 28 28 12 -28 12 -12 28 -12 -28 -28 -12 28 -12z" /><path class="hs" d="M110 440 l8 18 18 8 -18 8 -8 18 -8 -18 -18 -8 18 -8z" /></g></svg>
+            <div class="cut" id="l1-b1" style="left:30px;top:110px;width:300px;height:431px"><img src="assets/photos/bottle-no1.png" alt="" /></div>
+            <div class="cut" id="l1-b2" style="left:550px;top:110px;width:300px;height:431px"><img src="assets/photos/bottle-no2.png" alt="" /></div>
+            <div class="cut" id="l1-b3" style="left:250px;top:0px;width:390px;height:560px"><img src="assets/photos/bottle-no3.png" alt="" /></div>
+            <svg id="h-spark" viewBox="0 0 880 640" style="position:absolute;left:0;top:0;width:880px;height:640px"><g fill="#c9a24b"><path class="hs" d="M110 120 l12 28 28 12 -28 12 -12 28 -12 -28 -28 -12 28 -12z" /><path class="hs" d="M770 80 l10 22 22 10 -22 10 -10 22 -10 -22 -22 -10 22 -10z" /><path class="hs" d="M790 440 l12 28 28 12 -28 12 -12 28 -12 -28 -28 -12 28 -12z" /><path class="hs" d="M80 460 l8 18 18 8 -18 8 -8 18 -8 -18 -18 -8 18 -8z" /></g></svg>
           </div>
         </div>
       </section>
-      <section id="s-s2" class="clip" data-start="%s2.start%" data-duration="%s2.dur%" data-track-index="1">
+      <section id="s-l2" class="clip" data-start="%l2.start%" data-duration="%l2.dur%" data-track-index="1">
         <div class="stage">
-          <div class="chip"><i></i>QURAARADDA<i></i></div>
-          <div class="headline"><span class="hl"><span class="hw y">Guduud</span></span><span class="hl sm"><span class="hw">saxan</span> <span class="hw">iyo</span> <span class="hw">dabool</span> <span class="hw">dahab</span></span></div>
+          <div class="chip"><i></i>UGU XOOGGAN<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Romance</span> <span class="hw y">N°3</span></span><span class="hl sm"><span class="hw">ugu</span> <span class="hw">udgoonka</span> <span class="hw">xooggan</span></span></div>
           <div class="visual">
-            <div class="cut" id="a-bottle" style="left:10px;top:20px;width:380px;height:546px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
-            <div class="photo round" id="a-plate" style="left:440px;top:0px;width:200px;height:200px"><img src="assets/photos/plate-crop.png" alt="" /></div>
-            <div class="photo round" id="a-cap" style="left:670px;top:0px;width:200px;height:200px"><img src="assets/photos/cap-crop.png" alt="" /></div>
-            <div class="lab tag" id="a-1" style="left:430px;top:250px"><i style="background:#b8243a"></i>Guduud-buni</div>
-            <div class="lab tag" id="a-2" style="left:430px;top:350px"><i style="background:#c9a24b"></i>Saxan dahab</div>
-            <div class="lab tag" id="a-3" style="left:430px;top:450px"><i style="background:#c9a24b"></i>Dabool dahab</div>
+            <div class="cut" id="l2-p" style="left:40px;top:20px;width:380px;height:546px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+            <div class="lab tag" id="l2-t0" style="left:450px;top:30px"><i style="background:#b8243a"></i>Ugu xooggan</div>
+            <div class="lab tag" id="l2-t1" style="left:450px;top:140px"><i style="background:#c9a24b"></i>Romance N°3</div>
+            <div class="disc2" id="l2-x" style="left:580px;top:370px;width:230px;height:230px;background:linear-gradient(135deg,#ecd08c,#c9a24b)"><span style="font-family:Cinzel;font-weight:900;font-size:64px;color:#4a2e1a;line-height:1;text-align:center">2025</span></div>
           </div>
         </div>
       </section>
-      <section id="s-s3" class="clip" data-start="%s3.start%" data-duration="%s3.dur%" data-track-index="1">
+      <section id="s-l3" class="clip" data-start="%l3.start%" data-duration="%l3.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>UDGOONKA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Ward</span> <span class="hw y">Taif</span></span><span class="hl sm"><span class="hw">bilow</span> <span class="hw">·</span> <span class="hw">wadne</span> <span class="hw">·</span> <span class="hw">sal</span></span></div>
+          <div class="visual">
+            <div class="disc2" id="l3-n0" style="left:20px;top:10px;width:170px;height:170px"><svg width="120" height="120" viewBox="0 0 120 120"><path d="M60 100 V116" stroke="#3f8f4a" stroke-width="6" /><circle cx="60" cy="58" r="42" fill="#d6456b" /><g fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="5" stroke-linecap="round"><path d="M60 58 m-10 0 a10 10 0 1 1 20 0 a18 18 0 1 1 -32 4 a26 26 0 1 1 46 -8" /></g></svg></div>
+            <div class="note" id="l3-l0" style="left:210px;top:40px"><div class="tier">Bilowga</div><div class="nm">ward Taif</div></div>
+            <div class="disc2" id="l3-n1" style="left:20px;top:210px;width:170px;height:170px"><svg width="120" height="120" viewBox="0 0 120 120"><ellipse cx="60" cy="26" rx="21" ry="34" fill="#f28bb0" transform="rotate(0 60 60)" /><ellipse cx="60" cy="26" rx="21" ry="34" fill="#f28bb0" transform="rotate(72 60 60)" /><ellipse cx="60" cy="26" rx="21" ry="34" fill="#f28bb0" transform="rotate(144 60 60)" /><ellipse cx="60" cy="26" rx="21" ry="34" fill="#f28bb0" transform="rotate(216 60 60)" /><ellipse cx="60" cy="26" rx="21" ry="34" fill="#f28bb0" transform="rotate(288 60 60)" /><circle cx="60" cy="60" r="14" fill="#ffe08a" /></svg></div>
+            <div class="note" id="l3-l1" style="left:210px;top:240px"><div class="tier">Wadnaha</div><div class="nm">Geranium</div></div>
+            <div class="disc2" id="l3-n2" style="left:20px;top:410px;width:170px;height:170px"><svg width="130" height="110" viewBox="0 0 130 110"><path d="M34 88 Q10 88 10 66 Q10 46 32 44 Q38 18 66 18 Q92 18 100 42 Q122 44 122 66 Q122 88 98 88Z" fill="#fff" stroke="#d9cfe8" stroke-width="5" /><g fill="#c9a24b"><circle cx="46" cy="64" r="5" /><circle cx="66" cy="54" r="5" /><circle cx="86" cy="66" r="5" /></g></svg></div>
+            <div class="note" id="l3-l2" style="left:210px;top:440px"><div class="tier">Salka</div><div class="nm">Misk jilicsan</div></div>
+            <div class="cut" id="l3-p" style="left:640px;top:40px;width:240px;height:345px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l4" class="clip" data-start="%l4.start%" data-duration="%l4.dur%" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>WALXAHA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Walxaha</span></span><span class="hl sm"><span class="hw">dabiici</span></span></div>
+          <div class="visual">
+            <svg id="l4-card" class="stk" viewBox="0 0 500 480" style="position:absolute;left:10px;top:10px;width:500px;height:480px"><rect x="8" y="8" width="484" height="464" rx="28" fill="#fffdf6" /><text x="250" y="86" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="36" fill="#8a5a36">WALXAHA</text><path d="M60 112 H440" stroke="#c9a24b" stroke-width="4" /><g font-family="Lora" font-weight="700" font-size="34" fill="#4a2e1a"><g id="l4-r0"><rect class="hi" x="30" y="140" width="440" height="84" rx="16" fill="#f6e3b0" /><text x="64" y="194">Aalkolo dabiici</text></g><g id="l4-r1"><rect class="hi" x="30" y="250" width="440" height="84" rx="16" fill="#f6e3b0" /><text x="64" y="304">Saliid udgoon</text></g><g id="l4-r2"><rect class="hi" x="30" y="360" width="440" height="84" rx="16" fill="#f6e3b0" /><text x="64" y="414">Citrus</text></g></g></svg>
+            <div class="cut" id="l4-p" style="left:620px;top:60px;width:280px;height:402px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l5" class="clip" data-start="%l5.start%" data-duration="%l5.dur%" data-track-index="1">
         <div class="stage">
           <div class="chip"><i></i>SAMAYSKA<i></i></div>
-          <div class="headline"><span class="hl"><span class="hw y">Imaaraadka</span></span><span class="hl sm"><span class="hw">75</span> <span class="hw">mililitir</span></span></div>
+          <div class="headline"><span class="hl"><span class="hw y">75</span> <span class="hw y">ML</span></span><span class="hl sm"><span class="hw">Imaaraadka</span> <span class="hw">Carabta</span></span></div>
           <div class="visual">
-            <div class="cut" id="b-box" style="left:60px;top:10px;width:300px;height:578px"><img src="assets/photos/box-cut.png" alt="" /></div>
-            <div class="disc2" id="b-flag" style="left:470px;top:20px;width:230px;height:230px"><svg width="150" height="100" viewBox="0 0 150 100"><rect width="150" height="100" rx="8" fill="#fff" stroke="#ddd" stroke-width="3" /><rect x="40" y="0" width="110" height="33" fill="#00843d" /><rect x="40" y="67" width="110" height="33" fill="#000" /><rect x="0" y="0" width="40" height="100" fill="#c8102e" /></svg></div>
-            <div class="lab tag" id="b-1" style="left:420px;top:280px"><i style="background:#00843d"></i>Imaaraadka</div>
-            <div class="disc2" id="b-ml" style="left:560px;top:380px;width:220px;height:220px;background:linear-gradient(135deg,#ecd08c,#c9a24b);flex-direction:column"><span style="font-family:Cinzel;font-weight:900;font-size:76px;color:#4a2e1a;line-height:1">75</span><span style="font-family:Cinzel;font-weight:900;font-size:40px;color:#4a2e1a">ML</span></div>
+            <div class="cut" id="l5-p" style="left:60px;top:10px;width:300px;height:578px"><img src="assets/photos/box-cut.png" alt="" /></div>
+            <div class="disc2" id="l5-flag" style="left:480px;top:20px;width:220px;height:220px"><svg width="150" height="100" viewBox="0 0 150 100"><rect width="150" height="100" rx="8" fill="#fff" stroke="#ddd" stroke-width="3" /><rect x="40" width="110" height="33" fill="#00843d" /><rect x="40" y="67" width="110" height="33" fill="#000" /><rect width="40" height="100" fill="#c8102e" /></svg></div>
+            <div class="lab tag" id="l5-t0" style="left:430px;top:270px"><i style="background:#00843d"></i>Imaaraadka</div>
+            <div class="disc2 col" id="l5-ml" style="left:560px;top:380px;width:210px;height:210px;background:linear-gradient(135deg,#ecd08c,#c9a24b)"><span style="font-family:Cinzel;font-weight:900;font-size:76px;color:#4a2e1a;line-height:1;text-align:center">75</span><span style="font-family:Cinzel;font-weight:900;font-size:38px;color:#4a2e1a;line-height:1;text-align:center">ML</span></div>
           </div>
         </div>
       </section>
-      <section id="s-s4" class="clip" data-start="%s4.start%" data-duration="%s4.dur%" data-track-index="1">
+      <section id="s-l6" class="clip" data-start="%l6.start%" data-duration="%l6.dur%" data-track-index="1">
         <div class="stage">
-          <div class="chip"><i></i>MAXAA KU JIRA?<i></i></div>
-          <div class="headline"><span class="hl"><span class="hw y">Walxaha</span></span><span class="hl sm"><span class="hw">qoraalka</span> <span class="hw">gadaal</span></span></div>
+          <div class="chip"><i></i>QOF KASTA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Ragga</span> <span class="hw y">+</span> <span class="hw y">dumarka</span></span><span class="hl sm"><span class="hw">labadaba</span></span></div>
           <div class="visual">
-            <svg id="c-card" class="stk" viewBox="0 0 500 560" style="position:absolute;left:10px;top:0;width:500px;height:560px"><rect x="10" y="10" width="480" height="540" rx="28" fill="#fffdf6" /><text x="250" y="90" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="36" fill="#8a5a36">WALXAHA</text><path d="M60 118 H440" stroke="#c9a24b" stroke-width="4" />
-<g font-family="Lora" font-weight="700" font-size="36" fill="#4a2e1a"><g id="c-r1"><rect class="hi" x="36" y="160" width="428" height="80" rx="16" fill="#f6e3b0" /><text x="70" y="212">Aalkolo dabiici</text></g><g id="c-r2"><rect class="hi" x="36" y="270" width="428" height="80" rx="16" fill="#f6e3b0" /><text x="70" y="322">Saliid udgoon</text></g><g id="c-r3"><rect class="hi" x="36" y="380" width="428" height="80" rx="16" fill="#f6e3b0" /><text x="70" y="432">Citrus</text></g></g></svg>
-            <div class="cut" id="c-bottle" style="left:560px;top:60px;width:300px;height:431px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
-            <svg id="c-lemon" viewBox="0 0 120 120" style="position:absolute;left:470px;top:400px;width:120px;height:120px"><circle cx="60" cy="60" r="50" fill="#ffd84a" stroke="#e8b400" stroke-width="6" /><g stroke="#fff4b0" stroke-width="5"><path d="M60 16 V104 M16 60 H104 M29 29 L91 91 M29 91 L91 29" /></g></svg>
+            <div class="disc2" id="l6-d0" style="left:30px;top:20px;width:250px;height:250px"><svg width="140" height="150" viewBox="0 0 140 150"><circle cx="70" cy="46" r="30" fill="#9d6646" /><path d="M20 150 V112 Q20 84 70 84 Q120 84 120 112 V150Z" fill="#1c3f86" /><path d="M40 40 Q70 6 100 40 Q96 22 70 18 Q44 22 40 40Z" fill="#2a1a10" /></svg></div>
+            <div class="lab tag" id="l6-t0" style="left:30px;top:300px"><i style="background:#1c3f86"></i>Ragga</div>
+            <div class="disc2" id="l6-d1" style="left:330px;top:20px;width:250px;height:250px"><svg width="140" height="150" viewBox="0 0 140 150"><path d="M70 10 C104 10 118 36 116 70 C114 96 104 110 96 118 L124 150 H16 L44 118 C36 110 26 96 24 70 C22 36 36 10 70 10Z" fill="#b8452f" /><ellipse cx="70" cy="66" rx="30" ry="36" fill="#c08a68" /></svg></div>
+            <div class="lab tag" id="l6-t1" style="left:330px;top:300px"><i style="background:#b8452f"></i>Dumarka</div>
+            <div class="cut" id="l6-p" style="left:650px;top:40px;width:230px;height:330px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
           </div>
         </div>
       </section>
-      <section id="s-how" class="clip" data-start="%how.start%" data-duration="%how.dur%" data-track-index="1">
+      <section id="s-l7" class="clip" data-start="%l7.start%" data-duration="%l7.dur%" data-track-index="1">
         <div class="stage">
-          <div class="chip"><i></i>SIDEE?<i></i></div>
-          <div class="headline"><span class="hl"><span class="hw y">Ku</span> <span class="hw y">rusheey</span></span><span class="hl sm"><span class="hw">gacmaha</span> <span class="hw">iyo</span> <span class="hw">qoorta</span></span></div>
+          <div class="chip"><i></i>MUDDO DHEER<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Muddo</span> <span class="hw y">dheer</span></span><span class="hl sm"><span class="hw">dharka</span> <span class="hw">iyo</span> <span class="hw">jirka</span></span></div>
           <div class="visual">
-            <div class="cut" id="d-bottle" style="left:20px;top:60px;width:330px;height:474px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
-            <svg id="mist" viewBox="0 0 240 200" style="position:absolute;left:250px;top:40px;width:240px;height:200px"><g fill="#bfe0ff" opacity=".85"><circle class="md" cx="30" cy="100" r="10" /><circle class="md" cx="70" cy="80" r="14" /><circle class="md" cx="70" cy="124" r="12" /><circle class="md" cx="110" cy="60" r="16" /><circle class="md" cx="112" cy="104" r="18" /><circle class="md" cx="112" cy="148" r="14" /><circle class="md" cx="160" cy="50" r="18" /><circle class="md" cx="164" cy="100" r="22" /><circle class="md" cx="160" cy="152" r="18" /><circle class="md" cx="210" cy="70" r="16" /><circle class="md" cx="214" cy="128" r="20" /></g></svg>
-            <div class="disc2" id="d-hand" style="left:470px;top:0px;width:190px;height:190px"><svg width="140" height="150" viewBox="0 0 140 150"><g fill="#c08a68"><rect x="36" y="26" width="16" height="64" rx="8" /><rect x="54" y="14" width="16" height="74" rx="8" /><rect x="72" y="18" width="16" height="70" rx="8" /><rect x="90" y="30" width="15" height="60" rx="7" /><path d="M30 80 Q28 60 20 52 Q14 44 22 40 Q32 38 40 60 L40 80Z" /><path d="M32 78 H106 V110 Q106 128 88 132 H50 Q34 128 32 110Z" /><rect x="46" y="128" width="46" height="22" /></g><path d="M40 138 H100" stroke="#c9a24b" stroke-width="6" /></svg></div>
-            <div class="disc2" id="d-neck" style="left:680px;top:0px;width:190px;height:190px"><svg width="140" height="150" viewBox="0 0 140 150"><path d="M70 10 C104 10 118 36 116 70 C114 96 104 110 96 118 L124 150 H16 L44 118 C36 110 26 96 24 70 C22 36 36 10 70 10Z" fill="#1c3f86" /><ellipse cx="70" cy="66" rx="30" ry="36" fill="#c08a68" /><path d="M52 110 Q70 128 88 110 V130 H52Z" fill="#c08a68" /></svg></div>
-            <div class="lab tag" id="d-1" style="left:450px;top:215px;font-size:32px"><i style="background:#c08a68"></i>Gacmaha</div>
-            <div class="lab tag" id="d-2" style="left:670px;top:305px;font-size:32px"><i style="background:#1c3f86"></i>Qoorta</div>
-            <div class="lab tag" id="d-3" style="left:400px;top:440px;font-size:34px"><i style="background:#b8452f"></i>Dibadda oo keliya</div>
+            <div class="disc2" id="l7-clock" style="left:20px;top:20px;width:200px;height:200px"><svg width="130" height="130" viewBox="0 0 130 130"><circle cx="65" cy="65" r="54" fill="#fff" stroke="#c9a24b" stroke-width="10" /><g stroke="#4a2e1a" stroke-width="8" stroke-linecap="round"><path id="hand-h" d="M65 65 V34" /><path d="M65 65 L90 78" /></g><circle cx="65" cy="65" r="7" fill="#b8452f" /></svg></div>
+            <div class="lab tag" id="l7-t0" style="left:10px;top:240px;font-size:30px"><i style="background:#c9a24b"></i>Muddo dheer</div>
+            <div class="disc2" id="l7-shirt" style="left:290px;top:20px;width:200px;height:200px"><svg width="140" height="140" viewBox="0 0 150 150"><path d="M40 20 L60 10 Q75 26 90 10 L110 20 L135 50 L115 66 L108 58 V140 H42 V58 L35 66 L15 50Z" fill="#2f6fd0" /><g fill="none" stroke="#c9a24b" stroke-width="5" stroke-linecap="round"><path d="M60 80 q10 -12 20 0 t20 0" /><path d="M56 104 q10 -12 20 0 t20 0" /></g></svg></div>
+            <div class="lab tag" id="l7-t1" style="left:300px;top:330px;font-size:30px"><i style="background:#2f6fd0"></i>Dharka</div>
+            <div class="lab tag" id="l7-t2" style="left:40px;top:330px;font-size:30px"><i style="background:#c08a68"></i>Jirka</div>
+            <div class="cut" id="l7-p" style="left:640px;top:20px;width:240px;height:345px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+            <svg id="l7-waves" viewBox="0 0 300 200" style="position:absolute;left:520px;top:380px;width:300px;height:200px"><g fill="none" stroke="#c9a24b" stroke-width="8" stroke-linecap="round"><path class="wv" d="M20 60 q30 -30 60 0 t60 0 t60 0 t60 0" /><path class="wv" d="M20 110 q30 -30 60 0 t60 0 t60 0 t60 0" /><path class="wv" d="M20 160 q30 -30 60 0 t60 0 t60 0 t60 0" /></g></svg>
+            <div class="lab tag" id="l7-t3" style="left:20px;top:500px"><i style="background:#b8243a"></i>Wuu sii uraa</div>
           </div>
         </div>
       </section>
-      <section id="s-fire" class="clip" data-start="%fire.start%" data-duration="%fire.dur%" data-track-index="1">
+      <section id="s-l8" class="clip" data-start="%l8.start%" data-duration="%l8.dur%" data-track-index="1">
         <div class="stage">
-          <div class="chip alt"><i></i>TAXADDAR<i></i></div>
-          <div class="headline"><span class="hl"><span class="hw y">Dabka</span></span><span class="hl sm"><span class="hw">iyo</span> <span class="hw">kulaylka</span></span></div>
+          <div class="chip"><i></i>MEESHA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Falarosa</span></span><span class="hl sm"><span class="hw">Surrey</span> <span class="hw">·</span> <span class="hw">BC</span> <span class="hw">·</span> <span class="hw">Kanada</span></span></div>
           <div class="visual">
-            <div class="disc2" id="e-fire" style="left:40px;top:20px;width:250px;height:250px"><svg width="120" height="140" viewBox="0 0 120 140"><path d="M60 8 C70 40 100 52 100 90 A40 40 0 0 1 20 90 C20 66 36 58 40 36 C50 50 52 60 60 64 C64 46 58 28 60 8Z" fill="#ff8a3c" /><path d="M60 60 C66 78 82 84 80 104 A20 20 0 0 1 40 104 C40 90 52 84 60 60Z" fill="#ffd166" /></svg><svg class="banx" id="e-fire-ban" viewBox="0 0 200 200"><g fill="none" stroke="#b8452f" stroke-width="14"><circle cx="100" cy="100" r="86" /><path d="M40 40 L160 160" /></g></svg></div>
-            <div class="disc2" id="e-heat" style="left:330px;top:20px;width:250px;height:250px"><svg width="130" height="130" viewBox="0 0 130 130"><circle cx="65" cy="65" r="30" fill="#e3c173" /><g stroke="#c9a24b" stroke-width="10" stroke-linecap="round"><path d="M65 8 v16 M65 106 v16 M8 65 h16 M106 65 h16 M24 24 l11 11 M95 95 l11 11 M24 106 l11 -11 M95 35 l11 -11" /></g></svg><svg class="banx" id="e-heat-ban" viewBox="0 0 200 200"><g fill="none" stroke="#b8452f" stroke-width="14"><circle cx="100" cy="100" r="86" /><path d="M40 40 L160 160" /></g></svg></div>
-            <div class="cut" id="e-bottle" style="left:640px;top:0px;width:220px;height:316px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
-            <div class="lab tag" id="e-1" style="left:40px;top:330px"><i style="background:#ff8a3c"></i>Way shidmi kartaa</div>
-            <div class="lab tag" id="e-2" style="left:180px;top:440px"><i style="background:#6fa4e8"></i>Ilaa ay qalasho</div>
+            <div class="cut" id="l8-store" style="left:20px;top:20px;width:420px;height:400px"><svg viewBox="0 0 400 380" style="width:100%;height:100%"><rect x="30" y="120" width="340" height="240" rx="14" fill="#fffdf6" stroke="#c9a24b" stroke-width="6" />
+<g><path d="M30 70 H98 V130 Q64 160 30 130Z" fill="#1c3f86" /><path d="M98 70 H166 V130 Q132 160 98 130Z" fill="#c9a24b" /><path d="M166 70 H234 V130 Q200 160 166 130Z" fill="#1c3f86" /><path d="M234 70 H302 V130 Q268 160 234 130Z" fill="#c9a24b" /><path d="M302 70 H370 V130 Q336 160 302 130Z" fill="#1c3f86" /></g>
+<rect x="20" y="40" width="360" height="36" rx="10" fill="#4a2e1a" /><text x="200" y="66" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="22" fill="#e3c173" letter-spacing="3">FALAROSA LUXURY</text>
+<rect x="70" y="190" width="120" height="170" rx="8" fill="#e8dcc6" stroke="#c9a24b" stroke-width="4" /><circle cx="170" cy="280" r="6" fill="#c9a24b" />
+<rect x="220" y="190" width="120" height="100" rx="8" fill="#cfe3fb" stroke="#c9a24b" stroke-width="4" />
+<g><rect x="236" y="236" width="18" height="44" rx="4" fill="#b8243a" /><rect x="262" y="226" width="18" height="54" rx="4" fill="#e0b21c" /><rect x="288" y="232" width="18" height="48" rx="4" fill="#1d2f55" /><rect x="313" y="240" width="14" height="40" rx="4" fill="#fff" stroke="#c9a24b" stroke-width="2" /></g></svg></div>
+            <div id="l8-name" class="shopname">Falarosa<br />Luxury</div>
+            <div class="disc2" id="l8-pin" style="left:470px;top:330px;width:150px;height:150px"><svg width="120" height="140" viewBox="0 0 120 140"><path d="M60 132 C30 92 16 72 16 50 A44 44 0 0 1 104 50 C104 72 90 92 60 132Z" fill="#b8452f" /><circle cx="60" cy="50" r="18" fill="#fff" /></svg></div>
+            <div class="lab tag" id="l8-t0" style="left:630px;top:360px;font-size:34px"><i style="background:#b8452f"></i>Surrey, BC</div>
+            <div class="disc2" id="l8-leaf" style="left:470px;top:490px;width:130px;height:130px"><svg width="120" height="120" viewBox="0 0 120 120"><path d="M60 8 L68 30 L82 22 L78 48 L100 38 L94 54 L112 60 L84 76 L90 88 L64 82 L64 112 L56 112 L56 82 L30 88 L36 76 L8 60 L26 54 L20 38 L42 48 L38 22 L52 30Z" fill="#d52b1e" /></svg></div>
+            <div class="lab tag" id="l8-t1" style="left:620px;top:520px;font-size:34px"><i style="background:#d52b1e"></i>Kanada</div>
           </div>
         </div>
       </section>
-      <section id="s-store" class="clip" data-start="%store.start%" data-duration="%store.dur%" data-track-index="1">
+      <section id="s-l9" class="clip" data-start="%l9.start%" data-duration="%l9.dur%" data-track-index="1">
         <div class="stage">
-          <div class="chip"><i></i>KAYDI<i></i></div>
-          <div class="headline"><span class="hl"><span class="hw y">Qabow</span> <span class="hw y">+</span> <span class="hw y">qalalan</span></span><span class="hl sm"><span class="hw">carruurta</span> <span class="hw">ka</span> <span class="hw">fogee</span></span></div>
+          <div class="chip"><i></i>LA XIRIIR<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Nala</span> <span class="hw y">soo</span> <span class="hw y">xiriir</span></span><span class="hl sm"><span class="hw">lambarka</span> <span class="hw">bogga</span></span></div>
           <div class="visual">
-            <div class="disc2" id="f-cool" style="left:30px;top:20px;width:220px;height:220px"><svg width="130" height="130" viewBox="0 0 130 130"><g stroke="#6fa4e8" stroke-width="10" stroke-linecap="round" fill="none"><path d="M65 10 V120 M17 37 L113 93 M17 93 L113 37" /><path d="M50 18 L65 32 L80 18 M50 112 L65 98 L80 112" /></g></svg></div>
-            <div class="disc2" id="f-dry" style="left:330px;top:20px;width:220px;height:220px"><svg width="120" height="130" viewBox="0 0 120 130"><rect x="14" y="30" width="92" height="90" rx="16" fill="#efe4d2" /><path d="M14 56 H106" stroke="#c9a24b" stroke-width="6" /><rect x="34" y="10" width="52" height="26" rx="8" fill="#c9a24b" /><path d="M60 70 Q72 88 72 96 A12 12 0 0 1 48 96 Q48 88 60 70Z" fill="#6fa4e8" /></svg></div>
-            <div class="disc2" id="f-kid" style="left:630px;top:20px;width:220px;height:220px"><svg width="130" height="140" viewBox="0 0 130 140"><circle cx="65" cy="40" r="26" fill="#c08a68" /><path d="M25 136 V96 Q25 72 65 72 Q105 72 105 96 V136Z" fill="#c9a24b" /></svg><svg class="banx" id="f-kid-ban" viewBox="0 0 200 200"><g fill="none" stroke="#b8452f" stroke-width="14"><circle cx="100" cy="100" r="86" /><path d="M40 40 L160 160" /></g></svg></div>
-            <div class="lab tag" id="f-1" style="left:50px;top:270px;font-size:28px"><i style="background:#6fa4e8"></i>Qabow</div>
-            <div class="lab tag" id="f-2" style="left:335px;top:270px;font-size:28px"><i style="background:#c9a24b"></i>Qalalan</div>
-            <div class="lab tag" id="f-3" style="left:600px;top:270px;font-size:28px"><i style="background:#b8452f"></i>Carruurta</div>
-            <div class="cut" id="f-bottle" style="left:360px;top:390px;width:130px;height:250px"><img src="assets/photos/box-cut.png" alt="" /></div>
+            <div class="disc2" id="l9-phone" style="left:40px;top:20px;width:300px;height:300px"><svg width="150" height="150" viewBox="0 0 150 150"><rect x="44" y="14" width="62" height="122" rx="12" fill="#1c3f86" /><rect x="50" y="28" width="50" height="86" rx="4" fill="#cfe3fb" /><circle cx="75" cy="124" r="5" fill="#fff" /><g id="rings" fill="none" stroke="#c9a24b" stroke-width="6" stroke-linecap="round"><path d="M116 50 q12 25 0 50" /><path d="M128 38 q20 37 0 74" /><path d="M34 50 q-12 25 0 50" /><path d="M22 38 q-20 37 0 74" /></g></svg></div>
+            <div class="lab tag" id="l9-t0" style="left:390px;top:60px"><i style="background:#2f6fd0"></i>Nala soo xiriir</div>
+            <div class="lab tag" id="l9-t1" style="left:390px;top:180px"><i style="background:#c9a24b"></i>Lambarka bogga</div>
+            <svg id="arrowdn" viewBox="0 0 90 120" style="position:absolute;left:180px;top:380px;width:90px;height:120px"><path d="M45 8 V96 M14 66 L45 100 L76 66" fill="none" stroke="#2f6fd0" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <div class="cut" id="l9-p" style="left:650px;top:290px;width:230px;height:330px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
           </div>
         </div>
       </section>
-      <section id="s-cta" class="clip" data-start="%cta.start%" data-duration="%cta.dur%" data-track-index="1">
+      <section id="s-l10" class="clip" data-start="%l10.start%" data-duration="%l10.dur%" data-track-index="1">
         <div class="stage">
           <div class="chip"><i></i>HADDA<i></i></div>
-          <div class="headline"><span class="hl"><span class="hw y">Udgoon</span></span><span class="hl sm"><span class="hw">Imaaraati</span> <span class="hw">ah</span></span></div>
+          <div class="headline"><span class="hl"><span class="hw y">Hadda</span> <span class="hw y">dalbo</span></span><span class="hl sm"><span class="hw">Falarosa</span> <span class="hw">Luxury</span></span></div>
           <div class="visual">
-            <div class="cut" id="g-bottle" style="left:30px;top:0px;width:400px;height:575px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+            <div class="cut" id="l10-p" style="left:40px;top:0px;width:400px;height:575px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
             <div id="g-name">Romance<br />N°3</div>
             <div id="g-ar">طيف الإمارات</div><div id="g-en">TAIF AL EMARAT</div>
-            <div id="g-buy" class="center stk">HADDA RAADSO</div>
+            <div id="g-buy" class="center stk">HADDA DALBO</div>
           </div>
         </div>
       </section>
 
       <!-- persistent chrome above scenes -->
-      <div id="brand"><svg width="30" height="28" viewBox="0 0 46 42"><path d="M23 40 C8 28 2 20 2 12 C2 6 7 2 12 2 C17 2 21 5 23 9 C25 5 29 2 34 2 C39 2 44 6 44 12 C44 20 38 28 23 40Z" fill="#c9a24b" /></svg>TAIF AL EMARAT · ROMANCE</div>
+      <div id="brand"><svg width="30" height="28" viewBox="0 0 46 42"><path d="M23 40 C8 28 2 20 2 12 C2 6 7 2 12 2 C17 2 21 5 23 9 C25 5 29 2 34 2 C39 2 44 6 44 12 C44 20 38 28 23 40Z" fill="#c9a24b" /></svg>TAIF AL EMARAT · ROMANCE N°3</div>
       <div id="prog"><span id="prog-fill"></span></div>
       <div id="caps">
         %CAPTIONS%
@@ -236,51 +272,61 @@
         el.querySelectorAll(".photo img, .cut img").forEach((img) => tl.fromTo(img, { scale: 1.02 }, { scale: 1.14, duration: s.dur, ease: "none" }, s.start));
       });
 
-      // product scenes (generated)
-      tl.fromTo("#h-bottle", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "back.out(1.4)" }, S.hook.start+0.1);
-      tl.fromTo(".hs", { scale: 0, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1, opacity: 1, duration: 0.3, stagger: 0.12, ease: "back.out(3)" }, B.brand-0.2);
-      pop("#a-bottle", S.s2.start+0.1);
-      pop("#a-1", B.quraarad+0.3);
-      pop("#a-plate", B.saxan-0.2);
-      pop("#a-2", B.saxan+0.1);
-      pop("#a-cap", B.dabool-0.2);
-      pop("#a-3", B.dabool+0.1);
-      pop("#b-box", S.s3.start+0.1);
-      pop("#b-flag", B.made-0.2);
-      pop("#b-1", B.made+0.1);
-      pop("#b-ml", B.ml);
-      pop("#c-card", S.s4.start+0.1);
-      pop("#c-bottle", S.s4.start+0.3);
-      tl.fromTo("#c-r1 .hi", { opacity: 0 }, { opacity: 1, duration: 0.2 }, B.alc); tl.fromTo("#c-r1 text", { x: -20 }, { x: 0, duration: 0.3, ease: "back.out(3)" }, B.alc);
-      tl.fromTo("#c-r2 .hi", { opacity: 0 }, { opacity: 1, duration: 0.2 }, B.oil); tl.fromTo("#c-r2 text", { x: -20 }, { x: 0, duration: 0.3, ease: "back.out(3)" }, B.oil);
-      tl.fromTo("#c-r3 .hi", { opacity: 0 }, { opacity: 1, duration: 0.2 }, B.cit); tl.fromTo("#c-r3 text", { x: -20 }, { x: 0, duration: 0.3, ease: "back.out(3)" }, B.cit);
-      pop("#c-lemon", B.cit);
-      pop("#d-bottle", S.how.start+0.1);
-      tl.fromTo("#mist .md", { scale: 0, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1, opacity: 0.9, duration: 0.35, stagger: 0.03, ease: "power2.out" }, B.spray); tl.to("#mist .md", { x: 40, opacity: 0, duration: 0.9, stagger: 0.03 }, B.spray+0.6);
-      pop("#d-hand", B.hand-0.1);
-      pop("#d-1", B.hand+0.1);
-      pop("#d-neck", B.neck-0.1);
-      pop("#d-2", B.neck+0.1);
-      pop("#d-3", B.ext);
-      pop("#e-bottle", S.fire.start+0.1);
-      pop("#e-1", B.flam);
-      pop("#e-2", B.dry);
-      pop("#e-fire", B.fire-0.3);
-      tl.fromTo("#e-fire-ban", { opacity: 0, scale: 1.5, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.25, ease: "power4.in" }, B.fire+0.1);
-      pop("#e-heat", B.heat-0.2);
-      tl.fromTo("#e-heat-ban", { opacity: 0, scale: 1.5, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.25, ease: "power4.in" }, B.heat+0.2);
-      pop("#f-cool", B.cool-0.1);
-      pop("#f-1", B.cool+0.1);
-      pop("#f-dry", B.dryst-0.1);
-      pop("#f-2", B.dryst+0.1);
-      pop("#f-kid", B.kids-0.1);
-      tl.fromTo("#f-kid-ban", { opacity: 0, scale: 1.5, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.25, ease: "power4.in" }, B.kids+0.3);
-      pop("#f-3", B.kids+0.1);
-      pop("#f-bottle", S.store.start+0.3);
-      tl.fromTo("#g-bottle", { x: -400, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, S.cta.start+0.1);
+      // product scenes (generated by adgen.py)
+      tl.fromTo("#l1-b1", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "back.out(1.4)" }, S.l1.start+0.1);
+      tl.fromTo("#l1-b2", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "back.out(1.4)" }, S.l1.start+0.25);
+      tl.fromTo("#l1-b3", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "back.out(1.4)" }, B.brand-0.3);
+      tl.fromTo(".hs", { scale: 0, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1, opacity: 1, duration: 0.3, stagger: 0.12, ease: "back.out(3)" }, B.brand+0.2);
+      pop("#l2-p", S.l2.start+0.1);
+      pop("#l2-t0", B.l2t0);
+      pop("#l2-t1", B.l2t1);
+      pop("#l2-x", B.l2x);
+      pop("#l3-p", S.l3.start+0.1);
+      pop("#l3-n0", B.l3n0-0.1);
+      tl.fromTo("#l3-l0", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B.l3n0);
+      pop("#l3-n1", B.l3n1-0.1);
+      tl.fromTo("#l3-l1", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B.l3n1);
+      pop("#l3-n2", B.l3n2-0.1);
+      tl.fromTo("#l3-l2", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B.l3n2);
+      pop("#l4-card", S.l4.start+0.1);
+      pop("#l4-p", S.l4.start+0.35);
+      tl.fromTo("#l4-r0 .hi", { opacity: 0 }, { opacity: 1, duration: 0.2 }, B.l4r0); tl.fromTo("#l4-r0 text", { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "back.out(3)" }, B.l4r0);
+      tl.fromTo("#l4-r1 .hi", { opacity: 0 }, { opacity: 1, duration: 0.2 }, B.l4r1); tl.fromTo("#l4-r1 text", { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "back.out(3)" }, B.l4r1);
+      tl.fromTo("#l4-r2 .hi", { opacity: 0 }, { opacity: 1, duration: 0.2 }, B.l4r2); tl.fromTo("#l4-r2 text", { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "back.out(3)" }, B.l4r2);
+      pop("#l5-p", S.l5.start+0.1);
+      pop("#l5-ml", B.ml);
+      pop("#l5-flag", B.uae-0.2);
+      pop("#l5-t0", B.uae+0.1);
+      pop("#l6-p", S.l6.start+0.1);
+      pop("#l6-d0", B.l6d0-0.15);
+      pop("#l6-t0", B.l6d0+0.1);
+      pop("#l6-d1", B.l6d1-0.15);
+      pop("#l6-t1", B.l6d1+0.1);
+      pop("#l7-p", S.l7.start+0.1);
+      pop("#l7-clock", B.last-0.2);
+      tl.fromTo("#l7-clock svg", { rotation: -20 }, { rotation: 0, duration: 0.5, ease: "elastic.out(1, 0.4)" }, B.last);
+      pop("#l7-t0", B.last+0.1);
+      pop("#l7-shirt", B.clothes-0.2);
+      pop("#l7-t1", B.clothes+0.1);
+      pop("#l7-t2", B.body);
+      tl.fromTo("#l7-waves .wv", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.4, stagger: 0.15, ease: "power2.out" }, B.clothes);
+      pop("#l7-t3", B.smell-0.2);
+      pop("#l8-store", S.l8.start+0.1);
+      pop("#l8-name", B.shop, 0.6);
+      pop("#l8-pin", B.surrey-0.1);
+      pop("#l8-t0", B.surrey+0.05);
+      pop("#l8-leaf", B.canada-0.1);
+      pop("#l8-t1", B.canada+0.05);
+      pop("#l9-phone", S.l9.start+0.1);
+      tl.fromTo("#rings", { opacity: 0 }, { opacity: 1, duration: 0.12, yoyo: true, repeat: 7 }, S.l9.start+0.3);
+      pop("#l9-t0", B.call);
+      pop("#l9-t1", B.num);
+      tl.fromTo("#arrowdn", { y: -30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }, B.num+0.1); tl.to("#arrowdn", { y: 22, duration: 0.3, yoyo: true, repeat: 5, ease: "sine.inOut" }, B.num+0.1+0.35);
+      pop("#l9-p", S.l9.start+0.4);
+      tl.fromTo("#l10-p", { x: -400, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, S.l10.start+0.1);
       pop("#g-name", B.cname, 0.6);
-      pop("#g-ar", B.emi-0.1, 0.6);
-      pop("#g-en", B.emi+0.1, 0.6);
+      pop("#g-ar", B.cname+0.4, 0.6);
+      pop("#g-en", B.cname+0.6, 0.6);
       tl.fromTo("#g-buy", { y: 240, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "back.out(2)" }, B.buy-0.1); tl.fromTo("#g-buy", { scale: 1 }, { scale: 1.06, duration: 0.3, yoyo: true, repeat: 3, ease: "sine.inOut" }, B.buy+0.4);
 
       // captions: word-by-word karaoke in Somali

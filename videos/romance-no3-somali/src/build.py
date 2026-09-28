@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate index.html for the Somali Romance N°3 product ad from timing.json.
+"""Generate index.html for the Somali Romance N°3 ad from timing.json.
 
 timing.json holds scene + word times for the retimed narration (see
 align_external.py). Scene cuts, SFX placement and captions are all derived from
@@ -37,30 +37,31 @@ def word_time(scene_id, prefix, nth=0, exact=False):
 
 # reveal beats (absolute seconds) keyed to the spoken Somali words
 beats = {
-    "quraarad": word_time("s2", "quraarad"),
-    "saxan": word_time("s2", "saxan"),
-    "dabool": word_time("s2", "dabool"),
-    "made": word_time("s3", "imaaraadka"),
-    "ml": word_time("s3", "toddobaatan"),
-    "alc": word_time("s4", "aalkolo"),
-    "oil": word_time("s4", "saliid"),
-    "cit": word_time("s4", "citrus"),
-    "brand": word_time("hook", "taif"),
-    "coll": word_time("hook", "ururka"),
-    "spray": word_time("how", "rusheey"),
-    "hand": word_time("how", "gacmaha"),
-    "neck": word_time("how", "qoorta"),
-    "ext": word_time("how", "dibaddiisa"),
-    "flam": word_time("fire", "shidmi"),
-    "dry": word_time("fire", "qalasho"),
-    "fire": word_time("fire", "dabka"),
-    "heat": word_time("fire", "kulaylka"),
-    "cool": word_time("store", "qabow"),
-    "dryst": word_time("store", "qalalan"),
-    "kids": word_time("store", "carruurtana"),
-    "cname": word_time("cta", "romance"),
-    "emi": word_time("cta", "imaaraati"),
-    "buy": word_time("cta", "hadda"),
+    "brand": word_time("l1", "taif"),
+    "l2t0": word_time("l2", "xooggan"),
+    "l2t1": word_time("l2", "romance"),
+    "l2x": word_time("l2", "labo"),
+    "l3n0": word_time("l3", "ward"),
+    "l3n1": word_time("l3", "geranium"),
+    "l3n2": word_time("l3", "misk"),
+    "l4r0": word_time("l4", "aalkolo"),
+    "l4r1": word_time("l4", "saliid"),
+    "l4r2": word_time("l4", "citrus"),
+    "ml": word_time("l5", "toddobaatan"),
+    "uae": word_time("l5", "imaaraadka"),
+    "l6d0": word_time("l6", "ragga"),
+    "l6d1": word_time("l6", "dumarkaba"),
+    "last": word_time("l7", "muddo"),
+    "clothes": word_time("l7", "dharkaaga"),
+    "body": word_time("l7", "jirkaaga"),
+    "smell": word_time("l7", "uraa"),
+    "shop": word_time("l8", "falarosa"),
+    "surrey": word_time("l8", "surrey"),
+    "canada": word_time("l8", "kanada"),
+    "call": word_time("l9", "xiriir"),
+    "num": word_time("l9", "lambarka"),
+    "cname": word_time("l10", "romance"),
+    "buy": word_time("l10", "hadda"),
 }
 
 # ---- audio: VO + music bed + SFX on every cut and reveal ----
@@ -77,13 +78,13 @@ for i, c in enumerate(cuts[1:-1], 1):
         f'<audio id="sfx-whoosh-{i}" src="assets/audio/whoosh.mp3" data-start="{max(0, c - 0.2):.3f}" '
         f'data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>'
     )
-pops = ["quraarad", "saxan", "dabool", "made", "ml", "alc", "oil", "cit", "hand", "neck", "ext", "flam", "dry", "fire", "heat", "cool", "dryst", "kids"]
+pops = ["l2t0", "l2t1", "l2x", "l3n0", "l3n1", "l3n2", "l4r0", "l4r1", "l4r2", "ml", "uae", "l6d0", "l6d1", "last", "clothes", "body", "smell", "surrey", "canada", "call"]
 for i, k in enumerate(pops):
     audio.append(
         f'<audio id="sfx-pop-{i}" src="assets/audio/pop.mp3" data-start="{beats[k]:.3f}" '
         f'data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>'
     )
-for i, k in enumerate(["brand", "spray", "buy"]):
+for i, k in enumerate(["brand", "shop", "buy"]):
     audio.append(
         f'<audio id="sfx-ding-{i}" src="assets/audio/ding.mp3" data-start="{beats[k]:.3f}" '
         f'data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>'
