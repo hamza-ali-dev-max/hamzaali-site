@@ -4,4 +4,4 @@
 - To generate the audio: `edge-tts --voice so-SO-MuuseNeural -f src/somali-vo.txt --write-media assets/audio/muuse.mp3`.
 - Script only for now. The audio, video and captions still need to be created.
 
-- **Script corrected:** Kashmir Musk is the perfume and Arabian Oud is the brand. The first uploaded audio read "Arabian Oud" as the scent name, so it needs to be re-recorded from this script.
+- **Needs a corrected recording:** Kashmir Musk is the perfume and Arabian Oud is the brand. `src/somali-vo.txt` (the text of the uploaded audio) reads "Arabian Oud" as the scent name. `src/somali-vo-corrected.txt` fixes that and adds the fragrance notes; record it and replace the audio before building.
