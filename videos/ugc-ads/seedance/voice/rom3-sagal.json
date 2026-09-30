@@ -1,0 +1,26 @@
+{
+ "key": "rom3",
+ "voice": "sagal",
+ "model": "eleven_v4",
+ "total": 20.01,
+ "segments": [
+  {
+   "name": "hook",
+   "text": "Gabdhahow, cadar muddo dheer idin raaca ma rabtaan? Kan eega!",
+   "start": 0.35,
+   "end": 4.91
+  },
+  {
+   "name": "notes",
+   "text": "Romance 3, Taif Al Emarat. Ward Taif, geranium iyo misk jilicsan.",
+   "start": 5.36,
+   "end": 11.86
+  },
+  {
+   "name": "cta",
+   "text": "Kani waa midka ugu udgoonka xooggan. Ka hela Falarosa Luxury, Surrey!",
+   "start": 13.76,
+   "end": 19.51
+  }
+ ]
+}
