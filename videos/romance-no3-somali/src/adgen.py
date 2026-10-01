@@ -147,10 +147,13 @@ def s_hook_single(sid, chip, big, small, brandword, photo, w, h):
 
 def s_hero(sid, chip, big, small, photo, tags, extra=None, alt=False, bw=380, bh=546):
     """photo left, up to 3 tags on the right, optional disc (inner, beatkey-word)"""
+    lx = 450
+    if LUX and max(len(t[0]) for t in tags) > 12:  # wide Cinzel label: pull the column left, clear of the edge and TikTok's buttons
+        lx, bh, bw = 400, round(bh * (bw - 50) / bw), bw - 50
     body = [cut(f"{sid}-p", photo, 40, 20, bw, bh)]
     ys = [30, 140, 250] if extra else [60, 190, 320]
     for k, (text, color, word) in enumerate(tags):
-        body.append(lab(f"{sid}-t{k}", text, color, 450, ys[k]))
+        body.append(lab(f"{sid}-t{k}", text, color, lx, ys[k]))
     if extra:
         body.append(disc(f"{sid}-x", extra[0], 580, 370, 230, bg=extra[2] if len(extra) > 2 else None))
     section(sid, chip, big, small, body, alt)
@@ -159,6 +162,16 @@ def s_hero(sid, chip, big, small, photo, tags, extra=None, alt=False, bw=380, bh
         at("pop", f"#{sid}-t{k}", beat(f"{sid}t{k}", sid, *word) if isinstance(word, tuple) else beat(f"{sid}t{k}", sid, word))
     if extra:
         at("pop", f"#{sid}-x", beat(f"{sid}x", sid, *extra[1]) if isinstance(extra[1], tuple) else beat(f"{sid}x", sid, extra[1]))
+
+
+def fit_px(text, room, base=68):
+    """font size (px) that fits a Lora italic note name in `room` px, or None if the base size already fits"""
+    try:
+        from PIL import ImageFont
+        w = ImageFont.truetype("assets/fonts/lora-600i.woff2", base).getlength(text) + 8
+    except Exception:
+        w = len(text) * base * 0.56
+    return None if w <= room else int(base * room / w)
 
 
 def s_notes(sid, chip, big, small, notes, photo, pw=240, ph=345):
@@ -170,7 +183,9 @@ def s_notes(sid, chip, big, small, notes, photo, pw=240, ph=345):
     for k, (name, tier, word) in enumerate(notes):
         y = y0 + k * step
         body.append(disc(f"{sid}-n{k}", NOTE[name], 20, y, 170))
-        body.append(f'<div class="note" id="{sid}-l{k}" style="left:210px;top:{y + 30}px"><div class="tier">{tier}</div><div class="nm">{name}</div></div>')
+        px = fit_px(name, 880 - pw - 226) if LUX else None  # long names shrink so they stop short of the bottle
+        nst = f' style="font-size:{px}px"' if px else ""
+        body.append(f'<div class="note" id="{sid}-l{k}" style="left:210px;top:{y + 30}px"><div class="tier">{tier}</div><div class="nm"{nst}>{name}</div></div>')
     body.append(cut(f"{sid}-p", photo, 880 - pw, 40, pw, ph))
     section(sid, chip, big, small, body)
     at("pop", f"#{sid}-p", f"S.{sid}.start+0.1")
@@ -346,7 +361,7 @@ elif KEY in ("rom1", "rom2"):
     s_card("l5", "WALXAHA", "Walxaha", "dabiici", "WALXAHA", [("Aalkolo dabiici", "aalkolo"), ("Saliid udgoon", "saliid")], "bottle-cut.png")
     s_facts("l6", "SAXANKA", f"Saxan {metal.lower()}", "magaca Taif", [
         ("", f"Saxan {metal.lower()}", "#c9a24b", mword, f'<div class="photo round" style="position:static;width:230px;height:230px;border-width:0;box-shadow:none"><img src="assets/photos/plate-crop.png" alt="" /></div>'),
-        ("", "Far Carabi", "#8a5a36", "carabi", f'<span style="font-family:serif;font-weight:700;font-size:48px;color:#4a2e1a">{TAIF_AR}</span>')], "bottle-cut.png", 220, 316)
+        ("", "Far Carabi", "#8a5a36", "carabi", f'<span style="font-family:serif;font-weight:700;font-size:48px;color:{"#e8c874" if LUX else "#4a2e1a"}">{TAIF_AR}</span>')], "bottle-cut.png", 220, 316)
     s_hero("l7", "UGU XOOGGAN", "Romance N°3", "udgoonka ugu xooggan", "bottle-no3.png",
            [("Ugu xooggan", "#b8243a", "xooggan"), ("Romance N°3", "#c9a24b", ("romance",))])
     s_shop("l8"); s_contact("l9", "bottle-cut.png")
@@ -467,6 +482,8 @@ if LUX:
       #g-ar { color: var(--lx-cream); }
       #g-en { color: #b89c62; font-size: 30px; letter-spacing: 0.16em; white-space: nowrap; }
       #g-buy { background: linear-gradient(90deg, #b8913f, #f1d98f 50%, #b8913f); color: #0b0a09; box-shadow: 0 0 40px rgba(212, 174, 92, 0.45); }
+      .cap-line { left: -60px; width: 960px; }
+      .cap-pill { white-space: nowrap; max-width: none; }
       .cap-pill { background: rgba(10, 9, 8, 0.82); border: 2px solid rgba(212, 174, 92, 0.85); box-shadow: 0 12px 26px rgba(0, 0, 0, 0.55); }
       .cw { color: var(--lx-cream); }
 """
@@ -495,7 +512,9 @@ if LUX:
     chrome = re.sub(r'<div id="brand">.*?</div>', '<div id="brand"><svg viewBox="0 0 120 140"><use href="#emblem" width="120" height="140" /></svg>FALAROSA LUXURY</div>\n      <div id="lux-frame"></div>', chrome, count=1, flags=re.S)
     chrome = chrome.replace('tl.set("#flash", { opacity: 0.55 }, s.start);', 'tl.set("#flash", { opacity: 0.3 }, s.start);')
     tail = tail.replace('{ color: "#2f6fd0" }', '{ color: "#e8c874" }').replace('{ color: "#4a2e1a" }', '{ color: "#f3ead8" }')
-    jstext = ('      // bokeh lights drift slowly upward\n'
+    jstext = ('      // long caption lines shrink with their letter count so they stay on one row\n'
+              '      document.querySelectorAll(".cap-pill").forEach((p) => { const n = p.textContent.length; if (n > 20) p.style.fontSize = Math.round(60 * 20 / n) + "px"; });\n'
+              '      // bokeh lights drift slowly upward\n'
               '      tl.fromTo("#bokeh i", { y: 0 }, { y: (i) => -60 - (i % 5) * 30, duration: D.total, ease: "none" }, 0);\n' + jstext)
     caps = caps + LUX_CSS
 out = head + css + caps + body_open + "".join(secs) + "\n" + chrome + jstext + tail
