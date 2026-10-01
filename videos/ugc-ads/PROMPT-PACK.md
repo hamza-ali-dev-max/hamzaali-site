@@ -2,6 +2,8 @@
 
 Hyper-realistic "Somali woman talks to her phone" ads for the five Falarosa Luxury perfumes. Every prompt here is copy-ready.
 
+> **Using Seedance 2.5?** See [SEEDANCE.md](SEEDANCE.md): one generation per ad with a real ElevenLabs Somali voice, no stills or separate lip-sync step needed.
+
 ## How it works (5 steps)
 
 1. **Make the woman once** (Step 0). Keep that one image and reuse it as the face reference in every later prompt, so all five ads show the same person. In Higgsfield you can train her as a Soul ID instead.
