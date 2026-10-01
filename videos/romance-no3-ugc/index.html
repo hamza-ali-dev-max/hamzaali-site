@@ -1,0 +1,90 @@
+<!doctype html>
+<html><head><meta charset="utf-8" />
+<script src="assets/js/gsap.min.js"></script>
+<style>
+@font-face { font-family: "Lora"; src: url("assets/fonts/lora-700.woff2") format("woff2"); font-weight: 700; }
+@font-face { font-family: "Lora"; src: url("assets/fonts/lora-600i.woff2") format("woff2"); font-weight: 600; font-style: italic; }
+@font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-700.woff2") format("woff2"); font-weight: 700; }
+@font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-900.woff2") format("woff2"); font-weight: 900; }
+html, body { margin: 0; background: #0b0a09; }
+#main { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #0b0a09; font-family: "Lora"; }
+#clip { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; }
+#caps { position: absolute; left: 60px; top: 1330px; width: 840px; height: 190px; }
+.cap-line { position: absolute; left: -60px; top: 0; width: 960px; text-align: center; opacity: 0; }
+.cap-pill { display: inline-block; white-space: nowrap; padding: 14px 30px 18px; border-radius: 30px; background: rgba(10, 9, 8, 0.78);
+  border: 2px solid rgba(212, 174, 92, 0.85); box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45); font-weight: 700; font-size: 60px; line-height: 1.15; }
+.cw { display: inline-block; margin: 0 8px; color: #f3ead8; }
+#end { position: absolute; inset: 0; opacity: 0; background: #0b0a09 url("assets/lux/marble.jpg") center / cover; }
+#end .frame { position: absolute; inset: 26px; border: 2px solid rgba(212, 174, 92, 0.6); border-radius: 6px; }
+#end .logo { position: absolute; left: 180px; top: 120px; width: 720px; height: 420px; }
+#end .brand { position: absolute; left: 0; width: 1080px; top: 350px; text-align: center; font-family: "Cinzel"; font-weight: 900; font-size: 62px; letter-spacing: .2em; color: #e8c874; }
+#end .sub { position: absolute; left: 0; width: 1080px; top: 560px; text-align: center; font-family: "Cinzel"; font-weight: 700; font-size: 30px; letter-spacing: .32em; color: #f3ead8; }
+#end .bottle { position: absolute; left: 370px; top: 650px; width: 340px; -webkit-box-reflect: below 6px linear-gradient(transparent 70%, rgba(255,255,255,.18)); }
+#end .name { position: absolute; left: 0; width: 1080px; top: 1250px; text-align: center; font-style: italic; font-weight: 600; font-size: 96px;
+  color: transparent; background: linear-gradient(180deg, #f7e7b4, #c9a24b 60%, #a07a28); -webkit-background-clip: text; background-clip: text; }
+#end .buy { position: absolute; left: 340px; top: 1400px; width: 400px; height: 110px; border-radius: 55px; background: linear-gradient(90deg, #d4ae5c, #f1d98f);
+  color: #1a1206; font-family: "Cinzel"; font-weight: 900; font-size: 44px; display: flex; align-items: center; justify-content: center; letter-spacing: .06em; }
+#end .tel { position: absolute; left: 0; width: 1080px; top: 1545px; text-align: center; font-weight: 700; font-size: 56px; color: #f3ead8; letter-spacing: .02em; }
+</style></head>
+<body>
+<div id="main" data-composition-id="main" data-width="1080" data-height="1920" data-duration="22.86">
+  <video id="clip" class="clip" src="assets/clip.mp4" data-start="0" data-duration="20.06" muted playsinline></video>
+  <audio id="vo" class="clip" src="assets/seedance-audio.mp3" data-start="0" data-duration="20.06"></audio>
+  <div id="caps">
+<div class="cap-line" id="cap-0"><span class="cap-pill"><span class="cw" id="cw-0-0">Gabdhahow</span></span></div>
+<div class="cap-line" id="cap-1"><span class="cap-pill"><span class="cw" id="cw-1-0">cadar</span><span class="cw" id="cw-1-1">muddo</span><span class="cw" id="cw-1-2">dheer</span></span></div>
+<div class="cap-line" id="cap-2"><span class="cap-pill"><span class="cw" id="cw-2-0">idin</span><span class="cw" id="cw-2-1">raaca</span><span class="cw" id="cw-2-2">ma</span></span></div>
+<div class="cap-line" id="cap-3"><span class="cap-pill"><span class="cw" id="cw-3-0">rabtaan</span></span></div>
+<div class="cap-line" id="cap-4"><span class="cap-pill"><span class="cw" id="cw-4-0">Kan</span><span class="cw" id="cw-4-1">eega</span></span></div>
+<div class="cap-line" id="cap-5"><span class="cap-pill"><span class="cw" id="cw-5-0">Romance</span><span class="cw" id="cw-5-1">N°3</span></span></div>
+<div class="cap-line" id="cap-6"><span class="cap-pill"><span class="cw" id="cw-6-0">Taif</span><span class="cw" id="cw-6-1">Al</span><span class="cw" id="cw-6-2">Emarat</span></span></div>
+<div class="cap-line" id="cap-7"><span class="cap-pill"><span class="cw" id="cw-7-0">Ward</span><span class="cw" id="cw-7-1">Taif</span></span></div>
+<div class="cap-line" id="cap-8"><span class="cap-pill"><span class="cw" id="cw-8-0">geranium</span><span class="cw" id="cw-8-1">iyo</span><span class="cw" id="cw-8-2">misk</span></span></div>
+<div class="cap-line" id="cap-9"><span class="cap-pill"><span class="cw" id="cw-9-0">jilicsan</span></span></div>
+<div class="cap-line" id="cap-10"><span class="cap-pill"><span class="cw" id="cw-10-0">Kani</span><span class="cw" id="cw-10-1">waa</span><span class="cw" id="cw-10-2">midka</span></span></div>
+<div class="cap-line" id="cap-11"><span class="cap-pill"><span class="cw" id="cw-11-0">ugu</span><span class="cw" id="cw-11-1">udgoonka</span><span class="cw" id="cw-11-2">xooggan</span></span></div>
+<div class="cap-line" id="cap-12"><span class="cap-pill"><span class="cw" id="cw-12-0">Ka</span><span class="cw" id="cw-12-1">hela</span><span class="cw" id="cw-12-2">Falarosa</span></span></div>
+<div class="cap-line" id="cap-13"><span class="cap-pill"><span class="cw" id="cw-13-0">Luxury</span></span></div>
+<div class="cap-line" id="cap-14"><span class="cap-pill"><span class="cw" id="cw-14-0">Surrey</span></span></div>
+  </div>
+  <div id="end">
+    <div class="frame"></div>
+    <svg width="0" height="0" style="position:absolute"><defs><linearGradient id="lxgold" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#f7e6b0" /><stop offset=".45" stop-color="#d4ae5c" /><stop offset="1" stop-color="#96701f" /></linearGradient><symbol id="emblem" viewBox="0 0 120 140">
+            <g fill="none" stroke="url(#lxgold)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M60 132 C22 108 18 70 44 48 C56 38 60 26 54 12" />
+              <path d="M60 132 C98 108 102 70 76 48 C64 38 60 26 66 12" />
+              <path d="M60 114 C44 102 44 80 60 70 C76 80 76 102 60 114 Z" />
+              <path d="M60 70 V54 M52 62 Q60 56 68 62" />
+            </g>
+            <path d="M60 0 L67 9 L60 18 L53 9 Z" fill="url(#lxgold)" />
+          </symbol>
+</defs></svg>
+    <img class="logo" src="assets/logo.png" />
+    <div class="sub">SURREY · BC · KANADA</div>
+    <img class="bottle" src="assets/bottle.png" />
+    <div class="name">Romance N°3</div>
+    <div class="buy">HADDA DALBO</div>
+    <div class="tel">+1 (604) 396-6638</div>
+  </div>
+</div>
+<script>
+  window.__timelines = window.__timelines || {};
+  const D = {"caps": [{"s": 0.35, "e": 1.152, "w": [{"t": "Gabdhahow", "s": 0.35}]}, {"s": 1.152, "e": 2.349, "w": [{"t": "cadar", "s": 1.152}, {"t": "muddo", "s": 1.631}, {"t": "dheer", "s": 2.109}]}, {"s": 2.349, "e": 3.546, "w": [{"t": "idin", "s": 2.349}, {"t": "raaca", "s": 2.827}, {"t": "ma", "s": 3.306}]}, {"s": 3.546, "e": 4.108, "w": [{"t": "rabtaan", "s": 3.546}]}, {"s": 4.108, "e": 5.36, "w": [{"t": "Kan", "s": 4.108}, {"t": "eega", "s": 4.347}]}, {"s": 5.36, "e": 6.681, "w": [{"t": "Romance", "s": 5.36}, {"t": "N°3", "s": 6.271}]}, {"s": 6.681, "e": 8.306, "w": [{"t": "Taif", "s": 6.681}, {"t": "Al", "s": 6.985}, {"t": "Emarat", "s": 7.289}]}, {"s": 8.306, "e": 9.02, "w": [{"t": "Ward", "s": 8.306}, {"t": "Taif", "s": 8.61}]}, {"s": 9.02, "e": 10.842, "w": [{"t": "geranium", "s": 9.02}, {"t": "iyo", "s": 9.931}, {"t": "misk", "s": 10.539}]}, {"s": 10.842, "e": 12.36, "w": [{"t": "jilicsan", "s": 10.842}]}, {"s": 13.76, "e": 14.955, "w": [{"t": "Kani", "s": 13.76}, {"t": "waa", "s": 14.238}, {"t": "midka", "s": 14.477}]}, {"s": 14.955, "e": 16.713, "w": [{"t": "ugu", "s": 14.955}, {"t": "udgoonka", "s": 15.434}, {"t": "xooggan", "s": 16.151}]}, {"s": 16.713, "e": 18.386, "w": [{"t": "Ka", "s": 16.713}, {"t": "hela", "s": 16.952}, {"t": "Falarosa", "s": 17.43}]}, {"s": 18.386, "e": 18.948, "w": [{"t": "Luxury", "s": 18.386}]}, {"s": 18.948, "e": 20.01, "w": [{"t": "Surrey", "s": 18.948}]}], "clip": 20.06, "total": 22.86};
+  const tl = gsap.timeline({ paused: true });
+  document.querySelectorAll(".cap-pill").forEach((p) => { const n = p.textContent.length; if (n > 20) p.style.fontSize = Math.round(60 * 20 / n) + "px"; });
+  D.caps.forEach((g, gi) => {
+    const line = "#cap-" + gi;
+    tl.fromTo(line, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.16, ease: "power2.out" }, g.s);
+    g.w.forEach((w, wi) => { tl.set("#cw-" + gi + "-" + wi, { color: "#e8c874" }, w.s); if (wi > 0) tl.set("#cw-" + gi + "-" + (wi - 1), { color: "#f3ead8" }, w.s); });
+    tl.to(line, { opacity: 0, duration: 0.12 }, Math.min(g.e, D.clip - 0.05));
+  });
+  tl.to("#end", { opacity: 1, duration: 0.5, ease: "power1.out" }, D.clip - 0.3);
+  tl.fromTo("#end .logo", { scale: 0.85, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "power2.out" }, D.clip);
+  tl.fromTo("#end .bottle", { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, D.clip + 0.1);
+  tl.fromTo(["#end .sub", "#end .name"], { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, stagger: 0.12, ease: "power2.out" }, D.clip + 0.2);
+  tl.fromTo("#end .buy", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2.5)" }, D.clip + 0.7);
+  tl.fromTo("#end .tel", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, D.clip + 0.9);
+  tl.set({}, {}, D.total);
+  window.__timelines["main"] = tl;
+</script>
+</body></html>
