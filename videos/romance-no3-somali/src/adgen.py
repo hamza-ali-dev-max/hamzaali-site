@@ -10,6 +10,8 @@ import re
 import sys
 
 KEY = sys.argv[1]
+THEME = sys.argv[2] if len(sys.argv) > 2 else "lux"  # lux = Falarosa black marble + gold; heritage = original cream style
+LUX = THEME == "lux"
 ROOT = f"/tmp/claude-0/hf/{KEY}"
 BASE = open("/tmp/claude-0/hf/oud/src/template.html.tmpl").read()
 
@@ -37,6 +39,10 @@ def rphoto(i, src, x, y, d):
 
 
 def lab(i, text, color, x, y, fs=None):
+    if LUX and color == "#2f6fd0":
+        color = "#c23b4a"
+    elif LUX and color == "#1c3f86":
+        color = "#c9ced6"
     st = f"left:{x}px;top:{y}px" + (f";font-size:{fs}px" if fs else "")
     return f'<div class="lab tag" id="{i}" style="{st}"><i style="background:{color}"></i>{text}</div>'
 
@@ -44,10 +50,12 @@ def lab(i, text, color, x, y, fs=None):
 def disc(i, inner, x, y, d, ban=False, bg=None):
     b = f'<svg class="banx" id="{i}-ban" viewBox="0 0 200 200"><g fill="none" stroke="#b8452f" stroke-width="14"><circle cx="100" cy="100" r="86" /><path d="M40 40 L160 160" /></g></svg>' if ban else ""
     st = f"left:{x}px;top:{y}px;width:{d}px;height:{d}px" + (f";background:{bg}" if bg else "")
-    return f'<div class="disc2" id="{i}" style="{st}">{inner}{b}</div>'
+    cls = "disc2 keep" if "data-keep" in inner else "disc2"
+    return f'<div class="{cls}" id="{i}" style="{st}">{inner}{b}</div>'
 
 
-def bigtext(text, size, color="#4a2e1a", font="Cinzel"):
+def bigtext(text, size, color=None, font="Cinzel"):
+    color = color or ("#0b0a09" if LUX else "#4a2e1a")
     return f'<span style="font-family:{font};font-weight:900;font-size:{size}px;color:{color};line-height:1;text-align:center">{text}</span>'
 
 
@@ -101,11 +109,11 @@ STORE = '''<svg viewBox="0 0 400 380" style="width:100%;height:100%"><rect x="30
 PIN = '<svg width="120" height="140" viewBox="0 0 120 140"><path d="M60 132 C30 92 16 72 16 50 A44 44 0 0 1 104 50 C104 72 90 92 60 132Z" fill="#b8452f" /><circle cx="60" cy="50" r="18" fill="#fff" /></svg>'
 MAPLE = '<svg width="120" height="120" viewBox="0 0 120 120"><path d="M60 8 L68 30 L82 22 L78 48 L100 38 L94 54 L112 60 L84 76 L90 88 L64 82 L64 112 L56 112 L56 82 L30 88 L36 76 L8 60 L26 54 L20 38 L42 48 L38 22 L52 30Z" fill="#d52b1e" /></svg>'
 PHONE = '<svg width="150" height="150" viewBox="0 0 150 150"><rect x="44" y="14" width="62" height="122" rx="12" fill="#1c3f86" /><rect x="50" y="28" width="50" height="86" rx="4" fill="#cfe3fb" /><circle cx="75" cy="124" r="5" fill="#fff" /><g id="rings" fill="none" stroke="#c9a24b" stroke-width="6" stroke-linecap="round"><path d="M116 50 q12 25 0 50" /><path d="M128 38 q20 37 0 74" /><path d="M34 50 q-12 25 0 50" /><path d="M22 38 q-20 37 0 74" /></g></svg>'
-ARROW = '<svg id="arrowdn" viewBox="0 0 90 120" style="position:absolute;left:%dpx;top:%dpx;width:90px;height:120px"><path d="M45 8 V96 M14 66 L45 100 L76 66" fill="none" stroke="#2f6fd0" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" /></svg>'
+ARROW = '<svg id="arrowdn" viewBox="0 0 90 120" style="position:absolute;left:%dpx;top:%dpx;width:90px;height:120px"><path d="M45 8 V96 M14 66 L45 100 L76 66" fill="none" stroke="' + ("#d4ae5c" if LUX else "#2f6fd0") + '" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" /></svg>'
 HEART = '<svg width="130" height="120" viewBox="0 0 130 120"><path d="M65 110 C20 80 8 58 8 38 C8 18 24 6 42 6 C54 6 62 14 65 24 C68 14 76 6 88 6 C106 6 122 18 122 38 C122 58 110 80 65 110Z" fill="#b8243a" /></svg>'
 COMPASS = '<svg width="130" height="130" viewBox="0 0 130 130"><circle cx="65" cy="65" r="56" fill="#fff" stroke="#c9a24b" stroke-width="8" /><path d="M65 14 L76 65 L65 116 L54 65Z" fill="#1c3f86" /><path d="M14 65 L65 54 L116 65 L65 76Z" fill="#c9a24b" /><circle cx="65" cy="65" r="8" fill="#b8452f" /></svg>'
-FLAG_UAE = '<svg width="150" height="100" viewBox="0 0 150 100"><rect width="150" height="100" rx="8" fill="#fff" stroke="#ddd" stroke-width="3" /><rect x="40" width="110" height="33" fill="#00843d" /><rect x="40" y="67" width="110" height="33" fill="#000" /><rect width="40" height="100" fill="#c8102e" /></svg>'
-FLAG_SA = '<svg width="150" height="100" viewBox="0 0 150 100"><rect width="150" height="100" rx="8" fill="#006c35" /><path d="M40 40 H110" stroke="#fff" stroke-width="5" /><path d="M42 66 H104 L110 60" stroke="#fff" stroke-width="5" fill="none" /></svg>'
+FLAG_UAE = '<svg data-keep="1" width="150" height="100" viewBox="0 0 150 100"><rect width="150" height="100" rx="8" fill="#fff" stroke="#ddd" stroke-width="3" /><rect x="40" width="110" height="33" fill="#00843d" /><rect x="40" y="67" width="110" height="33" fill="#000" /><rect width="40" height="100" fill="#c8102e" /></svg>'
+FLAG_SA = '<svg data-keep="1" width="150" height="100" viewBox="0 0 150 100"><rect width="150" height="100" rx="8" fill="#006c35" /><path d="M40 40 H110" stroke="#fff" stroke-width="5" /><path d="M42 66 H104 L110 60" stroke="#fff" stroke-width="5" fill="none" /></svg>'
 SPARK = '<svg id="h-spark" viewBox="0 0 880 640" style="position:absolute;left:0;top:0;width:880px;height:640px"><g fill="#c9a24b"><path class="hs" d="M110 120 l12 28 28 12 -28 12 -12 28 -12 -28 -28 -12 28 -12z" /><path class="hs" d="M770 80 l10 22 22 10 -22 10 -10 22 -10 -22 -22 -10 22 -10z" /><path class="hs" d="M790 440 l12 28 28 12 -28 12 -12 28 -12 -28 -28 -12 28 -12z" /><path class="hs" d="M80 460 l8 18 18 8 -18 8 -8 18 -8 -18 -18 -8 18 -8z" /></g></svg>'
 
 NOTE = {
@@ -175,8 +183,10 @@ def s_notes(sid, chip, big, small, notes, photo, pw=240, ph=345):
 def s_card(sid, chip, big, small, title, rows, photo, pw=280, ph=402):
     """ingredient card: rows = [(text, word)]"""
     h = 150 + 110 * len(rows)
-    rr = "".join(f'<g id="{sid}-r{k}"><rect class="hi" x="30" y="{140 + k * 110}" width="440" height="84" rx="16" fill="#f6e3b0" /><text x="64" y="{194 + k * 110}">{t}</text></g>' for k, (t, w) in enumerate(rows))
-    card = f'''<svg id="{sid}-card" class="stk" viewBox="0 0 500 {h}" style="position:absolute;left:10px;top:10px;width:500px;height:{h}px"><rect x="8" y="8" width="484" height="{h - 16}" rx="28" fill="#fffdf6" /><text x="250" y="86" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="36" fill="#8a5a36">{title}</text><path d="M60 112 H440" stroke="#c9a24b" stroke-width="4" /><g font-family="Lora" font-weight="700" font-size="34" fill="#4a2e1a">{rr}</g></svg>'''
+    C = (dict(bg="#12100d", edge=' stroke="#d4ae5c" stroke-width="3"', title="#e8c874", hi="rgba(212,174,92,0.16)", hiedge=' stroke="rgba(212,174,92,0.6)" stroke-width="2"', text="#f3ead8")
+         if LUX else dict(bg="#fffdf6", edge="", title="#8a5a36", hi="#f6e3b0", hiedge="", text="#4a2e1a"))
+    rr = "".join(f'<g id="{sid}-r{k}"><rect class="hi" x="30" y="{140 + k * 110}" width="440" height="84" rx="16" fill="{C["hi"]}"{C["hiedge"]} /><text x="64" y="{194 + k * 110}">{t}</text></g>' for k, (t, w) in enumerate(rows))
+    card = f'''<svg id="{sid}-card" class="stk" viewBox="0 0 500 {h}" style="position:absolute;left:10px;top:10px;width:500px;height:{h}px"><rect x="8" y="8" width="484" height="{h - 16}" rx="28" fill="{C["bg"]}"{C["edge"]} /><text x="250" y="86" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="36" letter-spacing="6" fill="{C["title"]}">{title}</text><path d="M60 112 H440" stroke="#c9a24b" stroke-width="3" /><g font-family="Lora" font-weight="700" font-size="34" fill="{C["text"]}">{rr}</g></svg>'''
     section(sid, chip, big, small, [card, cut(f"{sid}-p", photo, 880 - pw + 20, 60, pw, ph)])
     at("pop", f"#{sid}-card", f"S.{sid}.start+0.1")
     at("pop", f"#{sid}-p", f"S.{sid}.start+0.35")
@@ -190,7 +200,7 @@ def s_twodisc(sid, chip, big, small, a, b, photo=None, pw=230, ph=330, alt=False
     for k, (inner, text, color, word, bg) in enumerate((a, b)):
         x = 30 + k * 300
         body.append(disc(f"{sid}-d{k}", inner, x, 20, 250, bg=bg))
-        body.append(lab(f"{sid}-t{k}", text, color, x, 300))
+        body.append(lab(f"{sid}-t{k}", text, color, x, 300 + k * 95, 34))
     if photo:
         body.append(cut(f"{sid}-p", photo, 880 - pw, 40, pw, ph))
     section(sid, chip, big, small, body, alt)
@@ -238,7 +248,7 @@ def s_facts(sid, chip, big, small, facts, photo=None, pw=230, ph=330):
         x = 30 + k * 290
         content = inner if inner else bigtext(bt, 70 if len(bt) < 5 else 56)
         body.append(disc(f"{sid}-d{k}", content, x, 20, 250, bg=None if inner else GOLD))
-        body.append(lab(f"{sid}-t{k}", text, color, x, 300))
+        body.append(lab(f"{sid}-t{k}", text, color, x, 300 + k * 95, 32))
     if photo:
         body.append(cut(f"{sid}-p", photo, 880 - pw, 60 if len(facts) < 3 else 330, pw, ph))
     section(sid, chip, big, small, body)
@@ -250,9 +260,20 @@ def s_facts(sid, chip, big, small, facts, photo=None, pw=230, ph=330):
         at("pop", f"#{sid}-t{k}", t + "+0.1")
 
 
+LOGO = '<div class="lx-logo"><svg viewBox="0 0 120 140"><use href="#emblem" width="120" height="140" /></svg><div class="lx-word">FALAROSA</div><div class="lx-sub">LUXURY</div></div>'
+STORE_LUX = '''<svg viewBox="0 0 400 380" style="width:100%;height:100%"><rect x="16" y="30" width="368" height="336" rx="10" fill="#0f0e0c" stroke="#d4ae5c" stroke-width="3" />
+<rect x="36" y="48" width="328" height="84" rx="6" fill="#151310" stroke="rgba(212,174,92,.5)" stroke-width="1.5" /><use href="#emblem" x="186" y="54" width="28" height="33" />
+<text x="200" y="118" text-anchor="middle" font-family="Cinzel" font-weight="700" font-size="22" letter-spacing="5" fill="#e8c874">FALAROSA LUXURY</text>
+<rect x="46" y="148" width="308" height="168" rx="6" fill="#1c1813" stroke="rgba(212,174,92,.7)" stroke-width="2" />
+<g stroke="#d4ae5c" stroke-width="3"><path d="M56 206 H344" /><path d="M56 266 H344" /></g><g fill="#fff2c8" opacity=".35"><rect x="56" y="200" width="288" height="4" /><rect x="56" y="260" width="288" height="4" /></g>
+<g><rect x="70" y="170" width="18" height="34" rx="4" fill="#d4ae5c" /><rect x="100" y="164" width="18" height="40" rx="4" fill="#1d2f55" /><rect x="130" y="172" width="18" height="32" rx="4" fill="#8e1e30" /><rect x="160" y="166" width="18" height="38" rx="4" fill="#f3ead8" /><rect x="222" y="170" width="18" height="34" rx="4" fill="#0b0a09" stroke="#d4ae5c" /><rect x="252" y="166" width="18" height="38" rx="4" fill="#d4ae5c" /><rect x="282" y="172" width="18" height="32" rx="4" fill="#8e1e30" /><rect x="312" y="168" width="18" height="36" rx="4" fill="#1d2f55" />
+<rect x="80" y="228" width="20" height="36" rx="4" fill="#8e1e30" /><rect x="112" y="232" width="20" height="32" rx="4" fill="#d4ae5c" /><rect x="144" y="226" width="20" height="38" rx="4" fill="#0b0a09" stroke="#d4ae5c" /><rect x="236" y="230" width="20" height="34" rx="4" fill="#f3ead8" /><rect x="268" y="226" width="20" height="38" rx="4" fill="#d4ae5c" /><rect x="300" y="232" width="20" height="32" rx="4" fill="#1d2f55" /></g>
+<rect x="150" y="286" width="100" height="80" fill="#e6e0d4" /><path d="M150 300 C180 310 200 290 250 312 M160 350 C190 330 215 356 250 338" stroke="#a9a397" stroke-width="2" fill="none" /><rect x="150" y="286" width="100" height="8" fill="#c9c2b4" /></svg>'''
+
+
 def s_shop(sid):
-    body = [f'<div class="cut" id="{sid}-store" style="left:20px;top:20px;width:420px;height:400px">{STORE}</div>',
-            f'<div id="{sid}-name" class="shopname">Falarosa<br />Luxury</div>',
+    body = [f'<div class="cut" id="{sid}-store" style="left:20px;top:20px;width:420px;height:400px">{STORE_LUX if LUX else STORE}</div>',
+            (f'<div id="{sid}-name" style="position:absolute;left:460px;top:10px;width:420px">{LOGO}</div>' if LUX else f'<div id="{sid}-name" class="shopname">Falarosa<br />Luxury</div>'),
             disc(f"{sid}-pin", PIN, 470, 330, 150), lab(f"{sid}-t0", "Surrey, BC", "#b8452f", 630, 360, 34),
             disc(f"{sid}-leaf", MAPLE, 470, 490, 130), lab(f"{sid}-t1", "Kanada", "#d52b1e", 620, 520, 34)]
     section(sid, "MEESHA", "Falarosa", "Surrey · BC · Kanada", body)
@@ -276,11 +297,15 @@ def s_contact(sid, photo, pw=230, ph=330):
 def s_cta(sid, name_html, ar, en, photo, word, bw=400, bh=575):
     body = [cut(f"{sid}-p", photo, 40, 0, bw, bh), f'<div id="g-name">{name_html}</div>',
             f'<div id="g-ar">{ar}</div><div id="g-en">{en}</div>', '<div id="g-buy" class="center stk">HADDA DALBO</div>']
+    if LUX:
+        body.append('<div class="lx-tag" id="g-tag" style="position:absolute;left:0;top:598px;width:880px;text-align:center">SCENTS · PEOPLE · STORIES</div>')
     section(sid, "HADDA", "Hadda dalbo", "Falarosa Luxury", body)
     at("slide", f"#{sid}-p", f"S.{sid}.start+0.1")
     t = beat("cname", sid, word); at("pop6", "#g-name", t)
     at("pop6", "#g-ar", t + "+0.4"); at("pop6", "#g-en", t + "+0.6")
     at("buy", "#g-buy", beat("buy", sid, "hadda"))
+    if LUX:
+        at("pop6", "#g-tag", "B.buy+0.5")
 
 
 # ---------- products ----------
@@ -401,6 +426,78 @@ caps = BASE[BASE.index("      /* captions:") : BASE.index("    </style>")]
 body_open = BASE[BASE.index("    </style>") : BASE.index('      <svg width="0"')]
 chrome = BASE[BASE.index("      <!-- persistent chrome") : BASE.index("      // 1 hook:")].replace("AL MAJED OUD · CUUD", BRAND)
 tail = BASE[BASE.index("      // captions: word-by-word") :]
+if LUX:
+    # Falarosa Luxury: black marble, gold serif type, bokeh lights, original emblem
+    LUX_CSS = """      /* ---- Falarosa luxury theme: black marble + gold ---- */
+      :root { --sticker: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.6)); --lx-gold: #d4ae5c; --lx-gold2: #f1d98f; --lx-cream: #f3ead8; }
+      html, body, #root { background: #0b0a09; }
+      #root { color: var(--lx-cream); }
+      #bg { background: #0b0a09 url("assets/lux/marble.jpg") center / cover no-repeat; opacity: 0.62; }
+      #weave, #band { display: none; }
+      #bokeh { position: absolute; inset: 0; pointer-events: none; }
+      #bokeh i { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(255, 214, 140, 0.5) 0%, rgba(255, 214, 140, 0.12) 45%, rgba(255, 214, 140, 0) 70%); }
+      #lux-frame { position: absolute; inset: 26px; border: 2px solid rgba(212, 174, 92, 0.42); border-radius: 6px; pointer-events: none; }
+      #brand { left: 60px; top: 56px; gap: 14px; color: var(--lx-gold2); font-size: 26px; font-weight: 700; letter-spacing: 0.3em; }
+      #brand svg { width: 34px; height: 40px; }
+      #prog { background: rgba(255, 255, 255, 0.08); height: 6px; top: 116px; }
+      #prog-fill { background: linear-gradient(90deg, #96701f, #f1d98f); }
+      #flash { background: radial-gradient(circle at 50% 40%, #fff3cf 0%, #d4ae5c 55%, #5a4314 100%); }
+      .chip { background: rgba(11, 10, 9, 0.85); border: 2px solid var(--lx-gold); color: var(--lx-gold2); box-shadow: none; font-weight: 700; font-size: 26px; letter-spacing: 0.26em; }
+      .chip i { background: var(--lx-gold); }
+      .chip.alt { background: linear-gradient(90deg, #b8913f, #f1d98f); border: 0; color: #0b0a09; }
+      .chip.alt i { background: #0b0a09; }
+      .headline { color: var(--lx-cream); }
+      .headline .y { font-family: "Lora"; font-style: italic; font-weight: 600; font-size: 1.36em; line-height: 1.08; text-transform: none; color: transparent; background: linear-gradient(180deg, #f7e7b4 0%, #d4ae5c 55%, #a07a28 100%); -webkit-background-clip: text; background-clip: text; padding-right: 8px; }
+      .headline .sm { font-family: "Cinzel"; font-weight: 700; font-size: 38px; letter-spacing: 0.22em; color: #e9dcc0; }
+      .lab { background: rgba(14, 13, 12, 0.9); border: 2px solid rgba(212, 174, 92, 0.85); color: var(--lx-cream); box-shadow: 0 12px 22px rgba(0, 0, 0, 0.5); font-weight: 700; letter-spacing: 0.06em; }
+      .lab i { box-shadow: 0 0 0 3px rgba(212, 174, 92, 0.55); }
+      .disc2 { background: radial-gradient(circle at 35% 30%, #2a251f 0%, #11100e 70%); box-shadow: 0 0 0 3px var(--lx-gold), 0 18px 30px rgba(0, 0, 0, 0.6); }
+      .disc2:not(.keep) > svg:not(.banx) { filter: grayscale(1) sepia(1) saturate(2.6) hue-rotate(-6deg) brightness(1.08) contrast(1.05); }
+      .photo { background: #111; border: 6px solid #111; box-shadow: 0 0 0 3px var(--lx-gold), 0 18px 30px rgba(0, 0, 0, 0.6); }
+      .cut { filter: drop-shadow(0 22px 26px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 30px rgba(212, 174, 92, 0.2)); }
+      .cut img { -webkit-box-reflect: below 0px linear-gradient(transparent 82%, rgba(255, 255, 255, 0.16)); }
+      .note .tier { color: #b89c62; }
+      .note .nm { font-family: "Lora"; font-style: italic; font-weight: 600; font-size: 68px; color: transparent; background: linear-gradient(180deg, #f7e7b4, #c9a24b 60%, #a07a28); -webkit-background-clip: text; background-clip: text; padding-right: 10px; }
+      .lx-logo { display: flex; flex-direction: column; align-items: center; }
+      .lx-logo svg { width: 92px; height: 108px; }
+      .lx-word { font-family: "Cinzel"; font-weight: 700; font-size: 70px; letter-spacing: 0.1em; line-height: 1.1; color: transparent; background: linear-gradient(180deg, #f7e7b4, #d4ae5c 55%, #a07a28); -webkit-background-clip: text; background-clip: text; }
+      .lx-sub { font-family: "Cinzel"; font-weight: 700; font-size: 28px; letter-spacing: 0.55em; margin-left: 0.55em; color: #d9bd7a; }
+      .lx-tag { font-family: "Cinzel"; font-weight: 700; font-size: 26px; letter-spacing: 0.34em; color: #d9bd7a; }
+      #g-name { font-family: "Lora"; font-style: italic; font-weight: 600; font-size: 100px; color: transparent; background: linear-gradient(180deg, #f7e7b4, #d4ae5c 55%, #a07a28); -webkit-background-clip: text; background-clip: text; }
+      #g-ar { color: var(--lx-cream); }
+      #g-en { color: #b89c62; font-size: 30px; letter-spacing: 0.16em; white-space: nowrap; }
+      #g-buy { background: linear-gradient(90deg, #b8913f, #f1d98f 50%, #b8913f); color: #0b0a09; box-shadow: 0 0 40px rgba(212, 174, 92, 0.45); }
+      .cap-pill { background: rgba(10, 9, 8, 0.82); border: 2px solid rgba(212, 174, 92, 0.85); box-shadow: 0 12px 26px rgba(0, 0, 0, 0.55); }
+      .cw { color: var(--lx-cream); }
+"""
+    import random
+    rnd = random.Random(5)
+    bokeh = "".join(
+        f'<i style="left:{rnd.randint(-40, 1040)}px;top:{rnd.randint(-40, 1880)}px;width:{d}px;height:{d}px;opacity:{rnd.uniform(0.35, 0.9):.2f}"></i>'
+        for d in [rnd.choice([26, 34, 46, 60, 78, 96, 120]) for _ in range(18)])
+    DEFS = """      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <linearGradient id="lxgold" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#f7e6b0" /><stop offset=".45" stop-color="#d4ae5c" /><stop offset="1" stop-color="#96701f" /></linearGradient>
+          <!-- Falarosa emblem (original): a fragrance drop drawn as two calligraphic strokes around a rose bud -->
+          <symbol id="emblem" viewBox="0 0 120 140">
+            <g fill="none" stroke="url(#lxgold)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M60 132 C22 108 18 70 44 48 C56 38 60 26 54 12" />
+              <path d="M60 132 C98 108 102 70 76 48 C64 38 60 26 66 12" />
+              <path d="M60 114 C44 102 44 80 60 70 C76 80 76 102 60 114 Z" />
+              <path d="M60 70 V54 M52 62 Q60 56 68 62" />
+            </g>
+            <path d="M60 0 L67 9 L60 18 L53 9 Z" fill="url(#lxgold)" />
+          </symbol>
+        </defs>
+      </svg>
+"""
+    body_open = body_open + '      <div id="bokeh">' + bokeh + "</div>\n" + DEFS
+    chrome = re.sub(r'<div id="brand">.*?</div>', '<div id="brand"><svg viewBox="0 0 120 140"><use href="#emblem" width="120" height="140" /></svg>FALAROSA LUXURY</div>\n      <div id="lux-frame"></div>', chrome, count=1, flags=re.S)
+    chrome = chrome.replace('tl.set("#flash", { opacity: 0.55 }, s.start);', 'tl.set("#flash", { opacity: 0.3 }, s.start);')
+    tail = tail.replace('{ color: "#2f6fd0" }', '{ color: "#e8c874" }').replace('{ color: "#4a2e1a" }', '{ color: "#f3ead8" }')
+    jstext = ('      // bokeh lights drift slowly upward\n'
+              '      tl.fromTo("#bokeh i", { y: 0 }, { y: (i) => -60 - (i % 5) * 30, duration: D.total, ease: "none" }, 0);\n' + jstext)
+    caps = caps + LUX_CSS
 out = head + css + caps + body_open + "".join(secs) + "\n" + chrome + jstext + tail
 open(f"{ROOT}/src/template.html.tmpl", "w").write(out)
 ids = re.findall(r'id="([^"]+)"', out)
