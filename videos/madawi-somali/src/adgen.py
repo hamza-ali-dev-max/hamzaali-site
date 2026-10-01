@@ -164,6 +164,16 @@ def s_hero(sid, chip, big, small, photo, tags, extra=None, alt=False, bw=380, bh
         at("pop", f"#{sid}-x", beat(f"{sid}x", sid, *extra[1]) if isinstance(extra[1], tuple) else beat(f"{sid}x", sid, extra[1]))
 
 
+def fit_px(text, room, base=68):
+    """font size (px) that fits a Lora italic note name in `room` px, or None if the base size already fits"""
+    try:
+        from PIL import ImageFont
+        w = ImageFont.truetype("assets/fonts/lora-600i.woff2", base).getlength(text) + 8
+    except Exception:
+        w = len(text) * base * 0.56
+    return None if w <= room else int(base * room / w)
+
+
 def s_notes(sid, chip, big, small, notes, photo, pw=240, ph=345):
     """notes = [(name, tier, word)] -> rows of icon disc + label"""
     body = []
@@ -173,7 +183,9 @@ def s_notes(sid, chip, big, small, notes, photo, pw=240, ph=345):
     for k, (name, tier, word) in enumerate(notes):
         y = y0 + k * step
         body.append(disc(f"{sid}-n{k}", NOTE[name], 20, y, 170))
-        body.append(f'<div class="note" id="{sid}-l{k}" style="left:210px;top:{y + 30}px"><div class="tier">{tier}</div><div class="nm">{name}</div></div>')
+        px = fit_px(name, 880 - pw - 226) if LUX else None  # long names shrink so they stop short of the bottle
+        nst = f' style="font-size:{px}px"' if px else ""
+        body.append(f'<div class="note" id="{sid}-l{k}" style="left:210px;top:{y + 30}px"><div class="tier">{tier}</div><div class="nm"{nst}>{name}</div></div>')
     body.append(cut(f"{sid}-p", photo, 880 - pw, 40, pw, ph))
     section(sid, chip, big, small, body)
     at("pop", f"#{sid}-p", f"S.{sid}.start+0.1")
