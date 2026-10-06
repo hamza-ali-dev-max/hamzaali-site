@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="so" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Coquette</title>
+    <script src="assets/js/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Dancing Script"; src: url("assets/fonts/dancing-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-900.woff2") format("woff2"); font-weight: 900; }
+      @font-face { font-family: "Lora"; src: url("assets/fonts/lora-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Lora"; src: url("assets/fonts/lora-600i.woff2") format("woff2"); font-weight: 600; font-style: italic; }
+      :root {
+        --paper: #fbf7f0;
+        --sand: #efe4d2;
+        --sand2: #f6eee1;
+        --gold: #c9a24b;
+        --gold2: #e3c173;
+        --brown: #4a2e1a;
+        --brown2: #8a5a36;
+        --blue: #2f6fd0;
+        --navy: #1c3f86;
+        --terra: #b8452f;
+        --skin: #8d5a3b;
+        --sticker: drop-shadow(6px 0 0 #fff) drop-shadow(-6px 0 0 #fff) drop-shadow(0 6px 0 #fff) drop-shadow(0 -6px 0 #fff) drop-shadow(0 14px 14px rgba(74, 46, 26, 0.22));
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Lora", serif; color: var(--brown); background: var(--paper); }
+
+      /* persistent heritage theme: warm paper, woven diamond lattice, patterned band */
+      #bg { position: absolute; inset: 0; background: radial-gradient(1000px 900px at 50% 30%, #ffffff 0%, var(--paper) 55%, var(--sand2) 100%); }
+      #weave { position: absolute; inset: 0; opacity: 0.55;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><path d='M60 6 L114 60 L60 114 L6 60 Z' fill='none' stroke='%23e3c173' stroke-width='2' opacity='.45'/><path d='M60 48 L72 60 L60 72 L48 60 Z' fill='%23c9a24b' opacity='.28'/></svg>");
+        background-size: 120px 120px; }
+      #band { position: absolute; left: 0; top: 0; width: 1080px; height: 30px;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='30'><rect width='60' height='30' fill='%231c3f86'/><path d='M0 30 L15 6 L30 30Z' fill='%23c9a24b'/><path d='M30 30 L45 6 L60 30Z' fill='%23b8452f'/><path d='M15 0 L30 18 L45 0Z' fill='%23fbf7f0'/></svg>");
+        background-size: 60px 30px; }
+      #brand { position: absolute; left: 60px; top: 66px; display: flex; align-items: center; gap: 14px; font-family: "Cinzel"; font-weight: 700; font-size: 28px; letter-spacing: 0.16em; color: var(--brown); }
+      #brand svg { display: block; }
+      #prog { position: absolute; left: 60px; top: 118px; width: 820px; height: 10px; border-radius: 6px; background: var(--sand); overflow: hidden; }
+      #prog-fill { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold2)); transform-origin: left center; }
+      #flash { position: absolute; inset: 0; background: var(--gold2); opacity: 0; pointer-events: none; }
+
+      /* scenes */
+      .clip { position: absolute; inset: 0; }
+      .stage { position: absolute; inset: 0; transform-origin: 470px 900px; }
+      .stk { filter: var(--sticker); }
+      .chip { position: absolute; left: 60px; top: 190px; height: 66px; padding: 0 26px; border-radius: 33px; background: #fff; border: 3px solid var(--gold); color: var(--brown);
+        font-family: "Cinzel"; font-weight: 900; font-size: 30px; letter-spacing: 0.12em; display: flex; align-items: center; gap: 14px; box-shadow: 0 8px 14px rgba(74, 46, 26, 0.15); }
+      .chip i { display: block; width: 14px; height: 14px; background: var(--gold); transform: rotate(45deg); }
+      .chip.alt { background: var(--blue); border-color: #fff; color: #fff; }
+      .chip.alt i { background: #fff; }
+      .headline { position: absolute; left: 60px; top: 285px; width: 860px; font-family: "Cinzel"; font-weight: 900; font-size: 88px; line-height: 1.08; text-transform: uppercase; color: var(--brown); }
+      .headline .hl { display: block; overflow: hidden; padding-bottom: 8px; }
+      .headline .hw { display: inline-block; }
+      .headline .y { font-family: "Dancing Script"; font-weight: 700; font-size: 1.62em; line-height: 0.95; text-transform: none; color: var(--blue); }
+      .headline .sm { font-size: 62px; letter-spacing: 0.04em; color: var(--brown2); }
+      .visual { position: absolute; left: 40px; top: 690px; width: 880px; height: 640px; }
+      .center { display: flex; align-items: center; justify-content: center; }
+
+      .lab { display: flex; align-items: center; gap: 22px; height: 70px; white-space: nowrap; padding: 0 28px; border-radius: 38px; background: #fff; border: 3px solid var(--gold2); box-shadow: 0 10px 16px rgba(74, 46, 26, 0.13);
+        font-family: "Cinzel"; font-weight: 900; font-size: 38px; text-transform: uppercase; color: var(--brown); }
+      .lab i { display: block; width: 36px; height: 36px; border-radius: 50%; }
+      .tag { position: absolute; }
+      .photo { position: absolute; overflow: hidden; background: #fff; border: 10px solid #fff; box-shadow: 0 0 0 5px var(--gold), 0 18px 28px rgba(74, 46, 26, 0.28); }
+      .photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      .round { border-radius: 50%; }
+      .cut { position: absolute; filter: drop-shadow(0 18px 18px rgba(74, 46, 26, 0.3)); }
+      .cut img { display: block; width: 100%; height: 100%; object-fit: contain; }
+      .disc2 { position: absolute; border-radius: 50%; background: #fff; box-shadow: 0 14px 20px rgba(74, 46, 26, 0.16); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+      .disc2.col { flex-direction: column; }
+      .banx { position: absolute; inset: 0; width: 100%; height: 100%; }
+      .note { position: absolute; }
+      .note .tier { font-family: "Cinzel"; font-weight: 900; font-size: 26px; letter-spacing: 0.14em; color: var(--brown2); text-transform: uppercase; }
+      .note .nm { font-family: "Dancing Script"; font-weight: 700; font-size: 74px; line-height: 1.05; color: var(--blue); white-space: nowrap; }
+      .shopname { position: absolute; left: 460px; top: 30px; width: 420px; text-align: center; font-family: "Dancing Script"; font-weight: 700; font-size: 110px; line-height: 1; color: var(--blue); }
+      #g-name { position: absolute; left: 450px; top: 20px; width: 430px; text-align: center; font-family: "Dancing Script"; font-weight: 700; font-size: 110px; line-height: 1; color: var(--blue); }
+      #g-ar { position: absolute; left: 450px; top: 260px; width: 430px; text-align: center; font-family: serif; font-weight: 700; font-size: 62px; color: var(--brown); }
+      #g-en { position: absolute; left: 450px; top: 350px; width: 430px; text-align: center; font-family: "Cinzel"; font-weight: 900; font-size: 34px; letter-spacing: 0.12em; color: var(--brown2); }
+      #g-buy { position: absolute; left: 470px; top: 440px; width: 400px; white-space: nowrap; height: 120px; border-radius: 60px; background: linear-gradient(90deg, var(--gold), var(--gold2)); color: var(--brown); font-family: "Cinzel"; font-weight: 900; font-size: 44px; }
+      /* captions: word-by-word, on a white sticker label */
+      #caps { position: absolute; left: 60px; top: 1370px; width: 840px; height: 190px; }
+      .cap-line { position: absolute; left: 0; top: 0; width: 840px; text-align: center; opacity: 0; }
+      .cap-pill { display: inline-block; max-width: 840px; padding: 14px 30px 18px; border-radius: 30px; background: #fff; border: 3px solid var(--gold2); box-shadow: 0 10px 18px rgba(74, 46, 26, 0.16);
+        font-weight: 700; font-size: 60px; line-height: 1.15; }
+      .cw { display: inline-block; margin: 0 8px; color: var(--brown); }
+      /* ---- Falarosa luxury theme: black marble + gold ---- */
+      :root { --sticker: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.6)); --lx-gold: #d4ae5c; --lx-gold2: #f1d98f; --lx-cream: #f3ead8; }
+      html, body, #root { background: #0b0a09; }
+      #root { color: var(--lx-cream); }
+      #bg { background: #0b0a09 url("assets/lux/marble.jpg") center / cover no-repeat; opacity: 0.62; }
+      #weave, #band { display: none; }
+      #bokeh { position: absolute; inset: 0; pointer-events: none; }
+      #bokeh i { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(255, 214, 140, 0.5) 0%, rgba(255, 214, 140, 0.12) 45%, rgba(255, 214, 140, 0) 70%); }
+      #lux-frame { position: absolute; inset: 26px; border: 2px solid rgba(212, 174, 92, 0.42); border-radius: 6px; pointer-events: none; }
+      #brand { left: 60px; top: 56px; gap: 14px; color: var(--lx-gold2); font-size: 26px; font-weight: 700; letter-spacing: 0.3em; }
+      #brand svg { width: 34px; height: 40px; }
+      #prog { background: rgba(255, 255, 255, 0.08); height: 6px; top: 116px; }
+      #prog-fill { background: linear-gradient(90deg, #96701f, #f1d98f); }
+      #flash { background: radial-gradient(circle at 50% 40%, #fff3cf 0%, #d4ae5c 55%, #5a4314 100%); }
+      .chip { background: rgba(11, 10, 9, 0.85); border: 2px solid var(--lx-gold); color: var(--lx-gold2); box-shadow: none; font-weight: 700; font-size: 26px; letter-spacing: 0.26em; }
+      .chip i { background: var(--lx-gold); }
+      .chip.alt { background: linear-gradient(90deg, #b8913f, #f1d98f); border: 0; color: #0b0a09; }
+      .chip.alt i { background: #0b0a09; }
+      .headline { color: var(--lx-cream); }
+      .headline .y { font-family: "Lora"; font-style: italic; font-weight: 600; font-size: 1.36em; line-height: 1.08; text-transform: none; color: transparent; background: linear-gradient(180deg, #f7e7b4 0%, #d4ae5c 55%, #a07a28 100%); -webkit-background-clip: text; background-clip: text; padding-right: 8px; }
+      .headline .sm { font-family: "Cinzel"; font-weight: 700; font-size: 38px; letter-spacing: 0.22em; color: #e9dcc0; }
+      .lab { background: rgba(14, 13, 12, 0.9); border: 2px solid rgba(212, 174, 92, 0.85); color: var(--lx-cream); box-shadow: 0 12px 22px rgba(0, 0, 0, 0.5); font-weight: 700; letter-spacing: 0.06em; }
+      .lab i { box-shadow: 0 0 0 3px rgba(212, 174, 92, 0.55); }
+      .disc2 { background: radial-gradient(circle at 35% 30%, #2a251f 0%, #11100e 70%); box-shadow: 0 0 0 3px var(--lx-gold), 0 18px 30px rgba(0, 0, 0, 0.6); }
+      .disc2:not(.keep) > svg:not(.banx) { filter: grayscale(1) sepia(1) saturate(2.6) hue-rotate(-6deg) brightness(1.08) contrast(1.05); }
+      .photo { background: #111; border: 6px solid #111; box-shadow: 0 0 0 3px var(--lx-gold), 0 18px 30px rgba(0, 0, 0, 0.6); }
+      .cut { filter: drop-shadow(0 22px 26px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 30px rgba(212, 174, 92, 0.2)); }
+      .cut img { -webkit-box-reflect: below 0px linear-gradient(transparent 82%, rgba(255, 255, 255, 0.16)); }
+      .note .tier { color: #b89c62; }
+      .note .nm { font-family: "Lora"; font-style: italic; font-weight: 600; font-size: 68px; color: transparent; background: linear-gradient(180deg, #f7e7b4, #c9a24b 60%, #a07a28); -webkit-background-clip: text; background-clip: text; padding-right: 10px; }
+      .lx-logo { display: flex; flex-direction: column; align-items: center; }
+      .lx-logo svg { width: 92px; height: 108px; }
+      .lx-word { font-family: "Cinzel"; font-weight: 700; font-size: 70px; letter-spacing: 0.1em; line-height: 1.1; color: transparent; background: linear-gradient(180deg, #f7e7b4, #d4ae5c 55%, #a07a28); -webkit-background-clip: text; background-clip: text; }
+      .lx-sub { font-family: "Cinzel"; font-weight: 700; font-size: 28px; letter-spacing: 0.55em; margin-left: 0.55em; color: #d9bd7a; }
+      .lx-tag { font-family: "Cinzel"; font-weight: 700; font-size: 26px; letter-spacing: 0.34em; color: #d9bd7a; }
+      #g-name { font-family: "Lora"; font-style: italic; font-weight: 600; font-size: 100px; color: transparent; background: linear-gradient(180deg, #f7e7b4, #d4ae5c 55%, #a07a28); -webkit-background-clip: text; background-clip: text; }
+      #g-ar { color: var(--lx-cream); }
+      #g-en { color: #b89c62; font-size: 30px; letter-spacing: 0.16em; white-space: nowrap; }
+      #g-buy { background: linear-gradient(90deg, #b8913f, #f1d98f 50%, #b8913f); color: #0b0a09; box-shadow: 0 0 40px rgba(212, 174, 92, 0.45); }
+      .cap-line { left: -60px; width: 960px; }
+      .cap-pill { white-space: nowrap; max-width: none; }
+      .cap-pill { background: rgba(10, 9, 8, 0.82); border: 2px solid rgba(212, 174, 92, 0.85); box-shadow: 0 12px 26px rgba(0, 0, 0, 0.55); }
+      .cw { color: var(--lx-cream); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="37" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="weave"></div>
+      <div id="band"></div>
+      <div id="bokeh"><i style="left:191px;top:721px;width:78px;height:78px;opacity:0.61"></i><i style="left:464px;top:739px;width:46px;height:46px;opacity:0.65"></i><i style="left:470px;top:-14px;width:96px;height:96px;opacity:0.75"></i><i style="left:795px;top:532px;width:46px;height:46px;opacity:0.45"></i><i style="left:757px;top:286px;width:120px;height:120px;opacity:0.77"></i><i style="left:107px;top:244px;width:96px;height:96px;opacity:0.69"></i><i style="left:871px;top:219px;width:120px;height:120px;opacity:0.42"></i><i style="left:-30px;top:388px;width:96px;height:96px;opacity:0.78"></i><i style="left:299px;top:1746px;width:96px;height:96px;opacity:0.44"></i><i style="left:602px;top:367px;width:78px;height:78px;opacity:0.65"></i><i style="left:379px;top:332px;width:26px;height:26px;opacity:0.87"></i><i style="left:363px;top:1790px;width:120px;height:120px;opacity:0.56"></i><i style="left:4px;top:699px;width:60px;height:60px;opacity:0.58"></i><i style="left:258px;top:500px;width:120px;height:120px;opacity:0.39"></i><i style="left:577px;top:1634px;width:34px;height:34px;opacity:0.68"></i><i style="left:-34px;top:1180px;width:96px;height:96px;opacity:0.72"></i><i style="left:652px;top:95px;width:26px;height:26px;opacity:0.52"></i><i style="left:586px;top:944px;width:34px;height:34px;opacity:0.73"></i></div>
+      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <linearGradient id="lxgold" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#f7e6b0" /><stop offset=".45" stop-color="#d4ae5c" /><stop offset="1" stop-color="#96701f" /></linearGradient>
+          <!-- Falarosa emblem (original): a fragrance drop drawn as two calligraphic strokes around a rose bud -->
+          <symbol id="emblem" viewBox="0 0 120 140">
+            <g fill="none" stroke="url(#lxgold)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M60 132 C22 108 18 70 44 48 C56 38 60 26 54 12" />
+              <path d="M60 132 C98 108 102 70 76 48 C64 38 60 26 66 12" />
+              <path d="M60 114 C44 102 44 80 60 70 C76 80 76 102 60 114 Z" />
+              <path d="M60 70 V54 M52 62 Q60 56 68 62" />
+            </g>
+            <path d="M60 0 L67 9 L60 18 L53 9 Z" fill="url(#lxgold)" />
+          </symbol>
+        </defs>
+      </svg>
+      <section id="s-l1" class="clip" data-start="0.000" data-duration="3.049" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>TAIF AL EMARAT<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Guri</span> <span class="hw y">udgoon</span></span><span class="hl sm"><span class="hw">had</span> <span class="hw">iyo</span> <span class="hw">jeer</span></span></div>
+          <div class="visual">
+            <div class="cut" id="l1-bottle" style="left:345px;top:0px;width:190px;height:628px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+            <svg id="h-spark" viewBox="0 0 880 640" style="position:absolute;left:0;top:0;width:880px;height:640px"><g fill="#c9a24b"><path class="hs" d="M110 120 l12 28 28 12 -28 12 -12 28 -12 -28 -28 -12 28 -12z" /><path class="hs" d="M770 80 l10 22 22 10 -22 10 -10 22 -10 -22 -22 -10 22 -10z" /><path class="hs" d="M790 440 l12 28 28 12 -28 12 -12 28 -12 -28 -28 -12 28 -12z" /><path class="hs" d="M80 460 l8 18 18 8 -18 8 -8 18 -8 -18 -18 -8 18 -8z" /></g></svg>
+          </div>
+        </div>
+      </section>
+      <section id="s-l2" class="clip" data-start="3.049" data-duration="3.261" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>TAIF AL EMARAT<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Coquette</span></span><span class="hl sm"><span class="hw">Taif</span> <span class="hw">Al</span> <span class="hw">Emarat</span></span></div>
+          <div class="visual">
+            <div class="cut" id="l2-p" style="left:40px;top:20px;width:250px;height:502px"><img src="assets/photos/set-cut.png" alt="" /></div>
+            <div class="lab tag" id="l2-t0" style="left:400px;top:60px"><i style="background:#c23b4a"></i>Coquette</div>
+            <div class="lab tag" id="l2-t1" style="left:400px;top:190px"><i style="background:#c9a24b"></i>Taif Al Emarat</div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l3" class="clip" data-start="6.310" data-duration="4.075" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>CABBIRKA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">250</span> <span class="hw y">ML</span></span><span class="hl sm"><span class="hw">buufin</span> <span class="hw">hawada</span> <span class="hw">guriga</span></span></div>
+          <div class="visual">
+            <div class="disc2" id="l3-d0" style="left:30px;top:20px;width:250px;height:250px;background:linear-gradient(135deg,#ecd08c,#c9a24b)"><span style="font-family:Cinzel;font-weight:900;font-size:70px;color:#0b0a09;line-height:1;text-align:center">250</span></div>
+            <div class="lab tag" id="l3-t0" style="left:30px;top:300px;font-size:32px"><i style="background:#c9a24b"></i>Mililitir</div>
+            <div class="disc2" id="l3-d1" style="left:320px;top:20px;width:250px;height:250px"><svg width="140" height="130" viewBox="0 0 140 130"><path d="M18 62 L70 18 L122 62" fill="none" stroke="#c9a24b" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" /><path d="M32 58 V116 H108 V58" fill="#f3ead8" stroke="#c9a24b" stroke-width="8" /><rect x="60" y="80" width="22" height="36" rx="4" fill="#c9a24b" /><g fill="none" stroke="#c9a24b" stroke-width="5" stroke-linecap="round"><path d="M100 30 q8 -8 0 -16" /><path d="M112 34 q10 -10 0 -22" /></g></svg></div>
+            <div class="lab tag" id="l3-t1" style="left:320px;top:395px;font-size:32px"><i style="background:#c9ced6"></i>Buufin guri</div>
+            <div class="cut" id="l3-p" style="left:740px;top:60px;width:140px;height:463px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l4" class="clip" data-start="10.385" data-duration="3.795" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>BILOWGA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Bilowga</span></span><span class="hl sm"><span class="hw">bergamot</span> <span class="hw">·</span> <span class="hw">citrus</span> <span class="hw">·</span> <span class="hw">filfil</span></span></div>
+          <div class="visual">
+            <div class="disc2" id="l4-n0" style="left:20px;top:10px;width:170px;height:170px"><svg width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="48" fill="#b5d64a" stroke="#6f9f2a" stroke-width="8" /><g stroke="#fff4c0" stroke-width="5"><path d="M60 16 V104 M16 60 H104 M29 29 L91 91 M29 91 L91 29" /></g><circle cx="60" cy="60" r="8" fill="#fff4c0" /></svg></div>
+            <div class="note" id="l4-l0" style="left:210px;top:40px"><div class="tier">Bilowga</div><div class="nm">Bergamot</div></div>
+            <div class="disc2" id="l4-n1" style="left:20px;top:210px;width:170px;height:170px"><svg width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="48" fill="#ffb020" stroke="#f08a00" stroke-width="8" /><g stroke="#fff4c0" stroke-width="5"><path d="M60 16 V104 M16 60 H104 M29 29 L91 91 M29 91 L91 29" /></g><circle cx="60" cy="60" r="8" fill="#fff4c0" /></svg></div>
+            <div class="note" id="l4-l1" style="left:210px;top:240px"><div class="tier">Bilowga</div><div class="nm">Citrus</div></div>
+            <div class="disc2" id="l4-n2" style="left:20px;top:410px;width:170px;height:170px"><svg width="120" height="120" viewBox="0 0 120 120"><g fill="#e0607a"><circle cx="40" cy="40" r="13" /><circle cx="74" cy="34" r="13" /><circle cx="58" cy="64" r="13" /><circle cx="30" cy="76" r="13" /><circle cx="84" cy="72" r="13" /><circle cx="56" cy="94" r="13" /></g><g fill="#fff" opacity=".5"><circle cx="36" cy="36" r="4" /><circle cx="70" cy="30" r="4" /><circle cx="54" cy="60" r="4" /><circle cx="26" cy="72" r="4" /><circle cx="80" cy="68" r="4" /><circle cx="52" cy="90" r="4" /></g></svg></div>
+            <div class="note" id="l4-l2" style="left:210px;top:440px"><div class="tier">Bilowga</div><div class="nm">Filfil casaan</div></div>
+            <div class="cut" id="l4-p" style="left:740px;top:40px;width:140px;height:463px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l5" class="clip" data-start="14.180" data-duration="4.317" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>SALKA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Salka</span></span><span class="hl sm"><span class="hw">misk</span> <span class="hw">·</span> <span class="hw">patchouli</span> <span class="hw">·</span> <span class="hw">sandal</span></span></div>
+          <div class="visual">
+            <div class="disc2" id="l5-n0" style="left:20px;top:10px;width:170px;height:170px"><svg width="130" height="110" viewBox="0 0 130 110"><path d="M34 88 Q10 88 10 66 Q10 46 32 44 Q38 18 66 18 Q92 18 100 42 Q122 44 122 66 Q122 88 98 88Z" fill="#fff" stroke="#d9cfe8" stroke-width="5" /><g fill="#c9a24b"><circle cx="46" cy="64" r="5" /><circle cx="66" cy="54" r="5" /><circle cx="86" cy="66" r="5" /></g></svg></div>
+            <div class="note" id="l5-l0" style="left:210px;top:40px"><div class="tier">Salka</div><div class="nm">Misk</div></div>
+            <div class="disc2" id="l5-n1" style="left:20px;top:210px;width:170px;height:170px"><svg width="120" height="120" viewBox="0 0 120 120"><path d="M30 108 Q60 60 92 14" stroke="#6b4a2a" stroke-width="5" fill="none" /><g fill="#2f5a2a"><ellipse cx="30" cy="100" rx="6" ry="16" transform="rotate(-50 30 100)" /><ellipse cx="41" cy="85" rx="6" ry="16" transform="rotate(40 41 85)" /><ellipse cx="52" cy="70" rx="6" ry="16" transform="rotate(-50 52 70)" /><ellipse cx="63" cy="55" rx="6" ry="16" transform="rotate(40 63 55)" /><ellipse cx="74" cy="40" rx="6" ry="16" transform="rotate(-50 74 40)" /><ellipse cx="85" cy="25" rx="6" ry="16" transform="rotate(40 85 25)" /></g></svg></div>
+            <div class="note" id="l5-l1" style="left:210px;top:240px"><div class="tier">Salka</div><div class="nm">Patchouli</div></div>
+            <div class="disc2" id="l5-n2" style="left:20px;top:410px;width:170px;height:170px"><svg width="130" height="110" viewBox="0 0 130 110"><rect x="12" y="30" width="96" height="56" rx="10" fill="#9a6444" /><ellipse cx="108" cy="58" rx="16" ry="28" fill="#c99470" /><g fill="none" stroke="#7a4a2f" stroke-width="3"><ellipse cx="108" cy="58" rx="9" ry="17" /><path d="M20 46 H96 M20 62 H96 M20 76 H96" /></g></svg></div>
+            <div class="note" id="l5-l2" style="left:210px;top:440px"><div class="tier">Salka</div><div class="nm">Qori sandal</div></div>
+            <div class="cut" id="l5-p" style="left:740px;top:40px;width:140px;height:463px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l6" class="clip" data-start="18.497" data-duration="3.303" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>MEELAHA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Meel</span> <span class="hw y">kasta</span></span><span class="hl sm"><span class="hw">fadhiga</span> <span class="hw">·</span> <span class="hw">jiifka</span> <span class="hw">·</span> <span class="hw">gaariga</span></span></div>
+          <div class="visual">
+            <div class="cut" id="l6-p" style="left:40px;top:20px;width:150px;height:496px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+            <div class="lab tag" id="l6-t0" style="left:400px;top:60px"><i style="background:#c9a24b"></i>Qolka fadhiga</div>
+            <div class="lab tag" id="l6-t1" style="left:400px;top:190px"><i style="background:#c9ced6"></i>Qolka jiifka</div>
+            <div class="lab tag" id="l6-t2" style="left:400px;top:320px"><i style="background:#c23b4a"></i>Gaariga</div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l7" class="clip" data-start="21.800" data-duration="4.359" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>MARTIDA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Soo</span> <span class="hw y">dhawoow</span></span><span class="hl sm"><span class="hw">udgoon</span> <span class="hw">qurux</span> <span class="hw">badan</span></span></div>
+          <div class="visual">
+            <div class="cut" id="l7-p" style="left:40px;top:20px;width:270px;height:542px"><img src="assets/photos/set-cut.png" alt="" /></div>
+            <div class="lab tag" id="l7-t0" style="left:450px;top:30px"><i style="background:#c9a24b"></i>Martida</div>
+            <div class="lab tag" id="l7-t1" style="left:450px;top:140px"><i style="background:#c23b4a"></i>Udgoon qurux</div>
+            <div class="disc2" id="l7-x" style="left:580px;top:370px;width:230px;height:230px"><svg width="130" height="120" viewBox="0 0 130 120"><path d="M65 110 C20 80 8 58 8 38 C8 18 24 6 42 6 C54 6 62 14 65 24 C68 14 76 6 88 6 C106 6 122 18 122 38 C122 58 110 80 65 110Z" fill="#b8243a" /></svg></div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l8" class="clip" data-start="26.159" data-duration="3.963" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>MEESHA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Falarosa</span></span><span class="hl sm"><span class="hw">Surrey</span> <span class="hw">·</span> <span class="hw">BC</span> <span class="hw">·</span> <span class="hw">Kanada</span></span></div>
+          <div class="visual">
+            <div class="cut" id="l8-store" style="left:20px;top:20px;width:420px;height:400px"><svg viewBox="0 0 400 380" style="width:100%;height:100%"><rect x="16" y="30" width="368" height="336" rx="10" fill="#0f0e0c" stroke="#d4ae5c" stroke-width="3" />
+<rect x="36" y="48" width="328" height="84" rx="6" fill="#151310" stroke="rgba(212,174,92,.5)" stroke-width="1.5" /><use href="#emblem" x="186" y="54" width="28" height="33" />
+<text x="200" y="118" text-anchor="middle" font-family="Cinzel" font-weight="700" font-size="22" letter-spacing="5" fill="#e8c874">FALAROSA LUXURY</text>
+<rect x="46" y="148" width="308" height="168" rx="6" fill="#1c1813" stroke="rgba(212,174,92,.7)" stroke-width="2" />
+<g stroke="#d4ae5c" stroke-width="3"><path d="M56 206 H344" /><path d="M56 266 H344" /></g><g fill="#fff2c8" opacity=".35"><rect x="56" y="200" width="288" height="4" /><rect x="56" y="260" width="288" height="4" /></g>
+<g><rect x="70" y="170" width="18" height="34" rx="4" fill="#d4ae5c" /><rect x="100" y="164" width="18" height="40" rx="4" fill="#1d2f55" /><rect x="130" y="172" width="18" height="32" rx="4" fill="#8e1e30" /><rect x="160" y="166" width="18" height="38" rx="4" fill="#f3ead8" /><rect x="222" y="170" width="18" height="34" rx="4" fill="#0b0a09" stroke="#d4ae5c" /><rect x="252" y="166" width="18" height="38" rx="4" fill="#d4ae5c" /><rect x="282" y="172" width="18" height="32" rx="4" fill="#8e1e30" /><rect x="312" y="168" width="18" height="36" rx="4" fill="#1d2f55" />
+<rect x="80" y="228" width="20" height="36" rx="4" fill="#8e1e30" /><rect x="112" y="232" width="20" height="32" rx="4" fill="#d4ae5c" /><rect x="144" y="226" width="20" height="38" rx="4" fill="#0b0a09" stroke="#d4ae5c" /><rect x="236" y="230" width="20" height="34" rx="4" fill="#f3ead8" /><rect x="268" y="226" width="20" height="38" rx="4" fill="#d4ae5c" /><rect x="300" y="232" width="20" height="32" rx="4" fill="#1d2f55" /></g>
+<rect x="150" y="286" width="100" height="80" fill="#e6e0d4" /><path d="M150 300 C180 310 200 290 250 312 M160 350 C190 330 215 356 250 338" stroke="#a9a397" stroke-width="2" fill="none" /><rect x="150" y="286" width="100" height="8" fill="#c9c2b4" /></svg></div>
+            <div id="l8-name" style="position:absolute;left:460px;top:10px;width:420px"><div class="lx-logo"><svg viewBox="0 0 120 140"><use href="#emblem" width="120" height="140" /></svg><div class="lx-word">FALAROSA</div><div class="lx-sub">LUXURY</div></div></div>
+            <div class="disc2" id="l8-pin" style="left:470px;top:330px;width:150px;height:150px"><svg width="120" height="140" viewBox="0 0 120 140"><path d="M60 132 C30 92 16 72 16 50 A44 44 0 0 1 104 50 C104 72 90 92 60 132Z" fill="#b8452f" /><circle cx="60" cy="50" r="18" fill="#fff" /></svg></div>
+            <div class="lab tag" id="l8-t0" style="left:630px;top:360px;font-size:34px"><i style="background:#b8452f"></i>Surrey, BC</div>
+            <div class="disc2" id="l8-leaf" style="left:470px;top:490px;width:130px;height:130px"><svg width="120" height="120" viewBox="0 0 120 120"><path d="M60 8 L68 30 L82 22 L78 48 L100 38 L94 54 L112 60 L84 76 L90 88 L64 82 L64 112 L56 112 L56 82 L30 88 L36 76 L8 60 L26 54 L20 38 L42 48 L38 22 L52 30Z" fill="#d52b1e" /></svg></div>
+            <div class="lab tag" id="l8-t1" style="left:620px;top:520px;font-size:34px"><i style="background:#d52b1e"></i>Kanada</div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l9" class="clip" data-start="30.122" data-duration="2.777" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>LA XIRIIR<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Nala</span> <span class="hw y">soo</span> <span class="hw y">xiriir</span></span><span class="hl sm"><span class="hw">lambarka</span> <span class="hw">bogga</span></span></div>
+          <div class="visual">
+            <div class="disc2" id="l9-phone" style="left:40px;top:20px;width:300px;height:300px"><svg width="150" height="150" viewBox="0 0 150 150"><rect x="44" y="14" width="62" height="122" rx="12" fill="#1c3f86" /><rect x="50" y="28" width="50" height="86" rx="4" fill="#cfe3fb" /><circle cx="75" cy="124" r="5" fill="#fff" /><g id="rings" fill="none" stroke="#c9a24b" stroke-width="6" stroke-linecap="round"><path d="M116 50 q12 25 0 50" /><path d="M128 38 q20 37 0 74" /><path d="M34 50 q-12 25 0 50" /><path d="M22 38 q-20 37 0 74" /></g></svg></div>
+            <div class="lab tag" id="l9-t0" style="left:390px;top:60px"><i style="background:#c23b4a"></i>Nala soo xiriir</div>
+            <div class="lab tag" id="l9-t1" style="left:390px;top:180px"><i style="background:#c9a24b"></i>Lambarka bogga</div>
+            <svg id="arrowdn" viewBox="0 0 90 120" style="position:absolute;left:180px;top:325px;width:90px;height:120px"><path d="M45 8 V96 M14 66 L45 100 L76 66" fill="none" stroke="#d4ae5c" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <div class="cut" id="l9-p" style="left:740px;top:290px;width:140px;height:463px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+            <div id="l9-tel" class="stk" style="position:absolute;left:20px;top:450px;display:flex;align-items:center;padding:18px 40px;border-radius:70px;background:linear-gradient(90deg, #d4ae5c, #f1d98f);border:3px solid #c9a24b;color:#1a1206;font-family:Lora;font-weight:700;font-size:54px;white-space:nowrap"><svg viewBox="0 0 24 24" style="width:54px;height:54px;margin-right:18px;flex:none"><path fill="#1a1206" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>+1 (604) 396-6638</div>
+          </div>
+        </div>
+      </section>
+      <section id="s-l10" class="clip" data-start="32.899" data-duration="4.101" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>HADDA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Hadda</span> <span class="hw y">dalbo</span></span><span class="hl sm"><span class="hw">Falarosa</span> <span class="hw">Luxury</span></span></div>
+          <div class="visual">
+            <div class="cut" id="l10-p" style="left:40px;top:0px;width:180px;height:595px"><img src="assets/photos/bottle-cut.png" alt="" /></div>
+            <div id="g-name">Coquette</div>
+            <div id="g-ar">كوكيت</div><div id="g-en">TAIF AL EMARAT</div>
+            <div id="g-buy" class="center stk">HADDA DALBO</div>
+            <div id="g-tel" style="position:absolute;left:440px;top:585px;width:460px;text-align:center;font-family:Lora;font-weight:700;font-size:44px;white-space:nowrap;color:#f3ead8">+1 (604) 396-6638</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- persistent chrome above scenes -->
+      <div id="brand"><svg viewBox="0 0 120 140"><use href="#emblem" width="120" height="140" /></svg>FALAROSA LUXURY</div>
+      <div id="lux-frame"></div>
+      <div id="prog"><span id="prog-fill"></span></div>
+      <div id="caps">
+        <div class="cap-line" id="cap-0"><span class="cap-pill"><span class="cw" id="cw-0-0">Gurigaaga</span><span class="cw" id="cw-0-1">ka</span><span class="cw" id="cw-0-2">dhig</span></span></div>
+        <div class="cap-line" id="cap-1"><span class="cap-pill"><span class="cw" id="cw-1-0">mid</span><span class="cw" id="cw-1-1">had</span><span class="cw" id="cw-1-2">iyo</span></span></div>
+        <div class="cap-line" id="cap-2"><span class="cap-pill"><span class="cw" id="cw-2-0">jeer</span><span class="cw" id="cw-2-1">udgoon</span></span></div>
+        <div class="cap-line" id="cap-3"><span class="cap-pill"><span class="cw" id="cw-3-0">Kani</span><span class="cw" id="cw-3-1">waa</span><span class="cw" id="cw-3-2">Coquette</span></span></div>
+        <div class="cap-line" id="cap-4"><span class="cap-pill"><span class="cw" id="cw-4-0">oo</span><span class="cw" id="cw-4-1">ka</span><span class="cw" id="cw-4-2">socda</span></span></div>
+        <div class="cap-line" id="cap-5"><span class="cap-pill"><span class="cw" id="cw-5-0">Taif</span><span class="cw" id="cw-5-1">Al</span><span class="cw" id="cw-5-2">Emarat</span></span></div>
+        <div class="cap-line" id="cap-6"><span class="cap-pill"><span class="cw" id="cw-6-0">Waa</span><span class="cw" id="cw-6-1">buufin</span><span class="cw" id="cw-6-2">hawada</span></span></div>
+        <div class="cap-line" id="cap-7"><span class="cap-pill"><span class="cw" id="cw-7-0">guriga</span><span class="cw" id="cw-7-1">ah</span></span></div>
+        <div class="cap-line" id="cap-8"><span class="cap-pill"><span class="cw" id="cw-8-0">laba</span><span class="cw" id="cw-8-1">boqol</span><span class="cw" id="cw-8-2">iyo</span></span></div>
+        <div class="cap-line" id="cap-9"><span class="cap-pill"><span class="cw" id="cw-9-0">konton</span><span class="cw" id="cw-9-1">mililitir</span></span></div>
+        <div class="cap-line" id="cap-10"><span class="cap-pill"><span class="cw" id="cw-10-0">Wuxuu</span><span class="cw" id="cw-10-1">ku</span><span class="cw" id="cw-10-2">bilaabmaa</span></span></div>
+        <div class="cap-line" id="cap-11"><span class="cap-pill"><span class="cw" id="cw-11-0">bergamot</span></span></div>
+        <div class="cap-line" id="cap-12"><span class="cap-pill"><span class="cw" id="cw-12-0">citrus</span><span class="cw" id="cw-12-1">iyo</span><span class="cw" id="cw-12-2">filfil</span></span></div>
+        <div class="cap-line" id="cap-13"><span class="cap-pill"><span class="cw" id="cw-13-0">casaan</span><span class="cw" id="cw-13-1">ah</span></span></div>
+        <div class="cap-line" id="cap-14"><span class="cap-pill"><span class="cw" id="cw-14-0">Salkiisuna</span><span class="cw" id="cw-14-1">waa</span><span class="cw" id="cw-14-2">misk</span></span></div>
+        <div class="cap-line" id="cap-15"><span class="cap-pill"><span class="cw" id="cw-15-0">patchouli</span><span class="cw" id="cw-15-1">iyo</span><span class="cw" id="cw-15-2">qori</span></span></div>
+        <div class="cap-line" id="cap-16"><span class="cap-pill"><span class="cw" id="cw-16-0">sandal</span><span class="cw" id="cw-16-1">ah</span><span class="cw" id="cw-16-2">oo</span></span></div>
+        <div class="cap-line" id="cap-17"><span class="cap-pill"><span class="cw" id="cw-17-0">jilicsan</span></span></div>
+        <div class="cap-line" id="cap-18"><span class="cap-pill"><span class="cw" id="cw-18-0">Ku</span><span class="cw" id="cw-18-1">buufi</span><span class="cw" id="cw-18-2">qolka</span></span></div>
+        <div class="cap-line" id="cap-19"><span class="cap-pill"><span class="cw" id="cw-19-0">fadhiga</span></span></div>
+        <div class="cap-line" id="cap-20"><span class="cap-pill"><span class="cw" id="cw-20-0">qolka</span><span class="cw" id="cw-20-1">jiifka</span><span class="cw" id="cw-20-2">ama</span></span></div>
+        <div class="cap-line" id="cap-21"><span class="cap-pill"><span class="cw" id="cw-21-0">gaariga</span></span></div>
+        <div class="cap-line" id="cap-22"><span class="cap-pill"><span class="cw" id="cw-22-0">Martidaadu</span><span class="cw" id="cw-22-1">waxay</span><span class="cw" id="cw-22-2">dareemi</span></span></div>
+        <div class="cap-line" id="cap-23"><span class="cap-pill"><span class="cw" id="cw-23-0">doonaan</span><span class="cw" id="cw-23-1">udgoon</span><span class="cw" id="cw-23-2">qurux</span></span></div>
+        <div class="cap-line" id="cap-24"><span class="cap-pill"><span class="cw" id="cw-24-0">badan</span><span class="cw" id="cw-24-1">marka</span><span class="cw" id="cw-24-2">ay</span></span></div>
+        <div class="cap-line" id="cap-25"><span class="cap-pill"><span class="cw" id="cw-25-0">soo</span><span class="cw" id="cw-25-1">galaan</span></span></div>
+        <div class="cap-line" id="cap-26"><span class="cap-pill"><span class="cw" id="cw-26-0">Waxaad</span><span class="cw" id="cw-26-1">ka</span><span class="cw" id="cw-26-2">heli</span></span></div>
+        <div class="cap-line" id="cap-27"><span class="cap-pill"><span class="cw" id="cw-27-0">kartaa</span><span class="cw" id="cw-27-1">Falarosa</span><span class="cw" id="cw-27-2">Luxury</span></span></div>
+        <div class="cap-line" id="cap-28"><span class="cap-pill"><span class="cw" id="cw-28-0">Surrey</span></span></div>
+        <div class="cap-line" id="cap-29"><span class="cap-pill"><span class="cw" id="cw-29-0">BC</span></span></div>
+        <div class="cap-line" id="cap-30"><span class="cap-pill"><span class="cw" id="cw-30-0">Kanada</span></span></div>
+        <div class="cap-line" id="cap-31"><span class="cap-pill"><span class="cw" id="cw-31-0">Nagala</span><span class="cw" id="cw-31-1">soo</span><span class="cw" id="cw-31-2">xiriir</span></span></div>
+        <div class="cap-line" id="cap-32"><span class="cap-pill"><span class="cw" id="cw-32-0">lambarka</span><span class="cw" id="cw-32-1">ku</span><span class="cw" id="cw-32-2">qoran</span></span></div>
+        <div class="cap-line" id="cap-33"><span class="cap-pill"><span class="cw" id="cw-33-0">bogga</span></span></div>
+        <div class="cap-line" id="cap-34"><span class="cap-pill"><span class="cw" id="cw-34-0">Coquette</span></span></div>
+        <div class="cap-line" id="cap-35"><span class="cap-pill"><span class="cw" id="cw-35-0">Taif</span><span class="cw" id="cw-35-1">Al</span><span class="cw" id="cw-35-2">Emarat</span></span></div>
+        <div class="cap-line" id="cap-36"><span class="cap-pill"><span class="cw" id="cw-36-0">Hadda</span><span class="cw" id="cw-36-1">dalbo</span></span></div>
+      </div>
+      <div id="flash"></div>
+
+    <audio id="vo" src="assets/audio/vo.mp3" data-start="0" data-duration="35.71" data-track-index="10" data-volume="1"></audio>
+    <audio id="bgm" src="assets/audio/bgm.mp3" data-start="0" data-duration="37.0" data-track-index="11" data-volume="0.22" data-fade-out="1.2"></audio>
+    <audio id="sfx-whoosh-1" src="assets/audio/whoosh.mp3" data-start="2.849" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-2" src="assets/audio/whoosh.mp3" data-start="6.110" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-3" src="assets/audio/whoosh.mp3" data-start="10.185" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-4" src="assets/audio/whoosh.mp3" data-start="13.980" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-5" src="assets/audio/whoosh.mp3" data-start="18.297" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-6" src="assets/audio/whoosh.mp3" data-start="21.600" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-7" src="assets/audio/whoosh.mp3" data-start="25.959" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-8" src="assets/audio/whoosh.mp3" data-start="29.922" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-9" src="assets/audio/whoosh.mp3" data-start="32.699" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-pop-0" src="assets/audio/pop.mp3" data-start="3.651" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-1" src="assets/audio/pop.mp3" data-start="4.932" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-2" src="assets/audio/pop.mp3" data-start="8.090" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-3" src="assets/audio/pop.mp3" data-start="6.629" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-4" src="assets/audio/pop.mp3" data-start="11.529" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-5" src="assets/audio/pop.mp3" data-start="12.088" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-6" src="assets/audio/pop.mp3" data-start="12.736" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-7" src="assets/audio/pop.mp3" data-start="15.247" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-8" src="assets/audio/pop.mp3" data-start="15.611" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-9" src="assets/audio/pop.mp3" data-start="16.445" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-10" src="assets/audio/pop.mp3" data-start="19.416" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-11" src="assets/audio/pop.mp3" data-start="20.128" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-12" src="assets/audio/pop.mp3" data-start="20.778" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-13" src="assets/audio/pop.mp3" data-start="21.900" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-14" src="assets/audio/pop.mp3" data-start="24.014" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-15" src="assets/audio/pop.mp3" data-start="25.270" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-16" src="assets/audio/pop.mp3" data-start="28.456" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-17" src="assets/audio/pop.mp3" data-start="29.125" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-18" src="assets/audio/pop.mp3" data-start="30.859" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-ding-0" src="assets/audio/ding.mp3" data-start="0.300" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    <audio id="sfx-ding-1" src="assets/audio/ding.mp3" data-start="27.542" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    <audio id="sfx-ding-2" src="assets/audio/ding.mp3" data-start="34.926" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    </div>
+    <script>
+      const D = {"total": 37.0, "scenes": [{"id": "l1", "start": 0.0, "dur": 3.049}, {"id": "l2", "start": 3.049, "dur": 3.261}, {"id": "l3", "start": 6.31, "dur": 4.075}, {"id": "l4", "start": 10.385, "dur": 3.795}, {"id": "l5", "start": 14.18, "dur": 4.317}, {"id": "l6", "start": 18.497, "dur": 3.303}, {"id": "l7", "start": 21.8, "dur": 4.359}, {"id": "l8", "start": 26.159, "dur": 3.963}, {"id": "l9", "start": 30.122, "dur": 2.777}, {"id": "l10", "start": 32.899, "dur": 4.101}], "beats": {"brand": 0.3, "l2t0": 3.651, "l2t1": 4.932, "l3f0": 8.09, "l3f1": 6.629, "l4n0": 11.529, "l4n1": 12.088, "l4n2": 12.736, "l5n0": 15.247, "l5n1": 15.611, "l5n2": 16.445, "l6t0": 19.416, "l6t1": 20.128, "l6t2": 20.778, "l7t0": 21.9, "l7t1": 24.014, "l7x": 25.27, "shop": 27.542, "surrey": 28.456, "canada": 29.125, "call": 30.859, "num": 31.208, "cname": 32.999, "buy": 34.926}, "caps": [{"s": 0.3, "e": 1.264, "w": [{"t": "Gurigaaga", "s": 0.3}, {"t": "ka", "s": 0.919}, {"t": "dhig", "s": 1.092}]}, {"s": 1.264, "e": 1.909, "w": [{"t": "mid", "s": 1.264}, {"t": "had", "s": 1.437}, {"t": "iyo", "s": 1.609}]}, {"s": 1.909, "e": 3.009, "w": [{"t": "jeer", "s": 1.909}, {"t": "udgoon", "s": 2.145}]}, {"s": 3.149, "e": 4.223, "w": [{"t": "Kani", "s": 3.149}, {"t": "waa", "s": 3.43}, {"t": "Coquette", "s": 3.651}]}, {"s": 4.223, "e": 4.932, "w": [{"t": "oo", "s": 4.223}, {"t": "ka", "s": 4.459}, {"t": "socda", "s": 4.632}]}, {"s": 4.932, "e": 6.27, "w": [{"t": "Taif", "s": 4.932}, {"t": "Al", "s": 5.169}, {"t": "Emarat", "s": 5.341}]}, {"s": 6.41, "e": 7.364, "w": [{"t": "Waa", "s": 6.41}, {"t": "buufin", "s": 6.629}, {"t": "hawada", "s": 6.967}]}, {"s": 7.364, "e": 8.09, "w": [{"t": "guriga", "s": 7.364}, {"t": "ah", "s": 7.762}]}, {"s": 8.09, "e": 8.99, "w": [{"t": "laba", "s": 8.09}, {"t": "boqol", "s": 8.39}, {"t": "iyo", "s": 8.69}]}, {"s": 8.99, "e": 10.345, "w": [{"t": "konton", "s": 8.99}, {"t": "mililitir", "s": 9.29}]}, {"s": 10.485, "e": 11.529, "w": [{"t": "Wuxuu", "s": 10.485}, {"t": "ku", "s": 10.833}, {"t": "bilaabmaa", "s": 10.998}]}, {"s": 11.529, "e": 12.088, "w": [{"t": "bergamot", "s": 11.529}]}, {"s": 12.088, "e": 13.06, "w": [{"t": "citrus", "s": 12.088}, {"t": "iyo", "s": 12.412}, {"t": "filfil", "s": 12.736}]}, {"s": 13.06, "e": 14.14, "w": [{"t": "casaan", "s": 13.06}, {"t": "ah", "s": 13.453}]}, {"s": 14.28, "e": 15.611, "w": [{"t": "Salkiisuna", "s": 14.28}, {"t": "waa", "s": 14.98}, {"t": "misk", "s": 15.247}]}, {"s": 15.611, "e": 16.76, "w": [{"t": "patchouli", "s": 15.611}, {"t": "iyo", "s": 16.129}, {"t": "qori", "s": 16.445}]}, {"s": 16.76, "e": 17.506, "w": [{"t": "sandal", "s": 16.76}, {"t": "ah", "s": 17.076}, {"t": "oo", "s": 17.258}]}, {"s": 17.506, "e": 18.457, "w": [{"t": "jilicsan", "s": 17.506}]}, {"s": 18.597, "e": 19.416, "w": [{"t": "Ku", "s": 18.597}, {"t": "buufi", "s": 18.765}, {"t": "qolka", "s": 19.122}]}, {"s": 19.416, "e": 19.834, "w": [{"t": "fadhiga", "s": 19.416}]}, {"s": 19.834, "e": 20.778, "w": [{"t": "qolka", "s": 19.834}, {"t": "jiifka", "s": 20.128}, {"t": "ama", "s": 20.485}]}, {"s": 20.778, "e": 21.76, "w": [{"t": "gaariga", "s": 20.778}]}, {"s": 21.9, "e": 23.254, "w": [{"t": "Martidaadu", "s": 21.9}, {"t": "waxay", "s": 22.494}, {"t": "dareemi", "s": 22.782}]}, {"s": 23.254, "e": 24.302, "w": [{"t": "doonaan", "s": 23.254}, {"t": "udgoon", "s": 23.665}, {"t": "qurux", "s": 24.014}]}, {"s": 24.302, "e": 25.043, "w": [{"t": "badan", "s": 24.302}, {"t": "marka", "s": 24.59}, {"t": "ay", "s": 24.878}]}, {"s": 25.043, "e": 26.119, "w": [{"t": "soo", "s": 25.043}, {"t": "galaan", "s": 25.27}]}, {"s": 26.259, "e": 27.153, "w": [{"t": "Waxaad", "s": 26.259}, {"t": "ka", "s": 26.648}, {"t": "heli", "s": 26.833}]}, {"s": 27.153, "e": 28.456, "w": [{"t": "kartaa", "s": 27.153}, {"t": "Falarosa", "s": 27.542}, {"t": "Luxury", "s": 28.136}]}, {"s": 28.456, "e": 28.777, "w": [{"t": "Surrey", "s": 28.456}]}, {"s": 28.777, "e": 29.125, "w": [{"t": "BC", "s": 28.777}]}, {"s": 29.125, "e": 30.082, "w": [{"t": "Kanada", "s": 29.125}]}, {"s": 30.222, "e": 31.208, "w": [{"t": "Nagala", "s": 30.222}, {"t": "soo", "s": 30.632}, {"t": "xiriir", "s": 30.859}]}, {"s": 31.208, "e": 32.071, "w": [{"t": "lambarka", "s": 31.208}, {"t": "ku", "s": 31.618}, {"t": "qoran", "s": 31.783}]}, {"s": 32.071, "e": 32.859, "w": [{"t": "bogga", "s": 32.071}]}, {"s": 32.999, "e": 33.512, "w": [{"t": "Coquette", "s": 32.999}]}, {"s": 33.512, "e": 34.886, "w": [{"t": "Taif", "s": 33.512}, {"t": "Al", "s": 33.759}, {"t": "Emarat", "s": 33.939}]}, {"s": 34.926, "e": 36.088, "w": [{"t": "Hadda", "s": 34.926}, {"t": "dalbo", "s": 35.257}]}]};
+      const tl = gsap.timeline({ paused: true });
+      const S = {};
+      D.scenes.forEach((s) => (S[s.id] = s));
+      const B = D.beats;
+      const q = (sel) => document.querySelector(sel);
+      const pop = (sel, t, from = 0.3) => tl.fromTo(sel, { scale: from, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2.4)" }, t);
+      const drift = (sel, t, dur) => tl.fromTo(sel, { y: 30, opacity: 0 }, { y: -40, opacity: 1, duration: dur, ease: "sine.out" }, t);
+
+      // persistent theme motion
+      tl.fromTo("#weave", { backgroundPosition: "0px 0px" }, { backgroundPosition: "0px 180px", duration: D.total, ease: "none" }, 0);
+      tl.fromTo("#band", { backgroundPosition: "0px 0px" }, { backgroundPosition: "180px 0px", duration: D.total, ease: "none" }, 0);
+      tl.fromTo("#prog-fill", { scaleX: 0 }, { scaleX: 1, duration: D.total, ease: "none" }, 0);
+
+      // every scene: hard cut + gold flash, punch-in landing, a mid-scene jump-cut zoom
+      D.scenes.forEach((s, i) => {
+        const el = q("#s-" + s.id);
+        const stage = el.querySelector(".stage");
+        const dir = i % 2 ? -1 : 1;
+        tl.fromTo(stage, { scale: 1.16, x: 90 * dir }, { scale: 1, x: 0, duration: 0.38, ease: "power3.out" }, s.start);
+        const jump = s.start + s.dur * 0.56;
+        tl.set(stage, { scale: 1.07 }, jump);
+        tl.to(stage, { scale: 1.1, duration: s.dur * 0.44 - 0.02, ease: "none" }, jump + 0.01);
+        if (i > 0) {
+          tl.set("#flash", { opacity: 0.3 }, s.start);
+          tl.to("#flash", { opacity: 0, duration: 0.16, ease: "power2.out" }, s.start + 0.001);
+        }
+        tl.fromTo(el.querySelector(".chip"), { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(3)" }, s.start + 0.05);
+        tl.fromTo(el.querySelectorAll(".hw"), { yPercent: 105 }, { yPercent: 0, duration: 0.42, stagger: 0.06, ease: "power4.out" }, s.start + 0.08);
+        // slow Ken Burns on every real photo in the scene
+        el.querySelectorAll(".photo img, .cut img").forEach((img) => tl.fromTo(img, { scale: 1.02 }, { scale: 1.14, duration: s.dur, ease: "none" }, s.start));
+      });
+
+      // long caption lines shrink with their letter count so they stay on one row
+      document.querySelectorAll(".cap-pill").forEach((p) => { const n = p.textContent.length; if (n > 20) p.style.fontSize = Math.round(60 * 20 / n) + "px"; });
+      // bokeh lights drift slowly upward
+      tl.fromTo("#bokeh i", { y: 0 }, { y: (i) => -60 - (i % 5) * 30, duration: D.total, ease: "none" }, 0);
+      // product scenes (generated by adgen.py)
+      tl.fromTo("#l1-bottle", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "back.out(1.4)" }, S.l1.start+0.1);
+      tl.fromTo(".hs", { scale: 0, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1, opacity: 1, duration: 0.3, stagger: 0.12, ease: "back.out(3)" }, B.brand-0.1);
+      pop("#l2-p", S.l2.start+0.1);
+      pop("#l2-t0", B.l2t0);
+      pop("#l2-t1", B.l2t1);
+      pop("#l3-p", S.l3.start+0.1);
+      pop("#l3-d0", B.l3f0-0.15);
+      pop("#l3-t0", B.l3f0+0.1);
+      pop("#l3-d1", B.l3f1-0.15);
+      pop("#l3-t1", B.l3f1+0.1);
+      pop("#l4-p", S.l4.start+0.1);
+      pop("#l4-n0", B.l4n0-0.1);
+      tl.fromTo("#l4-l0", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B.l4n0);
+      pop("#l4-n1", B.l4n1-0.1);
+      tl.fromTo("#l4-l1", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B.l4n1);
+      pop("#l4-n2", B.l4n2-0.1);
+      tl.fromTo("#l4-l2", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B.l4n2);
+      pop("#l5-p", S.l5.start+0.1);
+      pop("#l5-n0", B.l5n0-0.1);
+      tl.fromTo("#l5-l0", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B.l5n0);
+      pop("#l5-n1", B.l5n1-0.1);
+      tl.fromTo("#l5-l1", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B.l5n1);
+      pop("#l5-n2", B.l5n2-0.1);
+      tl.fromTo("#l5-l2", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B.l5n2);
+      pop("#l6-p", S.l6.start+0.1);
+      pop("#l6-t0", B.l6t0);
+      pop("#l6-t1", B.l6t1);
+      pop("#l6-t2", B.l6t2);
+      pop("#l7-p", S.l7.start+0.1);
+      pop("#l7-t0", B.l7t0);
+      pop("#l7-t1", B.l7t1);
+      pop("#l7-x", B.l7x);
+      pop("#l8-store", S.l8.start+0.1);
+      pop("#l8-name", B.shop, 0.6);
+      pop("#l8-pin", B.surrey-0.1);
+      pop("#l8-t0", B.surrey+0.05);
+      pop("#l8-leaf", B.canada-0.1);
+      pop("#l8-t1", B.canada+0.05);
+      pop("#l9-phone", S.l9.start+0.1);
+      tl.fromTo("#rings", { opacity: 0 }, { opacity: 1, duration: 0.12, yoyo: true, repeat: 7 }, S.l9.start+0.3);
+      pop("#l9-t0", B.call);
+      pop("#l9-t1", B.num);
+      tl.fromTo("#arrowdn", { y: -30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }, B.num+0.1); tl.to("#arrowdn", { y: 22, duration: 0.3, yoyo: true, repeat: 5, ease: "sine.inOut" }, B.num+0.1+0.35);
+      pop("#l9-tel", B.num+0.35);
+      pop("#l9-p", S.l9.start+0.4);
+      tl.fromTo("#l10-p", { x: -400, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, S.l10.start+0.1);
+      pop("#g-name", B.cname, 0.6);
+      pop("#g-ar", B.cname+0.4, 0.6);
+      pop("#g-en", B.cname+0.6, 0.6);
+      tl.fromTo("#g-buy", { y: 240, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "back.out(2)" }, B.buy-0.1); tl.fromTo("#g-buy", { scale: 1 }, { scale: 1.06, duration: 0.3, yoyo: true, repeat: 3, ease: "sine.inOut" }, B.buy+0.4);
+      pop("#g-tel", B.buy+0.3, 0.6);
+
+      // captions: word-by-word karaoke in Somali
+      D.caps.forEach((g, gi) => {
+        const line = "#cap-" + gi;
+        tl.set(line, { opacity: 1 }, g.s);
+        tl.fromTo(line, { scale: 0.86 }, { scale: 1, duration: 0.12, ease: "back.out(3)", immediateRender: false }, g.s);
+        tl.set(line, { opacity: 0 }, g.e);
+        g.w.forEach((w, wi) => {
+          const id = "#cw-" + gi + "-" + wi;
+          tl.set(id, { color: "#e8c874" }, w.s);
+          if (wi + 1 < g.w.length) tl.set(id, { color: "#f3ead8" }, g.w[wi + 1].s);
+        });
+      });
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

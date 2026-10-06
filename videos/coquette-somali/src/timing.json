@@ -1,0 +1,588 @@
+{
+ "scenes": [
+  {
+   "id": "l1",
+   "text": "Gurigaaga ka dhig mid had iyo jeer udgoon!",
+   "s": 0.3,
+   "e": 2.509
+  },
+  {
+   "id": "l2",
+   "text": "Kani waa Coquette, oo ka socda Taif Al Emarat.",
+   "s": 3.149,
+   "e": 5.77
+  },
+  {
+   "id": "l3",
+   "text": "Waa buufin hawada guriga ah, laba boqol iyo konton mililitir.",
+   "s": 6.41,
+   "e": 9.845
+  },
+  {
+   "id": "l4",
+   "text": "Wuxuu ku bilaabmaa bergamot, citrus iyo filfil casaan ah.",
+   "s": 10.485,
+   "e": 13.64
+  },
+  {
+   "id": "l5",
+   "text": "Salkiisuna waa misk, patchouli iyo qori sandal ah oo jilicsan.",
+   "s": 14.28,
+   "e": 17.957
+  },
+  {
+   "id": "l6",
+   "text": "Ku buufi qolka fadhiga, qolka jiifka ama gaariga.",
+   "s": 18.597,
+   "e": 21.26
+  },
+  {
+   "id": "l7",
+   "text": "Martidaadu waxay dareemi doonaan udgoon qurux badan marka ay soo galaan.",
+   "s": 21.9,
+   "e": 25.619
+  },
+  {
+   "id": "l8",
+   "text": "Waxaad ka heli kartaa Falarosa Luxury, Surrey, BC, Kanada.",
+   "s": 26.259,
+   "e": 29.582
+  },
+  {
+   "id": "l9",
+   "text": "Nagala soo xiriir lambarka ku qoran bogga.",
+   "s": 30.222,
+   "e": 32.359
+  },
+  {
+   "id": "l10",
+   "text": "Coquette, Taif Al Emarat. Hadda dalbo!",
+   "s": 32.999,
+   "e": 35.588
+  }
+ ],
+ "words": [
+  {
+   "scene": "l1",
+   "w": "Gurigaaga",
+   "s": 0.3,
+   "e": 0.919
+  },
+  {
+   "scene": "l1",
+   "w": "ka",
+   "s": 0.919,
+   "e": 1.092
+  },
+  {
+   "scene": "l1",
+   "w": "dhig",
+   "s": 1.092,
+   "e": 1.264
+  },
+  {
+   "scene": "l1",
+   "w": "mid",
+   "s": 1.264,
+   "e": 1.437
+  },
+  {
+   "scene": "l1",
+   "w": "had",
+   "s": 1.437,
+   "e": 1.609
+  },
+  {
+   "scene": "l1",
+   "w": "iyo",
+   "s": 1.609,
+   "e": 1.909
+  },
+  {
+   "scene": "l1",
+   "w": "jeer",
+   "s": 1.909,
+   "e": 2.145
+  },
+  {
+   "scene": "l1",
+   "w": "udgoon!",
+   "s": 2.145,
+   "e": 2.509
+  },
+  {
+   "scene": "l2",
+   "w": "Kani",
+   "s": 3.149,
+   "e": 3.43
+  },
+  {
+   "scene": "l2",
+   "w": "waa",
+   "s": 3.43,
+   "e": 3.651
+  },
+  {
+   "scene": "l2",
+   "w": "Coquette,",
+   "s": 3.651,
+   "e": 4.11
+  },
+  {
+   "scene": "l2",
+   "w": "oo",
+   "s": 4.223,
+   "e": 4.459
+  },
+  {
+   "scene": "l2",
+   "w": "ka",
+   "s": 4.459,
+   "e": 4.632
+  },
+  {
+   "scene": "l2",
+   "w": "socda",
+   "s": 4.632,
+   "e": 4.932
+  },
+  {
+   "scene": "l2",
+   "w": "Taif",
+   "s": 4.932,
+   "e": 5.169
+  },
+  {
+   "scene": "l2",
+   "w": "Al",
+   "s": 5.169,
+   "e": 5.341
+  },
+  {
+   "scene": "l2",
+   "w": "Emarat.",
+   "s": 5.341,
+   "e": 5.77
+  },
+  {
+   "scene": "l3",
+   "w": "Waa",
+   "s": 6.41,
+   "e": 6.629
+  },
+  {
+   "scene": "l3",
+   "w": "buufin",
+   "s": 6.629,
+   "e": 6.967
+  },
+  {
+   "scene": "l3",
+   "w": "hawada",
+   "s": 6.967,
+   "e": 7.364
+  },
+  {
+   "scene": "l3",
+   "w": "guriga",
+   "s": 7.364,
+   "e": 7.762
+  },
+  {
+   "scene": "l3",
+   "w": "ah,",
+   "s": 7.762,
+   "e": 7.922
+  },
+  {
+   "scene": "l3",
+   "w": "laba",
+   "s": 8.09,
+   "e": 8.39
+  },
+  {
+   "scene": "l3",
+   "w": "boqol",
+   "s": 8.39,
+   "e": 8.69
+  },
+  {
+   "scene": "l3",
+   "w": "iyo",
+   "s": 8.69,
+   "e": 8.99
+  },
+  {
+   "scene": "l3",
+   "w": "konton",
+   "s": 8.99,
+   "e": 9.29
+  },
+  {
+   "scene": "l3",
+   "w": "mililitir.",
+   "s": 9.29,
+   "e": 9.845
+  },
+  {
+   "scene": "l4",
+   "w": "Wuxuu",
+   "s": 10.485,
+   "e": 10.833
+  },
+  {
+   "scene": "l4",
+   "w": "ku",
+   "s": 10.833,
+   "e": 10.998
+  },
+  {
+   "scene": "l4",
+   "w": "bilaabmaa",
+   "s": 10.998,
+   "e": 11.529
+  },
+  {
+   "scene": "l4",
+   "w": "bergamot,",
+   "s": 11.529,
+   "e": 11.939
+  },
+  {
+   "scene": "l4",
+   "w": "citrus",
+   "s": 12.088,
+   "e": 12.412
+  },
+  {
+   "scene": "l4",
+   "w": "iyo",
+   "s": 12.412,
+   "e": 12.736
+  },
+  {
+   "scene": "l4",
+   "w": "filfil",
+   "s": 12.736,
+   "e": 13.06
+  },
+  {
+   "scene": "l4",
+   "w": "casaan",
+   "s": 13.06,
+   "e": 13.453
+  },
+  {
+   "scene": "l4",
+   "w": "ah.",
+   "s": 13.453,
+   "e": 13.64
+  },
+  {
+   "scene": "l5",
+   "w": "Salkiisuna",
+   "s": 14.28,
+   "e": 14.98
+  },
+  {
+   "scene": "l5",
+   "w": "waa",
+   "s": 14.98,
+   "e": 15.247
+  },
+  {
+   "scene": "l5",
+   "w": "misk,",
+   "s": 15.247,
+   "e": 15.442
+  },
+  {
+   "scene": "l5",
+   "w": "patchouli",
+   "s": 15.611,
+   "e": 16.129
+  },
+  {
+   "scene": "l5",
+   "w": "iyo",
+   "s": 16.129,
+   "e": 16.445
+  },
+  {
+   "scene": "l5",
+   "w": "qori",
+   "s": 16.445,
+   "e": 16.76
+  },
+  {
+   "scene": "l5",
+   "w": "sandal",
+   "s": 16.76,
+   "e": 17.076
+  },
+  {
+   "scene": "l5",
+   "w": "ah",
+   "s": 17.076,
+   "e": 17.258
+  },
+  {
+   "scene": "l5",
+   "w": "oo",
+   "s": 17.258,
+   "e": 17.506
+  },
+  {
+   "scene": "l5",
+   "w": "jilicsan.",
+   "s": 17.506,
+   "e": 17.957
+  },
+  {
+   "scene": "l6",
+   "w": "Ku",
+   "s": 18.597,
+   "e": 18.765
+  },
+  {
+   "scene": "l6",
+   "w": "buufi",
+   "s": 18.765,
+   "e": 19.122
+  },
+  {
+   "scene": "l6",
+   "w": "qolka",
+   "s": 19.122,
+   "e": 19.416
+  },
+  {
+   "scene": "l6",
+   "w": "fadhiga,",
+   "s": 19.416,
+   "e": 19.834
+  },
+  {
+   "scene": "l6",
+   "w": "qolka",
+   "s": 19.834,
+   "e": 20.128
+  },
+  {
+   "scene": "l6",
+   "w": "jiifka",
+   "s": 20.128,
+   "e": 20.485
+  },
+  {
+   "scene": "l6",
+   "w": "ama",
+   "s": 20.485,
+   "e": 20.778
+  },
+  {
+   "scene": "l6",
+   "w": "gaariga.",
+   "s": 20.778,
+   "e": 21.26
+  },
+  {
+   "scene": "l7",
+   "w": "Martidaadu",
+   "s": 21.9,
+   "e": 22.494
+  },
+  {
+   "scene": "l7",
+   "w": "waxay",
+   "s": 22.494,
+   "e": 22.782
+  },
+  {
+   "scene": "l7",
+   "w": "dareemi",
+   "s": 22.782,
+   "e": 23.254
+  },
+  {
+   "scene": "l7",
+   "w": "doonaan",
+   "s": 23.254,
+   "e": 23.665
+  },
+  {
+   "scene": "l7",
+   "w": "udgoon",
+   "s": 23.665,
+   "e": 24.014
+  },
+  {
+   "scene": "l7",
+   "w": "qurux",
+   "s": 24.014,
+   "e": 24.302
+  },
+  {
+   "scene": "l7",
+   "w": "badan",
+   "s": 24.302,
+   "e": 24.59
+  },
+  {
+   "scene": "l7",
+   "w": "marka",
+   "s": 24.59,
+   "e": 24.878
+  },
+  {
+   "scene": "l7",
+   "w": "ay",
+   "s": 24.878,
+   "e": 25.043
+  },
+  {
+   "scene": "l7",
+   "w": "soo",
+   "s": 25.043,
+   "e": 25.27
+  },
+  {
+   "scene": "l7",
+   "w": "galaan.",
+   "s": 25.27,
+   "e": 25.619
+  },
+  {
+   "scene": "l8",
+   "w": "Waxaad",
+   "s": 26.259,
+   "e": 26.648
+  },
+  {
+   "scene": "l8",
+   "w": "ka",
+   "s": 26.648,
+   "e": 26.833
+  },
+  {
+   "scene": "l8",
+   "w": "heli",
+   "s": 26.833,
+   "e": 27.153
+  },
+  {
+   "scene": "l8",
+   "w": "kartaa",
+   "s": 27.153,
+   "e": 27.542
+  },
+  {
+   "scene": "l8",
+   "w": "Falarosa",
+   "s": 27.542,
+   "e": 28.136
+  },
+  {
+   "scene": "l8",
+   "w": "Luxury,",
+   "s": 28.136,
+   "e": 28.456
+  },
+  {
+   "scene": "l8",
+   "w": "Surrey,",
+   "s": 28.456,
+   "e": 28.777
+  },
+  {
+   "scene": "l8",
+   "w": "BC,",
+   "s": 28.777,
+   "e": 29.125
+  },
+  {
+   "scene": "l8",
+   "w": "Kanada.",
+   "s": 29.125,
+   "e": 29.582
+  },
+  {
+   "scene": "l9",
+   "w": "Nagala",
+   "s": 30.222,
+   "e": 30.632
+  },
+  {
+   "scene": "l9",
+   "w": "soo",
+   "s": 30.632,
+   "e": 30.859
+  },
+  {
+   "scene": "l9",
+   "w": "xiriir",
+   "s": 30.859,
+   "e": 31.208
+  },
+  {
+   "scene": "l9",
+   "w": "lambarka",
+   "s": 31.208,
+   "e": 31.618
+  },
+  {
+   "scene": "l9",
+   "w": "ku",
+   "s": 31.618,
+   "e": 31.783
+  },
+  {
+   "scene": "l9",
+   "w": "qoran",
+   "s": 31.783,
+   "e": 32.071
+  },
+  {
+   "scene": "l9",
+   "w": "bogga.",
+   "s": 32.071,
+   "e": 32.359
+  },
+  {
+   "scene": "l10",
+   "w": "Coquette,",
+   "s": 32.999,
+   "e": 33.512
+  },
+  {
+   "scene": "l10",
+   "w": "Taif",
+   "s": 33.512,
+   "e": 33.759
+  },
+  {
+   "scene": "l10",
+   "w": "Al",
+   "s": 33.759,
+   "e": 33.939
+  },
+  {
+   "scene": "l10",
+   "w": "Emarat.",
+   "s": 33.939,
+   "e": 34.386
+  },
+  {
+   "scene": "l10",
+   "w": "Hadda",
+   "s": 34.926,
+   "e": 35.257
+  },
+  {
+   "scene": "l10",
+   "w": "dalbo!",
+   "s": 35.257,
+   "e": 35.588
+  }
+ ]
+}
