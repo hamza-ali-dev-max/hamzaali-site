@@ -302,7 +302,7 @@ def s_shop(sid):
     t = beat("canada", sid, "kanada"); at("pop", f"#{sid}-leaf", t + "-0.1"); at("pop", f"#{sid}-t1", t + "+0.05")
 
 
-PHONE_NUM = "+1 (604) 396-6638"
+PHONE_NUM = "+1 (672) 952-9114"
 
 
 def tel_pill(i, x, y, fs):
