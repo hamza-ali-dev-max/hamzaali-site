@@ -1,0 +1,708 @@
+{
+ "scenes": [
+  {
+   "id": "l1",
+   "text": "Waxaan idin tusayaa cadarrada Taif Al Emarat, ururka Romance!",
+   "s": 0.3,
+   "e": 3.777
+  },
+  {
+   "id": "l2",
+   "text": "Midka ugu udgoonka xooggan waa Romance N°3, oo la soo saaray labo kun iyo shan iyo labaatan.",
+   "s": 4.417,
+   "e": 9.948
+  },
+  {
+   "id": "l3",
+   "text": "Wuxuu ku bilaabmaa ward Taif ah, wadnihiisu waa geranium, salkiisuna waa misk jilicsan.",
+   "s": 10.588,
+   "e": 15.533
+  },
+  {
+   "id": "l4",
+   "text": "Waxaa lagu sameeyay aalkolo dabiici ah oo aan caraf lahayn, saliid udgoon dabiici ah iyo citrus.",
+   "s": 16.173,
+   "e": 21.719
+  },
+  {
+   "id": "l5",
+   "text": "Waa toddobaatan iyo shan mililitir, waxaana lagu sameeyay Imaaraadka Carabta.",
+   "s": 22.359,
+   "e": 26.399
+  },
+  {
+   "id": "l6",
+   "text": "Ragga iyo dumarkaba wuu ku habboon yahay.",
+   "s": 27.039,
+   "e": 29.093
+  },
+  {
+   "id": "l7",
+   "text": "Udgoonkiisu muddo dheer ayuu ku jiraa dharkaaga iyo jirkaaga, wuuna sii uraa.",
+   "s": 29.733,
+   "e": 33.967
+  },
+  {
+   "id": "l8",
+   "text": "Waxaad ka heli kartaa Falarosa Luxury, Surrey, BC, Kanada.",
+   "s": 34.607,
+   "e": 37.93
+  },
+  {
+   "id": "l9",
+   "text": "Nagala soo xiriir lambarka ku qoran bogga.",
+   "s": 38.57,
+   "e": 40.707
+  },
+  {
+   "id": "l10",
+   "text": "Romance N°3, Taif Al Emarat. Hadda dalbo!",
+   "s": 41.347,
+   "e": 44.55
+  }
+ ],
+ "words": [
+  {
+   "scene": "l1",
+   "w": "Waxaan",
+   "s": 0.3,
+   "e": 0.655
+  },
+  {
+   "scene": "l1",
+   "w": "idin",
+   "s": 0.655,
+   "e": 0.949
+  },
+  {
+   "scene": "l1",
+   "w": "tusayaa",
+   "s": 0.949,
+   "e": 1.429
+  },
+  {
+   "scene": "l1",
+   "w": "cadarrada",
+   "s": 1.429,
+   "e": 1.971
+  },
+  {
+   "scene": "l1",
+   "w": "Taif",
+   "s": 1.971,
+   "e": 2.202
+  },
+  {
+   "scene": "l1",
+   "w": "Al",
+   "s": 2.202,
+   "e": 2.37
+  },
+  {
+   "scene": "l1",
+   "w": "Emarat,",
+   "s": 2.37,
+   "e": 2.788
+  },
+  {
+   "scene": "l1",
+   "w": "ururka",
+   "s": 2.984,
+   "e": 3.381
+  },
+  {
+   "scene": "l1",
+   "w": "Romance!",
+   "s": 3.381,
+   "e": 3.777
+  },
+  {
+   "scene": "l2",
+   "w": "Midka",
+   "s": 4.417,
+   "e": 4.802
+  },
+  {
+   "scene": "l2",
+   "w": "ugu",
+   "s": 4.802,
+   "e": 5.187
+  },
+  {
+   "scene": "l2",
+   "w": "udgoonka",
+   "s": 5.187,
+   "e": 5.818
+  },
+  {
+   "scene": "l2",
+   "w": "xooggan",
+   "s": 5.818,
+   "e": 6.285
+  },
+  {
+   "scene": "l2",
+   "w": "waa",
+   "s": 6.285,
+   "e": 6.588
+  },
+  {
+   "scene": "l2",
+   "w": "Romance",
+   "s": 6.588,
+   "e": 7.136
+  },
+  {
+   "scene": "l2",
+   "w": "N°3,",
+   "s": 7.136,
+   "e": 7.194
+  },
+  {
+   "scene": "l2",
+   "w": "oo",
+   "s": 7.425,
+   "e": 7.642
+  },
+  {
+   "scene": "l2",
+   "w": "la",
+   "s": 7.642,
+   "e": 7.8
+  },
+  {
+   "scene": "l2",
+   "w": "soo",
+   "s": 7.8,
+   "e": 8.017
+  },
+  {
+   "scene": "l2",
+   "w": "saaray",
+   "s": 8.017,
+   "e": 8.352
+  },
+  {
+   "scene": "l2",
+   "w": "labo",
+   "s": 8.352,
+   "e": 8.628
+  },
+  {
+   "scene": "l2",
+   "w": "kun",
+   "s": 8.628,
+   "e": 8.786
+  },
+  {
+   "scene": "l2",
+   "w": "iyo",
+   "s": 8.786,
+   "e": 9.062
+  },
+  {
+   "scene": "l2",
+   "w": "shan",
+   "s": 9.062,
+   "e": 9.22
+  },
+  {
+   "scene": "l2",
+   "w": "iyo",
+   "s": 9.22,
+   "e": 9.496
+  },
+  {
+   "scene": "l2",
+   "w": "labaatan.",
+   "s": 9.496,
+   "e": 9.948
+  },
+  {
+   "scene": "l3",
+   "w": "Wuxuu",
+   "s": 10.588,
+   "e": 10.941
+  },
+  {
+   "scene": "l3",
+   "w": "ku",
+   "s": 10.941,
+   "e": 11.108
+  },
+  {
+   "scene": "l3",
+   "w": "bilaabmaa",
+   "s": 11.108,
+   "e": 11.648
+  },
+  {
+   "scene": "l3",
+   "w": "ward",
+   "s": 11.648,
+   "e": 11.815
+  },
+  {
+   "scene": "l3",
+   "w": "Taif",
+   "s": 11.815,
+   "e": 12.044
+  },
+  {
+   "scene": "l3",
+   "w": "ah,",
+   "s": 12.044,
+   "e": 12.212
+  },
+  {
+   "scene": "l3",
+   "w": "wadnihiisu",
+   "s": 12.4,
+   "e": 12.996
+  },
+  {
+   "scene": "l3",
+   "w": "waa",
+   "s": 12.996,
+   "e": 13.224
+  },
+  {
+   "scene": "l3",
+   "w": "geranium,",
+   "s": 13.224,
+   "e": 13.697
+  },
+  {
+   "scene": "l3",
+   "w": "salkiisuna",
+   "s": 13.823,
+   "e": 14.55
+  },
+  {
+   "scene": "l3",
+   "w": "waa",
+   "s": 14.55,
+   "e": 14.828
+  },
+  {
+   "scene": "l3",
+   "w": "misk",
+   "s": 14.828,
+   "e": 15.031
+  },
+  {
+   "scene": "l3",
+   "w": "jilicsan.",
+   "s": 15.031,
+   "e": 15.533
+  },
+  {
+   "scene": "l4",
+   "w": "Waxaa",
+   "s": 16.173,
+   "e": 16.52
+  },
+  {
+   "scene": "l4",
+   "w": "lagu",
+   "s": 16.52,
+   "e": 16.806
+  },
+  {
+   "scene": "l4",
+   "w": "sameeyay",
+   "s": 16.806,
+   "e": 17.275
+  },
+  {
+   "scene": "l4",
+   "w": "aalkolo",
+   "s": 17.275,
+   "e": 17.744
+  },
+  {
+   "scene": "l4",
+   "w": "dabiici",
+   "s": 17.744,
+   "e": 18.212
+  },
+  {
+   "scene": "l4",
+   "w": "ah",
+   "s": 18.212,
+   "e": 18.377
+  },
+  {
+   "scene": "l4",
+   "w": "oo",
+   "s": 18.377,
+   "e": 18.602
+  },
+  {
+   "scene": "l4",
+   "w": "aan",
+   "s": 18.602,
+   "e": 18.827
+  },
+  {
+   "scene": "l4",
+   "w": "caraf",
+   "s": 18.827,
+   "e": 19.113
+  },
+  {
+   "scene": "l4",
+   "w": "lahayn,",
+   "s": 19.113,
+   "e": 19.399
+  },
+  {
+   "scene": "l4",
+   "w": "saliid",
+   "s": 19.513,
+   "e": 19.916
+  },
+  {
+   "scene": "l4",
+   "w": "udgoon",
+   "s": 19.916,
+   "e": 20.319
+  },
+  {
+   "scene": "l4",
+   "w": "dabiici",
+   "s": 20.319,
+   "e": 20.864
+  },
+  {
+   "scene": "l4",
+   "w": "ah",
+   "s": 20.864,
+   "e": 21.055
+  },
+  {
+   "scene": "l4",
+   "w": "iyo",
+   "s": 21.055,
+   "e": 21.387
+  },
+  {
+   "scene": "l4",
+   "w": "citrus.",
+   "s": 21.387,
+   "e": 21.719
+  },
+  {
+   "scene": "l5",
+   "w": "Waa",
+   "s": 22.359,
+   "e": 22.578
+  },
+  {
+   "scene": "l5",
+   "w": "toddobaatan",
+   "s": 22.578,
+   "e": 23.151
+  },
+  {
+   "scene": "l5",
+   "w": "iyo",
+   "s": 23.151,
+   "e": 23.428
+  },
+  {
+   "scene": "l5",
+   "w": "shan",
+   "s": 23.428,
+   "e": 23.588
+  },
+  {
+   "scene": "l5",
+   "w": "mililitir,",
+   "s": 23.588,
+   "e": 24.102
+  },
+  {
+   "scene": "l5",
+   "w": "waxaana",
+   "s": 24.276,
+   "e": 24.712
+  },
+  {
+   "scene": "l5",
+   "w": "lagu",
+   "s": 24.712,
+   "e": 24.978
+  },
+  {
+   "scene": "l5",
+   "w": "sameeyay",
+   "s": 24.978,
+   "e": 25.414
+  },
+  {
+   "scene": "l5",
+   "w": "Imaaraadka",
+   "s": 25.414,
+   "e": 26.02
+  },
+  {
+   "scene": "l5",
+   "w": "Carabta.",
+   "s": 26.02,
+   "e": 26.399
+  },
+  {
+   "scene": "l6",
+   "w": "Ragga",
+   "s": 27.039,
+   "e": 27.315
+  },
+  {
+   "scene": "l6",
+   "w": "iyo",
+   "s": 27.315,
+   "e": 27.592
+  },
+  {
+   "scene": "l6",
+   "w": "dumarkaba",
+   "s": 27.592,
+   "e": 28.104
+  },
+  {
+   "scene": "l6",
+   "w": "wuu",
+   "s": 28.104,
+   "e": 28.322
+  },
+  {
+   "scene": "l6",
+   "w": "ku",
+   "s": 28.322,
+   "e": 28.481
+  },
+  {
+   "scene": "l6",
+   "w": "habboon",
+   "s": 28.481,
+   "e": 28.816
+  },
+  {
+   "scene": "l6",
+   "w": "yahay.",
+   "s": 28.816,
+   "e": 29.093
+  },
+  {
+   "scene": "l7",
+   "w": "Udgoonkiisu",
+   "s": 29.733,
+   "e": 30.383
+  },
+  {
+   "scene": "l7",
+   "w": "muddo",
+   "s": 30.383,
+   "e": 30.669
+  },
+  {
+   "scene": "l7",
+   "w": "dheer",
+   "s": 30.669,
+   "e": 30.894
+  },
+  {
+   "scene": "l7",
+   "w": "ayuu",
+   "s": 30.894,
+   "e": 31.24
+  },
+  {
+   "scene": "l7",
+   "w": "ku",
+   "s": 31.24,
+   "e": 31.405
+  },
+  {
+   "scene": "l7",
+   "w": "jiraa",
+   "s": 31.405,
+   "e": 31.751
+  },
+  {
+   "scene": "l7",
+   "w": "dharkaaga",
+   "s": 31.751,
+   "e": 32.219
+  },
+  {
+   "scene": "l7",
+   "w": "iyo",
+   "s": 32.219,
+   "e": 32.505
+  },
+  {
+   "scene": "l7",
+   "w": "jirkaaga,",
+   "s": 32.505,
+   "e": 32.973
+  },
+  {
+   "scene": "l7",
+   "w": "wuuna",
+   "s": 33.105,
+   "e": 33.431
+  },
+  {
+   "scene": "l7",
+   "w": "sii",
+   "s": 33.431,
+   "e": 33.642
+  },
+  {
+   "scene": "l7",
+   "w": "uraa.",
+   "s": 33.642,
+   "e": 33.967
+  },
+  {
+   "scene": "l8",
+   "w": "Waxaad",
+   "s": 34.607,
+   "e": 34.996
+  },
+  {
+   "scene": "l8",
+   "w": "ka",
+   "s": 34.996,
+   "e": 35.181
+  },
+  {
+   "scene": "l8",
+   "w": "heli",
+   "s": 35.181,
+   "e": 35.501
+  },
+  {
+   "scene": "l8",
+   "w": "kartaa",
+   "s": 35.501,
+   "e": 35.89
+  },
+  {
+   "scene": "l8",
+   "w": "Falarosa",
+   "s": 35.89,
+   "e": 36.484
+  },
+  {
+   "scene": "l8",
+   "w": "Luxury,",
+   "s": 36.484,
+   "e": 36.804
+  },
+  {
+   "scene": "l8",
+   "w": "Surrey,",
+   "s": 36.804,
+   "e": 37.125
+  },
+  {
+   "scene": "l8",
+   "w": "BC,",
+   "s": 37.125,
+   "e": 37.473
+  },
+  {
+   "scene": "l8",
+   "w": "Kanada.",
+   "s": 37.473,
+   "e": 37.93
+  },
+  {
+   "scene": "l9",
+   "w": "Nagala",
+   "s": 38.57,
+   "e": 38.98
+  },
+  {
+   "scene": "l9",
+   "w": "soo",
+   "s": 38.98,
+   "e": 39.207
+  },
+  {
+   "scene": "l9",
+   "w": "xiriir",
+   "s": 39.207,
+   "e": 39.556
+  },
+  {
+   "scene": "l9",
+   "w": "lambarka",
+   "s": 39.556,
+   "e": 39.966
+  },
+  {
+   "scene": "l9",
+   "w": "ku",
+   "s": 39.966,
+   "e": 40.131
+  },
+  {
+   "scene": "l9",
+   "w": "qoran",
+   "s": 40.131,
+   "e": 40.419
+  },
+  {
+   "scene": "l9",
+   "w": "bogga.",
+   "s": 40.419,
+   "e": 40.707
+  },
+  {
+   "scene": "l10",
+   "w": "Romance",
+   "s": 41.347,
+   "e": 42.226
+  },
+  {
+   "scene": "l10",
+   "w": "N°3,",
+   "s": 42.226,
+   "e": 42.317
+  },
+  {
+   "scene": "l10",
+   "w": "Taif",
+   "s": 42.464,
+   "e": 42.713
+  },
+  {
+   "scene": "l10",
+   "w": "Al",
+   "s": 42.713,
+   "e": 42.896
+  },
+  {
+   "scene": "l10",
+   "w": "Emarat.",
+   "s": 42.896,
+   "e": 43.348
+  },
+  {
+   "scene": "l10",
+   "w": "Hadda",
+   "s": 43.888,
+   "e": 44.219
+  },
+  {
+   "scene": "l10",
+   "w": "dalbo!",
+   "s": 44.219,
+   "e": 44.55
+  }
+ ]
+}

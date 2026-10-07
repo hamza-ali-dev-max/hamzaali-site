@@ -1,0 +1,26 @@
+{
+ "key": "rom2",
+ "voice": "sagal",
+ "model": "eleven_v4",
+ "total": 17.64,
+ "segments": [
+  {
+   "name": "hook",
+   "text": "Cadar ragga iyo dumarkaba ku habboon? Waa kan!",
+   "start": 0.35,
+   "end": 3.75
+  },
+  {
+   "name": "notes",
+   "text": "Romance 2: ward Moroccan, rosemary, citrus iyo qori cedar.",
+   "start": 4.2,
+   "end": 10.33
+  },
+  {
+   "name": "cta",
+   "text": "Waxaad ka heli kartaan Falarosa Luxury, Surrey. Nala soo xiriira!",
+   "start": 12.23,
+   "end": 17.14
+  }
+ ]
+}

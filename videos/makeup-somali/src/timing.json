@@ -1,0 +1,654 @@
+{
+ "scenes": [
+  {
+   "id": "q",
+   "text": "Adigoo wejiga qurxin ku leh ma seexataa?",
+   "s": 0.3,
+   "e": 2.297
+  },
+  {
+   "id": "tired",
+   "text": "Xitaa haddii aad daalan tahay, iska saar ka hor hurdada.",
+   "s": 3.087,
+   "e": 5.612
+  },
+  {
+   "id": "pores",
+   "text": "Qurxinta habeenkii wejiga ku hartaa waxay xiri kartaa daloolada maqaarka, waxayna keeni kartaa finan.",
+   "s": 6.402,
+   "e": 11.285
+  },
+  {
+   "id": "remove",
+   "text": "Marka hore, si tartiib ah uga saar qurxinta wejiga iyo indhaha.",
+   "s": 12.075,
+   "e": 15.207
+  },
+  {
+   "id": "wash",
+   "text": "Kadib wejiga ku dhaq nadiifiye jilicsan iyo biyo diirran.",
+   "s": 15.997,
+   "e": 18.776
+  },
+  {
+   "id": "fingers",
+   "text": "Farahaaga isticmaal, hana xoqin maqaarka.",
+   "s": 19.566,
+   "e": 21.585
+  },
+  {
+   "id": "pat",
+   "text": "Tuwaal nadiif ah si tartiib ah ugu qalaji.",
+   "s": 22.375,
+   "e": 24.52
+  },
+  {
+   "id": "moist",
+   "text": "Ugu dambayn, mari kareem qoyaan siiya maqaarkaaga oo aan daloolada xirin.",
+   "s": 25.31,
+   "e": 28.784
+  },
+  {
+   "id": "share",
+   "text": "Alaabta qurxinta iyo burushyada dadka kale ha la wadaagin.",
+   "s": 29.574,
+   "e": 32.211
+  },
+  {
+   "id": "cta",
+   "text": "Caawa caado fiican bilow: qurxinta iska saar, wejigaagana daryeel! U dir qof aad jeceshahay.",
+   "s": 33.001,
+   "e": 39.177
+  }
+ ],
+ "words": [
+  {
+   "scene": "q",
+   "w": "Adigoo",
+   "s": 0.3,
+   "e": 0.728
+  },
+  {
+   "scene": "q",
+   "w": "wejiga",
+   "s": 0.728,
+   "e": 1.101
+  },
+  {
+   "scene": "q",
+   "w": "qurxin",
+   "s": 1.101,
+   "e": 1.363
+  },
+  {
+   "scene": "q",
+   "w": "ku",
+   "s": 1.363,
+   "e": 1.513
+  },
+  {
+   "scene": "q",
+   "w": "leh",
+   "s": 1.513,
+   "e": 1.663
+  },
+  {
+   "scene": "q",
+   "w": "ma",
+   "s": 1.663,
+   "e": 1.813
+  },
+  {
+   "scene": "q",
+   "w": "seexataa?",
+   "s": 1.813,
+   "e": 2.297
+  },
+  {
+   "scene": "tired",
+   "w": "Xitaa",
+   "s": 3.087,
+   "e": 3.4
+  },
+  {
+   "scene": "tired",
+   "w": "haddii",
+   "s": 3.4,
+   "e": 3.713
+  },
+  {
+   "scene": "tired",
+   "w": "aad",
+   "s": 3.713,
+   "e": 3.916
+  },
+  {
+   "scene": "tired",
+   "w": "daalan",
+   "s": 3.916,
+   "e": 4.229
+  },
+  {
+   "scene": "tired",
+   "w": "tahay,",
+   "s": 4.229,
+   "e": 4.487
+  },
+  {
+   "scene": "tired",
+   "w": "iska",
+   "s": 4.487,
+   "e": 4.745
+  },
+  {
+   "scene": "tired",
+   "w": "saar",
+   "s": 4.745,
+   "e": 4.948
+  },
+  {
+   "scene": "tired",
+   "w": "ka",
+   "s": 4.948,
+   "e": 5.096
+  },
+  {
+   "scene": "tired",
+   "w": "hor",
+   "s": 5.096,
+   "e": 5.244
+  },
+  {
+   "scene": "tired",
+   "w": "hurdada.",
+   "s": 5.244,
+   "e": 5.612
+  },
+  {
+   "scene": "pores",
+   "w": "Qurxinta",
+   "s": 6.402,
+   "e": 6.773
+  },
+  {
+   "scene": "pores",
+   "w": "habeenkii",
+   "s": 6.773,
+   "e": 7.254
+  },
+  {
+   "scene": "pores",
+   "w": "wejiga",
+   "s": 7.254,
+   "e": 7.625
+  },
+  {
+   "scene": "pores",
+   "w": "ku",
+   "s": 7.625,
+   "e": 7.775
+  },
+  {
+   "scene": "pores",
+   "w": "hartaa",
+   "s": 7.775,
+   "e": 8.09
+  },
+  {
+   "scene": "pores",
+   "w": "waxay",
+   "s": 8.09,
+   "e": 8.351
+  },
+  {
+   "scene": "pores",
+   "w": "xiri",
+   "s": 8.351,
+   "e": 8.611
+  },
+  {
+   "scene": "pores",
+   "w": "kartaa",
+   "s": 8.611,
+   "e": 8.926
+  },
+  {
+   "scene": "pores",
+   "w": "daloolada",
+   "s": 8.926,
+   "e": 9.463
+  },
+  {
+   "scene": "pores",
+   "w": "maqaarka,",
+   "s": 9.463,
+   "e": 9.889
+  },
+  {
+   "scene": "pores",
+   "w": "waxayna",
+   "s": 10.025,
+   "e": 10.395
+  },
+  {
+   "scene": "pores",
+   "w": "keeni",
+   "s": 10.395,
+   "e": 10.71
+  },
+  {
+   "scene": "pores",
+   "w": "kartaa",
+   "s": 10.71,
+   "e": 11.025
+  },
+  {
+   "scene": "pores",
+   "w": "finan.",
+   "s": 11.025,
+   "e": 11.285
+  },
+  {
+   "scene": "remove",
+   "w": "Marka",
+   "s": 12.075,
+   "e": 12.349
+  },
+  {
+   "scene": "remove",
+   "w": "hore,",
+   "s": 12.349,
+   "e": 12.623
+  },
+  {
+   "scene": "remove",
+   "w": "si",
+   "s": 12.623,
+   "e": 12.781
+  },
+  {
+   "scene": "remove",
+   "w": "tartiib",
+   "s": 12.781,
+   "e": 13.113
+  },
+  {
+   "scene": "remove",
+   "w": "ah",
+   "s": 13.113,
+   "e": 13.271
+  },
+  {
+   "scene": "remove",
+   "w": "uga",
+   "s": 13.271,
+   "e": 13.545
+  },
+  {
+   "scene": "remove",
+   "w": "saar",
+   "s": 13.545,
+   "e": 13.761
+  },
+  {
+   "scene": "remove",
+   "w": "qurxinta",
+   "s": 13.761,
+   "e": 14.151
+  },
+  {
+   "scene": "remove",
+   "w": "wejiga",
+   "s": 14.151,
+   "e": 14.542
+  },
+  {
+   "scene": "remove",
+   "w": "iyo",
+   "s": 14.542,
+   "e": 14.816
+  },
+  {
+   "scene": "remove",
+   "w": "indhaha.",
+   "s": 14.816,
+   "e": 15.207
+  },
+  {
+   "scene": "wash",
+   "w": "Kadib",
+   "s": 15.997,
+   "e": 16.267
+  },
+  {
+   "scene": "wash",
+   "w": "wejiga",
+   "s": 16.267,
+   "e": 16.653
+  },
+  {
+   "scene": "wash",
+   "w": "ku",
+   "s": 16.653,
+   "e": 16.808
+  },
+  {
+   "scene": "wash",
+   "w": "dhaq",
+   "s": 16.808,
+   "e": 16.964
+  },
+  {
+   "scene": "wash",
+   "w": "nadiifiye",
+   "s": 16.964,
+   "e": 17.522
+  },
+  {
+   "scene": "wash",
+   "w": "jilicsan",
+   "s": 17.522,
+   "e": 17.908
+  },
+  {
+   "scene": "wash",
+   "w": "iyo",
+   "s": 17.908,
+   "e": 18.178
+  },
+  {
+   "scene": "wash",
+   "w": "biyo",
+   "s": 18.178,
+   "e": 18.448
+  },
+  {
+   "scene": "wash",
+   "w": "diirran.",
+   "s": 18.448,
+   "e": 18.776
+  },
+  {
+   "scene": "fingers",
+   "w": "Farahaaga",
+   "s": 19.566,
+   "e": 20.134
+  },
+  {
+   "scene": "fingers",
+   "w": "isticmaal,",
+   "s": 20.134,
+   "e": 20.585
+  },
+  {
+   "scene": "fingers",
+   "w": "hana",
+   "s": 20.585,
+   "e": 20.86
+  },
+  {
+   "scene": "fingers",
+   "w": "xoqin",
+   "s": 20.86,
+   "e": 21.135
+  },
+  {
+   "scene": "fingers",
+   "w": "maqaarka.",
+   "s": 21.135,
+   "e": 21.585
+  },
+  {
+   "scene": "pat",
+   "w": "Tuwaal",
+   "s": 22.375,
+   "e": 22.709
+  },
+  {
+   "scene": "pat",
+   "w": "nadiif",
+   "s": 22.709,
+   "e": 23.043
+  },
+  {
+   "scene": "pat",
+   "w": "ah",
+   "s": 23.043,
+   "e": 23.202
+  },
+  {
+   "scene": "pat",
+   "w": "si",
+   "s": 23.202,
+   "e": 23.36
+  },
+  {
+   "scene": "pat",
+   "w": "tartiib",
+   "s": 23.36,
+   "e": 23.694
+  },
+  {
+   "scene": "pat",
+   "w": "ah",
+   "s": 23.694,
+   "e": 23.852
+  },
+  {
+   "scene": "pat",
+   "w": "ugu",
+   "s": 23.852,
+   "e": 24.128
+  },
+  {
+   "scene": "pat",
+   "w": "qalaji.",
+   "s": 24.128,
+   "e": 24.52
+  },
+  {
+   "scene": "moist",
+   "w": "Ugu",
+   "s": 25.31,
+   "e": 25.567
+  },
+  {
+   "scene": "moist",
+   "w": "dambayn,",
+   "s": 25.567,
+   "e": 25.823
+  },
+  {
+   "scene": "moist",
+   "w": "mari",
+   "s": 25.823,
+   "e": 26.079
+  },
+  {
+   "scene": "moist",
+   "w": "kareem",
+   "s": 26.079,
+   "e": 26.39
+  },
+  {
+   "scene": "moist",
+   "w": "qoyaan",
+   "s": 26.39,
+   "e": 26.701
+  },
+  {
+   "scene": "moist",
+   "w": "siiya",
+   "s": 26.701,
+   "e": 27.012
+  },
+  {
+   "scene": "moist",
+   "w": "maqaarkaaga",
+   "s": 27.012,
+   "e": 27.595
+  },
+  {
+   "scene": "moist",
+   "w": "oo",
+   "s": 27.595,
+   "e": 27.797
+  },
+  {
+   "scene": "moist",
+   "w": "aan",
+   "s": 27.797,
+   "e": 27.999
+  },
+  {
+   "scene": "moist",
+   "w": "daloolada",
+   "s": 27.999,
+   "e": 28.528
+  },
+  {
+   "scene": "moist",
+   "w": "xirin.",
+   "s": 28.528,
+   "e": 28.784
+  },
+  {
+   "scene": "share",
+   "w": "Alaabta",
+   "s": 29.574,
+   "e": 29.978
+  },
+  {
+   "scene": "share",
+   "w": "qurxinta",
+   "s": 29.978,
+   "e": 30.329
+  },
+  {
+   "scene": "share",
+   "w": "iyo",
+   "s": 30.329,
+   "e": 30.575
+  },
+  {
+   "scene": "share",
+   "w": "burushyada",
+   "s": 30.575,
+   "e": 31.031
+  },
+  {
+   "scene": "share",
+   "w": "dadka",
+   "s": 31.031,
+   "e": 31.278
+  },
+  {
+   "scene": "share",
+   "w": "kale",
+   "s": 31.278,
+   "e": 31.524
+  },
+  {
+   "scene": "share",
+   "w": "ha",
+   "s": 31.524,
+   "e": 31.665
+  },
+  {
+   "scene": "share",
+   "w": "la",
+   "s": 31.665,
+   "e": 31.807
+  },
+  {
+   "scene": "share",
+   "w": "wadaagin.",
+   "s": 31.807,
+   "e": 32.211
+  },
+  {
+   "scene": "cta",
+   "w": "Caawa",
+   "s": 33.001,
+   "e": 33.335
+  },
+  {
+   "scene": "cta",
+   "w": "caado",
+   "s": 33.335,
+   "e": 33.669
+  },
+  {
+   "scene": "cta",
+   "w": "fiican",
+   "s": 33.669,
+   "e": 34.003
+  },
+  {
+   "scene": "cta",
+   "w": "bilow:",
+   "s": 34.003,
+   "e": 34.279
+  },
+  {
+   "scene": "cta",
+   "w": "qurxinta",
+   "s": 34.423,
+   "e": 34.792
+  },
+  {
+   "scene": "cta",
+   "w": "iska",
+   "s": 34.792,
+   "e": 35.05
+  },
+  {
+   "scene": "cta",
+   "w": "saar,",
+   "s": 35.05,
+   "e": 35.253
+  },
+  {
+   "scene": "cta",
+   "w": "wejigaagana",
+   "s": 35.412,
+   "e": 36.077
+  },
+  {
+   "scene": "cta",
+   "w": "daryeel!",
+   "s": 36.077,
+   "e": 36.401
+  },
+  {
+   "scene": "cta",
+   "w": "U",
+   "s": 36.941,
+   "e": 37.235
+  },
+  {
+   "scene": "cta",
+   "w": "dir",
+   "s": 37.235,
+   "e": 37.53
+  },
+  {
+   "scene": "cta",
+   "w": "qof",
+   "s": 37.53,
+   "e": 37.824
+  },
+  {
+   "scene": "cta",
+   "w": "aad",
+   "s": 37.824,
+   "e": 38.228
+  },
+  {
+   "scene": "cta",
+   "w": "jeceshahay.",
+   "s": 38.228,
+   "e": 39.177
+  }
+ ]
+}
