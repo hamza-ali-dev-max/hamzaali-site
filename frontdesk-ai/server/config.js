@@ -38,7 +38,7 @@ export function loadConfig(env = process.env) {
         apiKey: real(env.XAI_API_KEY),
         apiBase: (env.XAI_API_BASE || 'https://api.x.ai/v1').replace(/\/+$/, ''),
         realtimeUrl: env.XAI_REALTIME_URL || 'wss://api.x.ai/v1/realtime',
-        model: env.XAI_VOICE_MODEL || 'grok-voice-latest',
+        model: env.XAI_VOICE_MODEL || 'grok-voice-3.0',
         voice: env.XAI_VOICE || 'eve',
       },
     },

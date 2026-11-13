@@ -1,6 +1,10 @@
-// Everything interactive on the page: language, dark mode, menu, tabs, FAQ, map,
-// contact details, the demo request form and the live voice demo.
-import { STRINGS, LANGUAGES } from './i18n.js';
+// Everything interactive on the page: language, dark mode, menu, the call stage, recordings,
+// the live demo, tabs, FAQ, the calculator, the trial form and contact details.
+import { STRINGS, LANGUAGES, fill } from './i18n.js';
+import CALLS from './calls.json';
+import { messagesFor } from './whatsapp.js';
+import { createStage } from './stage.js';
+import { createRecordings } from './recordings.js';
 import { startCall, micSupported } from './voice.js';
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -21,10 +25,26 @@ const waDigits = (number) => { const d = number.replace(/\D/g, ''); return d.sta
 
 /* ---------------------------------------------------------------- Language */
 let lang = 'en';
-let mapApi = null;
 const tr = (key) => (STRINGS[lang] && STRINGS[lang][key]) || STRINGS.en[key] || key;
-// Show a translated message in an element and remember its key, so it follows the language switcher.
-const say = (el, key) => { if (!el) return; if (key) { el.dataset.i18n = key; el.textContent = tr(key); } else { delete el.dataset.i18n; el.textContent = ''; } };
+const locale = () => (LANGUAGES.find((l) => l.code === lang) || LANGUAGES[0]).locale;
+// Put a translated text (or attribute) on an element and remember the key for the language switcher.
+function say(el, key, attr) {
+  if (!el) return;
+  if (attr) { el.dataset.i18nAttr = `${attr}:${key}`; el.setAttribute(attr, tr(key)); return; }
+  if (key) { el.dataset.i18n = key; el.textContent = tr(key); } else { delete el.dataset.i18n; el.textContent = ''; }
+}
+let stage = null;
+let recordings = null;
+
+function renderWhatsapp() {
+  $$('[data-wa-call]').forEach((el) => {
+    const call = CALLS.find((c) => c.id === el.dataset.waCall);
+    if (!call) return;
+    const msgs = messagesFor(call.events, { business: call.name, when: call.when.split(' ').pop() }, tr, locale());
+    const text = msgs[el.dataset.waKind];
+    if (text) el.textContent = text;
+  });
+}
 
 function applyLanguage(next, remember = true) {
   lang = STRINGS[next] ? next : 'en';
@@ -34,22 +54,27 @@ function applyLanguage(next, remember = true) {
     el.dataset.i18nAttr.split(';').forEach((pair) => { const [attr, key] = pair.split(':'); if (attr && key) el.setAttribute(attr, tr(key)); });
   });
   $$('[data-lang]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.lang === lang)));
-  if (mapApi) mapApi.refreshText();
+  renderWhatsapp();
   refreshWhatsappLinks();
+  updateCalc();
+  if (stage) stage.refreshText();
+  if (lastEvents) showSummary(lastEvents);
   if (remember) store.set('fd-lang', lang);
 }
 $$('[data-lang]').forEach((button) => button.addEventListener('click', () => applyLanguage(button.dataset.lang)));
 
 /* ---------------------------------------------------------------- Contact details */
 function refreshWhatsappLinks() {
-  const text = encodeURIComponent(tr('cta.wa.intro'));
-  $$('[data-wa]').forEach((el) => el.setAttribute('href', `https://wa.me/${waDigits(setting('whatsapp'))}?text=${text}`));
+  const text = encodeURIComponent(tr('start.wa.intro'));
+  $$('[data-wa-link]').forEach((el) => el.setAttribute('href', `https://wa.me/${waDigits(setting('whatsapp'))}?text=${text}`));
 }
 $$('[data-text]').forEach((el) => { el.textContent = setting(el.dataset.text); });
 $$('[data-tel]').forEach((el) => el.setAttribute('href', `tel:${dial(setting(el.dataset.tel))}`));
 $$('[data-mailto]').forEach((el) => el.setAttribute('href', `mailto:${setting(el.dataset.mailto)}`));
-$$('[data-maps]').forEach((el) => { if (CONFIG.mapsUrl) el.setAttribute('href', CONFIG.mapsUrl); });
 $$('[data-ph]').forEach((el) => { el.hidden = setting(el.dataset.ph) !== PLACEHOLDERS[el.dataset.ph]; });
+$$('[data-wa-link]').forEach((el) => el.setAttribute('target', '_blank'));
+const vat = String(CONFIG.vatNote || '').trim();
+$$('[data-vat]').forEach((el) => { el.textContent = vat; });
 $('#year').textContent = String(new Date().getFullYear());
 
 /* ---------------------------------------------------------------- Dark mode */
@@ -61,12 +86,11 @@ function applyTheme(dark, remember) {
     $('[data-icon="moon"]', button).hidden = dark;
     $('[data-icon="sun"]', button).hidden = !dark;
   });
-  if (themeColor) themeColor.setAttribute('content', dark ? '#081226' : '#1570EF');
+  if (themeColor) themeColor.setAttribute('content', dark ? '#15120F' : '#F5EFE3');
   if (remember) store.set('fd-theme', dark ? 'dark' : 'light');
 }
 applyTheme(document.documentElement.classList.contains('dark'), false);
 $$('[data-theme-toggle]').forEach((button) => button.addEventListener('click', () => applyTheme(!document.documentElement.classList.contains('dark'), true)));
-// Follow the system setting until the visitor makes their own choice.
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', (event) => { if (!store.get('fd-theme')) applyTheme(event.matches, false); });
 
 /* ---------------------------------------------------------------- Mobile menu */
@@ -84,18 +108,38 @@ document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && 
 document.addEventListener('click', (event) => { if (!mobileMenu.hidden && !$('#site-header').contains(event.target)) setMenu(false); });
 window.matchMedia('(min-width: 1024px)').addEventListener?.('change', (event) => { if (event.matches) setMenu(false); });
 
-/* ---------------------------------------------------------------- Fade-in on scroll */
+/* ---------------------------------------------------------------- Fade-ins and the two lanes */
 const revealItems = $$('[data-reveal]');
+const lanes = $('[data-lanes]');
 if ('IntersectionObserver' in window && !reduceMotion) {
   const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
-    if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
-  }), { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
+    if (entry.isIntersecting) { entry.target.classList.add('is-visible', 'is-in'); observer.unobserve(entry.target); }
+  }), { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
   revealItems.forEach((el) => observer.observe(el));
+  if (lanes) observer.observe(lanes);
 } else {
   revealItems.forEach((el) => el.classList.add('is-visible'));
+  if (lanes) lanes.classList.add('is-in');
 }
 
-/* ---------------------------------------------------------------- Industry tabs */
+/* ---------------------------------------------------------------- The call stage and the recordings */
+const stageRoot = $('#stage');
+if (stageRoot) {
+  stage = createStage(stageRoot, { say, reduceMotion, onSound: () => recordings && recordings.pause() });
+  $$('[data-stage-sound]').forEach((button) => button.addEventListener('click', () => {
+    const rect = stageRoot.getBoundingClientRect();
+    if (rect.top < 0 || rect.bottom > window.innerHeight) stageRoot.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    stage.playSound();
+  }));
+}
+recordings = createRecordings({ tablist: $('#rec-tabs'), audio: $('#rec-audio'), say, onPlay: () => stage && stage.pauseSound() });
+$$('[data-play-rec]').forEach((link) => link.addEventListener('click', (event) => {
+  event.preventDefault();
+  $('#rec-tabs').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+  recordings.playCall(link.dataset.playRec);
+}));
+
+/* ---------------------------------------------------------------- Tabs (industries) */
 function initTabs(tablist) {
   const tabs = $$('[role="tab"]', tablist);
   const select = (tab, focus) => {
@@ -103,9 +147,7 @@ function initTabs(tablist) {
       const active = item === tab;
       item.setAttribute('aria-selected', String(active));
       item.tabIndex = active ? 0 : -1;
-      const panel = document.getElementById(item.getAttribute('aria-controls'));
-      panel.hidden = !active;
-      panel.classList.toggle('is-entering', active);
+      document.getElementById(item.getAttribute('aria-controls')).hidden = !active;
     });
     if (focus) tab.focus();
   };
@@ -122,9 +164,9 @@ function initTabs(tablist) {
   });
   select(tabs.find((tab) => tab.getAttribute('aria-selected') === 'true') || tabs[0], false);
 }
-initTabs($('#industry-tabs'));
+initTabs($('#ind-tabs'));
 
-/* ---------------------------------------------------------------- FAQ accordion */
+/* ---------------------------------------------------------------- FAQ */
 $$('.faq-item').forEach((item) => {
   const button = $('.faq-q', item);
   button.addEventListener('click', () => {
@@ -134,41 +176,38 @@ $$('.faq-item').forEach((item) => {
   });
 });
 
-/* ---------------------------------------------------------------- Map (loads when it scrolls into view) */
-const mapElement = $('#map');
-let mapLoading = false;
-async function loadMap() {
-  if (mapLoading) return;
-  mapLoading = true;
-  try {
-    const { createMap } = await import('./map.js');
-    mapApi = createMap(mapElement, tr);
-    window.__frontDeskMap = mapApi;
-  } catch {
-    mapLoading = false;
-  }
+/* ---------------------------------------------------------------- Calculator: the owner's own numbers */
+const rand = (n) => `R${Math.round(n).toLocaleString('en-US')}`;
+function updateCalc() {
+  const missed = Number($('#calc-missed').value);
+  const value = Number($('#calc-value').value);
+  const rate = Number($('#calc-rate').value);
+  $$('#calc .range').forEach((input) => {
+    const p = ((Number(input.value) - Number(input.min)) / (Number(input.max) - Number(input.min))) * 100;
+    input.style.setProperty('--p', `${p}%`);
+    const shown = input.id === 'calc-value' ? Number(input.value).toLocaleString('en-US') : input.value;
+    $(`#${input.id}-out`).textContent = `${input.dataset.prefix}${shown}${input.dataset.suffix}`;
+  });
+  const monthly = missed * 4.33 * value * (rate / 100);
+  $('#calc-result').textContent = rand(monthly);
+  const ratio = monthly / 1999;
+  const verdict = $('#calc-verdict');
+  if (ratio >= 1) { verdict.removeAttribute('data-i18n'); verdict.textContent = fill(tr('calc.covers'), { x: ratio >= 10 ? Math.round(ratio) : ratio.toFixed(1) }); } else say(verdict, 'calc.short');
 }
-if ('IntersectionObserver' in window) {
-  const mapObserver = new IntersectionObserver((entries) => {
-    if (entries.some((entry) => entry.isIntersecting)) { mapObserver.disconnect(); loadMap(); }
-  }, { rootMargin: '600px 0px' });
-  mapObserver.observe(mapElement);
-} else {
-  loadMap();
-}
+$$('#calc .range').forEach((input) => input.addEventListener('input', updateCalc));
 
-/* ---------------------------------------------------------------- Book a free demo form */
-const form = $('#demo-form');
-const success = $('#demo-success');
+/* ---------------------------------------------------------------- Free trial form */
+const form = $('#start-form');
+const success = $('#start-success');
 let submitted = false;
-const cleanPhone = (value) => value.replace(/[\s\-().]/g, '');
-const validSaPhone = (value) => /^(?:\+27|0027|27|0)[1-8]\d{8}$/.test(cleanPhone(value));
+const cleanPhone = (v) => v.replace(/[\s\-().]/g, '');
+const validSaPhone = (v) => /^(?:\+27|0027|27|0)[1-8]\d{8}$/.test(cleanPhone(v));
 const validators = {
-  name: (v) => (v.length >= 2 ? '' : 'cta.err.name'),
-  business: (v) => (v.length >= 2 ? '' : 'cta.err.business'),
-  type: (v) => (v ? '' : 'cta.err.type'),
-  phone: (v) => (validSaPhone(v) || /^\+\d{8,15}$/.test(cleanPhone(v)) ? '' : 'cta.err.phone'),
-  email: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : 'cta.err.email'),
+  name: (v) => (v.length >= 2 ? '' : 'start.err.name'),
+  business: (v) => (v.length >= 2 ? '' : 'start.err.business'),
+  type: (v) => (v ? '' : 'start.err.type'),
+  phone: (v) => (validSaPhone(v) || /^\+\d{8,15}$/.test(cleanPhone(v)) ? '' : 'start.err.phone'),
+  email: (v) => (!v || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : 'start.err.email'),
 };
 const control = (name) => form.elements.namedItem(name);
 const value = (name) => String(control(name).value || '').trim();
@@ -186,8 +225,20 @@ Object.keys(validators).forEach((name) => {
   input.addEventListener('input', () => { if (input.getAttribute('aria-invalid') === 'true') validateField(name); });
   input.addEventListener('change', () => { if (submitted) validateField(name); });
 });
-function demoLink() {
-  const lines = [tr('cta.wa.intro'), '', `${tr('cta.name')}: ${value('name')}`, `${tr('cta.business')}: ${value('business')}`, `${tr('cta.type')}: ${value('type')}`, `${tr('cta.phone')}: ${value('phone')}`, `${tr('cta.email')}: ${value('email')}`];
+$$('[data-plan]').forEach((link) => link.addEventListener('click', () => { control('plan').value = link.dataset.plan; }));
+function trialLink() {
+  const typeOption = control('type').selectedOptions[0];
+  const when = form.querySelector('input[name="when"]:checked');
+  const lines = [
+    tr('start.wa.intro'), '',
+    `${tr('start.name')}: ${value('name')}`,
+    `${tr('start.business')}: ${value('business')}`,
+    `${tr('start.type')}: ${typeOption ? typeOption.textContent : ''}`,
+    `${tr('start.phone')}: ${value('phone')}`,
+  ];
+  if (value('email')) lines.push(`${tr('start.email').replace(/\s*\(.*\)$/, '')}: ${value('email')}`);
+  lines.push(`${tr('start.when')} ${tr(when && when.value === 'all' ? 'start.when.all' : 'start.when.busy')}`);
+  if (value('plan')) lines.push(`Plan: ${value('plan')}`);
   return `https://wa.me/${waDigits(setting('whatsapp'))}?text=${encodeURIComponent(lines.join('\n'))}`;
 }
 form.addEventListener('submit', (event) => {
@@ -195,31 +246,41 @@ form.addEventListener('submit', (event) => {
   submitted = true;
   const invalid = Object.keys(validators).filter((name) => !validateField(name));
   if (invalid.length) { control(invalid[0]).focus(); return; }
-  const link = demoLink();
-  $('#success-whatsapp').setAttribute('href', link);
+  const link = trialLink();
+  $('#start-whatsapp').setAttribute('href', link);
   form.hidden = true;
   success.hidden = false;
   success.focus();
   window.open(link, '_blank', 'noopener');
 });
-$('#success-edit').addEventListener('click', () => { success.hidden = true; form.hidden = false; control('name').focus(); });
+$('#start-edit').addEventListener('click', () => { success.hidden = true; form.hidden = false; control('name').focus(); });
 
-/* ---------------------------------------------------------------- Live voice demo */
+/* ---------------------------------------------------------------- Live demo */
 const demoBox = $('#demo-box');
 const micButton = $('#mic-button');
 const micStatus = $('#mic-status');
 const micTimer = $('#mic-timer');
 const transcript = $('#transcript');
 const transcriptEmpty = $('#transcript-empty');
+const summary = $('#live-summary');
+let business = 'dentist';
 let call = null;
 let agentLine = null;
 let pendingUser = null;
+let lastEvents = null;
+let maxSeconds = 180;
+
+$$('[data-biz]').forEach((chip) => chip.addEventListener('click', () => {
+  if (call) return; // do not switch business in the middle of a call
+  business = chip.dataset.biz;
+  $$('[data-biz]').forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+}));
 
 function showDemo(state) {
   demoBox.dataset.state = state;
   $$('[data-show]', demoBox).forEach((el) => { el.hidden = el.dataset.show !== state; });
 }
-const clock = (seconds) => `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+const clock = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 function setMic(state) {
   micButton.dataset.state = state;
   micButton.disabled = state === 'busy';
@@ -231,12 +292,11 @@ function setMic(state) {
 function addLine(who) {
   transcriptEmpty.hidden = true;
   const li = document.createElement('li');
-  li.className = `flex flex-col ${who === 'you' ? 'items-end' : 'items-start'}`;
+  li.className = `t-line${who === 'you' ? ' is-you' : ''}`;
   const label = document.createElement('span');
-  label.className = 'who';
-  say(label, who === 'you' ? 'try.you' : 'try.ai');
+  label.className = 'cap-who';
+  say(label, who === 'you' ? 'try.you' : 'stage.ai');
   const bubble = document.createElement('p');
-  bubble.className = `bubble ${who === 'you' ? 'bubble-you' : 'bubble-ai'}`;
   li.append(label, bubble);
   transcript.append(li);
   return { li, bubble };
@@ -246,27 +306,42 @@ function addNote(key) {
   const li = document.createElement('li');
   li.className = 'flex';
   const note = document.createElement('p');
-  note.className = 'bubble-note';
+  note.className = 't-note';
   say(note, key);
   li.append(note);
   transcript.append(li);
   transcript.scrollTop = transcript.scrollHeight;
 }
 const scrollTranscript = () => { transcript.scrollTop = transcript.scrollHeight; };
+const BUSINESS_NAMES = { dentist: 'Milkwood Dental', salon: 'Studio Lumi', physio: 'Harbour Physio', plumber: 'Khoza Plumbing' };
+function showSummary(events) {
+  lastEvents = events;
+  const now = new Intl.DateTimeFormat('en-GB', { timeZone: 'Africa/Johannesburg', hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date());
+  const msgs = messagesFor(events, { business: BUSINESS_NAMES[business], when: now }, tr, locale());
+  const text = $('#live-summary-text');
+  if (msgs.owner) { text.removeAttribute('data-i18n'); text.textContent = msgs.owner; } else say(text, 'try.summary.none');
+  summary.hidden = false;
+}
 
 const ERROR_KEYS = { no_mic_support: 'try.err.nomic', mic_denied: 'try.err.mic', busy: 'try.err.busy', rate_limited: 'try.err.limit', daily_limit: 'try.err.limit', network: 'try.err.network' };
 const END_KEYS = { user: 'try.status.ended', time_limit: 'try.status.timeup', network: 'try.err.network', left_page: 'try.status.ended' };
 
 async function beginCall() {
+  if (stage) stage.pauseSound();
+  if (recordings) recordings.pause();
   setMic('busy');
   say(micStatus, 'try.status.connecting');
   transcript.replaceChildren();
   transcriptEmpty.hidden = false;
+  summary.hidden = true;
+  lastEvents = null;
   agentLine = null;
   pendingUser = null;
+  let events = [];
   try {
     call = await startCall({
       apiBase: API,
+      business,
       handlers: {
         state(name, detail) {
           if (name === 'live') { setMic('live'); say(micStatus, 'try.status.live'); }
@@ -275,6 +350,7 @@ async function beginCall() {
             if (pendingUser && !pendingUser.bubble.textContent) pendingUser.li.remove();
             setMic('idle');
             say(micStatus, END_KEYS[detail] || 'try.status.ended');
+            showSummary(events);
           }
         },
         timer(left) { micTimer.textContent = clock(left); },
@@ -289,6 +365,16 @@ async function beginCall() {
           if (!pendingUser) { pendingUser = addLine('you'); pendingUser.li.hidden = true; }
         },
         userText(text) {
+          // The provider sometimes repeats the previous chunk at the start of the next one: merge them.
+          const last = transcript.lastElementChild;
+          const lastText = last && last.classList.contains('is-you') ? last.querySelector('p').textContent : '';
+          if (lastText && text.startsWith(lastText)) {
+            if (pendingUser && pendingUser.li !== last) pendingUser.li.remove();
+            last.querySelector('p').textContent = text;
+            pendingUser = null;
+            scrollTranscript();
+            return;
+          }
           if (!pendingUser) pendingUser = addLine('you');
           pendingUser.li.hidden = false;
           pendingUser.bubble.textContent = text;
@@ -296,49 +382,20 @@ async function beginCall() {
           scrollTranscript();
         },
         tool() { addNote('try.tool'); },
+        events(list) { events = list; },
       },
     });
   } catch (error) {
     call = null;
     setMic('idle');
-    micTimer.textContent = clock(180);
+    micTimer.textContent = clock(maxSeconds);
     if (error.code === 'not_configured') { showDemo('off'); return; }
     say(micStatus, ERROR_KEYS[error.code] || 'try.err.generic');
   }
 }
 micButton.addEventListener('click', () => { if (call) call.end('user'); else if (micButton.dataset.state !== 'busy') beginCall(); });
 
-// Sample recordings, used when the live demo is not available.
-const sampleAudio = $('#sample-audio');
-let currentSample = null;
-const sampleClock = (s) => clock(Math.floor(Number.isFinite(s) ? s : 0));
-function paintSamples() {
-  $$('.sample').forEach((row) => {
-    const active = row === currentSample;
-    const playing = active && !sampleAudio.paused && !sampleAudio.ended;
-    const button = $('.sample-play', row);
-    button.setAttribute('aria-pressed', String(playing));
-    $('[data-icon="play"]', button).hidden = playing;
-    $('[data-icon="pause"]', button).hidden = !playing;
-    say($('[data-role="verb"]', button), playing ? 'try.sample.pause' : 'try.sample.play');
-    const ratio = active && sampleAudio.duration ? sampleAudio.currentTime / sampleAudio.duration : 0;
-    $('.sample-bar span', row).style.width = `${(ratio * 100).toFixed(1)}%`;
-    $('.sample-time', row).textContent = active ? sampleClock(sampleAudio.currentTime) : '0:00';
-  });
-}
-$$('.sample').forEach((row) => {
-  $('.sample-play', row).addEventListener('click', () => {
-    if (currentSample !== row) {
-      currentSample = row;
-      sampleAudio.src = row.dataset.src;
-      sampleAudio.play().catch(() => {});
-    } else if (sampleAudio.paused) sampleAudio.play().catch(() => {}); else sampleAudio.pause();
-    paintSamples();
-  });
-});
-['play', 'pause', 'ended', 'timeupdate', 'error'].forEach((name) => sampleAudio.addEventListener(name, paintSamples));
-
-// Phone test (Twilio). Only shown when the backend says it is configured.
+// Phone test (Twilio): only shown when the backend says it is set up.
 const callForm = $('#call-form');
 const callStatus = $('#call-status');
 const CALL_KEYS = { bad_number: 'try.call.bad', rate_limited: 'try.call.limit', unverified_number: 'try.call.unverified', busy: 'try.err.busy' };
@@ -352,7 +409,7 @@ callForm.addEventListener('submit', async (event) => {
   say($('#call-button-label'), 'try.call.sending');
   say(callStatus, null);
   try {
-    const res = await fetch(`${API}/api/demo/call-me`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ phone: input.value }) });
+    const res = await fetch(`${API}/api/demo/call-me`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ phone: input.value, business }) });
     const data = await res.json().catch(() => ({}));
     say(callStatus, res.ok ? 'try.call.ok' : (CALL_KEYS[data.code] || 'try.call.fail'));
   } catch {
@@ -371,19 +428,26 @@ async function checkDemo() {
     const health = await res.json();
     if (!res.ok || !health.ok) throw new Error('unhealthy');
     showDemo(health.voice && health.voice.configured && micSupported() ? 'live' : 'off');
-    if (health.demo && health.demo.maxSeconds) micTimer.textContent = clock(health.demo.maxSeconds);
+    if (health.demo && health.demo.maxSeconds) { maxSeconds = health.demo.maxSeconds; micTimer.textContent = clock(maxSeconds); }
     if (health.phone && health.phone.configured && health.phone.number) {
-      $('#dial-number').textContent = health.phone.number.replace(/^(\+27)(\d{2})(\d{3})(\d{4})$/, '$1 $2 $3 $4');
+      const pretty = health.phone.number.replace(/^\+27(\d{2})(\d{3})(\d{4})$/, '0$1 $2 $3');
+      $('#dial-number').textContent = pretty;
       $('#dial-link').setAttribute('href', `tel:${health.phone.number}`);
       $('#phone-test').hidden = false;
+      const header = $('#header-demo');
+      header.setAttribute('href', `tel:${health.phone.number}`);
+      header.dataset.ready = 'true';
     }
   } catch {
-    showDemo('off'); // no backend reachable: show the sample calls instead of a broken demo
+    showDemo('off'); // no backend reachable: the recorded calls still play
   }
+  const header = $('#header-demo');
+  if (header.dataset.ready !== 'true') header.remove(); // no demo line to call yet
 }
 
 /* ---------------------------------------------------------------- Start */
 setMic('idle');
+updateCalc();
 applyLanguage(store.get('fd-lang') || 'en', false);
 checkDemo();
 
@@ -399,5 +463,4 @@ if (/^G-[A-Z0-9]{6,}$/.test(gaId) && gaId !== 'G-XXXXXXXXXX') {
   window.gtag('js', new Date());
   window.gtag('config', gaId, { anonymize_ip: true });
 }
-
-export { LANGUAGES };
+window.__frontDesk = { stage: () => stage, recordings: () => recordings };

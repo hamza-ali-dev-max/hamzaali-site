@@ -30,7 +30,7 @@ const banned = html.match(/[—–]|lorem ipsum/i);
 if (banned) throw new Error(`Banned text in page: ${JSON.stringify(html.slice(banned.index - 50, banned.index + 20))}`);
 fs.writeFileSync(path.join(dist, 'index.html'), html);
 
-// 2. JavaScript (the map code is split out and only loads when the map scrolls into view)
+// 2. JavaScript
 await esbuild.build({
   entryPoints: [path.join(web, 'src', 'main.js')],
   outdir: path.join(dist, 'assets'),
@@ -44,9 +44,9 @@ await esbuild.build({
   legalComments: 'none',
 });
 
-// 3. CSS: Tailwind plus Leaflet's stylesheet in one file
+// 3. CSS: Tailwind
 const tmpCss = path.join(dist, 'assets', '.app.src.css');
-fs.writeFileSync(tmpCss, `${fs.readFileSync(path.join(web, 'src', 'styles.css'), 'utf8')}\n${fs.readFileSync(path.join(root, 'node_modules', 'leaflet', 'dist', 'leaflet.css'), 'utf8').replace(/url\(images\/[^)]+\)/g, 'none')}`);
+fs.copyFileSync(path.join(web, 'src', 'styles.css'), tmpCss);
 execFileSync(path.join(root, 'node_modules', '.bin', 'tailwindcss'), ['-c', path.join(web, 'tailwind.config.cjs'), '-i', tmpCss, '-o', path.join(dist, 'assets', 'app.css'), '--minify'], { cwd: root, stdio: ['ignore', 'ignore', 'pipe'] });
 fs.rmSync(tmpCss);
 

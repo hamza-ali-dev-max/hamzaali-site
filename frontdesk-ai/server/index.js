@@ -11,7 +11,7 @@ import crypto from 'node:crypto';
 import { WebSocketServer } from 'ws';
 import { loadConfig, phoneConfigured } from './config.js';
 import { createVoiceProvider } from './providers/index.js';
-import { buildInstructions, TOOLS, OPENING_PROMPT } from './agent.js';
+import { buildInstructions, TOOLS, OPENING_PROMPT, businessKey } from './agent.js';
 import { createCalendar } from './calendar.js';
 import { createLimiter, log, usd } from './limits.js';
 import { createPhone } from './phone.js';
@@ -71,11 +71,13 @@ export function createApp(cfg = loadConfig()) {
     clearTimeout(session.timer);
     slots.release(`web:${id}`);
     const seconds = Math.min(cfg.demo.maxSeconds + 30, Math.round((Date.now() - session.startedAt) / 1000));
-    log('demo_session_end', { sessionId: id, reason, seconds, voiceUsd: usd(seconds, cfg.voice.usdPerMinute), bookings: session.calendar.bookings().length });
+    log('demo_session_end', { sessionId: id, business: session.calendar.business, reason, seconds, voiceUsd: usd(seconds, cfg.voice.usdPerMinute), bookings: session.calendar.bookings().length });
     return true;
   }
 
   async function startSession(req, res) {
+    const body = await readJson(req);
+    const business = businessKey(String(body.business || ''));
     if (!provider.configured) {
       return send(req, res, 503, { code: 'not_configured', message: 'The live demo is not available right now.' });
     }
@@ -98,15 +100,15 @@ export function createApp(cfg = loadConfig()) {
     }
     try {
       const connection = await provider.createBrowserSession({
-        instructions: buildInstructions({ channel: 'browser', maxSeconds: cfg.demo.maxSeconds }),
+        instructions: buildInstructions({ business, channel: 'browser', maxSeconds: cfg.demo.maxSeconds }),
         tools: TOOLS,
         ttlSeconds: cfg.demo.maxSeconds + 60,
       });
-      const session = { startedAt: Date.now(), calendar: createCalendar(), timer: null };
+      const session = { startedAt: Date.now(), calendar: createCalendar({ business }), timer: null };
       session.timer = setTimeout(() => endSession(id, 'expired'), (cfg.demo.maxSeconds + 30) * 1000);
       sessions.set(id, session);
-      log('demo_session_start', { sessionId: id, provider: provider.name });
-      return send(req, res, 200, { sessionId: id, maxSeconds: cfg.demo.maxSeconds, provider: provider.name, openingPrompt: OPENING_PROMPT, connection });
+      log('demo_session_start', { sessionId: id, business, provider: provider.name });
+      return send(req, res, 200, { sessionId: id, business, maxSeconds: cfg.demo.maxSeconds, provider: provider.name, openingPrompt: OPENING_PROMPT, connection });
     } catch (error) {
       slots.release(`web:${id}`);
       log('demo_session_error', { message: error.message, status: error.status });
@@ -121,7 +123,7 @@ export function createApp(cfg = loadConfig()) {
     if (!limiter.take(`tool:${body.sessionId}`, 30, HOUR).ok) return send(req, res, 429, { code: 'rate_limited', message: 'Too many requests.' });
     const result = session.calendar.run(String(body.name || ''), body.args && typeof body.args === 'object' ? body.args : {});
     log('demo_tool', { channel: 'browser', sessionId: body.sessionId, tool: body.name, ok: result.ok });
-    return send(req, res, 200, { result });
+    return send(req, res, 200, { result, events: session.calendar.events() });
   }
 
   // ---------------------------------------------------------------- static files
@@ -190,13 +192,13 @@ export function createApp(cfg = loadConfig()) {
       }
       case 'POST /api/demo/call-me': {
         const body = await readJson(req);
-        const result = await phone.callMe({ phone: body.phone, ip: clientIp(req) });
+        const result = await phone.callMe({ phone: body.phone, business: body.business, ip: clientIp(req) });
         return send(req, res, result.status, result.body, result.body.retryAfterSeconds ? { 'Retry-After': String(result.body.retryAfterSeconds) } : {});
       }
       case 'POST /api/twilio/voice':
       case 'POST /api/twilio/status': {
         const params = await readForm(req);
-        const args = { params, url: `${cfg.publicUrl}${url.pathname}${url.search}`, signature: req.headers['x-twilio-signature'] };
+        const args = { params, query: Object.fromEntries(url.searchParams), url: `${cfg.publicUrl}${url.pathname}${url.search}`, signature: req.headers['x-twilio-signature'] };
         const result = route.endsWith('voice') ? phone.voiceWebhook(args) : phone.statusWebhook(args);
         res.writeHead(result.status, { 'Content-Type': result.body.startsWith('<?xml') ? 'text/xml; charset=utf-8' : 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' });
         return res.end(result.body);

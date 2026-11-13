@@ -1,0 +1,318 @@
+[
+  {
+    "id": "dentist",
+    "business": "dentist",
+    "name": "Milkwood Dental",
+    "area": "Gardens, Cape Town",
+    "owner": "Dr Naidoo",
+    "when": "Tuesday 19:02",
+    "situation": "The practice is closed.",
+    "title": "A cracked tooth, after hours",
+    "file": "audio/call-dentist.mp3",
+    "duration": 48,
+    "recorded": "2026-11-13",
+    "lines": [
+      {
+        "who": "ai",
+        "text": "Good evening, you've reached Milkwood Dental, Gardens. I'm the practice's AI assistant. How can I help you?",
+        "t": 1.5
+      },
+      {
+        "who": "caller",
+        "text": "Hi. I cracked a tooth at supper and it is quite sore. Can someone see me tomorrow morning?",
+        "t": 8.9,
+        "heard": "Hi, I cracked a tooth at supper and it is quite sore. Can someone see me tomorrow morning?"
+      },
+      {
+        "who": "ai",
+        "text": "That sounds painful, let me check what we have open tomorrow morning.",
+        "t": 15.6
+      },
+      {
+        "who": "ai",
+        "text": "Tomorrow morning we have eight o'clock with Dr Naidoo, half past eight with Dr Petersen, or nine o'clock with Dr Petersen. Which would you prefer?",
+        "t": 19.8
+      },
+      {
+        "who": "caller",
+        "text": "The earliest one, please.",
+        "t": 29.8,
+        "heard": "The earliest one, please."
+      },
+      {
+        "who": "ai",
+        "text": "Eight o'clock with Dr Naidoo. Can I get your name?",
+        "t": 31.4
+      },
+      {
+        "who": "caller",
+        "text": "It is Aisha Jacobs.",
+        "t": 35,
+        "heard": "It is Aisha Jacobs."
+      },
+      {
+        "who": "ai",
+        "text": "Booking that for you.",
+        "t": 36.5
+      },
+      {
+        "who": "ai",
+        "text": "You're booked for Wednesday the eighteenth of November at eight o'clock with Dr Naidoo for the cracked tooth, Aisha Jacobs. You'll get a WhatsApp confirmation shortly.",
+        "t": 38.2
+      }
+    ],
+    "events": [
+      {
+        "type": "check_availability",
+        "t": 19.8,
+        "args": {
+          "date": "2026-11-18",
+          "part_of_day": "morning"
+        },
+        "result": {
+          "ok": true,
+          "date": "2026-11-18",
+          "day": "Wednesday, 18 November",
+          "closed": false,
+          "slots": [
+            {
+              "time": "08:00",
+              "with": "Dr Naidoo"
+            },
+            {
+              "time": "08:30",
+              "with": "Dr Petersen"
+            },
+            {
+              "time": "09:00",
+              "with": "Dr Petersen"
+            },
+            {
+              "time": "09:30",
+              "with": "Dr Naidoo"
+            },
+            {
+              "time": "11:00",
+              "with": "Dr Naidoo"
+            },
+            {
+              "time": "11:30",
+              "with": "Dr Petersen"
+            }
+          ],
+          "more_available": false
+        }
+      },
+      {
+        "type": "book_appointment",
+        "t": 38.2,
+        "args": {
+          "date": "2026-11-18",
+          "time": "08:00",
+          "service": "cracked tooth",
+          "patient_name": "Aisha Jacobs"
+        },
+        "result": {
+          "ok": true,
+          "status": "confirmed",
+          "type": "booking",
+          "reference": "DEMO-2764",
+          "date": "2026-11-18",
+          "day": "Wednesday, 18 November",
+          "time": "08:00",
+          "with": "Dr Naidoo",
+          "service": "cracked tooth",
+          "name": "Aisha Jacobs",
+          "note": "Demo only. Nothing is saved. In real use the caller now gets a WhatsApp confirmation."
+        }
+      }
+    ]
+  },
+  {
+    "id": "salon",
+    "business": "salon",
+    "name": "Studio Lumi",
+    "area": "Observatory, Cape Town",
+    "owner": "Naledi",
+    "when": "Saturday 10:40",
+    "situation": "Both stylists have clients in the chair.",
+    "title": "A price and a booking, on a busy Saturday",
+    "file": "audio/call-salon.mp3",
+    "duration": 52,
+    "recorded": "2026-11-13",
+    "lines": [
+      {
+        "who": "ai",
+        "text": "Good morning, you've reached Studio Lumi, the AI assistant. How can I help you today?",
+        "t": 1.5
+      },
+      {
+        "who": "caller",
+        "text": "Hi there. How much is a cut and blow-dry? And do you have anything next Saturday morning?",
+        "t": 7.3,
+        "heard": "Hi there, how much is a cut and blow-dry, and do you have anything next Saturday morning?"
+      },
+      {
+        "who": "ai",
+        "text": "A cut and blow-dry is three hundred and eighty rand. Let me check next Saturday for you.",
+        "t": 13.8
+      },
+      {
+        "who": "ai",
+        "text": "Next Saturday morning the first openings are eight o'clock with Carla, half past eight with Naledi, or half past nine with Carla. Which would you like?",
+        "t": 19.6
+      },
+      {
+        "who": "caller",
+        "text": "The first one sounds great.",
+        "t": 29.9,
+        "heard": "The first one sounds great."
+      },
+      {
+        "who": "ai",
+        "text": "That's eight o'clock with Carla. Can I get your name?",
+        "t": 32.2
+      },
+      {
+        "who": "caller",
+        "text": "Lerato. Lerato Mokoena.",
+        "t": 35.7,
+        "heard": "Lerato. Lerato Mokwena."
+      },
+      {
+        "who": "ai",
+        "text": "Saving that under Lerato Mokwena.",
+        "t": 38.5
+      },
+      {
+        "who": "ai",
+        "text": "You're booked for Saturday the twenty-eighth of November at eight o'clock in the morning with Carla for a cut and blow-dry, Lerato Mokwena. You'll get a WhatsApp confirmation shortly.",
+        "t": 41.5
+      }
+    ],
+    "events": [
+      {
+        "type": "check_availability",
+        "t": 19.6,
+        "args": {
+          "date": "2026-11-28",
+          "part_of_day": "morning"
+        },
+        "result": {
+          "ok": true,
+          "date": "2026-11-28",
+          "day": "Saturday, 28 November",
+          "closed": false,
+          "slots": [
+            {
+              "time": "08:00",
+              "with": "Carla"
+            },
+            {
+              "time": "08:30",
+              "with": "Naledi"
+            },
+            {
+              "time": "09:30",
+              "with": "Carla"
+            },
+            {
+              "time": "10:30",
+              "with": "Carla"
+            },
+            {
+              "time": "11:30",
+              "with": "Naledi"
+            }
+          ],
+          "more_available": false
+        }
+      },
+      {
+        "type": "book_appointment",
+        "t": 41.5,
+        "args": {
+          "date": "2026-11-28",
+          "time": "08:00",
+          "service": "Cut and blow-dry",
+          "patient_name": "Lerato Mokwena"
+        },
+        "result": {
+          "ok": true,
+          "status": "confirmed",
+          "type": "booking",
+          "reference": "DEMO-9926",
+          "date": "2026-11-28",
+          "day": "Saturday, 28 November",
+          "time": "08:00",
+          "with": "Carla",
+          "service": "Cut and blow-dry",
+          "name": "Lerato Mokwena",
+          "note": "Demo only. Nothing is saved. In real use the caller now gets a WhatsApp confirmation."
+        }
+      }
+    ]
+  },
+  {
+    "id": "plumber",
+    "business": "plumber",
+    "name": "Khoza Plumbing",
+    "area": "the northern suburbs of Cape Town",
+    "owner": "Thabo",
+    "when": "Sunday 21:15",
+    "situation": "Thabo is off duty.",
+    "title": "A burst geyser on a Sunday night",
+    "file": "audio/call-plumber.mp3",
+    "duration": 41,
+    "recorded": "2026-11-13",
+    "lines": [
+      {
+        "who": "ai",
+        "text": "Good evening, you've reached Khoza Plumbing, the AI assistant speaking. It's just after nine on a Sunday night, so the workshop is closed, but I can take a message for Thabo or put you through to him if it's urgent. What can I do for you?",
+        "t": 1.5
+      },
+      {
+        "who": "caller",
+        "text": "Hi, sorry to phone so late. My geyser has burst and there is water coming through the ceiling. Can someone come out?",
+        "t": 15,
+        "heard": "Hi, sorry to phone so late. My geyser has burst and there is water coming through the ceiling. Can someone come out?"
+      },
+      {
+        "who": "ai",
+        "text": "That sounds urgent. Can I get your name and a callback number in case the line drops?",
+        "t": 22.4
+      },
+      {
+        "who": "caller",
+        "text": "It is Pieter van Wyk, in Durbanville. My number is 082 555 0147.",
+        "t": 27.5,
+        "heard": "It is Pieter van Wyk in Durbanville. My number is 825550147."
+      },
+      {
+        "who": "ai",
+        "text": "Putting you through to Thabo now.",
+        "t": 33.6
+      },
+      {
+        "who": "ai",
+        "text": "Thabo is ringing now, and he has your name, number and the geyser details on WhatsApp.",
+        "t": 35.9
+      }
+    ],
+    "events": [
+      {
+        "type": "transfer_to_owner",
+        "t": 35.9,
+        "args": {
+          "reason": "Burst geyser, water through ceiling",
+          "caller_name": "Pieter van Wyk"
+        },
+        "result": {
+          "ok": true,
+          "status": "transferring",
+          "note": "The line to Thabo is ringing now. Tell the caller in one short sentence that you are putting them through to Thabo, and that he also has their details on WhatsApp."
+        }
+      }
+    ]
+  }
+]

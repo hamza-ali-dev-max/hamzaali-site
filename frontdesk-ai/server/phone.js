@@ -4,7 +4,7 @@
 // Either way Twilio opens a Media Stream (WebSocket) to /api/twilio/stream and this file
 // bridges the call audio to the same voice agent the browser demo uses.
 import crypto from 'node:crypto';
-import { buildInstructions, TOOLS, OPENING_PROMPT } from './agent.js';
+import { buildInstructions, TOOLS, OPENING_PROMPT, businessKey } from './agent.js';
 import { createCalendar } from './calendar.js';
 import { log, usd, maskPhone } from './limits.js';
 import { phoneConfigured } from './config.js';
@@ -52,7 +52,7 @@ export function createPhone({ cfg, provider, limiter, slots }) {
   };
 
   // ---- Call-me: ring the visitor -------------------------------------------------------
-  async function callMe({ phone, ip }) {
+  async function callMe({ phone, business, ip }) {
     if (!enabled()) return { status: 503, body: { code: 'phone_unavailable', message: 'Phone testing is not set up.' } };
     const number = normalisePhone(phone, cfg.phone.allowedPrefixes);
     if (!number) return { status: 400, body: { code: 'bad_number', message: 'Enter a South African number, for example 082 123 4567.' } };
@@ -65,7 +65,7 @@ export function createPhone({ cfg, provider, limiter, slots }) {
     const form = new URLSearchParams({
       To: number,
       From: cfg.phone.number,
-      Url: `${cfg.publicUrl}/api/twilio/voice`,
+      Url: `${cfg.publicUrl}/api/twilio/voice?business=${businessKey(String(business || ''))}`,
       Method: 'POST',
       StatusCallback: `${cfg.publicUrl}/api/twilio/status`,
       StatusCallbackMethod: 'POST',
@@ -105,7 +105,7 @@ export function createPhone({ cfg, provider, limiter, slots }) {
   }
 
   // ---- Twilio voice webhook: answer with TwiML that opens the media stream --------------
-  function voiceWebhook({ params, url, signature }) {
+  function voiceWebhook({ params, query = {}, url, signature }) {
     if (!phoneConfigured(cfg)) return { status: 503, body: sayAndHangUp('This demo line is not set up yet.') };
     if (!validTwilioSignature(cfg.phone.authToken, signature, url, params)) {
       log('twilio_bad_signature', { path: 'voice' });
@@ -128,7 +128,7 @@ export function createPhone({ cfg, provider, limiter, slots }) {
     const wsUrl = `${cfg.publicUrl.replace(/^http/, 'ws')}/api/twilio/stream`;
     return {
       status: 200,
-      body: twiml(`<Connect><Stream url="${xml(wsUrl)}"><Parameter name="token" value="${xml(streamToken(callSid))}"/></Stream></Connect>`),
+      body: twiml(`<Connect><Stream url="${xml(wsUrl)}"><Parameter name="token" value="${xml(streamToken(callSid))}"/><Parameter name="business" value="${xml(businessKey(String(query.business || '')))}"/></Stream></Connect>`),
     };
   }
 
@@ -160,7 +160,7 @@ export function createPhone({ cfg, provider, limiter, slots }) {
     let timer = null;
     let startedAt = 0;
     let ended = false;
-    const calendar = createCalendar();
+    let calendar = createCalendar();
 
     const end = (reason) => {
       if (ended) return;
@@ -182,9 +182,11 @@ export function createPhone({ cfg, provider, limiter, slots }) {
         if (voice || !validStreamToken(callSid, msg.start?.customParameters?.token) || !provider.configured) { end('rejected'); return; }
         if (!slots.acquire(`call:${callSid}`)) { end('busy'); return; }
         startedAt = Date.now();
+        const business = businessKey(String(msg.start?.customParameters?.business || ''));
+        calendar = createCalendar({ business });
         timer = setTimeout(() => end('time_limit'), cfg.demo.maxSeconds * 1000);
         voice = provider.connectServerSession({
-          instructions: buildInstructions({ channel: 'phone', maxSeconds: cfg.demo.maxSeconds }),
+          instructions: buildInstructions({ business, channel: 'phone', maxSeconds: cfg.demo.maxSeconds }),
           tools: TOOLS,
           format: 'pcmu',
           openingPrompt: OPENING_PROMPT,
@@ -200,7 +202,7 @@ export function createPhone({ cfg, provider, limiter, slots }) {
             else if (event.type === 'closed') end(event.reason === 'ended' ? 'ended' : 'voice_closed');
           },
         });
-        log('phone_session_start', { callSid, direction: calls.get(callSid)?.direction });
+        log('phone_session_start', { callSid, business, direction: calls.get(callSid)?.direction });
       } else if (msg.event === 'media') {
         if (voice && msg.media?.payload) voice.sendAudio(msg.media.payload);
       } else if (msg.event === 'stop') {

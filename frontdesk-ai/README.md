@@ -1,40 +1,56 @@
 # Front Desk AI
 
-The website for Front Desk AI, an AI receptionist for small businesses in South Africa.
+The website for Front Desk AI, an AI receptionist for small businesses in South Africa. Version 2, rebuilt from the research in `RESEARCH.md`.
 
 It has two parts:
 
-1. **The website** (`web/`): a landing page in English, Afrikaans and isiXhosa, with dark mode, a map, a demo request form and SEO set up.
+1. **The website** (`web/`): a landing page in English and Afrikaans that shows one real call from ring to WhatsApp, with dark mode, recorded sample calls, a live demo, a calculator, pricing and a free-trial form.
 2. **The backend** (`server/`): a small Node server that runs the live voice demo. It talks to the xAI Grok voice API and to Twilio. The xAI key lives only here.
+
+## What changed in v2, and why
+
+| v1 | v2 | Why (see RESEARCH.md) |
+|---|---|---|
+| "AI receptionist" that replaces a salary | "When you can't pick up, we answer": after hours and overflow, alongside your people | In live SA call data about half of calls still needed a person |
+| Three static hero cards on a sky photo | One real recorded call that plays itself: captions, the diary slot filling, WhatsApp to the client and to the owner | The owner's complaint; Goodcall shows the pattern works |
+| Scripted text-to-speech samples | Real recordings of the demo receptionist (Grok voice), captions timed to the audio | Proof beats claims; no SA competitor shows real calls |
+| English, Afrikaans, isiXhosa | English. Afrikaans "in testing". isiXhosa and isiZulu: take a message or transfer | No voice system tested supports them well; see Languages below |
+| One plan, R1,999 plus R2,500 setup | After Hours R999, Front Desk R1,999, multi-branch from R3,999. No setup fee. 14-day free trial | Self-serve rivals charge no setup fee and offer trials |
+| "One recovered booking a month pays for it" | "R67 a day. One extra booking a week pays for it." | The old line was false for salons, physios and dentists |
+| WhatsApp to the owner | WhatsApp to the owner and the client | SA runs on WhatsApp; it beats the "unknown number" problem |
+| "POPIA compliant" badge | An honest FAQ answer: where calls are processed, the operator agreement, deletion on request | Calls go through providers outside SA |
+| Map, stock photos, icon cards, sky blue | Warm paper palette, real artefacts (transcript, diary, WhatsApp), handwritten notes | Template tells; sky and blue are taken by others |
+| One demo receptionist (dentist) | Four: dentist, hair salon, physio, plumber, with message and transfer tools | Visitors test their own kind of business |
 
 ## What is in the box
 
 ```
 frontdesk-ai/
+  RESEARCH.md           The research report and the plan this version follows.
   web/
-    page.mjs            The page layout (all 13 sections). Words come from src/i18n.js.
-    src/i18n.js         EVERY word on the page, in English, Afrikaans and isiXhosa. Edit copy here.
-    src/main.js         Language switcher, dark mode, menu, tabs, FAQ, forms, demo screen.
+    page.mjs            The page layout. Words come from src/i18n.js, calls from src/calls.json.
+    src/i18n.js         EVERY word on the page, in English and Afrikaans. Edit copy here.
+    src/calls.json      The three recorded calls: who said what, when, and what was booked.
+    src/stage.js        The hero "call stage" that plays a recorded call step by step.
+    src/recordings.js   The recorded-calls player with captions that follow the audio.
+    src/whatsapp.js     Turns a call into the WhatsApp messages the owner and client get.
     src/voice.js        The live voice client (microphone in, speech out, transcript).
-    src/map.js          The Leaflet map (loads only when you scroll to it).
-    src/styles.css      Colours, cards, buttons. Light and dark themes.
-    public/             Photos, fonts, sample recordings, share image, site-config.js.
-    public/site-config.js   Contact details and Google Analytics ID. PLACEHOLDERS live here.
-    dist/               The built website (made by "npm run build", not committed).
+    src/main.js         Language, dark mode, menu, tabs, FAQ, calculator, forms, demo states.
+    src/styles.css      Colours, type, the stage, artefacts. Light and dark themes.
+    public/audio/       call-dentist.mp3, call-salon.mp3, call-plumber.mp3 (the recordings).
+    public/site-config.js   Contact details, VAT line, Google Analytics ID. PLACEHOLDERS live here.
   server/
     index.js            Routes: health check, demo sessions, tools, Twilio webhooks, static files.
+    agent.js            The four demo receptionists: persona, facts, rules, tools.
+    calendar.js         The in-memory demo diary, messages and transfers. Nothing is saved.
     config.js           Reads all settings from environment variables.
-    agent.js            The demo receptionist: persona, facts, tools.
-    calendar.js         The in-memory demo calendar. Sample data only, nothing is saved.
     limits.js           Rate limiting and logging.
     phone.js            Twilio: call-me, call-in, media stream bridge, signature checks.
-    providers/xai.js    The xAI Grok voice provider.
-    providers/index.js  Where a new voice provider (Retell, Bland, Vapi) plugs in.
-  scripts/build.mjs     Builds the website.
+    providers/          Voice providers. xai.js today; index.js is where others plug in.
+  scripts/build.mjs     Builds the website into web/dist.
   scripts/og-image.mjs  Makes the share image.
-  tests/                Backend tests, browser tests, and mock xAI and Twilio servers.
-  Dockerfile, docker-compose.yml, Caddyfile     One-container hosting.
-  railway.json, netlify.toml, vercel.json       Hosted deploys.
+  tests/                Backend tests, browser tests, live tests, and mock xAI and Twilio servers.
+  Dockerfile, docker-compose.yml, Caddyfile, railway.json, netlify.toml, vercel.json
   .env.example          Every setting, explained.
 ```
 
@@ -60,20 +76,28 @@ Open `.env` and paste your xAI key after `XAI_API_KEY=`. Then:
 npm run dev
 ```
 
-Open http://localhost:8787. That one command builds the website and starts the backend, which serves both.
+Open http://localhost:8787. Without a key the site still works: the live demo says it isn't switched on yet, and the recorded calls still play.
 
-Without a key the site still works. The demo section shows "live demo unavailable" and plays the sample calls.
+## The recorded calls
+
+The hero and the "Real calls, recorded" player use three real calls to the demo receptionist (Grok Voice 3.0, voice "eve"), recorded on 13 November 2026:
+
+- **Dentist**: a cracked tooth at 19:02 on a Tuesday. It checks the diary and books 08:00 the next morning.
+- **Salon**: a price question and a Saturday booking while both stylists are busy.
+- **Plumber**: a burst geyser on a Sunday night. It takes the name and number, then puts the caller through to the owner.
+
+The caller voices are generated (ElevenLabs, South African voices). The receptionist's side is exactly what Grok said, including one real slip: it heard "Mokoena" as "Mokwena". The page says the businesses and callers are made up.
+
+To replace them with real calls from a pilot client, save the new MP3 over the file in `web/public/audio/` and update the matching entry in `web/src/calls.json`: each line has `who`, `text` and `t` (the second it starts), and each event has its type and time. The hero stage and the captions follow those times.
 
 ## How the live demo works
 
 1. The page asks the backend `GET /api/health` what is set up.
-2. The visitor presses the microphone button. The browser asks for the microphone first.
-3. The backend (`POST /api/demo/session`) asks xAI for a short-lived client secret and sends it to the browser with the session settings. The real key never leaves the server.
-4. The browser connects straight to `wss://api.x.ai/v1/realtime?model=grok-voice-latest` with that secret, sends `session.update`, and streams PCM16 audio at 24 kHz. The transcript shows on screen.
-5. When the receptionist wants to check or book, the browser passes the tool call to the backend (`POST /api/demo/tool`), which runs it on the demo calendar.
-6. The call ends when the visitor ends it or after 3 minutes. The backend logs the duration and the cost.
-
-Checked against the xAI docs on 13 November 2026. Two things differ from older write-ups: audio is set under `session.audio.input.format` and `session.audio.output.format` (for example `{ "type": "audio/pcm", "rate": 24000 }`), and phone audio can use `audio/pcmu` directly, so Twilio audio needs no conversion.
+2. The visitor picks a business (dentist, salon, physio, plumber) and presses the microphone button. The browser asks for the microphone first.
+3. The backend (`POST /api/demo/session`) asks xAI for a short-lived client secret and sends it to the browser with that business's session settings. The real key never leaves the server.
+4. The browser connects straight to `wss://api.x.ai/v1/realtime?model=grok-voice-3.0`, sends `session.update`, and streams PCM16 audio at 24 kHz. The transcript shows on screen.
+5. Tool calls (check the diary, book, take a message, transfer) go to the backend (`POST /api/demo/tool`), which runs them on that session's demo diary and returns what the owner would get on WhatsApp.
+6. When the call ends, the page shows that WhatsApp summary. Calls end after 3 minutes. The backend logs duration and cost.
 
 ### Guardrails that keep the bill small
 
@@ -97,7 +121,13 @@ The limits are kept in memory, which is right for one server. If you ever run se
 
 ### Languages: read this
 
-The page promises English, Afrikaans and isiXhosa. The xAI docs list 20 officially supported languages and **Afrikaans and isiXhosa are not on that list**. The docs say the model "is also capable of conversing in additional languages, with varying degrees of accuracy". In my live test it answered correctly in Afrikaans. isiXhosa is untested. Test both with native speakers before you sell on that promise.
+The page promises English only, and says Afrikaans is in testing. That is deliberate.
+
+- **English** works well. Grok Voice 3.0 tops the independent Artificial Analysis speech ranking (RESEARCH.md, thread 4).
+- **Afrikaans**: xAI does not list it as supported. In our test on 13 November 2026 (a generated Afrikaans caller booking a cleaning), Grok understood the caller and booked correctly in Afrikaans, but drifted into Dutch ("Goeiemorgen", "Donderdagochtend"), first said the wrong date, and heard "Botha" as "Boota". Test it with real Afrikaans callers before promising it.
+- **isiXhosa and isiZulu**: no mainstream voice system handles them well yet (best recognition gets 20 to 34% of isiXhosa words wrong). The receptionist is told to offer a message or a transfer instead.
+
+Before any language goes on the page, make 20 or more real calls with native speakers on Vodacom and MTN, including names, places, numbers, rand amounts and mid-sentence switching.
 
 ### Changing the voice provider later
 
@@ -129,6 +159,8 @@ If any of those four settings is missing, the phone test hides itself and the mi
 **Trial accounts**: a Twilio trial account can only call numbers you have verified in the Twilio console, and it plays a trial message first. Upgrade the account before strangers test with their own numbers. Until then the call-me form tells them to use the microphone or dial in.
 
 A South African Twilio number needs a local business address and documents, and approval takes time. Start that early.
+
+A later option from the research: xAI now accepts phone calls directly over SIP, which would let a Twilio SIP trunk replace the media-stream bridge in `server/phone.js` and lower the per-minute cost. Not built yet, because it cannot be tested without a Twilio account.
 
 ## Going live
 
@@ -202,20 +234,19 @@ To let Twilio reach your computer for phone tests, run a tunnel such as `ngrok h
 |---|---|---|
 | Contact email | `web/public/site-config.js` | `hello@example.com` |
 | Contact phone | `web/public/site-config.js` | `+27 00 000 0000` |
-| WhatsApp number (demo requests go here) | `web/public/site-config.js` | `+27 00 000 0000` |
-| Google Maps link | `web/public/site-config.js` | Cape Town search link |
+| WhatsApp number (trial requests go here) | `web/public/site-config.js` | `+27 00 000 0000` |
+| VAT line under the prices | `web/public/site-config.js` (`vatNote`) | empty (nothing shown) |
 | Google Analytics ID | `web/public/site-config.js` | `G-XXXXXXXXXX` |
 | Domain | `SITE_URL` build setting | `https://frontdeskai.co.za` |
 | Search Console code | `GOOGLE_SITE_VERIFICATION` build setting | `PLACEHOLDER_GOOGLE_SITE_VERIFICATION` |
 | Demo phone number | comes from `TWILIO_PHONE_NUMBER` | hidden until set |
-| Sample recordings | `web/public/audio/*.mp3` | scripted placeholder calls |
 | Phone and email in the structured data | `web/page.mjs` (the `ld` block) | same placeholders |
 
 The red PLACEHOLDER tags on the page disappear by themselves once a value in `site-config.js` is replaced.
 
 ## Being found on Google
 
-Already in place: title and description, one H1, semantic sections, `sitemap.xml`, `robots.txt`, JSON-LD for LocalBusiness and the FAQ, Open Graph and Twitter cards with a share image, self-hosted fonts, lazy-loaded WebP photos with alt text.
+Already in place: title and description, one H1, semantic sections, `sitemap.xml`, `robots.txt`, JSON-LD for LocalBusiness and the FAQ, Open Graph and Twitter cards with a share image, self-hosted fonts, no heavy images.
 
 What you need to finish once the site is on its own domain:
 
@@ -233,20 +264,19 @@ What you need to finish once the site is on its own domain:
 npm test
 ```
 
-14 backend tests: health check, key handling, ephemeral secrets, rate limits, concurrency, the demo calendar, Twilio signatures, the phone bridge and the time cap.
+16 backend tests: health check, key handling, ephemeral secrets, the four businesses, message and transfer tools, rate limits, concurrency, the demo diary, Twilio signatures, the phone bridge and the time cap.
 
 ```bash
 npm run build && npm run test:e2e
 ```
 
-91 browser checks: every link, tab, accordion, form and switch, all three languages, dark mode, the map, the live demo and each failure state, nine screen widths, and an accessibility scan in light and dark. Both suites use mock xAI and Twilio servers (`tests/mocks.mjs`), so they need no keys and cost nothing.
+About 100 browser checks: the copy in both languages, the hero stage (autoplay, pause, sound, sync), recordings, every link, tab, accordion and form, the calculator, the live demo and each failure state, reduced motion, no JavaScript, nine screen widths, and an accessibility scan in light and dark. Both suites use mock xAI and Twilio servers (`tests/mocks.mjs`), so they need no keys and cost nothing.
 
-`tests/live-demo.mjs` runs the microphone demo against the real xAI API with a recorded caller. It needs a running server with a real key.
+`tests/live-demo.mjs` runs the microphone demo against the real xAI API with a recorded caller. `tests/live-site.mjs` smoke-tests a deployed copy.
 
 ## Credits
 
-- Photos: Unsplash (free licence). Photo IDs: sky `1517483000871-1dbf64a6e1c6`, hills `1601134467661-3d775b999c8b`, dental room `1629909615184-74f495363b67`, salon `1521590832167-7bcbfaa6381f`, reception `1519494026892-80bbd2d6fd0d`, bedroom `1631049307264-da0ec9d70304`.
-- Icons: Lucide (ISC) and Simple Icons (CC0) for the WhatsApp, Gmail and Google Maps marks.
-- Map: Leaflet (BSD) with OpenStreetMap tiles and data, © OpenStreetMap contributors. The public OSM tile server is fine for a small site. If traffic grows, switch to a paid tile host.
-- Fonts: Poppins and Nunito Sans (SIL Open Font Licence), served from this site.
+- Fonts: Bricolage Grotesque, Inter and Caveat (SIL Open Font Licence), served from this site.
+- Icons: Lucide (ISC) and Simple Icons (CC0) for the WhatsApp and Gmail marks.
+- Caller voices in the recordings: ElevenLabs. Receptionist voice: xAI Grok Voice 3.0.
 - CSS: Tailwind CSS (MIT).

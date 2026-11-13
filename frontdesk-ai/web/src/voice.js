@@ -164,10 +164,10 @@ async function createAudio(stream) {
 }
 
 // ---- One demo call --------------------------------------------------------------------
-// handlers: state(name, detail), timer(secondsLeft), agentText(text, final), userText(text), userSpeaking(), tool(name)
+// handlers: state(name, detail), timer(secondsLeft), agentText(text, final), userText(text), userSpeaking(), tool(name), events(list)
 // Resolves to { end(reason) }. Rejects with an Error whose .code says what went wrong:
 //   no_mic_support, mic_denied, not_configured, busy, rate_limited, daily_limit, network, provider_error
-export async function startCall({ apiBase, handlers }) {
+export async function startCall({ apiBase, business, handlers }) {
   const fail = (code, message) => Object.assign(new Error(message || code), { code });
   if (!micSupported()) throw fail('no_mic_support');
 
@@ -181,7 +181,7 @@ export async function startCall({ apiBase, handlers }) {
 
   let session;
   try {
-    const res = await fetch(`${apiBase}/api/demo/session`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+    const res = await fetch(`${apiBase}/api/demo/session`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ business }) });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) { stream.getTracks().forEach((t) => t.stop()); throw fail(data.code || 'provider_error', data.message); }
     session = data;
@@ -227,9 +227,10 @@ export async function startCall({ apiBase, handlers }) {
     try {
       const res = await fetch(`${apiBase}/api/demo/tool`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sessionId: session.sessionId, name, args }) });
       const data = await res.json();
-      return data.result || { ok: false, error: data.message || 'The demo calendar is not available.' };
+      if (data.events && handlers.events) handlers.events(data.events);
+      return data.result || { ok: false, error: data.message || 'The demo diary is not available.' };
     } catch {
-      return { ok: false, error: 'The demo calendar is not available right now.' };
+      return { ok: false, error: 'The demo diary is not available right now.' };
     }
   };
 

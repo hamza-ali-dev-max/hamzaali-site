@@ -64,7 +64,7 @@ test('browser demo: ephemeral secret, session config from the docs, tools, clean
   const { sessionId, connection, maxSeconds } = res.body;
   assert.equal(maxSeconds, 180);
   assert.equal(connection.protocol, 'openai-realtime');
-  assert.match(connection.url, /\/v1\/realtime\?model=grok-voice-latest$/);
+  assert.match(connection.url, /\/v1\/realtime\?model=grok-voice-3\.0$/);
   assert.deepEqual(connection.subprotocols, ['xai-client-secret.eph_1']);
   assert.ok(!JSON.stringify(res.body).includes('test-xai-key'), 'the real key must never reach the browser');
   assert.equal(t.mock.state.tokens[0].request.expires_after.seconds, 240);
@@ -73,8 +73,10 @@ test('browser demo: ephemeral secret, session config from the docs, tools, clean
   assert.deepEqual(s.turn_detection, { type: 'server_vad' });
   assert.deepEqual(s.audio.input.format, { type: 'audio/pcm', rate: 24000 });
   assert.deepEqual(s.audio.output.format, { type: 'audio/pcm', rate: 24000 });
-  assert.deepEqual(s.tools.map((x) => x.name), ['check_availability', 'book_appointment']);
+  assert.deepEqual(s.tools.map((x) => x.name), ['check_availability', 'book_appointment', 'take_message', 'transfer_to_owner']);
   assert.match(s.instructions, /Milkwood Dental/);
+  assert.match(s.instructions, /AI assistant/);
+  assert.equal(res.body.business, 'dentist');
 
   // The browser would now connect straight to the voice provider with the secret.
   const ws = new WebSocket(connection.url, connection.subprotocols);
@@ -137,9 +139,35 @@ test('a provider failure is reported cleanly and frees the slot', async () => {
   await t.stop();
 });
 
+test('each demo business gets its own receptionist and diary', async () => {
+  const t = await boot({ DEMO_SESSIONS_PER_IP_PER_HOUR: '20', DEMO_MAX_CONCURRENT: '10' });
+  for (const [business, name] of [['salon', 'Studio Lumi'], ['physio', 'Harbour Physio'], ['plumber', 'Khoza Plumbing'], ['nonsense', 'Milkwood Dental']]) {
+    const res = await json(`${t.base}/api/demo/session`, { method: 'POST', body: { business } });
+    assert.equal(res.status, 200);
+    assert.match(res.body.connection.sessionUpdate.session.instructions, new RegExp(name));
+    assert.equal(res.body.business, business === 'nonsense' ? 'dentist' : business);
+  }
+  await t.stop();
+});
+
+test('tool calls return what the owner would get on WhatsApp', async () => {
+  const t = await boot();
+  const { body } = await json(`${t.base}/api/demo/session`, { method: 'POST', body: { business: 'plumber' } });
+  const msg = await json(`${t.base}/api/demo/tool`, { method: 'POST', body: { sessionId: body.sessionId, name: 'take_message', args: { caller_name: 'Pieter', callback_number: '082 555 0147', message: 'Burst geyser' } } });
+  assert.equal(msg.body.result.ok, true);
+  const transfer = await json(`${t.base}/api/demo/tool`, { method: 'POST', body: { sessionId: body.sessionId, name: 'transfer_to_owner', args: { reason: 'Burst geyser', caller_name: 'Pieter' } } });
+  assert.match(transfer.body.result.note, /demo/);
+  assert.deepEqual(transfer.body.events.map((e) => e.type), ['message', 'transfer']);
+  assert.equal(transfer.body.events[0].number, '082 555 0147');
+  await t.stop();
+});
+
 test('demo calendar: availability, booking, double booking, closed days', () => {
   const now = () => new Date('2026-11-16T07:00:00Z'); // a Monday, 09:00 in Cape Town
-  const cal = createCalendar(now);
+  const cal0 = createCalendar({ business: 'dentist', now });
+  const cal = {};
+  cal.checkAvailability = (a) => cal0.run('check_availability', a);
+  cal.bookAppointment = (a) => cal0.run('book_appointment', a);
   const day = cal.checkAvailability({ date: '2026-11-17' });
   assert.equal(day.ok, true);
   assert.ok(day.slots.length > 0 && day.slots.length <= 6);
@@ -152,7 +180,8 @@ test('demo calendar: availability, booking, double booking, closed days', () => 
   assert.equal(cal.checkAvailability({ date: '2026-11-22' }).closed, true); // Sunday
   assert.equal(cal.checkAvailability({ date: '2026-11-01' }).ok, false);    // in the past
   assert.equal(cal.checkAvailability({ date: 'tomorrow' }).ok, false);
-  assert.equal(createCalendar(now).checkAvailability({ date: '2026-11-17' }).slots[0].time, slot.time, 'each session gets a fresh calendar');
+  assert.equal(createCalendar({ business: 'dentist', now }).run('check_availability', { date: '2026-11-17' }).slots[0].time, slot.time, 'each session gets a fresh diary');
+  assert.equal(createCalendar({ business: 'salon', now }).run('check_availability', { date: '2026-11-16' }).closed, true, 'the salon is closed on Mondays');
 });
 
 test('phone numbers are normalised and limited to South Africa by default', () => {
@@ -188,7 +217,7 @@ test('call-me: validates the number, places the call, one call per number per ho
   const call = t.mock.state.twilioCalls[0];
   assert.equal(call.form.To, '+27821234567');
   assert.equal(call.form.From, '+27210000000');
-  assert.equal(call.form.Url, `${t.app.cfg.publicUrl}/api/twilio/voice`);
+  assert.equal(call.form.Url, `${t.app.cfg.publicUrl}/api/twilio/voice?business=dentist`);
   assert.equal(call.form.TimeLimit, '195');
   assert.equal(call.auth, `Basic ${Buffer.from('ACtest:twilio-secret').toString('base64')}`);
   const again = await json(`${t.base}/api/demo/call-me`, { method: 'POST', body: { phone: '+27821234567' } });
@@ -205,7 +234,7 @@ test('Twilio webhooks: bad signatures are rejected, good ones get a media stream
   const good = await signed(t, '/api/twilio/voice', params);
   assert.equal(good.status, 200);
   const body = await good.text();
-  assert.match(body, /<Connect><Stream url="ws:\/\/127\.0\.0\.1:\d+\/api\/twilio\/stream"><Parameter name="token" value="[^"]+"\/><\/Stream><\/Connect>/);
+  assert.match(body, /<Connect><Stream url="ws:\/\/127\.0\.0\.1:\d+\/api\/twilio\/stream"><Parameter name="token" value="[^"]+"\/><Parameter name="business" value="dentist"\/><\/Stream><\/Connect>/);
   // The same number calling in again within the hour is turned away politely.
   const second = await (await signed(t, '/api/twilio/voice', { ...params, CallSid: 'CAinbound2' })).text();
   assert.match(second, /already had a test call/);
