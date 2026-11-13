@@ -1,26 +1,23 @@
 # Front Desk AI
 
-The website for Front Desk AI, an AI receptionist for small businesses in South Africa. Version 2, rebuilt from the research in `RESEARCH.md`.
+The website for Front Desk AI, an AI receptionist for small businesses in South Africa. Version 3: less reading, more showing, and a natural South African voice.
 
 It has two parts:
 
-1. **The website** (`web/`): a landing page in English and Afrikaans that shows one real call from ring to WhatsApp, with dark mode, recorded sample calls, a live demo, a calculator, pricing and a free-trial form.
-2. **The backend** (`server/`): a small Node server that runs the live voice demo. It talks to the xAI Grok voice API and to Twilio. The xAI key lives only here.
+1. **The website** (`web/`): a landing page in English and Afrikaans. The hero plays a real call as it happens: the caption types out as each line is spoken, the waveform moves, the steps tick off, the diary slot fills and the WhatsApps slide in. Then an animated ring-to-booked timeline, four moving feature tiles, three real calls with waveforms, the live demo, pricing, five FAQs and a free-trial form. Dark mode throughout.
+2. **The backend** (`server/`): a small Node server that runs the live voice demo. Grok (xAI) listens, thinks and books; ElevenLabs speaks with a South African voice. It also bridges Twilio phone calls. Every key lives only here.
 
-## What changed in v2, and why
+## What changed in v3, and why
 
-| v1 | v2 | Why (see RESEARCH.md) |
+| v2 | v3 | Why |
 |---|---|---|
-| "AI receptionist" that replaces a salary | "When you can't pick up, we answer": after hours and overflow, alongside your people | In live SA call data about half of calls still needed a person |
-| Three static hero cards on a sky photo | One real recorded call that plays itself: captions, the diary slot filling, WhatsApp to the client and to the owner | The owner's complaint; Goodcall shows the pattern works |
-| Scripted text-to-speech samples | Real recordings of the demo receptionist (Grok voice), captions timed to the audio | Proof beats claims; no SA competitor shows real calls |
-| English, Afrikaans, isiXhosa | English. Afrikaans "in testing". isiXhosa and isiZulu: take a message or transfer | No voice system tested supports them well; see Languages below |
-| One plan, R1,999 plus R2,500 setup | After Hours R999, Front Desk R1,999, multi-branch from R3,999. No setup fee. 14-day free trial | Self-serve rivals charge no setup fee and offer trials |
-| "One recovered booking a month pays for it" | "R67 a day. One extra booking a week pays for it." | The old line was false for salons, physios and dentists |
-| WhatsApp to the owner | WhatsApp to the owner and the client | SA runs on WhatsApp; it beats the "unknown number" problem |
-| "POPIA compliant" badge | An honest FAQ answer: where calls are processed, the operator agreement, deletion on request | Calls go through providers outside SA |
-| Map, stock photos, icon cards, sky blue | Warm paper palette, real artefacts (transcript, diary, WhatsApp), handwritten notes | Template tells; sky and blue are taken by others |
-| One demo receptionist (dentist) | Four: dentist, hair salon, physio, plumber, with message and transfer tools | Visitors test their own kind of business |
+| Grok's own voice ("eve") | Grok listens, decides and books; an ElevenLabs South African voice ("Claire", model `eleven_v4_turbo`) says the words | ElevenLabs v4 and v4 Turbo are #1 and #2 for naturalness on the Artificial Analysis TTS leaderboard (Nov 2026); Google's best (Gemini 3.8 Flash TTS) is #6. Turbo starts speaking in 0.2 to 0.5 seconds |
+| Captions appear line by line | Captions type out word by word as they are spoken, with a moving waveform, four step chips, a diary slot that slides in and WhatsApp messages that pop up | "More moving animation to show how it books real time" |
+| Long sections: lost-twice lanes, handover cards, industry tabs, calculator, 8 FAQs | Animated ring-to-booked timeline (real timings), four moving tiles, a "works for" row, 5 FAQs | "Too much text". About a third of the words |
+| Warm paper palette, three fonts, handwritten notes | White and soft grey, navy ink, one teal, coral only for tiny highlights, Inter only, a deep navy hero | "Better colours, more modern, professional" |
+| Recordings in tabs | Three cards with real waveforms you can scrub, and a live subtitle line | More show, less reading |
+
+The v2 decisions (after-hours positioning, no setup fee, honest languages and POPIA answers) still stand. They came from `RESEARCH.md`.
 
 ## What is in the box
 
@@ -31,12 +28,12 @@ frontdesk-ai/
     page.mjs            The page layout. Words come from src/i18n.js, calls from src/calls.json.
     src/i18n.js         EVERY word on the page, in English and Afrikaans. Edit copy here.
     src/calls.json      The three recorded calls: who said what, when, and what was booked.
-    src/stage.js        The hero "call stage" that plays a recorded call step by step.
-    src/recordings.js   The recorded-calls player with captions that follow the audio.
+    src/stage.js        The hero scene: plays a recorded call as it happened (typing caption, waveform, steps, diary, WhatsApps).
+    src/recordings.js   The recorded-call cards: waveform that fills and seeks, subtitle that follows the audio.
     src/whatsapp.js     Turns a call into the WhatsApp messages the owner and client get.
-    src/voice.js        The live voice client (microphone in, speech out, transcript).
-    src/main.js         Language, dark mode, menu, tabs, FAQ, calculator, forms, demo states.
-    src/styles.css      Colours, type, the stage, artefacts. Light and dark themes.
+    src/voice.js        The live voice client (microphone in, speech out, transcript). Two adapters: our relay, or straight to xAI.
+    src/main.js         Language, dark mode, menu, timeline, FAQ, forms, demo states.
+    src/styles.css      Colours, type, the scene, every animation. Light and dark themes.
     public/audio/       call-dentist.mp3, call-salon.mp3, call-plumber.mp3 (the recordings).
     public/site-config.js   Contact details, VAT line, Google Analytics ID. PLACEHOLDERS live here.
   server/
@@ -46,9 +43,12 @@ frontdesk-ai/
     config.js           Reads all settings from environment variables.
     limits.js           Rate limiting and logging.
     phone.js            Twilio: call-me, call-in, media stream bridge, signature checks.
+    relay.js            Grok's words cut into sentences and spoken by ElevenLabs, in order, cancelled when the caller talks.
+    tts/elevenlabs.js   ElevenLabs streaming text to speech (PCM 24 kHz for browsers, mu-law 8 kHz for phones).
     providers/          Voice providers. xai.js today; index.js is where others plug in.
   scripts/build.mjs     Builds the website into web/dist.
   scripts/og-image.mjs  Makes the share image.
+  scripts/record-calls.mjs  Re-records the three sample calls from the real receptionist.
   tests/                Backend tests, browser tests, live tests, and mock xAI and Twilio servers.
   Dockerfile, docker-compose.yml, Caddyfile, railway.json, netlify.toml, vercel.json
   .env.example          Every setting, explained.
@@ -70,7 +70,7 @@ npm install
 cp .env.example .env
 ```
 
-Open `.env` and paste your xAI key after `XAI_API_KEY=`. Then:
+Open `.env` and paste your xAI key after `XAI_API_KEY=` and your ElevenLabs key after `ELEVENLABS_API_KEY=`. Without the ElevenLabs key the demo uses Grok's own voice. Then:
 
 ```bash
 npm run dev
@@ -80,24 +80,34 @@ Open http://localhost:8787. Without a key the site still works: the live demo sa
 
 ## The recorded calls
 
-The hero and the "Real calls, recorded" player use three real calls to the demo receptionist (Grok Voice 3.0, voice "eve"), recorded on 13 November 2026:
+The hero and the "Hear real calls" cards use three real calls to the demo receptionist, recorded on 13 November 2026 with `scripts/record-calls.mjs`. Grok Voice 3.0 heard each caller and made every decision and diary booking for real; the receptionist's words are spoken by the same ElevenLabs voice the live demo uses.
 
-- **Dentist**: a cracked tooth at 19:02 on a Tuesday. It checks the diary and books 08:00 the next morning.
+- **Dentist**: a cracked tooth at 19:02 on a Tuesday. It checks the diary, offers the two earliest times and books 08:00 the next morning.
 - **Salon**: a price question and a Saturday booking while both stylists are busy.
-- **Plumber**: a burst geyser on a Sunday night. It takes the name and number, then puts the caller through to the owner.
+- **Plumber**: a burst geyser on a Sunday night. It asks for the name and number first, then puts the caller through to the owner.
 
-The caller voices are generated (ElevenLabs, South African voices). The receptionist's side is exactly what Grok said, including one real slip: it heard "Mokoena" as "Mokwena". The page says the businesses and callers are made up.
+The caller voices are generated (ElevenLabs South African voices Thandi, Nicole and Martin). The page says the businesses and callers are made up.
 
-To replace them with real calls from a pilot client, save the new MP3 over the file in `web/public/audio/` and update the matching entry in `web/src/calls.json`: each line has `who`, `text` and `t` (the second it starts), and each event has its type and time. The hero stage and the captions follow those times.
+To re-record (after changing the voice or the instructions): `node scripts/record-calls.mjs` (needs `XAI_API_KEY`, `ELEVENLABS_API_KEY` and ffmpeg; a few US cents per call). To use real calls from a pilot client instead, save the MP3 over the file in `web/public/audio/` and update the matching entry in `web/src/calls.json`: each line has `who`, `text`, `t` (the second it starts) and `d` (how long it lasts), and each event has its type and time. The hero scene follows those times.
 
 ## How the live demo works
 
 1. The page asks the backend `GET /api/health` what is set up.
 2. The visitor picks a business (dentist, salon, physio, plumber) and presses the microphone button. The browser asks for the microphone first.
-3. The backend (`POST /api/demo/session`) asks xAI for a short-lived client secret and sends it to the browser with that business's session settings. The real key never leaves the server.
-4. The browser connects straight to `wss://api.x.ai/v1/realtime?model=grok-voice-3.0`, sends `session.update`, and streams PCM16 audio at 24 kHz. The transcript shows on screen.
-5. Tool calls (check the diary, book, take a message, transfer) go to the backend (`POST /api/demo/tool`), which runs them on that session's demo diary and returns what the owner would get on WhatsApp.
-6. When the call ends, the page shows that WhatsApp summary. Calls end after 3 minutes. The backend logs duration and cost.
+3. `POST /api/demo/session` starts a session for that business. What happens next depends on the voice:
+
+**With an ElevenLabs key (the default once it is set): natural voice through our server**
+
+4. The browser opens a WebSocket to our own server (`/api/demo/stream`, with a one-time token) and streams microphone audio (PCM16, 24 kHz).
+5. The server holds the Grok session (`wss://api.x.ai/v1/realtime?model=grok-voice-3.0`). Grok listens, detects when the caller stops, decides what to say and calls the diary tools, which run on the server.
+6. Grok's words arrive as text. The server cuts them into sentences and streams each one to ElevenLabs (`eleven_v4_turbo`, voice Claire). Sentences are fetched in parallel and played in order. When the caller talks over the receptionist, everything queued is cancelled at once.
+7. The voice streams back to the browser, with the transcript and the WhatsApp events. Measured on 13 November 2026: the receptionist starts speaking about 1.3 to 1.9 seconds after the caller stops.
+
+**Without it: Grok's own voice, straight from the browser**
+
+4. The backend asks xAI for a short-lived client secret and sends it to the browser. The browser connects straight to xAI. Tool calls go to `POST /api/demo/tool`. Set `VOICE_TTS=native` to force this mode.
+
+Either way, the real keys never leave the server. When the call ends, the page shows the owner's WhatsApp summary. Calls end after 3 minutes. The backend logs duration and cost.
 
 ### Guardrails that keep the bill small
 
@@ -109,13 +119,13 @@ To replace them with real calls from a pilot client, save the new MP3 over the f
 | Browser calls per day, all visitors | 200 | `DEMO_SESSIONS_PER_DAY` |
 | Phone test calls per number per hour | 1 | `PHONE_CALLS_PER_NUMBER_PER_HOUR` |
 
-Grok voice costs about $0.08 per minute, so a full 3 minute demo is about $0.24. Every session writes one log line, for example:
+Grok voice costs about $0.08 per minute, so a full 3 minute demo is about $0.24. The ElevenLabs voice adds about $0.02 for a typical call (it is charged per character spoken, about 400 to 500 characters a call). Every session writes one log line, for example:
 
 ```
-{"event":"demo_session_end","sessionId":"...","reason":"user","seconds":49,"voiceUsd":0.0653,"bookings":1}
+{"event":"demo_session_end","reason":"user","seconds":51,"voiceUsd":0.068,"ttsCharacters":514,"ttsUsd":0.0206,"firstAudioMs":[592,263,103],"bookings":1}
 ```
 
-One honest limit: in the browser demo the audio goes straight from the visitor to xAI, so the 3 minute cap is enforced by the page and by the token lifetime (4 minutes), not by cutting a wire. The per-visitor, per-day and concurrency limits are what protect the bill. Phone calls are cut off by the server itself.
+With the ElevenLabs voice the audio passes through the server, so the 3 minute cap cuts the session off for real. In native mode the audio goes straight from the visitor to xAI, so the cap is enforced by the page and by the token lifetime (4 minutes); the per-visitor, per-day and concurrency limits protect the bill. Phone calls are always cut off by the server.
 
 The limits are kept in memory, which is right for one server. If you ever run several copies, move them to Redis.
 
@@ -123,7 +133,7 @@ The limits are kept in memory, which is right for one server. If you ever run se
 
 The page promises English only, and says Afrikaans is in testing. That is deliberate.
 
-- **English** works well. Grok Voice 3.0 tops the independent Artificial Analysis speech ranking (RESEARCH.md, thread 4).
+- **English** works well. Grok Voice 3.0 tops the independent Artificial Analysis speech ranking (RESEARCH.md, thread 4), and ElevenLabs v4 Turbo speaks it with a South African accent.
 - **Afrikaans**: xAI does not list it as supported. In our test on 13 November 2026 (a generated Afrikaans caller booking a cleaning), Grok understood the caller and booked correctly in Afrikaans, but drifted into Dutch ("Goeiemorgen", "Donderdagochtend"), first said the wrong date, and heard "Botha" as "Boota". Test it with real Afrikaans callers before promising it.
 - **isiXhosa and isiZulu**: no mainstream voice system handles them well yet (best recognition gets 20 to 34% of isiXhosa words wrong). The receptionist is told to offer a message or a transfer instead.
 
@@ -158,6 +168,8 @@ If any of those four settings is missing, the phone test hides itself and the mi
 
 **Trial accounts**: a Twilio trial account can only call numbers you have verified in the Twilio console, and it plays a trial message first. Upgrade the account before strangers test with their own numbers. Until then the call-me form tells them to use the microphone or dial in.
 
+With the ElevenLabs key set, phone calls use the same voice: ElevenLabs returns mu-law at 8 kHz, which goes to Twilio unchanged.
+
 A South African Twilio number needs a local business address and documents, and approval takes time. Start that early.
 
 A later option from the research: xAI now accepts phone calls directly over SIP, which would let a Twilio SIP trunk replace the media-stream bridge in `server/phone.js` and lower the per-minute cost. Not built yet, because it cannot be tested without a Twilio account.
@@ -170,10 +182,10 @@ A later option from the research: xAI now accepts phone calls directly over SIP,
 
 1. Go to https://railway.com, sign in with GitHub, New Project, Deploy from GitHub repo, pick this repo.
 2. In the service Settings set **Root Directory** to `frontdesk-ai`. Railway reads `railway.json` and builds the `Dockerfile`.
-3. In Variables paste: `XAI_API_KEY`, `ALLOWED_ORIGINS` (your website address, for example `https://frontdeskai.co.za,https://www.frontdeskai.co.za`), and later the Twilio values.
+3. In Variables paste: `XAI_API_KEY`, `ELEVENLABS_API_KEY`, `ALLOWED_ORIGINS` (your website address, for example `https://frontdeskai.co.za,https://www.frontdeskai.co.za`), and later the Twilio values.
 4. In Settings, Networking, press Generate Domain. Copy the address, for example `https://frontdesk-api.up.railway.app`.
 5. Add the variable `PUBLIC_URL` with that address.
-6. Open `https://YOUR-RAILWAY-ADDRESS/api/health`. You should see `"voice":{"provider":"xai","configured":true}`.
+6. Open `https://YOUR-RAILWAY-ADDRESS/api/health`. You should see `"configured":true` and `"speech":"elevenlabs"`.
 
 **2. Website on Netlify** (free)
 
@@ -210,7 +222,7 @@ For Vercel the records are `A @ 76.76.21.21` and `CNAME www cname.vercel-dns.com
 cp .env.example .env
 ```
 
-4. Fill in `.env` (at least `XAI_API_KEY`, and `PUBLIC_URL=https://frontdeskai.co.za` if you use Twilio). Add `SITE_DOMAIN=frontdeskai.co.za` to it.
+4. Fill in `.env` (at least `XAI_API_KEY` and `ELEVENLABS_API_KEY`, and `PUBLIC_URL=https://frontdeskai.co.za` if you use Twilio). Add `SITE_DOMAIN=frontdeskai.co.za` to it.
 
 ```bash
 docker compose up -d --build
@@ -218,7 +230,7 @@ docker compose up -d --build
 
 Caddy gets the HTTPS certificate automatically. The container serves the website and the backend together, so `PUBLIC_API_BASE` and `ALLOWED_ORIGINS` stay empty.
 
-To use Nginx instead of Caddy, proxy everything to port 8787 and pass WebSocket upgrades for `/api/twilio/stream`.
+To use Nginx instead of Caddy, proxy everything to port 8787 and pass WebSocket upgrades for `/api/demo/stream` and `/api/twilio/stream`.
 
 ### Option C: one command on your own computer
 
@@ -264,19 +276,20 @@ What you need to finish once the site is on its own domain:
 npm test
 ```
 
-16 backend tests: health check, key handling, ephemeral secrets, the four businesses, message and transfer tools, rate limits, concurrency, the demo diary, Twilio signatures, the phone bridge and the time cap.
+20 backend tests: health check, key handling, ephemeral secrets, the four businesses, message and transfer tools (a transfer needs a name and number first), rate limits, concurrency, the demo diary, Twilio signatures, the phone bridge, the time cap, and the ElevenLabs relay (sentence cutting, whole-sample audio, barge-in, phone mu-law).
 
 ```bash
 npm run build && npm run test:e2e
 ```
 
-About 100 browser checks: the copy in both languages, the hero stage (autoplay, pause, sound, sync), recordings, every link, tab, accordion and form, the calculator, the live demo and each failure state, reduced motion, no JavaScript, nine screen widths, and an accessibility scan in light and dark. Both suites use mock xAI and Twilio servers (`tests/mocks.mjs`), so they need no keys and cost nothing.
+About 100 browser checks: the copy in both languages, the hero scene (autoplay, typing caption, steps, pause, sound, sync), the timeline, the call cards (play, waveform, seek, subtitle, transcript), every link, accordion and form, the live demo in both voice modes and each failure state, reduced motion, no JavaScript, nine screen widths, and an accessibility scan in light and dark. Both suites use mock xAI, ElevenLabs and Twilio servers (`tests/mocks.mjs`), so they need no keys and cost nothing.
 
-`tests/live-demo.mjs` runs the microphone demo against the real xAI API with a recorded caller. `tests/live-site.mjs` smoke-tests a deployed copy.
+`tests/live-demo.mjs` runs the microphone demo against the real APIs with a recorded caller. `tests/live-site.mjs` smoke-tests a deployed copy.
 
 ## Credits
 
-- Fonts: Bricolage Grotesque, Inter and Caveat (SIL Open Font Licence), served from this site.
+- Font: Inter (SIL Open Font Licence), served from this site.
+- Voices: ElevenLabs voice library (Claire for the receptionist; Thandi, Nicole and Martin Louw for the sample callers).
 - Icons: Lucide (ISC) and Simple Icons (CC0) for the WhatsApp and Gmail marks.
 - Caller voices in the recordings: ElevenLabs. Receptionist voice: xAI Grok Voice 3.0.
 - CSS: Tailwind CSS (MIT).

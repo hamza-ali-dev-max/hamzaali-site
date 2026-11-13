@@ -1,4 +1,4 @@
-// Tailwind settings: brand colours, fonts and the dark mode switch.
+// Tailwind settings: colours, font and the dark mode switch.
 // Colours that change between light and dark are CSS variables set in src/styles.css.
 const path = require('node:path');
 
@@ -9,18 +9,18 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', '"Segoe UI"', 'Roboto', 'Arial', 'sans-serif'],
-        display: ['"Bricolage Grotesque"', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        hand: ['Caveat', '"Comic Sans MS"', 'cursive'],
       },
       colors: {
-        paper: 'var(--paper)',
+        bg: 'var(--bg)',
+        soft: 'var(--soft)',
         card: 'var(--card)',
         ink: 'var(--ink)',
         body: 'var(--body)',
         muted: 'var(--muted)',
         line: 'var(--line)',
-        accent: 'var(--accent)',
-        teal: 'var(--teal)',
+        brand: 'var(--brand)',
+        'on-brand': 'var(--on-brand)',
+        coral: 'var(--coral)',
       },
     },
   },

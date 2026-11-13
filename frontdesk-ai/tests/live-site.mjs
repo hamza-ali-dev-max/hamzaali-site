@@ -24,15 +24,15 @@ for (const [label, options] of [['desktop', { viewport: { width: 1366, height: 8
   const response = await page.goto(url, { waitUntil: 'load' });
   check(`${label}: page loads over HTTPS`, response.ok() && page.url().startsWith('https://'), `${response.status()} ${page.url()}`);
   console.log(`      load time ${Date.now() - started} ms`);
-  check(`${label}: headline visible in the display font`, await page.isVisible('h1') && (await page.evaluate(() => getComputedStyle(document.querySelector('h1')).fontFamily)).includes('Bricolage'));
+  check(`${label}: headline visible in Inter`, await page.isVisible('h1') && (await page.evaluate(() => getComputedStyle(document.querySelector('h1')).fontFamily)).includes('Inter'));
   check(`${label}: no sideways scroll`, await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth));
 
-  // The hero stage plays by itself, and plays the real recording on request
+  // The hero scene plays by itself, and plays the real recording on request
   await page.locator('#stage').scrollIntoViewIfNeeded();
-  await page.waitForTimeout(3000);
-  const s = await page.evaluate(() => window.__frontDesk.stage().state());
-  check(`${label}: the hero call plays by itself`, s.playing && s.pos > 1, JSON.stringify(s));
-  await page.click('.stage [data-stage-sound]');
+  await page.waitForTimeout(3500);
+  const s = await page.evaluate(() => ({ ...window.__frontDesk.stage().state(), words: document.querySelectorAll('#stage .caption-text .w:not(.is-hidden)').length }));
+  check(`${label}: the hero call plays by itself and the caption types out`, s.playing && s.pos > 1 && s.words > 0, JSON.stringify(s));
+  await page.click('#stage [data-stage-sound]');
   await page.waitForTimeout(2500);
   const audio = await page.evaluate(() => { const a = document.getElementById('stage-audio'); return { t: a.currentTime, paused: a.paused }; });
   check(`${label}: "Play with sound" plays the real recording`, audio.t > 1 && !audio.paused, JSON.stringify(audio));
@@ -51,22 +51,18 @@ for (const [label, options] of [['desktop', { viewport: { width: 1366, height: 8
   check(`${label}: dark mode toggles`, await page.evaluate(() => document.documentElement.classList.contains('dark')));
   await page.click('[data-theme-toggle]');
 
-  // Recordings, tabs, FAQ, calculator
-  await page.locator('#rec-tabs').scrollIntoViewIfNeeded();
-  await page.click('#rec-tab-plumber');
-  await page.click('#rec-panel-plumber .rec-play');
+  // Timeline, recorded calls, FAQ
+  await page.locator('[data-timeline]').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(6500);
+  check(`${label}: the ring-to-booked timeline plays`, (await page.$$eval('.tl-node.is-on', (els) => els.length)) === 5);
+  await page.locator('.rec-card[data-rec="plumber"]').scrollIntoViewIfNeeded();
+  await page.click('.rec-card[data-rec="plumber"] .rec-play');
   await page.waitForTimeout(2500);
-  check(`${label}: a recorded call plays`, await page.evaluate(() => !document.getElementById('rec-audio').paused && document.getElementById('rec-audio').currentTime > 1));
-  await page.click('#rec-panel-plumber .rec-play');
-  await page.locator('#ind-tabs').scrollIntoViewIfNeeded();
-  await page.click('#ind-tab-trade');
-  check(`${label}: industry tabs switch`, await page.evaluate(() => !document.getElementById('ind-panel-trade').hidden && document.getElementById('ind-panel-med').hidden));
+  check(`${label}: a recorded call plays and its waveform fills`, await page.evaluate(() => !document.getElementById('rec-audio').paused && document.getElementById('rec-audio').currentTime > 1 && document.querySelectorAll('.rec-card[data-rec="plumber"] .rec-bars i.is-played').length > 0));
+  await page.click('.rec-card[data-rec="plumber"] .rec-play');
   await page.click('#faq-q-4');
   await page.waitForTimeout(450);
   check(`${label}: FAQ opens`, (await page.evaluate(() => document.getElementById('faq-a-4').getBoundingClientRect().height)) > 30);
-  await page.locator('#calc-missed').fill('10');
-  await page.locator('#calc-missed').dispatchEvent('input');
-  check(`${label}: calculator updates`, (await page.textContent('#calc-result')) === 'R11,908');
 
   // Demo state
   await page.locator('#try').scrollIntoViewIfNeeded();

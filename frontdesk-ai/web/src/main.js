@@ -1,5 +1,5 @@
-// Everything interactive on the page: language, dark mode, menu, the call stage, recordings,
-// the live demo, tabs, FAQ, the calculator, the trial form and contact details.
+// Everything interactive on the page: language, dark mode, menu, the hero scene, the timeline,
+// the recorded calls, the live demo, FAQ, the trial form and contact details.
 import { STRINGS, LANGUAGES, fill } from './i18n.js';
 import CALLS from './calls.json';
 import { messagesFor } from './whatsapp.js';
@@ -49,15 +49,19 @@ function renderWhatsapp() {
 function applyLanguage(next, remember = true) {
   lang = STRINGS[next] ? next : 'en';
   document.documentElement.lang = lang;
-  $$('[data-i18n]').forEach((el) => { el.textContent = tr(el.dataset.i18n); });
+  $$('[data-i18n]').forEach((el) => {
+    let values = null;
+    if (el.dataset.fill) { try { values = JSON.parse(el.dataset.fill); } catch { values = null; } }
+    el.textContent = values ? fill(tr(el.dataset.i18n), values) : tr(el.dataset.i18n);
+  });
   $$('[data-i18n-attr]').forEach((el) => {
     el.dataset.i18nAttr.split(';').forEach((pair) => { const [attr, key] = pair.split(':'); if (attr && key) el.setAttribute(attr, tr(key)); });
   });
   $$('[data-lang]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.lang === lang)));
   renderWhatsapp();
   refreshWhatsappLinks();
-  updateCalc();
   if (stage) stage.refreshText();
+  if (recordings) recordings.refresh();
   if (lastEvents) showSummary(lastEvents);
   if (remember) store.set('fd-lang', lang);
 }
@@ -86,7 +90,7 @@ function applyTheme(dark, remember) {
     $('[data-icon="moon"]', button).hidden = dark;
     $('[data-icon="sun"]', button).hidden = !dark;
   });
-  if (themeColor) themeColor.setAttribute('content', dark ? '#15120F' : '#F5EFE3');
+  if (themeColor) themeColor.setAttribute('content', dark ? '#070B14' : '#FFFFFF');
   if (remember) store.set('fd-theme', dark ? 'dark' : 'light');
 }
 applyTheme(document.documentElement.classList.contains('dark'), false);
@@ -108,63 +112,71 @@ document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && 
 document.addEventListener('click', (event) => { if (!mobileMenu.hidden && !$('#site-header').contains(event.target)) setMenu(false); });
 window.matchMedia('(min-width: 1024px)').addEventListener?.('change', (event) => { if (event.matches) setMenu(false); });
 
-/* ---------------------------------------------------------------- Fade-ins and the two lanes */
+/* ---------------------------------------------------------------- Header line once scrolled */
+const siteHeader = $('#site-header');
+const onScroll = () => siteHeader.classList.toggle('is-scrolled', window.scrollY > 8);
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+/* ---------------------------------------------------------------- Fade-ins */
 const revealItems = $$('[data-reveal]');
-const lanes = $('[data-lanes]');
 if ('IntersectionObserver' in window && !reduceMotion) {
   const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
-    if (entry.isIntersecting) { entry.target.classList.add('is-visible', 'is-in'); observer.unobserve(entry.target); }
-  }), { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
+    if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
+  }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
   revealItems.forEach((el) => observer.observe(el));
-  if (lanes) observer.observe(lanes);
 } else {
   revealItems.forEach((el) => el.classList.add('is-visible'));
-  if (lanes) lanes.classList.add('is-in');
 }
 
-/* ---------------------------------------------------------------- The call stage and the recordings */
+/* ---------------------------------------------------------------- The hero scene and the recorded calls */
 const stageRoot = $('#stage');
 if (stageRoot) {
-  stage = createStage(stageRoot, { say, reduceMotion, onSound: () => recordings && recordings.pause() });
+  stage = createStage(stageRoot, { call: CALLS.find((c) => c.id === stageRoot.dataset.call), say, reduceMotion, onSound: () => recordings && recordings.pause() });
   $$('[data-stage-sound]').forEach((button) => button.addEventListener('click', () => {
     const rect = stageRoot.getBoundingClientRect();
     if (rect.top < 0 || rect.bottom > window.innerHeight) stageRoot.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
     stage.playSound();
   }));
 }
-recordings = createRecordings({ tablist: $('#rec-tabs'), audio: $('#rec-audio'), say, onPlay: () => stage && stage.pauseSound() });
+recordings = createRecordings({ list: $('#rec-list'), audio: $('#rec-audio'), calls: CALLS, say, onPlay: () => stage && stage.pauseSound() });
 $$('[data-play-rec]').forEach((link) => link.addEventListener('click', (event) => {
   event.preventDefault();
-  $('#rec-tabs').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+  const card = $(`.rec-card[data-rec="${link.dataset.playRec}"]`);
+  if (card) card.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
   recordings.playCall(link.dataset.playRec);
 }));
 
-/* ---------------------------------------------------------------- Tabs (industries) */
-function initTabs(tablist) {
-  const tabs = $$('[role="tab"]', tablist);
-  const select = (tab, focus) => {
-    tabs.forEach((item) => {
-      const active = item === tab;
-      item.setAttribute('aria-selected', String(active));
-      item.tabIndex = active ? 0 : -1;
-      document.getElementById(item.getAttribute('aria-controls')).hidden = !active;
+/* ---------------------------------------------------------------- Ring to booked: the timeline plays the real timings */
+const timeline = $('[data-timeline]');
+if (timeline) {
+  const nodes = $$('.tl-node', timeline).map((el) => ({ el, t: Number(el.dataset.t) }));
+  const total = Number(timeline.dataset.total) || nodes[nodes.length - 1].t;
+  const PLAY_MS = 5200; // the call's real 38 seconds, shown in about five
+  const paintTimeline = (t) => {
+    nodes.forEach((node, i) => {
+      node.el.classList.toggle('is-on', t >= node.t);
+      const next = nodes[i + 1];
+      if (next) node.el.style.setProperty('--f', String(Math.max(0, Math.min(1, (t - node.t) / Math.max(0.1, next.t - node.t)))));
     });
-    if (focus) tab.focus();
   };
-  tabs.forEach((tab, index) => {
-    tab.addEventListener('click', () => select(tab, false));
-    tab.addEventListener('keydown', (event) => {
-      const move = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
-      let next = null;
-      if (move) next = tabs[(index + move + tabs.length) % tabs.length];
-      else if (event.key === 'Home') next = tabs[0];
-      else if (event.key === 'End') next = tabs[tabs.length - 1];
-      if (next) { event.preventDefault(); select(next, true); }
-    });
-  });
-  select(tabs.find((tab) => tab.getAttribute('aria-selected') === 'true') || tabs[0], false);
+  let started = 0;
+  let frameId = 0;
+  const run = (now) => {
+    if (!started) started = now;
+    const t = Math.min(total, ((now - started) / PLAY_MS) * total);
+    paintTimeline(t);
+    if (t < total) frameId = requestAnimationFrame(run);
+  };
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    paintTimeline(total);
+  } else {
+    paintTimeline(0);
+    new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) { cancelAnimationFrame(frameId); started = 0; frameId = requestAnimationFrame(run); }
+    }, { threshold: 0.5 }).observe(timeline);
+  }
 }
-initTabs($('#ind-tabs'));
 
 /* ---------------------------------------------------------------- FAQ */
 $$('.faq-item').forEach((item) => {
@@ -175,26 +187,6 @@ $$('.faq-item').forEach((item) => {
     button.setAttribute('aria-expanded', String(open));
   });
 });
-
-/* ---------------------------------------------------------------- Calculator: the owner's own numbers */
-const rand = (n) => `R${Math.round(n).toLocaleString('en-US')}`;
-function updateCalc() {
-  const missed = Number($('#calc-missed').value);
-  const value = Number($('#calc-value').value);
-  const rate = Number($('#calc-rate').value);
-  $$('#calc .range').forEach((input) => {
-    const p = ((Number(input.value) - Number(input.min)) / (Number(input.max) - Number(input.min))) * 100;
-    input.style.setProperty('--p', `${p}%`);
-    const shown = input.id === 'calc-value' ? Number(input.value).toLocaleString('en-US') : input.value;
-    $(`#${input.id}-out`).textContent = `${input.dataset.prefix}${shown}${input.dataset.suffix}`;
-  });
-  const monthly = missed * 4.33 * value * (rate / 100);
-  $('#calc-result').textContent = rand(monthly);
-  const ratio = monthly / 1999;
-  const verdict = $('#calc-verdict');
-  if (ratio >= 1) { verdict.removeAttribute('data-i18n'); verdict.textContent = fill(tr('calc.covers'), { x: ratio >= 10 ? Math.round(ratio) : ratio.toFixed(1) }); } else say(verdict, 'calc.short');
-}
-$$('#calc .range').forEach((input) => input.addEventListener('input', updateCalc));
 
 /* ---------------------------------------------------------------- Free trial form */
 const form = $('#start-form');
@@ -366,7 +358,8 @@ async function beginCall() {
         },
         userText(text) {
           // The provider sometimes repeats the previous chunk at the start of the next one: merge them.
-          const last = transcript.lastElementChild;
+          const shownLines = Array.from(transcript.children).filter((li) => !li.hidden);
+          const last = shownLines[shownLines.length - 1];
           const lastText = last && last.classList.contains('is-you') ? last.querySelector('p').textContent : '';
           if (lastText && text.startsWith(lastText)) {
             if (pendingUser && pendingUser.li !== last) pendingUser.li.remove();
@@ -447,7 +440,6 @@ async function checkDemo() {
 
 /* ---------------------------------------------------------------- Start */
 setMic('idle');
-updateCalc();
 applyLanguage(store.get('fd-lang') || 'en', false);
 checkDemo();
 

@@ -1,88 +1,88 @@
-// The three recorded calls in "Try it": tabs, one shared audio player, captions that follow the audio.
+// The recorded call cards: one shared audio player, a waveform that fills as the call plays
+// (and can be dragged or arrowed to seek), and a one-line subtitle that follows the audio.
 
-export function createRecordings({ tablist, audio, say, onPlay }) {
-  const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
-  const panels = tabs.map((tab) => document.getElementById(tab.getAttribute('aria-controls')));
-  let current = null; // the panel whose recording is loaded
+export function createRecordings({ list, audio, calls, say, onPlay }) {
+  const cards = Array.from(list.querySelectorAll('.rec-card')).map((el) => ({
+    el,
+    id: el.dataset.rec,
+    call: calls.find((c) => c.id === el.dataset.rec),
+    bars: Array.from(el.querySelectorAll('.rec-bars i')),
+    seek: el.querySelector('.rec-seek'),
+    button: el.querySelector('.rec-play'),
+    who: el.querySelector('.rec-who'),
+    line: el.querySelector('.rec-line'),
+    sub: el.querySelector('.rec-sub'),
+    time: el.querySelector('.rec-time'),
+    lineIndex: -1,
+    played: -1,
+  }));
+  let current = null;
 
   const clock = (s) => `${Math.floor(s / 60)}:${String(Math.floor(Number.isFinite(s) ? s : 0) % 60).padStart(2, '0')}`;
 
-  function paint() {
-    panels.forEach((panel) => {
-      const active = panel === current;
-      const playing = active && !audio.paused && !audio.ended;
-      const button = panel.querySelector('.rec-play');
-      button.setAttribute('aria-pressed', String(playing));
-      button.querySelector('[data-icon="play"]').hidden = playing;
-      button.querySelector('[data-icon="pause"]').hidden = !playing;
-      say(button.querySelector('[data-rec-verb]'), playing ? 'try.rec.pause' : 'try.rec.play');
-      const duration = Number(panel.dataset.duration) || audio.duration || 1;
-      const t = active ? audio.currentTime : 0;
-      panel.querySelector('.rec-bar span').style.width = `${Math.min(100, (t / duration) * 100).toFixed(1)}%`;
-      panel.querySelector('.rec-time').textContent = `${clock(t)} / ${clock(duration)}`;
-      panel.classList.toggle('is-synced', active && t > 0 && !audio.ended);
-      let now = null;
-      panel.querySelectorAll('.cap[data-t]').forEach((cap) => {
-        const said = active && t >= Number(cap.dataset.t);
-        cap.classList.toggle('is-future', !said);
-        cap.classList.remove('is-now');
-        if (said) now = cap;
-      });
-      if (now && active && !audio.paused) {
-        now.classList.add('is-now');
-        const box = panel.querySelector('.caption-window');
-        const top = now.offsetTop - box.offsetTop - 40;
-        if (Math.abs(box.scrollTop - top) > 30) box.scrollTo({ top, behavior: 'smooth' });
-      }
-    });
+  function paintCard(card) {
+    const active = card === current;
+    const playing = active && !audio.paused && !audio.ended;
+    const duration = Number(card.el.dataset.duration) || audio.duration || 1;
+    const t = active ? audio.currentTime : 0;
+    card.button.setAttribute('aria-pressed', String(playing));
+    card.button.querySelector('[data-icon="play"]').hidden = playing;
+    card.button.querySelector('[data-icon="pause"]').hidden = !playing;
+    say(card.button.querySelector('[data-rec-verb]'), playing ? 'calls.pause' : 'calls.play');
+    card.el.classList.toggle('is-playing', playing);
+    // Waveform fill
+    const played = Math.round((t / duration) * card.bars.length);
+    if (played !== card.played) {
+      card.bars.forEach((bar, i) => bar.classList.toggle('is-played', i < played));
+      card.played = played;
+    }
+    if (document.activeElement !== card.seek) card.seek.value = String(t);
+    card.time.textContent = active && t > 0 ? `${clock(t)} / ${clock(duration)}` : clock(duration);
+    // Subtitle: the line being said now (the first line when idle)
+    const lines = (card.call && card.call.lines) || [];
+    let index = 0;
+    if (active) lines.forEach((line, i) => { if (line.t <= t + 0.15) index = i; });
+    if (index !== card.lineIndex && lines[index]) {
+      card.lineIndex = index;
+      card.line.textContent = lines[index].text;
+      card.sub.dataset.who = lines[index].who;
+      say(card.who, lines[index].who === 'ai' ? 'stage.ai' : 'stage.caller');
+    }
   }
+  const paint = () => cards.forEach(paintCard);
 
-  function select(tab, focus) {
-    tabs.forEach((item, i) => {
-      const active = item === tab;
-      item.setAttribute('aria-selected', String(active));
-      item.tabIndex = active ? 0 : -1;
-      panels[i].hidden = !active;
-    });
-    if (focus) tab.focus();
-    const panel = panels[tabs.indexOf(tab)];
-    if (current && current !== panel) { audio.pause(); }
-    paint();
-  }
-
-  function play(panel) {
-    if (current !== panel) {
-      current = panel;
-      audio.src = panel.dataset.src;
+  function play(card) {
+    if (current !== card) {
+      if (current) { audio.pause(); }
+      current = card;
+      audio.src = card.el.dataset.src;
     }
     if (onPlay) onPlay();
     audio.play().catch(() => {});
     paint();
   }
 
-  tabs.forEach((tab, index) => {
-    tab.addEventListener('click', () => select(tab, false));
-    tab.addEventListener('keydown', (event) => {
-      const move = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
-      if (move) { event.preventDefault(); select(tabs[(index + move + tabs.length) % tabs.length], true); }
+  cards.forEach((card) => {
+    card.button.addEventListener('click', () => {
+      if (current === card && !audio.paused) audio.pause(); else play(card);
+    });
+    card.seek.addEventListener('input', () => {
+      const t = Number(card.seek.value);
+      if (current !== card) { current = card; audio.src = card.el.dataset.src; }
+      const apply = () => { try { audio.currentTime = t; } catch { /* not ready */ } paint(); };
+      if (audio.readyState >= 1) apply(); else { audio.addEventListener('loadedmetadata', apply, { once: true }); audio.load(); }
     });
   });
-  panels.forEach((panel) => {
-    panel.querySelector('.rec-play').addEventListener('click', () => {
-      if (current === panel && !audio.paused) audio.pause(); else play(panel);
-    });
-  });
-  ['play', 'pause', 'ended', 'timeupdate', 'error'].forEach((name) => audio.addEventListener(name, paint));
-  select(tabs.find((tab) => tab.getAttribute('aria-selected') === 'true') || tabs[0], false);
+  ['play', 'pause', 'ended', 'timeupdate', 'error', 'seeked'].forEach((name) => audio.addEventListener(name, paint));
+  paint();
 
   return {
     playCall(id) {
-      const tab = tabs.find((item) => item.id === `rec-tab-${id}`);
-      if (!tab) return;
-      select(tab, false);
-      play(panels[tabs.indexOf(tab)]);
+      const card = cards.find((c) => c.id === id);
+      if (card) play(card);
     },
     pause() { audio.pause(); },
-    refresh: paint,
+    refresh() { cards.forEach((c) => { c.lineIndex = -1; }); paint(); },
+    state: () => ({ id: current && current.id, t: audio.currentTime, paused: audio.paused }),
   };
 }

@@ -24,6 +24,7 @@ async function boot(extra = {}) {
   const mock = await startMockXai();
   const env = { STATIC_DIR: dist, XAI_API_KEY: 'test-xai-key', XAI_API_BASE: mock.apiBase, XAI_REALTIME_URL: mock.realtimeUrl, DEMO_SESSIONS_PER_IP_PER_HOUR: '50', DEMO_MAX_CONCURRENT: '10', ...extra };
   if (extra.TWILIO_ACCOUNT_SID) env.TWILIO_API_BASE = mock.twilioBase;
+  if (extra.ELEVENLABS_API_KEY) env.ELEVENLABS_API_BASE = mock.elevenBase;
   const app = createApp(loadConfig(env));
   const port = await listen(app);
   return { mock, app, url: `http://127.0.0.1:${port}/`, stop: async () => { await app.close(); await mock.close(); } };
@@ -50,7 +51,7 @@ const stageState = (page) => page.evaluate(() => window.__frontDesk.stage().stat
 {
   const empty = KEYS.filter((k) => ['en', 'af'].some((l) => !String(STRINGS[l][k] || '').trim()));
   check(`all ${KEYS.length} texts exist in English and Afrikaans`, empty.length === 0, empty.join(','));
-  const same = KEYS.filter((k) => STRINGS.af[k] === STRINGS.en[k] && !['stage.whatsapp', 'stage.ai', 'price.fd.name'].includes(k));
+  const same = KEYS.filter((k) => STRINGS.af[k] === STRINGS.en[k] && !['stage.ai', 'price.fd.name', 'how.sec', 'feat.owner'].includes(k));
   check('Afrikaans is a real translation, not copied English', same.length === 0, same.join(','));
   const dashes = KEYS.filter((k) => ['en', 'af'].some((l) => /[—–]/.test(STRINGS[l][k])));
   check('no em dashes in any language', dashes.length === 0, dashes.join(','));
@@ -85,7 +86,7 @@ const A = await boot(TWILIO);
     const res = await page.request.get(A.url + file);
     check(`${file} is served`, res.ok(), res.status());
   }
-  check('search terms appear in the copy', await page.evaluate(() => { const t = document.body.innerText; return /AI receptionist/i.test(t) && /AI answering service/i.test(t) && /virtual receptionist/i.test(t) && /South Africa/.test(t); }));
+  check('search terms appear in the page', await page.evaluate(() => { const t = document.body.innerText; const ld = Array.from(document.querySelectorAll('script[type="application/ld+json"]')).map((s) => s.textContent).join(' '); return /AI receptionist/i.test(t) && /South Africa/.test(t) && /AI answering service/i.test(ld); }));
   check('no blur anywhere', (await page.evaluate(() => Array.from(document.querySelectorAll('*')).filter((el) => { const s = getComputedStyle(el); return (s.backdropFilter && s.backdropFilter !== 'none') || /blur/.test(s.filter); }).length)) === 0);
   check('no emojis in the page text', !(await page.evaluate(() => /\p{Extended_Pictographic}/u.test(document.body.innerText.replace(/©/g, '')))));
   const links = await page.evaluate(() => Array.from(document.querySelectorAll('a')).map((a) => a.getAttribute('href')));
@@ -93,7 +94,7 @@ const A = await boot(TWILIO);
   check(`all ${links.length} links go somewhere`, missing.length === 0 && links.every((h) => h && h !== '#'), missing.join(',') + links.filter((h) => !h || h === '#').join(','));
 
   // Header
-  for (const [label, id] of [['How it works', '#how'], ['Try it', '#try'], ['Pricing', '#pricing'], ['Questions', '#faq']]) {
+  for (const [label, id] of [['How it works', '#how'], ['Hear it', '#calls'], ['Try it', '#try'], ['Pricing', '#pricing'], ['Questions', '#faq']]) {
     await page.click(`header nav[aria-label="Main"] >> text="${label}"`);
     await page.waitForTimeout(1300);
     check(`nav "${label}" scrolls to ${id}`, await inView(page, id));
@@ -109,8 +110,9 @@ const A = await boot(TWILIO);
   await page.waitForTimeout(2500);
   let s1 = await stageState(page);
   check('hero stage plays the call by itself (silently) when on screen', s1.playing && !s1.sound && s1.pos > 1, JSON.stringify(s1));
-  const capsSeen = await page.evaluate(() => document.querySelectorAll('#stage .cap:not(.is-future)').length);
-  check('captions appear in step with the call', capsSeen >= 1 && capsSeen < 9, capsSeen);
+  await page.waitForTimeout(1500);
+  const cap = await page.evaluate(() => ({ shown: document.querySelectorAll('#stage .caption-text .w:not(.is-hidden)').length, all: document.querySelectorAll('#stage .caption-text .w').length, steps: document.querySelectorAll('#stage .step.is-done').length, speaking: document.getElementById('stage').dataset.speaking }));
+  check('the caption types out word by word, in step with the call', cap.shown >= 1 && cap.all >= cap.shown && cap.steps >= 1 && cap.steps < 4, JSON.stringify(cap));
   await page.click('[data-stage-toggle]');
   const p1 = await stageState(page);
   await page.waitForTimeout(700);
@@ -122,8 +124,8 @@ const A = await boot(TWILIO);
   check('"Hear a real call" plays the recording', snd.src === 'audio/call-dentist.mp3' && !snd.paused && snd.t > 1, JSON.stringify(snd));
   await page.evaluate(() => { document.getElementById('stage-audio').currentTime = 44; });
   await page.waitForTimeout(800);
-  const late = await page.evaluate(() => ({ filled: document.querySelector('#stage .diary-target').classList.contains('is-filled'), wa: document.querySelectorAll('#stage .wa-msg.is-shown').length, status: document.querySelector('[data-status-text]').textContent }));
-  check('the stage follows the audio: diary fills and WhatsApp messages land', late.filled && late.wa >= 1 && late.status === 'Booked', JSON.stringify(late));
+  const late = await page.evaluate(() => ({ filled: document.querySelector('#stage .slot-target').classList.contains('is-filled'), wa: document.querySelectorAll('#stage .toast.is-shown').length, steps: document.querySelectorAll('#stage .step.is-done').length, status: document.querySelector('[data-status-text]').textContent }));
+  check('the scene follows the audio: diary fills, steps tick off, WhatsApps land', late.filled && late.wa === 2 && late.steps === 4 && late.status === 'Booked', JSON.stringify(late));
   await page.click('[data-stage-toggle]');
 
   // Language
@@ -139,59 +141,44 @@ const A = await boot(TWILIO);
   // Dark mode
   await page.click('[data-theme-toggle]');
   const dark = await page.evaluate(() => ({ cls: document.documentElement.classList.contains('dark'), bg: getComputedStyle(document.body).backgroundColor }));
-  check('dark mode toggles', dark.cls && dark.bg === 'rgb(21, 18, 15)', JSON.stringify(dark));
+  check('dark mode toggles', dark.cls && dark.bg === 'rgb(7, 11, 20)', JSON.stringify(dark));
   await page.reload({ waitUntil: 'load' });
   check('dark mode is remembered', await page.evaluate(() => document.documentElement.classList.contains('dark')));
   await page.click('[data-theme-toggle]');
 
-  // Lost twice lanes animate in
-  await page.locator('#lost').scrollIntoViewIfNeeded();
-  await page.waitForTimeout(600);
-  check('the two lanes play in when scrolled to', await page.evaluate(() => document.querySelector('[data-lanes]').classList.contains('is-in')));
+  // Ring to booked: the timeline plays the real timings
+  await page.locator('[data-timeline]').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(1500);
+  const midway = await page.$$eval('.tl-node.is-on', (els) => els.length);
+  await page.waitForTimeout(5000);
+  const tl = await page.evaluate(() => ({ on: document.querySelectorAll('.tl-node.is-on').length, title: document.getElementById('how-title').textContent }));
+  check('the ring-to-booked timeline plays in when scrolled to', midway >= 1 && midway < 5 && tl.on === 5 && /Ring to booked in \d+ seconds/.test(tl.title), JSON.stringify({ midway, tl }));
 
-  // Recordings
-  await page.locator('#rec-tabs').scrollIntoViewIfNeeded();
-  await page.click('#rec-tab-salon');
-  check('recording tabs switch', await page.evaluate(() => !document.getElementById('rec-panel-salon').hidden && document.getElementById('rec-panel-dentist').hidden));
-  await page.click('#rec-panel-salon .rec-play');
+  // Recorded calls
+  await page.locator('#rec-list').scrollIntoViewIfNeeded();
+  await page.click('.rec-card[data-rec="salon"] .rec-play');
   await page.waitForTimeout(2200);
-  let rec = await page.evaluate(() => { const a = document.getElementById('rec-audio'); return { src: a.getAttribute('src'), t: a.currentTime, paused: a.paused, now: !!document.querySelector('#rec-panel-salon .cap.is-now') }; });
-  check('a recorded call plays with captions following it', rec.src === 'audio/call-salon.mp3' && rec.t > 1 && !rec.paused && rec.now, JSON.stringify(rec));
-  await page.click('#rec-panel-salon .rec-play');
+  let rec = await page.evaluate(() => { const a = document.getElementById('rec-audio'); return { src: a.getAttribute('src'), t: a.currentTime, paused: a.paused, played: document.querySelectorAll('.rec-card[data-rec="salon"] .rec-bars i.is-played').length, pressed: document.querySelector('.rec-card[data-rec="salon"] .rec-play').getAttribute('aria-pressed') }; });
+  check('a recorded call plays and its waveform fills', rec.src === 'audio/call-salon.mp3' && rec.t > 1 && !rec.paused && rec.played >= 1 && rec.pressed === 'true', JSON.stringify(rec));
+  await page.evaluate(() => { const r = document.querySelector('.rec-card[data-rec="salon"] .rec-seek'); r.value = '30'; r.dispatchEvent(new Event('input', { bubbles: true })); });
+  await page.waitForTimeout(600);
+  rec = await page.evaluate(() => ({ t: document.getElementById('rec-audio').currentTime, line: document.querySelector('.rec-card[data-rec="salon"] .rec-line').textContent }));
+  check('the waveform seeks, and the subtitle follows the audio', rec.t >= 29.5 && rec.t < 33 && !/^Studio Lumi, you're through/.test(rec.line), JSON.stringify(rec));
+  await page.click('.rec-card[data-rec="salon"] .rec-play');
   check('recording pauses', await page.evaluate(() => document.getElementById('rec-audio').paused));
-  await page.locator('#handover').scrollIntoViewIfNeeded();
+  await page.locator('#features').scrollIntoViewIfNeeded();
   await page.click('[data-play-rec="plumber"]');
   await page.waitForTimeout(1500);
-  rec = await page.evaluate(() => { const a = document.getElementById('rec-audio'); return { src: a.getAttribute('src'), playing: !a.paused, tab: document.getElementById('rec-tab-plumber').getAttribute('aria-selected') }; });
-  check('"Hear this call" in the handover section plays the plumber call', rec.src === 'audio/call-plumber.mp3' && rec.playing && rec.tab === 'true', JSON.stringify(rec));
+  rec = await page.evaluate(() => { const a = document.getElementById('rec-audio'); return { src: a.getAttribute('src'), playing: !a.paused }; });
+  check('"Hear it happen" plays the plumber call', rec.src === 'audio/call-plumber.mp3' && rec.playing, JSON.stringify(rec));
   await page.evaluate(() => document.getElementById('rec-audio').pause());
-
-  // Industries
-  const tabs = await page.$$eval('#ind-tabs [role="tab"]', (els) => els.map((e) => e.id));
-  let tabsOk = tabs.length === 5;
-  for (const id of tabs) {
-    await page.click(`#${id}`);
-    const visible = await page.$$eval('#industries [role="tabpanel"]', (els) => els.filter((e) => !e.hidden).map((e) => e.id));
-    if (visible.length !== 1 || visible[0] !== id.replace('tab', 'panel')) tabsOk = false;
-  }
-  check('5 industry tabs, each shows only its own panel', tabsOk, tabs.join(','));
-  await page.focus('#ind-tab-trade');
-  await page.keyboard.press('ArrowRight');
-  check('industry tabs work with arrow keys', await page.evaluate(() => document.activeElement.id === 'ind-tab-med'));
-
-  // Calculator
-  check('calculator starts from the owner\'s defaults', (await page.textContent('#calc-result')) === 'R5,954' && /3\.0 times/.test(await page.textContent('#calc-verdict')));
-  await page.locator('#calc-missed').fill('10');
-  await page.locator('#calc-missed').dispatchEvent('input');
-  check('moving a slider updates the result', (await page.textContent('#calc-result')) === 'R11,908' && (await page.textContent('#calc-missed-out')) === '10', await page.textContent('#calc-result'));
-  await page.locator('#calc-missed').fill('0');
-  await page.locator('#calc-missed').dispatchEvent('input');
-  check('when it would not pay for itself, it says so', /wouldn't pay for itself/.test(await page.textContent('#calc-verdict')));
+  await page.click('.rec-card[data-rec="dentist"] summary');
+  check('each call has a readable transcript', await page.locator('.rec-card[data-rec="dentist"] .transcript li').first().isVisible());
 
   // FAQ
   const fh = (n) => page.evaluate((i) => document.getElementById(`faq-a-${i}`).getBoundingClientRect().height, n);
-  let faqOk = (await page.locator('.faq-item').count()) === 8 && (await fh(1)) > 30;
-  for (let n = 2; n <= 8; n += 1) {
+  let faqOk = (await page.locator('.faq-item').count()) === 5;
+  for (let n = 1; n <= 5; n += 1) {
     const closed = await fh(n);
     await page.click(`#faq-q-${n}`);
     await page.waitForTimeout(420);
@@ -199,7 +186,7 @@ const A = await boot(TWILIO);
   }
   await page.click('#faq-q-1');
   await page.waitForTimeout(420);
-  check('8 FAQ questions open and close', faqOk && (await fh(1)) < 2);
+  check('5 FAQ questions open and close', faqOk && (await fh(1)) < 2);
 
   // Pricing button carries the plan into the trial form
   await page.click('#pricing [data-plan="Front Desk"]');
@@ -251,6 +238,7 @@ const A = await boot(TWILIO);
   check('after the call, the owner\'s WhatsApp summary is shown', await page.isVisible('#live-summary') && (await page.textContent('#live-summary-text')).length > 10, await page.textContent('#live-summary-text'));
   const health = await (await page.request.get(`${A.url}api/health`)).json();
   check('ending the call frees the session', health.demo.activeSessions === 0);
+  check('native voice mode connects the browser straight to the voice provider', health.voice.speech === 'native');
 
   // Phone test (mock Twilio)
   check('phone test shows with the demo number', await page.isVisible('#phone-test') && (await page.textContent('#dial-number')) === '021 555 0100');
@@ -272,13 +260,37 @@ const A = await boot(TWILIO);
   await ctx.close();
 }
 
+/* ============================== natural voice: browser talks to our relay ============================== */
+{
+  const R = await boot({ ELEVENLABS_API_KEY: 'test-el-key' });
+  const { ctx, page, errors } = await open(browser, R.url, { permissions: ['microphone'] });
+  const sockets = [];
+  page.on('websocket', (ws) => sockets.push(ws.url()));
+  await page.locator('#try').scrollIntoViewIfNeeded();
+  await page.waitForSelector('#demo-box[data-state="live"]', { timeout: 8000 });
+  await page.click('#mic-button');
+  await page.waitForSelector('#mic-button[data-state="live"]', { timeout: 10000 });
+  await page.waitForFunction(() => document.querySelectorAll('#transcript li').length >= 4, null, { timeout: 15000 }).catch(() => {});
+  const lines = await page.evaluate(() => Array.from(document.querySelectorAll('#transcript li')).filter((li) => !li.hidden).map((li) => li.innerText.replace(/\n+/g, ': ')));
+  check('ElevenLabs voice: the browser talks only to our server', sockets.length === 1 && /\/api\/demo\/stream\?session=/.test(sockets[0]) && R.mock.state.tokens.length === 0, sockets.join(','));
+  check('ElevenLabs voice: greeting, caller words and the diary check show', lines.some((l) => /Milkwood Dental/.test(l)) && lines.some((l) => /^YOU: Can I book/i.test(l)) && lines.some((l) => /Checking the diary/.test(l)) && R.mock.state.ttsRequests.length >= 2, lines.join(' || '));
+  await page.click('#mic-button');
+  await page.waitForSelector('#mic-button[data-state="idle"]');
+  await page.waitForTimeout(300);
+  const h = await (await page.request.get(`${R.url}api/health`)).json();
+  check('ElevenLabs voice: ending the call frees the session', h.demo.activeSessions === 0 && h.voice.speech === 'elevenlabs');
+  check('no JavaScript errors (relay)', errors.length === 0, errors.join(' | '));
+  await ctx.close();
+  await R.stop();
+}
+
 /* ============================== reduced motion ============================== */
 {
   const { ctx, page } = await open(browser, A.url, { reducedMotion: 'reduce' });
   await page.waitForTimeout(1500);
   const s = await stageState(page);
-  const shown = await page.evaluate(() => ({ caps: document.querySelectorAll('#stage .cap:not(.is-future)').length, wa: document.querySelectorAll('#stage .wa-msg.is-shown').length }));
-  check('reduced motion: the stage shows the finished call and does not move by itself', !s.playing && s.pos >= 40 && shown.caps === 9 && shown.wa === 2, JSON.stringify({ s, shown }));
+  const shown = await page.evaluate(() => ({ hidden: document.querySelectorAll('#stage .caption-text .w.is-hidden').length, steps: document.querySelectorAll('#stage .step.is-done').length, wa: document.querySelectorAll('#stage .toast.is-shown').length, tl: document.querySelectorAll('.tl-node.is-on').length }));
+  check('reduced motion: the finished call and timeline are shown, nothing moves by itself', !s.playing && s.pos >= 39 && shown.hidden === 0 && shown.steps === 4 && shown.wa === 2 && shown.tl === 5, JSON.stringify({ s, shown }));
   await ctx.close();
 }
 
@@ -340,7 +352,7 @@ const A = await boot(TWILIO);
   await page.locator('#try').scrollIntoViewIfNeeded();
   await page.waitForSelector('#demo-box[data-state="off"]', { timeout: 8000 });
   check('no API key: notice shown, microphone and phone test hidden', /isn't switched on yet/.test(await page.innerText('#demo-box')) && !(await page.isVisible('#mic-button')) && !(await page.isVisible('#phone-test')));
-  await page.click('#rec-panel-dentist .rec-play');
+  await page.click('.rec-card[data-rec="dentist"] .rec-play');
   await page.waitForTimeout(1500);
   check('the recorded calls still play', await page.evaluate(() => !document.getElementById('rec-audio').paused && document.getElementById('rec-audio').currentTime > 0.5));
   check('no JavaScript errors (no key)', errors.length === 0, errors.join(' | '));
@@ -359,7 +371,7 @@ const A = await boot(TWILIO);
   const { ctx, page } = await open(browser, `http://127.0.0.1:${plain.address().port}/`);
   await page.locator('#try').scrollIntoViewIfNeeded();
   await page.waitForSelector('#demo-box[data-state="off"]', { timeout: 9000 }).catch(() => {});
-  check('static host with no backend: falls back to the recorded calls', (await page.getAttribute('#demo-box', 'data-state')) === 'off' && (await page.locator('.rec-panel').count()) === 3);
+  check('static host with no backend: falls back to the recorded calls', (await page.getAttribute('#demo-box', 'data-state')) === 'off' && (await page.locator('.rec-card').count()) === 3);
   await ctx.close();
   plain.close();
   plain.closeAllConnections?.();
@@ -368,8 +380,8 @@ const A = await boot(TWILIO);
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, javaScriptEnabled: false });
   const page = await ctx.newPage();
   await page.goto(A.url);
-  const ok = await page.evaluate(() => document.querySelectorAll('#stage .cap').length === 9 && getComputedStyle(document.querySelector('#stage .cap:last-child')).display !== 'none');
-  check('without JavaScript the whole call and every section are still readable', ok && await page.locator('#faq-a-5 p').isVisible() && (await page.locator('#industries [role="tabpanel"]').count()) === 5);
+  const ok = await page.evaluate(() => document.querySelectorAll('.rec-details .cap').length >= 20 && getComputedStyle(document.querySelector('#stage .toast')).opacity === '1' && document.querySelector('#stage .caption-text').textContent.length > 20);
+  check('without JavaScript the calls, the scene and every section are still readable', ok && await page.locator('#faq-a-5 p').isVisible() && await page.locator('#pricing .plan').first().isVisible());
   await ctx.close();
 }
 
