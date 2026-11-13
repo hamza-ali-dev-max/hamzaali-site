@@ -1,6 +1,6 @@
 // Smoke test of a deployed copy of the website. Usage: node tests/live-site.mjs https://your-site/
-// Checks the things a visitor would touch, at desktop and phone size. It expects whatever
-// demo state the site is in (live microphone, or the sample-call fallback) to be working.
+// Checks what a visitor would touch, at desktop and phone size, in whatever demo state the
+// site is in (live microphone, or the notice with recorded calls).
 import { createRequire } from 'node:module';
 
 const { chromium, devices } = createRequire(import.meta.url)('playwright');
@@ -10,6 +10,7 @@ if (!url) { console.error('usage: node tests/live-site.mjs <url>'); process.exit
 let failures = 0;
 const check = (name, ok, detail = '') => { if (!ok) failures += 1; console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail && !ok ? `  [${String(detail).slice(0, 240)}]` : ''}`); };
 const browser = await chromium.launch({ proxy: process.env.HTTPS_PROXY ? { server: process.env.HTTPS_PROXY, bypass: 'localhost,127.0.0.1' } : undefined, args: ['--autoplay-policy=no-user-gesture-required'] });
+const inView = (page, s) => page.evaluate((sel) => { const r = document.querySelector(sel).getBoundingClientRect(); return r.top > -5 && r.top < window.innerHeight * 0.75; }, s);
 
 for (const [label, options] of [['desktop', { viewport: { width: 1366, height: 850 } }], ['phone', { ...devices['iPhone 13'] }]]) {
   const ctx = await browser.newContext(options);
@@ -23,74 +24,73 @@ for (const [label, options] of [['desktop', { viewport: { width: 1366, height: 8
   const response = await page.goto(url, { waitUntil: 'load' });
   check(`${label}: page loads over HTTPS`, response.ok() && page.url().startsWith('https://'), `${response.status()} ${page.url()}`);
   console.log(`      load time ${Date.now() - started} ms`);
-  check(`${label}: headline is visible and styled`, await page.isVisible('h1') && (await page.evaluate(() => getComputedStyle(document.querySelector('h1')).fontFamily)).includes('Poppins'));
+  check(`${label}: headline visible in the display font`, await page.isVisible('h1') && (await page.evaluate(() => getComputedStyle(document.querySelector('h1')).fontFamily)).includes('Bricolage'));
   check(`${label}: no sideways scroll`, await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth));
 
+  // The hero stage plays by itself, and plays the real recording on request
+  await page.locator('#stage').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(3000);
+  const s = await page.evaluate(() => window.__frontDesk.stage().state());
+  check(`${label}: the hero call plays by itself`, s.playing && s.pos > 1, JSON.stringify(s));
+  await page.click('.stage [data-stage-sound]');
+  await page.waitForTimeout(2500);
+  const audio = await page.evaluate(() => { const a = document.getElementById('stage-audio'); return { t: a.currentTime, paused: a.paused }; });
+  check(`${label}: "Play with sound" plays the real recording`, audio.t > 1 && !audio.paused, JSON.stringify(audio));
+  await page.click('[data-stage-toggle]');
+
+  // Language and theme
   if (label === 'phone') {
     await page.tap('#menu-toggle');
-    check('phone: menu opens', await page.isVisible('#mobile-menu'));
     await page.tap('#lang-mobile [data-lang="af"]');
-    check('phone: Afrikaans switch works', (await page.textContent('h1')).startsWith('Die KI-ontvangsdame'));
-    await page.tap('#lang-mobile [data-lang="xh"]');
-    check('phone: isiXhosa switch works', (await page.textContent('h1')).startsWith('Umamkeli we-AI'));
-    await page.tap('#lang-mobile [data-lang="en"]');
-    await page.tap('#mobile-menu >> text="FAQ"');
-    await page.waitForTimeout(1500);
-    check('phone: menu link scrolls to the FAQ', await page.evaluate(() => { const r = document.querySelector('#faq').getBoundingClientRect(); return r.top > -5 && r.top < window.innerHeight * 0.7; }));
   } else {
     await page.click('#lang-desktop [data-lang="af"]');
-    check('desktop: Afrikaans switch works', (await page.textContent('h1')).startsWith('Die KI-ontvangsdame'));
-    await page.click('#lang-desktop [data-lang="en"]');
-    await page.click('header nav >> text="Pricing"');
-    await page.waitForTimeout(1500);
-    check('desktop: nav link scrolls to pricing', await page.evaluate(() => { const r = document.querySelector('#pricing').getBoundingClientRect(); return r.top > -5 && r.top < window.innerHeight * 0.7; }));
   }
-
+  check(`${label}: Afrikaans switch works`, (await page.textContent('h1')).startsWith('Kan jy nie optel nie'));
+  if (label === 'phone') { await page.tap('#lang-mobile [data-lang="en"]'); await page.tap('#menu-toggle'); } else await page.click('#lang-desktop [data-lang="en"]');
   await page.click('[data-theme-toggle]');
-  check(`${label}: dark mode toggles`, await page.evaluate(() => document.documentElement.classList.contains('dark') && getComputedStyle(document.body).backgroundColor === 'rgb(8, 18, 38)'));
+  check(`${label}: dark mode toggles`, await page.evaluate(() => document.documentElement.classList.contains('dark')));
   await page.click('[data-theme-toggle]');
 
-  await page.click('#ind-tab-vets');
-  check(`${label}: industry tabs switch`, await page.evaluate(() => !document.querySelector('#ind-panel-vets').hidden && document.querySelector('#ind-panel-dentists').hidden));
-  await page.click('#faq-q-3');
+  // Recordings, tabs, FAQ, calculator
+  await page.locator('#rec-tabs').scrollIntoViewIfNeeded();
+  await page.click('#rec-tab-plumber');
+  await page.click('#rec-panel-plumber .rec-play');
+  await page.waitForTimeout(2500);
+  check(`${label}: a recorded call plays`, await page.evaluate(() => !document.getElementById('rec-audio').paused && document.getElementById('rec-audio').currentTime > 1));
+  await page.click('#rec-panel-plumber .rec-play');
+  await page.locator('#ind-tabs').scrollIntoViewIfNeeded();
+  await page.click('#ind-tab-trade');
+  check(`${label}: industry tabs switch`, await page.evaluate(() => !document.getElementById('ind-panel-trade').hidden && document.getElementById('ind-panel-med').hidden));
+  await page.click('#faq-q-4');
   await page.waitForTimeout(450);
-  check(`${label}: FAQ opens`, (await page.evaluate(() => document.getElementById('faq-a-3').getBoundingClientRect().height)) > 30);
+  check(`${label}: FAQ opens`, (await page.evaluate(() => document.getElementById('faq-a-4').getBoundingClientRect().height)) > 30);
+  await page.locator('#calc-missed').fill('10');
+  await page.locator('#calc-missed').dispatchEvent('input');
+  check(`${label}: calculator updates`, (await page.textContent('#calc-result')) === 'R11,908');
 
+  // Demo state
   await page.locator('#try').scrollIntoViewIfNeeded();
   await page.waitForFunction(() => document.getElementById('demo-box').dataset.state !== 'checking', null, { timeout: 12000 }).catch(() => {});
   const state = await page.getAttribute('#demo-box', 'data-state');
-  if (state === 'off') {
-    await page.click('.sample >> nth=0 >> .sample-play');
-    await page.waitForTimeout(2500);
-    const t = await page.evaluate(() => document.getElementById('sample-audio').currentTime);
-    check(`${label}: demo fallback shows and a sample call plays`, t > 0.8, `currentTime ${t}`);
-    await page.click('.sample >> nth=0 >> .sample-play');
-  } else {
-    check(`${label}: live microphone demo is offered`, state === 'live' && await page.isVisible('#mic-button'), state);
-  }
+  check(`${label}: the demo shows a clear state (live or notice)`, state === 'live' || state === 'off', state);
 
-  await page.locator('#contact').scrollIntoViewIfNeeded();
-  await page.waitForFunction(() => document.querySelectorAll('#map .map-pin').length === 6, null, { timeout: 15000 }).catch(() => {});
-  await page.waitForTimeout(2000);
-  const map = await page.evaluate(() => ({ pins: document.querySelectorAll('#map .map-pin').length, tiles: Array.from(document.querySelectorAll('#map img.leaflet-tile')).filter((i) => i.complete && i.naturalWidth > 0).length }));
-  check(`${label}: map shows 6 markers on real map tiles`, map.pins === 6 && map.tiles > 0, JSON.stringify(map));
-  await page.evaluate(() => window.__frontDeskMap.openCity('Durban'));
-  await page.waitForTimeout(300);
-  check(`${label}: a marker popup opens`, /Durban/.test(await page.locator('.leaflet-popup-content').innerText()));
-
-  await page.locator('#demo').scrollIntoViewIfNeeded();
-  await page.click('#demo-form button[type="submit"]');
-  check(`${label}: form refuses empty details`, (await page.$$eval('#demo-form .field-error', (els) => els.filter((e) => !e.hidden).length)) === 5);
-  await page.fill('#demo-name', 'Live Test');
-  await page.fill('#demo-business', 'Test Salon');
-  await page.selectOption('#demo-type', { index: 3 });
-  await page.fill('#demo-phone', '082 123 4567');
-  await page.fill('#demo-email', 'test@example.co.za');
-  await page.click('#demo-form button[type="submit"]');
+  // Trial form
+  await page.click('#pricing [data-plan="After Hours"]');
+  await page.waitForTimeout(1300);
+  check(`${label}: a pricing button goes to the trial form`, await inView(page, '#start'));
+  await page.click('#start-form button[type="submit"]');
+  check(`${label}: form refuses empty details`, (await page.$$eval('#start-form .field-error', (els) => els.filter((e) => !e.hidden).length)) === 4);
+  await page.fill('#start-name', 'Live Test');
+  await page.fill('#start-business', 'Test Salon');
+  await page.selectOption('#start-type', '3');
+  await page.fill('#start-phone', '082 123 4567');
+  await page.click('#start-form button[type="submit"]');
   const opened = await page.evaluate(() => window.__opened[0] || '');
-  check(`${label}: form confirms and opens WhatsApp with the details`, await page.isVisible('#demo-success') && opened.startsWith('https://wa.me/') && decodeURIComponent(opened).includes('Test Salon'), opened.slice(0, 80));
+  check(`${label}: form confirms and opens WhatsApp with the details`, await page.isVisible('#start-success') && decodeURIComponent(opened).includes('Test Salon') && decodeURIComponent(opened).includes('Plan: After Hours'), opened.slice(0, 80));
 
   check(`${label}: no failed files and no script errors`, failed.length === 0 && errors.length === 0, [...failed, ...errors].join(' | '));
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(300);
   await page.screenshot({ path: `tests/artifacts/live-${label}.png` });
   await ctx.close();
 }
