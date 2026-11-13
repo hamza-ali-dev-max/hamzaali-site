@@ -1,0 +1,30 @@
+{
+  "name": "frontdesk-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Front Desk AI: landing page plus live voice demo backend (xAI Grok voice, Twilio).",
+  "type": "module",
+  "engines": {
+    "node": ">=20.12"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "node server/index.js",
+    "dev": "npm run build && node server/index.js",
+    "test": "node --test tests/server.test.mjs",
+    "test:e2e": "node tests/e2e.mjs"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@fontsource-variable/nunito-sans": "^5.1.0",
+    "@fontsource/poppins": "^5.1.0",
+    "axe-core": "^4.10.0",
+    "esbuild": "^0.24.0",
+    "leaflet": "^1.9.4",
+    "lucide-static": "^0.460.0",
+    "simple-icons": "^13.16.0",
+    "tailwindcss": "^3.4.17"
+  }
+}

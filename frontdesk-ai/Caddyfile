@@ -1,0 +1,12 @@
+# Caddy gets and renews the HTTPS certificate by itself once DNS points at this server.
+# SITE_DOMAIN comes from docker-compose (default: the PLACEHOLDER domain frontdeskai.co.za).
+{$SITE_DOMAIN}, www.{$SITE_DOMAIN} {
+	encode gzip zstd
+	reverse_proxy app:8787
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "microphone=(self), camera=(), geolocation=()"
+	}
+}
