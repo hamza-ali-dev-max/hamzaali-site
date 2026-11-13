@@ -1,9 +1,10 @@
-// The hero scene: a real recorded call, played as it happened.
+// The hero scene: a real recorded call, played as it happened, told by floating chips.
 // Without sound it plays by itself (silently) while it is on screen, with a Pause button.
 // "Hear a real call" plays the recording and the scene follows the audio exactly.
-// What moves: the caption types out word by word as each line is spoken, the waveform moves
-// for whoever is talking, the steps tick off, the diary slot fills and the WhatsApps slide in.
-// With reduced motion it shows the finished call and only moves when asked.
+// What moves: each speech bubble types out word by word as its line is spoken (caller in the
+// dark bubble, receptionist in the blue one), the waveform moves for whoever talks, the call
+// button rings, the diary card goes from "checking" to "booked", the steps tick off and the
+// WhatsApps pop in. With reduced motion it shows the finished call and only moves when asked.
 
 export function createStage(root, { call, say, reduceMotion, onSound }) {
   const $ = (s) => root.querySelector(s);
@@ -11,19 +12,24 @@ export function createStage(root, { call, say, reduceMotion, onSound }) {
   const audio = $('#stage-audio');
   const duration = Number(root.dataset.duration) || 50;
   const bookAt = Number(root.dataset.book) || duration;
+  const checkAt = Number(root.dataset.check) || bookAt;
   const sentAt = Number(root.dataset.sent) || Math.min(bookAt + 2.5, duration);
   const firstLine = lines.length ? lines[0].t : 1;
   const steps = Array.from(root.querySelectorAll('[data-step]')).map((el) => ({ el, at: Number(el.dataset.at) }));
   const toasts = [[root.querySelector('[data-wa="client"]'), sentAt], [root.querySelector('[data-wa="owner"]'), Math.min(sentAt + 1.6, duration)]];
-  const target = root.querySelector('.slot-target');
-  const capWho = $('[data-cap-who]');
-  const capText = $('[data-cap-text]');
+  const waCount = $('[data-wa-count]');
   const statusText = $('[data-status-text]');
   const clockEl = $('[data-stage-clock]');
   const progress = $('[data-stage-progress]');
   const toggle = $('[data-stage-toggle]');
   const errorEl = document.querySelector('[data-stage-error]');
   const HOLD = 4; // seconds to rest on the finished call before the silent loop starts again
+
+  // One speech bubble per side. Each shows that side's latest line, typed as it is spoken.
+  const bubbles = ['caller', 'ai'].map((who) => {
+    const el = root.querySelector(`[data-cap="${who}"]`);
+    return { who, text: el && el.querySelector('[data-cap-text]'), index: -2, words: [], shown: -1 };
+  }).filter((b) => b.text);
 
   let pos = reduceMotion ? duration : 0;
   let playing = false;
@@ -33,57 +39,58 @@ export function createStage(root, { call, say, reduceMotion, onSound }) {
   let last = 0;
   let raf = 0;
   let status = '';
-  let lineIndex = -2;
-  let words = [];
-  let shown = -1;
 
   const clock = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s) % 60).padStart(2, '0')}`;
 
-  function setLine(index) {
-    lineIndex = index;
-    const line = lines[Math.max(0, index)];
-    if (!line) return;
-    root.dataset.who = line.who;
-    say(capWho, line.who === 'ai' ? 'stage.ai' : 'stage.caller');
-    capText.replaceChildren(...line.text.split(/\s+/).map((word, i) => {
-      const span = document.createElement('span');
-      span.className = 'w is-hidden';
-      span.textContent = i ? ` ${word}` : word;
-      return span;
-    }));
-    words = Array.from(capText.children);
-    shown = -1;
+  function paintBubble(b, p) {
+    // The latest line from this side that has started; before any, the first line still to come.
+    let index = -1;
+    lines.forEach((line, i) => { if (line.who === b.who && line.t <= p) index = i; });
+    const upcoming = index < 0 ? lines.findIndex((line) => line.who === b.who) : index;
+    if (upcoming !== b.index) {
+      b.index = upcoming;
+      const line = lines[upcoming];
+      b.text.replaceChildren(...(line ? line.text.split(/\s+/) : []).map((word, i) => {
+        const span = document.createElement('span');
+        span.className = 'w is-hidden';
+        span.textContent = i ? ` ${word}` : word;
+        return span;
+      }));
+      b.words = Array.from(b.text.children);
+      b.shown = -1;
+    }
+    let count = 0;
+    let speaking = false;
+    if (index >= 0) {
+      const line = lines[index];
+      const into = (p - line.t) / Math.max(0.6, line.d || 3);
+      count = Math.min(b.words.length, Math.ceil(b.words.length * Math.min(1, into * 1.06)));
+      speaking = into < 1;
+    }
+    if (count !== b.shown) {
+      b.words.forEach((w, i) => w.classList.toggle('is-hidden', i >= count));
+      b.shown = count;
+      const box = b.text.parentElement;
+      box.scrollTop = box.scrollHeight; // long lines: keep the newest words in view
+      box.classList.toggle('is-scrolled', box.scrollTop > 0);
+    }
+    return speaking;
   }
 
   function render() {
     const p = Math.min(pos, duration);
-    // Which line is being said, and how far into it
-    let index = -1;
-    for (let i = 0; i < lines.length; i += 1) if (lines[i].t <= p) index = i;
-    if (index !== lineIndex) setLine(index);
-    const line = lines[index];
-    let count = 0;
     let speaking = '';
-    if (line) {
-      const length = Math.max(0.6, line.d || 3);
-      const progressInLine = (p - line.t) / length;
-      count = Math.min(words.length, Math.ceil(words.length * Math.min(1, progressInLine * 1.06)));
-      if (progressInLine < 1) speaking = line.who;
-    }
-    if (count !== shown) {
-      words.forEach((w, i) => w.classList.toggle('is-hidden', i >= count));
-      shown = count;
-      // Long lines: keep the newest words in view
-      const box = capText.parentElement;
-      box.scrollTop = box.scrollHeight;
-      box.classList.toggle('is-scrolled', box.scrollTop > 0);
-    }
+    bubbles.forEach((b) => { if (paintBubble(b, p)) speaking = b.who; });
     if (root.dataset.speaking !== speaking) root.dataset.speaking = speaking;
     root.dataset.phase = p < firstLine ? 'ringing' : 'live';
+    root.dataset.diary = p >= bookAt ? 'booked' : p >= checkAt ? 'checked' : 'none';
+    root.classList.toggle('is-sent', p >= sentAt);
+    root.querySelectorAll('.slot-target').forEach((el) => el.classList.toggle('is-filled', p >= bookAt));
 
     steps.forEach((s) => s.el.classList.toggle('is-done', p >= s.at));
-    if (target) target.classList.toggle('is-filled', p >= bookAt);
-    toasts.forEach(([el, at]) => { if (el) el.classList.toggle('is-shown', p >= at); });
+    let sent = 0;
+    toasts.forEach(([el, at]) => { if (el) { el.classList.toggle('is-shown', p >= at); if (p >= at) sent += 1; } });
+    if (waCount) waCount.textContent = String(sent);
 
     const next = p < firstLine ? 'stage.incoming' : p < bookAt ? 'stage.s1' : 'stage.s3';
     if (next !== status) { status = next; say(statusText, next); }
@@ -166,7 +173,7 @@ export function createStage(root, { call, say, reduceMotion, onSound }) {
   audio.addEventListener('error', () => { if (sound) { sound = false; if (errorEl) errorEl.hidden = false; stop(); autoplay(); } });
 
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; autoplay(); }, { threshold: 0.25 }).observe(root);
+    new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; autoplay(); }, { threshold: 0.2 }).observe(root);
   } else {
     visible = true;
   }
@@ -179,7 +186,7 @@ export function createStage(root, { call, say, reduceMotion, onSound }) {
   return {
     playSound,
     pauseSound() { if (sound && playing) { audio.pause(); userPaused = true; stop(); } },
-    refreshText() { status = ''; const i = lineIndex; lineIndex = -2; if (i >= -1) render(); paintButton(); },
-    state: () => ({ pos, playing, sound, phase: root.dataset.phase, speaking: root.dataset.speaking }),
+    refreshText() { status = ''; render(); paintButton(); },
+    state: () => ({ pos, playing, sound, phase: root.dataset.phase, speaking: root.dataset.speaking, diary: root.dataset.diary }),
   };
 }

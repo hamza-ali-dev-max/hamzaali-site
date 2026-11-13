@@ -111,7 +111,7 @@ const A = await boot(TWILIO);
   let s1 = await stageState(page);
   check('hero stage plays the call by itself (silently) when on screen', s1.playing && !s1.sound && s1.pos > 1, JSON.stringify(s1));
   await page.waitForTimeout(1500);
-  const cap = await page.evaluate(() => ({ shown: document.querySelectorAll('#stage .caption-text .w:not(.is-hidden)').length, all: document.querySelectorAll('#stage .caption-text .w').length, steps: document.querySelectorAll('#stage .step.is-done').length, speaking: document.getElementById('stage').dataset.speaking }));
+  const cap = await page.evaluate(() => ({ shown: document.querySelectorAll('#stage .bubble-text .w:not(.is-hidden)').length, all: document.querySelectorAll('#stage .bubble-text .w').length, steps: document.querySelectorAll('#stage .step.is-done').length, speaking: document.getElementById('stage').dataset.speaking }));
   check('the caption types out word by word, in step with the call', cap.shown >= 1 && cap.all >= cap.shown && cap.steps >= 1 && cap.steps < 4, JSON.stringify(cap));
   await page.click('[data-stage-toggle]');
   const p1 = await stageState(page);
@@ -131,7 +131,7 @@ const A = await boot(TWILIO);
   // Language
   await page.click('#lang-desktop [data-lang="af"]');
   let lang = await page.evaluate(() => ({ html: document.documentElement.lang, h1: document.querySelector('h1').textContent, nav: document.querySelector('header nav a').textContent, faq: document.querySelector('#faq-q-1').textContent.trim(), price: document.querySelector('#price-title').textContent, wa: document.querySelector('[data-wa-call="dentist"][data-wa-kind="owner"]').textContent }));
-  check('Afrikaans translates the page, including the WhatsApp messages', lang.html === 'af' && lang.h1 === STRINGS.af['hero.title'] && lang.nav === 'Hoe dit werk' && lang.faq === STRINGS.af['faq.1.q'] && lang.price === STRINGS.af['price.title'] && /^Nuwe bespreking/.test(lang.wa), JSON.stringify(lang));
+  check('Afrikaans translates the page, including the WhatsApp messages', lang.html === 'af' && lang.h1 === `${STRINGS.af['hero.t1']} ${STRINGS.af['hero.t2']} ${STRINGS.af['hero.t3']}` && lang.nav === 'Hoe dit werk' && lang.faq === STRINGS.af['faq.1.q'] && lang.price === STRINGS.af['price.title'] && /^Nuwe bespreking/.test(lang.wa), JSON.stringify(lang));
   const untranslated = await page.evaluate((en) => Array.from(document.querySelectorAll('[data-i18n]')).filter((el) => el.textContent === en[el.dataset.i18n]).map((el) => el.dataset.i18n), STRINGS.en);
   check('nothing stays in English after switching', untranslated.filter((k) => STRINGS.af[k] !== STRINGS.en[k]).length === 0, untranslated.join(','));
   await page.reload({ waitUntil: 'load' });
@@ -141,7 +141,7 @@ const A = await boot(TWILIO);
   // Dark mode
   await page.click('[data-theme-toggle]');
   const dark = await page.evaluate(() => ({ cls: document.documentElement.classList.contains('dark'), bg: getComputedStyle(document.body).backgroundColor }));
-  check('dark mode toggles', dark.cls && dark.bg === 'rgb(7, 11, 20)', JSON.stringify(dark));
+  check('dark mode toggles', dark.cls && dark.bg === 'rgb(0, 0, 0)', JSON.stringify(dark));
   await page.reload({ waitUntil: 'load' });
   check('dark mode is remembered', await page.evaluate(() => document.documentElement.classList.contains('dark')));
   await page.click('[data-theme-toggle]');
@@ -289,7 +289,7 @@ const A = await boot(TWILIO);
   const { ctx, page } = await open(browser, A.url, { reducedMotion: 'reduce' });
   await page.waitForTimeout(1500);
   const s = await stageState(page);
-  const shown = await page.evaluate(() => ({ hidden: document.querySelectorAll('#stage .caption-text .w.is-hidden').length, steps: document.querySelectorAll('#stage .step.is-done').length, wa: document.querySelectorAll('#stage .toast.is-shown').length, tl: document.querySelectorAll('.tl-node.is-on').length }));
+  const shown = await page.evaluate(() => ({ hidden: document.querySelectorAll('#stage .bubble-text .w.is-hidden').length, steps: document.querySelectorAll('#stage .step.is-done').length, wa: document.querySelectorAll('#stage .toast.is-shown').length, tl: document.querySelectorAll('.tl-node.is-on').length }));
   check('reduced motion: the finished call and timeline are shown, nothing moves by itself', !s.playing && s.pos >= 39 && shown.hidden === 0 && shown.steps === 4 && shown.wa === 2 && shown.tl === 5, JSON.stringify({ s, shown }));
   await ctx.close();
 }
@@ -380,7 +380,7 @@ const A = await boot(TWILIO);
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, javaScriptEnabled: false });
   const page = await ctx.newPage();
   await page.goto(A.url);
-  const ok = await page.evaluate(() => document.querySelectorAll('.rec-details .cap').length >= 20 && getComputedStyle(document.querySelector('#stage .toast')).opacity === '1' && document.querySelector('#stage .caption-text').textContent.length > 20);
+  const ok = await page.evaluate(() => document.querySelectorAll('.rec-details .cap').length >= 20 && getComputedStyle(document.querySelector('#stage .toast')).opacity === '1' && document.querySelector('#stage .bubble-text').textContent.length > 20);
   check('without JavaScript the calls, the scene and every section are still readable', ok && await page.locator('#faq-a-5 p').isVisible() && await page.locator('#pricing .plan').first().isVisible());
   await ctx.close();
 }

@@ -15,30 +15,30 @@ const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>
 @font-face { font-family: I; font-weight: 100 900; src: url(${font('inter-latin-wght-normal.woff2')}); }
 * { box-sizing: border-box; margin: 0; }
 body { width: 1200px; height: 630px; font-family: I, sans-serif; color: #F5F7FA; overflow: hidden; position: relative;
-  background: radial-gradient(900px 480px at 90% -10%, rgba(45,212,191,.22), transparent 60%), radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px) 0 0 / 22px 22px, #0A0F1C; }
+  background: radial-gradient(900px 480px at 90% -10%, rgba(221,247,122,.10), transparent 60%), radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px) 0 0 / 22px 22px, #000000; }
 .left { position: absolute; left: 64px; top: 60px; width: 560px; }
 .logo { display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 28px; letter-spacing: -.02em; }
-.mark { width: 46px; height: 46px; border-radius: 13px; background: #0F766E; display: flex; align-items: center; justify-content: center; }
-.kicker { margin-top: 54px; display: inline-flex; gap: 10px; align-items: center; font-size: 19px; color: #A9B4C7; border: 1px solid #22304A; border-radius: 99px; padding: 8px 16px; }
-.kicker b { width: 8px; height: 8px; border-radius: 99px; background: #2DD4BF; }
+.mark { width: 46px; height: 46px; border-radius: 13px; background: #DDF77A; display: flex; align-items: center; justify-content: center; }
+.kicker { margin-top: 54px; display: inline-flex; gap: 10px; align-items: center; font-size: 19px; color: #A9B4C7; border: 1px solid #3A3A40; border-radius: 99px; padding: 8px 16px; }
+.kicker b { width: 8px; height: 8px; border-radius: 99px; background: #DDF77A; }
 h1 { margin-top: 22px; font-weight: 700; font-size: 74px; line-height: 1.02; letter-spacing: -.045em; color: #fff; }
 .sub { margin-top: 22px; font-size: 24px; line-height: 1.4; color: #A9B4C7; }
-.card { position: absolute; right: 64px; top: 72px; width: 450px; border-radius: 28px; background: #111A2C; border: 1px solid #22304A; padding: 26px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.7); }
+.card { position: absolute; right: 64px; top: 72px; width: 450px; border-radius: 28px; background: #2A2A2E; border: 1px solid #3A3A40; padding: 26px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.7); }
 .head { display: flex; align-items: center; gap: 14px; }
-.av { width: 50px; height: 50px; border-radius: 99px; background: #2DD4BF; display: flex; align-items: center; justify-content: center; }
+.av { width: 50px; height: 50px; border-radius: 99px; background: #DDF77A; display: flex; align-items: center; justify-content: center; }
 .k { font-size: 14px; font-weight: 600; letter-spacing: .08em; color: #A9B4C7; }
 .n { font-size: 22px; font-weight: 600; color: #fff; }
 .wave { margin-top: 22px; height: 52px; display: flex; align-items: center; gap: 4px; }
-.wave i { flex: 1; border-radius: 9px; background: #2DD4BF; }
-.who { margin-top: 20px; font-size: 14px; font-weight: 600; letter-spacing: .08em; color: #2DD4BF; }
+.wave i { flex: 1; border-radius: 9px; background: #DDF77A; }
+.who { margin-top: 20px; font-size: 14px; font-weight: 600; letter-spacing: .08em; color: #DDF77A; }
 .cap { margin-top: 6px; font-size: 23px; line-height: 1.3; font-weight: 500; color: #fff; }
-.toast { position: absolute; right: 40px; bottom: 44px; width: 380px; background: #fff; color: #0A0F1C; border-radius: 20px; padding: 16px; display: flex; gap: 12px; box-shadow: 0 24px 48px -16px rgba(0,0,0,.6); }
+.toast { position: absolute; right: 40px; bottom: 44px; width: 380px; background: #fff; color: #000000; border-radius: 20px; padding: 16px; display: flex; gap: 12px; box-shadow: 0 24px 48px -16px rgba(0,0,0,.6); }
 .toast span { font-size: 13px; font-weight: 600; letter-spacing: .08em; color: #5B6679; }
 .toast p { margin-top: 6px; background: #D9FDD3; color: #0B2A1A; border-radius: 14px; padding: 10px 12px; font-size: 17px; line-height: 1.35; }
 .wa { width: 36px; height: 36px; flex: none; border-radius: 99px; background: #E7F9EE; display: flex; align-items: center; justify-content: center; }
 </style></head><body>
 <div class="left">
-  <div class="logo"><span class="mark"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2a9 9 0 0 1 9 9"/><path d="M13 6a5 5 0 0 1 5 5"/><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></span>Front Desk AI</div>
+  <div class="logo"><span class="mark"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0B0B0C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2a9 9 0 0 1 9 9"/><path d="M13 6a5 5 0 0 1 5 5"/><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></span>Front Desk AI</div>
   <p class="kicker"><b></b>AI receptionist for South African businesses</p>
   <h1>When you can't pick up, we answer.</h1>
   <p class="sub">It books the client and WhatsApps you every call.</p>

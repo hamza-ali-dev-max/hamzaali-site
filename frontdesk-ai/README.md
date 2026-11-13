@@ -1,11 +1,22 @@
 # Front Desk AI
 
-The website for Front Desk AI, an AI receptionist for small businesses in South Africa. Version 3: less reading, more showing, and a natural South African voice.
+The website for Front Desk AI, an AI receptionist for small businesses in South Africa. Version 4: the look of modern app sites (floating colour chips, pill buttons, big headlines, sky and hills backdrops), a natural South African voice, and a true-black night mode with stars.
 
 It has two parts:
 
 1. **The website** (`web/`): a landing page in English and Afrikaans. The hero plays a real call as it happens: the caption types out as each line is spoken, the waveform moves, the steps tick off, the diary slot fills and the WhatsApps slide in. Then an animated ring-to-booked timeline, four moving feature tiles, three real calls with waveforms, the live demo, pricing, five FAQs and a free-trial form. Dark mode throughout.
 2. **The backend** (`server/`): a small Node server that runs the live voice demo. Grok (xAI) listens, thinks and books; ElevenLabs speaks with a South African voice. It also bridges Twilio phone calls. Every key lives only here.
+
+## What changed in v4
+
+| v3 | v4 | Why |
+|---|---|---|
+| Navy hero with one call card | Black hero where the call is told by floating chips: caller and receptionist speech bubbles that type as they speak, a waveform pill, a "08:00 booked" card, a "2 WhatsApps sent" pill, a ringing call button | Matches the reference designs (floating message-app widgets) |
+| Teal and navy, Inter only | Lime, mint, sky blue and coral chips with black text; pill buttons and a floating pill nav; Outfit for headlines, Anton for the giant "RING TO BOOKED IN 36 SECONDS" | Reference designs |
+| Plain sections | Call cards as white widgets on rolling grass hills, pricing cards floating in a cloud sky, a running strip of business types | Reference designs |
+| Dark mode in navy | True black, with a moonlit starry night over the hills and a starry night sky behind pricing | Owner request |
+
+The sky and hills are original images painted by `scripts/backdrops.py` (day and night versions, about 30 to 45 KB each). No stock photos.
 
 ## What changed in v3, and why
 
@@ -48,6 +59,7 @@ frontdesk-ai/
     providers/          Voice providers. xai.js today; index.js is where others plug in.
   scripts/build.mjs     Builds the website into web/dist.
   scripts/og-image.mjs  Makes the share image.
+  scripts/backdrops.py  Paints the sky and hills backdrops, day and night (web/public/img).
   scripts/record-calls.mjs  Re-records the three sample calls from the real receptionist.
   tests/                Backend tests, browser tests, live tests, and mock xAI and Twilio servers.
   Dockerfile, docker-compose.yml, Caddyfile, railway.json, netlify.toml, vercel.json
@@ -288,7 +300,8 @@ About 100 browser checks: the copy in both languages, the hero scene (autoplay, 
 
 ## Credits
 
-- Font: Inter (SIL Open Font Licence), served from this site.
+- Fonts: Outfit, Anton and Inter (SIL Open Font Licence), served from this site.
+- Backdrops: painted by `scripts/backdrops.py` (numpy and Pillow).
 - Voices: ElevenLabs voice library (Claire for the receptionist; Thandi, Nicole and Martin Louw for the sample callers).
 - Icons: Lucide (ISC) and Simple Icons (CC0) for the WhatsApp and Gmail marks.
 - Caller voices in the recordings: ElevenLabs. Receptionist voice: xAI Grok Voice 3.0.

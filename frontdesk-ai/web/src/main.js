@@ -90,7 +90,7 @@ function applyTheme(dark, remember) {
     $('[data-icon="moon"]', button).hidden = dark;
     $('[data-icon="sun"]', button).hidden = !dark;
   });
-  if (themeColor) themeColor.setAttribute('content', dark ? '#070B14' : '#FFFFFF');
+  if (themeColor) themeColor.setAttribute('content', dark ? '#000000' : '#F4F4F0');
   if (remember) store.set('fd-theme', dark ? 'dark' : 'light');
 }
 applyTheme(document.documentElement.classList.contains('dark'), false);

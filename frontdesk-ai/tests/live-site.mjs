@@ -24,13 +24,13 @@ for (const [label, options] of [['desktop', { viewport: { width: 1366, height: 8
   const response = await page.goto(url, { waitUntil: 'load' });
   check(`${label}: page loads over HTTPS`, response.ok() && page.url().startsWith('https://'), `${response.status()} ${page.url()}`);
   console.log(`      load time ${Date.now() - started} ms`);
-  check(`${label}: headline visible in Inter`, await page.isVisible('h1') && (await page.evaluate(() => getComputedStyle(document.querySelector('h1')).fontFamily)).includes('Inter'));
+  check(`${label}: headline visible in Outfit`, await page.isVisible('h1') && (await page.evaluate(() => getComputedStyle(document.querySelector('h1')).fontFamily)).includes('Outfit'));
   check(`${label}: no sideways scroll`, await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth));
 
   // The hero scene plays by itself, and plays the real recording on request
   await page.locator('#stage').scrollIntoViewIfNeeded();
   await page.waitForTimeout(3500);
-  const s = await page.evaluate(() => ({ ...window.__frontDesk.stage().state(), words: document.querySelectorAll('#stage .caption-text .w:not(.is-hidden)').length }));
+  const s = await page.evaluate(() => ({ ...window.__frontDesk.stage().state(), words: document.querySelectorAll('#stage .bubble-text .w:not(.is-hidden)').length }));
   check(`${label}: the hero call plays by itself and the caption types out`, s.playing && s.pos > 1 && s.words > 0, JSON.stringify(s));
   await page.click('#stage [data-stage-sound]');
   await page.waitForTimeout(2500);
