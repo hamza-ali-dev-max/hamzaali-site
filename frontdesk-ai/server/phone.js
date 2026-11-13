@@ -35,7 +35,7 @@ export function normalisePhone(input, allowedPrefixes = ['+27']) {
   return allowedPrefixes.some((prefix) => n.startsWith(prefix)) ? n : '';
 }
 
-export function createPhone({ cfg, provider, limiter, slots }) {
+export function createPhone({ cfg, provider, limiter, slots, openVoice }) {
   const calls = new Map(); // callSid -> { direction, startedAt, number }
   const enabled = () => phoneConfigured(cfg) && provider.configured;
 
@@ -185,14 +185,14 @@ export function createPhone({ cfg, provider, limiter, slots }) {
         const business = businessKey(String(msg.start?.customParameters?.business || ''));
         calendar = createCalendar({ business });
         timer = setTimeout(() => end('time_limit'), cfg.demo.maxSeconds * 1000);
-        voice = provider.connectServerSession({
+        const options = {
           instructions: buildInstructions({ business, channel: 'phone', maxSeconds: cfg.demo.maxSeconds }),
           tools: TOOLS,
           format: 'pcmu',
           openingPrompt: OPENING_PROMPT,
           onEvent(event) {
             if (ended) return;
-            if (event.type === 'audio') ws.send(JSON.stringify({ event: 'media', streamSid, media: { payload: event.audio } }));
+            if (event.type === 'audio') ws.send(JSON.stringify({ event: 'media', streamSid, media: { payload: Buffer.isBuffer(event.audio) ? event.audio.toString('base64') : event.audio } }));
             else if (event.type === 'interrupt') ws.send(JSON.stringify({ event: 'clear', streamSid }));
             else if (event.type === 'tool_call') {
               const result = calendar.run(event.name, event.args);
@@ -201,7 +201,9 @@ export function createPhone({ cfg, provider, limiter, slots }) {
             } else if (event.type === 'error') log('phone_voice_error', { callSid, message: event.message });
             else if (event.type === 'closed') end(event.reason === 'ended' ? 'ended' : 'voice_closed');
           },
-        });
+        };
+        // openVoice picks the voice (ElevenLabs relay or Grok's own); tests may build the phone without it.
+        voice = openVoice ? openVoice(options) : provider.connectServerSession(options);
         log('phone_session_start', { callSid, business, direction: calls.get(callSid)?.direction });
       } else if (msg.event === 'media') {
         if (voice && msg.media?.payload) voice.sendAudio(msg.media.payload);

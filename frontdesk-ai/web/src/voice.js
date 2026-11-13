@@ -111,7 +111,60 @@ function openaiRealtime({ connection, openingPrompt, audio, on, runTool }) {
   };
 }
 
-const ADAPTERS = { 'openai-realtime': openaiRealtime };
+// ---- Adapter for our own server relay (Grok listens, an ElevenLabs voice speaks) -------
+// Microphone audio goes up as binary PCM16; the receptionist's voice comes back the same way.
+function relay({ connection, apiBase, sessionId, audio, on }) {
+  const base = new URL(apiBase || window.location.origin, window.location.href);
+  const url = new URL(connection.path, base);
+  url.protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
+  url.searchParams.set('session', sessionId);
+  url.searchParams.set('token', connection.token);
+  const ws = new WebSocket(url.toString());
+  ws.binaryType = 'arraybuffer';
+  let agentText = '';
+  let closedByUs = false;
+  let opened = false;
+
+  ws.addEventListener('message', (message) => {
+    if (typeof message.data !== 'string') { audio.play(new Uint8Array(message.data)); return; }
+    let event;
+    try { event = JSON.parse(message.data); } catch { return; }
+    switch (event.type) {
+      case 'ready':
+        if (!opened) { opened = true; on.open(); }
+        break;
+      case 'agent_text':
+        if (event.final) { on.agentText(event.text || agentText, true); agentText = ''; } else { agentText += event.text || ''; on.agentText(agentText, false); }
+        break;
+      case 'interrupt':
+        audio.stopPlayback();
+        on.userSpeaking();
+        break;
+      case 'user_text':
+        if (event.text) on.userText(event.text.trim());
+        break;
+      case 'tool':
+        on.tool(event.name);
+        break;
+      case 'events':
+        if (on.events) on.events(event.events || []);
+        break;
+      default:
+    }
+  });
+  ws.addEventListener('close', () => { if (!closedByUs) on.closed(); });
+  ws.addEventListener('error', () => { /* a close event always follows */ });
+
+  return {
+    sendAudio: (pcm16) => { if (ws.readyState === WebSocket.OPEN) ws.send(pcm16); },
+    close() {
+      closedByUs = true;
+      try { if (ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify({ type: 'end' })); ws.close(1000); } catch { /* already closed */ }
+    },
+  };
+}
+
+const ADAPTERS = { 'openai-realtime': openaiRealtime, relay };
 
 // ---- Audio in and out -----------------------------------------------------------------
 async function createAudio(stream) {
@@ -237,10 +290,13 @@ export async function startCall({ apiBase, business, handlers }) {
   handlers.timer(session.maxSeconds);
   link = adapter({
     connection: session.connection,
+    apiBase,
+    sessionId: session.sessionId,
     openingPrompt: session.openingPrompt,
     audio,
     runTool,
     on: {
+      events: handlers.events,
       open() {
         audio.onChunk((chunk) => link.sendAudio(chunk));
         ticker = setInterval(() => {

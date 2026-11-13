@@ -39,7 +39,22 @@ export function loadConfig(env = process.env) {
         apiBase: (env.XAI_API_BASE || 'https://api.x.ai/v1').replace(/\/+$/, ''),
         realtimeUrl: env.XAI_REALTIME_URL || 'wss://api.x.ai/v1/realtime',
         model: env.XAI_VOICE_MODEL || 'grok-voice-3.0',
-        voice: env.XAI_VOICE || 'eve',
+        voice: env.XAI_VOICE || 'ara',
+      },
+    },
+
+    // Who speaks the receptionist's words. "elevenlabs": Grok listens, thinks and books, and an
+    // ElevenLabs South African voice says the reply (more natural, ranked top for naturalness).
+    // "native": Grok's own voice, straight from the browser to xAI (cheaper, a little faster).
+    // Default: elevenlabs when its key is set, otherwise native.
+    tts: {
+      mode: (env.VOICE_TTS || (real(env.ELEVENLABS_API_KEY) ? 'elevenlabs' : 'native')).toLowerCase(),
+      elevenlabs: {
+        apiKey: real(env.ELEVENLABS_API_KEY),
+        apiBase: (env.ELEVENLABS_API_BASE || 'https://api.elevenlabs.io').replace(/\/+$/, ''),
+        model: env.ELEVENLABS_MODEL || 'eleven_v4_turbo',
+        voiceId: env.ELEVENLABS_VOICE_ID || 'gsm4lUH9bnZ3pjR1Pw7w', // "Claire", South African English
+        usdPer1kChars: num(env.ELEVENLABS_USD_PER_1K_CHARS, 0.04),
       },
     },
 

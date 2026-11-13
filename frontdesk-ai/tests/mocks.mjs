@@ -6,7 +6,7 @@ import { WebSocketServer } from 'ws';
 const tone = (bytes) => Buffer.alloc(bytes, 0x7f).toString('base64');
 
 export function startMockXai({ port = 0 } = {}) {
-  const state = { tokens: [], connections: [], sessionUpdates: [], audioChunks: 0, toolOutputs: [], authHeaders: [], twilioCalls: [] };
+  const state = { ttsRequests: [], tokens: [], connections: [], sessionUpdates: [], audioChunks: 0, toolOutputs: [], authHeaders: [], twilioCalls: [] };
   const server = http.createServer((req, res) => {
     let body = '';
     req.on('data', (c) => { body += c; });
@@ -17,6 +17,18 @@ export function startMockXai({ port = 0 } = {}) {
         state.tokens.push({ value, request: JSON.parse(body || '{}') });
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ value, expires_at: Math.floor(Date.now() / 1000) + 240 }));
+        return;
+      }
+      // Mock of ElevenLabs streaming text to speech. Sends audio in odd-sized pieces, like a real stream can.
+      const tts = /^\/v1\/text-to-speech\/([^/]+)\/stream\?output_format=(\w+)$/.exec(req.url);
+      if (req.method === 'POST' && tts) {
+        const request = JSON.parse(body || '{}');
+        state.ttsRequests.push({ voice: tts[1], format: tts[2], key: req.headers['xi-api-key'], ...request });
+        if (req.headers['xi-api-key'] !== 'test-el-key') { res.writeHead(401); res.end('{"detail":"bad key"}'); return; }
+        res.writeHead(200, { 'Content-Type': 'audio/pcm' });
+        const size = tts[2] === 'ulaw_8000' ? 801 : 4801;
+        res.write(Buffer.alloc(size, 1));
+        setTimeout(() => { res.end(Buffer.alloc(size, 2)); }, 10);
         return;
       }
       // Mock of the Twilio REST "create call" endpoint.
@@ -97,6 +109,7 @@ export function startMockXai({ port = 0 } = {}) {
         apiBase: `http://127.0.0.1:${actual}/v1`,
         realtimeUrl: `ws://127.0.0.1:${actual}/v1/realtime`,
         twilioBase: `http://127.0.0.1:${actual}`,
+        elevenBase: `http://127.0.0.1:${actual}`,
         close: () => new Promise((done) => { wss.clients.forEach((c) => c.terminate()); server.close(done); server.closeAllConnections?.(); }),
       });
     });

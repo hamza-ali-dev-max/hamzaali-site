@@ -8,6 +8,7 @@ import { loadConfig } from '../server/config.js';
 import { twilioSignature, normalisePhone } from '../server/phone.js';
 import { createCalendar } from '../server/calendar.js';
 import { startMockXai } from './mocks.mjs';
+import { nextSentence } from '../server/relay.js';
 
 const listen = (app) => new Promise((resolve) => app.server.listen(0, '127.0.0.1', () => resolve(app.server.address().port)));
 const json = async (url, options = {}) => {
@@ -24,6 +25,7 @@ async function boot(extraEnv = {}) {
     ...extraEnv,
   };
   if (extraEnv.TWILIO_ACCOUNT_SID) env.TWILIO_API_BASE = mock.twilioBase;
+  if (extraEnv.ELEVENLABS_API_KEY) env.ELEVENLABS_API_BASE = mock.elevenBase;
   const app = createApp(loadConfig(env));
   const port = await listen(app);
   if (extraEnv.TWILIO_ACCOUNT_SID) app.cfg.publicUrl = `http://127.0.0.1:${port}`;
@@ -155,7 +157,10 @@ test('tool calls return what the owner would get on WhatsApp', async () => {
   const { body } = await json(`${t.base}/api/demo/session`, { method: 'POST', body: { business: 'plumber' } });
   const msg = await json(`${t.base}/api/demo/tool`, { method: 'POST', body: { sessionId: body.sessionId, name: 'take_message', args: { caller_name: 'Pieter', callback_number: '082 555 0147', message: 'Burst geyser' } } });
   assert.equal(msg.body.result.ok, true);
-  const transfer = await json(`${t.base}/api/demo/tool`, { method: 'POST', body: { sessionId: body.sessionId, name: 'transfer_to_owner', args: { reason: 'Burst geyser', caller_name: 'Pieter' } } });
+  const early = await json(`${t.base}/api/demo/tool`, { method: 'POST', body: { sessionId: body.sessionId, name: 'transfer_to_owner', args: { reason: 'Burst geyser' } } });
+  assert.equal(early.body.result.ok, false, 'no transfer before the caller\'s name and number');
+  assert.match(early.body.result.error, /name and a callback number/);
+  const transfer = await json(`${t.base}/api/demo/tool`, { method: 'POST', body: { sessionId: body.sessionId, name: 'transfer_to_owner', args: { reason: 'Burst geyser', caller_name: 'Pieter', callback_number: '082 555 0147' } } });
   assert.match(transfer.body.result.note, /demo/);
   assert.deepEqual(transfer.body.events.map((e) => e.type), ['message', 'transfer']);
   assert.equal(transfer.body.events[0].number, '082 555 0147');
@@ -286,5 +291,92 @@ test('a media stream without a valid token is refused', async () => {
   ws.send(JSON.stringify({ event: 'start', start: { streamSid: 'MZ2', callSid: 'CAfake', customParameters: { token: 'forged' } } }));
   await closed;
   assert.equal(t.mock.state.connections.length, 0);
+  await t.stop();
+});
+
+// ---------------------------------------------------------------- natural voice (Grok brain, ElevenLabs voice)
+const ELEVEN = { ELEVENLABS_API_KEY: 'test-el-key' };
+
+test('replies are cut into whole sentences for the voice', () => {
+  assert.deepEqual(nextSentence('Good day, Milkwood Dental. This is'), { sentence: 'Good day, Milkwood Dental.', rest: 'This is' });
+  assert.equal(nextSentence('Sure. '), null, 'very short sentences wait for the next one');
+  assert.deepEqual(nextSentence('Sure. Half past eight works. '), { sentence: 'Sure. Half past eight works.', rest: '' });
+  assert.equal(nextSentence('That is R1,500.00 for'), null, 'a decimal point is not a sentence end');
+  assert.deepEqual(nextSentence('How can I help', true), { sentence: 'How can I help', rest: '' });
+});
+
+test('browser demo with the ElevenLabs voice: relay through our server, keys stay put', async () => {
+  const t = await boot(ELEVEN);
+  const health = (await json(`${t.base}/api/health`)).body;
+  assert.equal(health.voice.speech, 'elevenlabs');
+  assert.equal(health.voice.tts.model, 'eleven_v4_turbo');
+  assert.ok(!JSON.stringify(health).includes('test-el-key'));
+
+  const res = await json(`${t.base}/api/demo/session`, { method: 'POST', body: { business: 'dentist' } });
+  assert.equal(res.status, 200);
+  const { sessionId, connection } = res.body;
+  assert.equal(connection.protocol, 'relay');
+  assert.equal(connection.path, '/api/demo/stream');
+  assert.equal(t.mock.state.tokens.length, 0, 'no xAI browser secret is issued in relay mode');
+  assert.ok(!/test-xai-key|test-el-key/.test(JSON.stringify(res.body)));
+
+  // A wrong token is refused.
+  const bad = new WebSocket(`ws://127.0.0.1:${t.port}${connection.path}?session=${sessionId}&token=nope`);
+  await new Promise((resolve) => { bad.on('error', resolve); bad.on('close', resolve); });
+
+  const ws = new WebSocket(`ws://127.0.0.1:${t.port}${connection.path}?session=${sessionId}&token=${connection.token}`);
+  const events = [];
+  const audio = [];
+  ws.on('message', (data, isBinary) => { if (isBinary) audio.push(data.length); else events.push(JSON.parse(data.toString())); });
+  await new Promise((resolve, reject) => { ws.on('open', resolve); ws.on('error', reject); });
+  await wait(300);
+  assert.ok(events.some((e) => e.type === 'ready'));
+  assert.ok(audio.length > 0 && audio.every((n) => n % 2 === 0), 'voice audio arrives in whole 16-bit samples');
+  const first = t.mock.state.ttsRequests[0];
+  assert.equal(first.voice, 'gsm4lUH9bnZ3pjR1Pw7w');
+  assert.equal(first.format, 'pcm_24000');
+  assert.equal(first.model_id, 'eleven_v4_turbo');
+  assert.equal(first.text, 'Good day, Milkwood Dental.');
+  assert.ok(t.mock.state.ttsRequests[1].previous_text.includes('Milkwood Dental'), 'later sentences get the earlier ones as context');
+  assert.equal(t.mock.state.sessionUpdates.at(-1).audio.output.format.type, 'audio/pcm');
+
+  // Caller audio goes up as binary; the agent books through the server diary.
+  for (let i = 0; i < 14; i += 1) ws.send(Buffer.alloc(4800));
+  await wait(400);
+  assert.ok(events.some((e) => e.type === 'interrupt'), 'caller speech stops the voice');
+  assert.ok(events.some((e) => e.type === 'user_text' && /cleaning/.test(e.text)));
+  assert.ok(events.some((e) => e.type === 'tool' && e.name === 'check_availability'));
+  assert.ok(events.some((e) => e.type === 'events' && Array.isArray(e.events)));
+  assert.equal(t.mock.state.toolOutputs.at(-1).ok, true);
+  assert.ok(t.mock.state.ttsRequests.some((r) => /booked for half past eight/.test(r.text)), 'the reply after the tool is spoken');
+
+  ws.close();
+  await wait(150);
+  assert.equal((await json(`${t.base}/api/health`)).body.demo.activeSessions, 0, 'closing the socket ends the session');
+  await t.stop();
+});
+
+test('VOICE_TTS=native keeps Grok\'s own voice even with an ElevenLabs key', async () => {
+  const t = await boot({ ...ELEVEN, VOICE_TTS: 'native' });
+  const res = await json(`${t.base}/api/demo/session`, { method: 'POST' });
+  assert.equal(res.body.connection.protocol, 'openai-realtime');
+  await t.stop();
+});
+
+test('phone calls use the ElevenLabs voice as mu-law, straight to Twilio', async () => {
+  const t = await boot({ ...TWILIO, ...ELEVEN });
+  const params = { CallSid: 'CAvoice', From: '+27825556666', To: '+27210000000', Direction: 'inbound' };
+  const body = await (await signed(t, '/api/twilio/voice', params)).text();
+  const token = /name="token" value="([^"]+)"/.exec(body)[1];
+  const ws = new WebSocket(`ws://127.0.0.1:${t.port}/api/twilio/stream`);
+  const out = [];
+  await new Promise((resolve, reject) => { ws.on('open', resolve); ws.on('error', reject); });
+  ws.on('message', (raw) => out.push(JSON.parse(raw.toString())));
+  ws.send(JSON.stringify({ event: 'start', start: { streamSid: 'MZ9', callSid: 'CAvoice', customParameters: { token } } }));
+  await wait(300);
+  assert.equal(t.mock.state.ttsRequests[0].format, 'ulaw_8000');
+  const media = out.filter((m) => m.event === 'media');
+  assert.ok(media.length > 0 && Buffer.from(media[0].media.payload, 'base64').length > 0);
+  ws.close();
   await t.stop();
 });

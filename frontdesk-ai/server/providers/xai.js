@@ -4,6 +4,13 @@
 // audio set under session.audio.{input,output}.format, OpenAI Realtime event shapes.
 import WebSocket from 'ws';
 
+// Behind an outbound HTTPS proxy (some offices and sandboxes), Node's WebSocket needs an agent.
+// Hosts such as Railway set no proxy, so this stays undefined there.
+const proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy;
+const proxyAgent = proxyUrl
+  ? await import('https-proxy-agent').then((m) => new m.HttpsProxyAgent(proxyUrl)).catch(() => undefined)
+  : undefined;
+
 const FORMATS = {
   pcm24: { type: 'audio/pcm', rate: 24000 }, // browser microphone and speaker
   pcmu: { type: 'audio/pcmu' },              // G.711 mu-law at 8 kHz, what phone lines (Twilio) use
@@ -55,12 +62,16 @@ export function createXaiProvider(cfg) {
       };
     },
 
-    // For phone calls: the server itself holds the voice session and reports neutral events.
-    // Events: ready, audio, interrupt, user_transcript, agent_transcript, tool_call, error, closed.
-    connectServerSession({ instructions, tools, format = 'pcmu', openingPrompt, onEvent }) {
-      const ws = new WebSocket(url, { headers: { Authorization: `Bearer ${apiKey}` } });
+    // Server-held voice session (phone calls, and the browser relay when another voice speaks).
+    // Events: ready, audio, interrupt, user_transcript, agent_delta, agent_transcript, tool_call,
+    // response_done, error, closed. With speech: 'external' Grok's own audio is dropped and the
+    // caller hears whatever voice the relay feeds the agent's words to.
+    connectServerSession({ instructions, tools, format = 'pcmu', openingPrompt, speech = 'native', onEvent }) {
+      const ws = new WebSocket(url, { headers: { Authorization: `Bearer ${apiKey}` }, agent: url.startsWith('wss:') ? proxyAgent : undefined });
       let open = false;
       let closed = false;
+      let responding = false;
+      let replyWanted = false; // a tool result is in: ask for the next reply once the current one finishes
       const send = (payload) => { if (open && ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(payload)); };
 
       ws.on('open', () => {
@@ -77,9 +88,21 @@ export function createXaiProvider(cfg) {
         let event;
         try { event = JSON.parse(raw.toString()); } catch { return; }
         switch (event.type) {
+          case 'response.created':
+            responding = true;
+            break;
+          case 'response.done':
+            responding = false;
+            onEvent({ type: 'response_done' });
+            if (replyWanted) { replyWanted = false; send({ type: 'response.create' }); }
+            break;
           case 'response.output_audio.delta':
           case 'response.audio.delta':
-            if (event.delta) onEvent({ type: 'audio', audio: event.delta });
+            if (event.delta && speech === 'native') onEvent({ type: 'audio', audio: event.delta });
+            break;
+          case 'response.output_audio_transcript.delta':
+          case 'response.audio_transcript.delta':
+            if (event.delta) onEvent({ type: 'agent_delta', text: event.delta });
             break;
           case 'input_audio_buffer.speech_started':
             onEvent({ type: 'interrupt' });
@@ -111,7 +134,7 @@ export function createXaiProvider(cfg) {
         sendAudio: (base64) => send({ type: 'input_audio_buffer.append', audio: base64 }),
         sendToolResult(callId, output) {
           send({ type: 'conversation.item.create', item: { type: 'function_call_output', call_id: callId, output: JSON.stringify(output) } });
-          send({ type: 'response.create' });
+          if (responding) replyWanted = true; else send({ type: 'response.create' });
         },
         close() { try { ws.close(1000); } catch { /* already closed */ } finish('ended'); },
       };

@@ -77,8 +77,11 @@ export function createCalendar({ business, now = () => new Date() } = {}) {
     return { ok: true, status: 'sent', note: `Demo only. In real use ${b.owner} gets this on WhatsApp straight away.` };
   }
 
-  function transferToOwner({ reason, caller_name: name } = {}) {
-    const item = { type: 'transfer', name: clean(name, 60) || 'Caller', reason: clean(reason, 120) || 'asked for a person' };
+  function transferToOwner({ reason, caller_name: name, callback_number: number } = {}) {
+    if (!clean(name, 60) || !clean(number, 30)) {
+      return { ok: false, error: 'Before transferring, ask for the caller\'s name and a callback number in one short question, then call transfer_to_owner again.' };
+    }
+    const item = { type: 'transfer', name: clean(name, 60), number: clean(number, 30), reason: clean(reason, 120) || 'asked for a person' };
     events.push(item);
     return {
       ok: true,
