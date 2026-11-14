@@ -111,8 +111,8 @@ const A = await boot(TWILIO);
   let s1 = await stageState(page);
   check('hero stage plays the call by itself (silently) when on screen', s1.playing && !s1.sound && s1.pos > 1, JSON.stringify(s1));
   await page.waitForTimeout(1500);
-  const cap = await page.evaluate(() => ({ shown: document.querySelectorAll('#stage .bubble-text .w:not(.is-hidden)').length, all: document.querySelectorAll('#stage .bubble-text .w').length, steps: document.querySelectorAll('#stage .step.is-done').length, speaking: document.getElementById('stage').dataset.speaking }));
-  check('the caption types out word by word, in step with the call', cap.shown >= 1 && cap.all >= cap.shown && cap.steps >= 1 && cap.steps < 4, JSON.stringify(cap));
+  const cap = await page.evaluate(() => ({ shown: document.querySelectorAll('#stage .bubble-text .w:not(.is-hidden)').length, all: document.querySelectorAll('#stage .bubble-text .w').length, diary: document.getElementById('stage').dataset.diary, status: document.querySelector('[data-status-text]').textContent }));
+  check('the caption types out word by word, in step with the call', cap.shown >= 1 && cap.all >= cap.shown && cap.diary === 'none' && cap.status === 'Answered', JSON.stringify(cap));
   await page.click('[data-stage-toggle]');
   const p1 = await stageState(page);
   await page.waitForTimeout(700);
@@ -124,8 +124,8 @@ const A = await boot(TWILIO);
   check('"Hear a real call" plays the recording', snd.src === 'audio/call-dentist.mp3' && !snd.paused && snd.t > 1, JSON.stringify(snd));
   await page.evaluate(() => { document.getElementById('stage-audio').currentTime = 44; });
   await page.waitForTimeout(800);
-  const late = await page.evaluate(() => ({ filled: document.querySelector('#stage .slot-target').classList.contains('is-filled'), wa: document.querySelectorAll('#stage .toast.is-shown').length, steps: document.querySelectorAll('#stage .step.is-done').length, status: document.querySelector('[data-status-text]').textContent }));
-  check('the scene follows the audio: diary fills, steps tick off, WhatsApps land', late.filled && late.wa === 2 && late.steps === 4 && late.status === 'Booked', JSON.stringify(late));
+  const late = await page.evaluate(() => ({ diary: document.getElementById('stage').dataset.diary, time: document.querySelector('#stage .big-time').innerText.trim(), wa: document.querySelector('#stage [data-wa="owner"]').classList.contains('is-shown') && document.querySelector('#stage [data-wa="owner"]').offsetParent !== null, status: document.querySelector('[data-status-text]').textContent }));
+  check('the scene follows the audio: the diary card books, the WhatsApp lands', late.diary === 'booked' && late.time === '08:00' && late.wa && late.status === 'WhatsApp sent', JSON.stringify(late));
   await page.click('[data-stage-toggle]');
 
   // Language
@@ -289,8 +289,8 @@ const A = await boot(TWILIO);
   const { ctx, page } = await open(browser, A.url, { reducedMotion: 'reduce' });
   await page.waitForTimeout(1500);
   const s = await stageState(page);
-  const shown = await page.evaluate(() => ({ hidden: document.querySelectorAll('#stage .bubble-text .w.is-hidden').length, steps: document.querySelectorAll('#stage .step.is-done').length, wa: document.querySelectorAll('#stage .toast.is-shown').length, tl: document.querySelectorAll('.tl-node.is-on').length }));
-  check('reduced motion: the finished call and timeline are shown, nothing moves by itself', !s.playing && s.pos >= 39 && shown.hidden === 0 && shown.steps === 4 && shown.wa === 2 && shown.tl === 5, JSON.stringify({ s, shown }));
+  const shown = await page.evaluate(() => ({ hidden: document.querySelectorAll('#stage .bubble-text .w.is-hidden').length, diary: document.getElementById('stage').dataset.diary, wa: document.querySelectorAll('#stage [data-wa].is-shown').length, tl: document.querySelectorAll('.tl-node.is-on').length }));
+  check('reduced motion: the finished call and timeline are shown, nothing moves by itself', !s.playing && s.pos >= 39 && shown.hidden === 0 && shown.diary === 'booked' && shown.wa === 1 && shown.tl === 5, JSON.stringify({ s, shown }));
   await ctx.close();
 }
 
@@ -380,7 +380,7 @@ const A = await boot(TWILIO);
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, javaScriptEnabled: false });
   const page = await ctx.newPage();
   await page.goto(A.url);
-  const ok = await page.evaluate(() => document.querySelectorAll('.rec-details .cap').length >= 20 && getComputedStyle(document.querySelector('#stage .toast')).opacity === '1' && document.querySelector('#stage .bubble-text').textContent.length > 20);
+  const ok = await page.evaluate(() => document.querySelectorAll('.rec-details .cap').length >= 20 && getComputedStyle(document.querySelector('#stage [data-wa]')).display !== 'none' && document.querySelector('#stage .bubble-text').textContent.length > 20);
   check('without JavaScript the calls, the scene and every section are still readable', ok && await page.locator('#faq-a-5 p').isVisible() && await page.locator('#pricing .plan').first().isVisible());
   await ctx.close();
 }

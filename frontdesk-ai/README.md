@@ -1,13 +1,22 @@
 # Front Desk AI
 
-The website for Front Desk AI, an AI receptionist for small businesses in South Africa. Version 4: the look of modern app sites (floating colour chips, pill buttons, big headlines, sky and hills backdrops), a natural South African voice, and a true-black night mode with stars.
+The website for Front Desk AI, an AI receptionist for small businesses in South Africa. Version 5: a calm, modern look (one big headline, three cards that show a real booking, pill buttons, sky and hills backdrops), a natural South African voice, and a true-black night mode with stars.
 
 It has two parts:
 
 1. **The website** (`web/`): a landing page in English and Afrikaans. The hero plays a real call as it happens: the caption types out as each line is spoken, the waveform moves, the steps tick off, the diary slot fills and the WhatsApps slide in. Then an animated ring-to-booked timeline, four moving feature tiles, three real calls with waveforms, the live demo, pricing, five FAQs and a free-trial form. Dark mode throughout.
 2. **The backend** (`server/`): a small Node server that runs the live voice demo. Grok (xAI) listens, thinks and books; ElevenLabs speaks with a South African voice. It also bridges Twilio phone calls. Every key lives only here.
 
-## What changed in v4
+## What changed in v5
+
+The owner's note on v4 was "too much happening", so v5 keeps the v4 look and removes most of the movement and pieces:
+
+- **Hero:** one centred headline and three cards (the call, the diary, the WhatsApp to you) instead of twelve floating chips. One thing moves at a time: the caption types, then the diary card turns lime with "08:00 Booked", then the WhatsApp arrives.
+- **One accent colour** (lime). The blue, mint and coral chips are gone; coral is only the live dot and the end-call button.
+- **No looping animations.** The scrolling strip of business types, the pulsing rings and the four animated tiles were removed. The timeline lights up once when scrolled to.
+- **Fewer pieces per section:** four plain feature cards with one icon each, a single "works for" line, three call cards on the hills, straight pricing cards.
+
+## What changed in v4 (superseded in part by v5)
 
 | v3 | v4 | Why |
 |---|---|---|

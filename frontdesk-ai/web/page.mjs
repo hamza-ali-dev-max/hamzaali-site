@@ -1,4 +1,4 @@
-// The page template (v4). All wording comes from src/i18n.js: English is rendered into the HTML,
+// The page template (v5). All wording comes from src/i18n.js: English is rendered into the HTML,
 // and each element carries a data-i18n key so the language switcher can swap it.
 // Everything that moves on the page is driven by the real recorded calls in src/calls.json.
 import fs from 'node:fs';
@@ -72,7 +72,7 @@ ${NAV.map(([href, key]) => `      <a class="flex min-h-[3rem] items-center round
   </div>
 </header>`;
 
-  // ---------------------------------------------------------------- Hero: the call told by floating chips
+  // ---------------------------------------------------------------- Hero: one headline, three cards
   const hero = CALLS.find((c) => c.id === 'dentist');
   const heroMsgs = messagesFor(hero.events, { business: hero.name, when: hero.when.split(' ').pop() }, t, 'en-ZA');
   const heroBooking = normaliseEvents(hero.events).find((e) => e.type === 'booking');
@@ -81,129 +81,71 @@ ${NAV.map(([href, key]) => `      <a class="flex min-h-[3rem] items-center round
   const checkT = heroCheck ? heroCheck.t : bookT;
   const sentT = round1(Math.min(bookT + 2.5, hero.duration));
   const first = hero.lines[0];
-  const firstCaller = hero.lines.find((l) => l.who === 'caller');
-  const initials = (name) => String(name).split(/\s+/).map((p) => p[0]).join('').slice(0, 2).toUpperCase();
-  const bars = (n) => Array.from({ length: n }, (_, i) => `<i style="--i:${i}"></i>`).join('');
-  const STEPS = [['stage.s1', first.t], ['stage.s2', checkT], ['stage.s3', bookT], ['stage.s4', sentT]];
   const bookedDay = shortDay(heroBooking.date);
 
   const heroSection = `
 <section id="hero" class="hero-shell" aria-labelledby="hero-title">
   <div class="hero">
-    <!-- THE SCENE: a real recorded call, played as it happened. Timings come from src/calls.json. -->
-    <div id="stage" class="scene" data-call="dentist" data-duration="${hero.duration}" data-book="${bookT}" data-check="${checkT}" data-sent="${sentT}" data-src="${hero.file}" data-diary="none" role="region" aria-label="${h('stage.label')}" data-i18n-attr="aria-label:stage.label">
-      <div class="chip-card chip-blue c-missed" aria-hidden="true">
-        <p class="text-[0.9375rem] font-medium" data-i18n="stage.missed">${h('stage.missed')}</p>
-        <p class="mt-1 font-display text-5xl font-semibold leading-none">0</p>
-        <div class="mt-4 flex items-center justify-between">${lucide('phone-incoming', 'h-4 w-4', 2.25)}<span class="flex -space-x-1.5"><span class="ava ava-sm ava-coral">AJ</span><span class="ava ava-sm ava-lime">LS</span><span class="ava ava-sm ava-green">PV</span></span></div>
-      </div>
-
-      <div class="chip-pill chip-lime c-caller">
-        <span class="ava ava-coral">${initials(heroBooking.name)}</span>
-        <span class="font-display text-lg font-semibold">082 ••• 3108</span>
-        <span class="count-badge tabular-nums" data-stage-clock>0:00</span>
-      </div>
-
-      <div class="chip-round chip-coral c-chat" aria-hidden="true">${lucide('message-circle-more', 'h-6 w-6', 2.25)}<span class="count-badge" data-wa-count>0</span></div>
-
-      <div class="bubble bubble-dark c-callerline" data-cap="caller">
-        <span class="ava ava-coral">${initials(heroBooking.name)}</span>
-        <div class="min-w-0 flex-1">
-          <p class="bubble-name" data-i18n="stage.caller">${h('stage.caller')}</p>
-          <div class="bubble-box"><p class="bubble-text" data-cap-text>${esc(firstCaller.text)}</p></div>
-        </div>
-      </div>
-
-      <div class="wave-pill c-wave">
-        <div class="wave" data-wave aria-hidden="true">${bars(30)}</div>
-        <button type="button" class="wave-btn" data-stage-sound aria-label="${h('stage.play')}" data-i18n-attr="aria-label:stage.play">${lucide('volume-2', 'h-5 w-5', 2.25)}</button>
-      </div>
-
-      <div class="bubble bubble-blue c-ailine" data-cap="ai">
-        <span class="ava ava-ink">${lucide('bot', 'h-5 w-5', 2)}</span>
-        <div class="min-w-0 flex-1">
-          <p class="bubble-name" data-i18n="stage.ai">${h('stage.ai')}</p>
-          <div class="bubble-box"><p class="bubble-text" data-cap-text>${esc(first.text)}</p></div>
-        </div>
-      </div>
-
-      <div class="chip-card chip-green c-booking slot-target">
-        <span class="flex items-center justify-between">${lucide('corner-up-right', 'h-6 w-6', 2.25)}${lucide('calendar-check', 'h-5 w-5 booked-only', 2.25)}</span>
-        <p class="mt-3 font-display text-5xl font-semibold leading-none tabular-nums"><span class="when-none">--:--</span><span class="when-time">${esc(heroBooking.time)}</span></p>
-        <p class="mt-1.5 text-sm font-semibold"><span class="when-none" data-i18n="stage.diary">${h('stage.diary')}</span><span class="when-checked" data-i18n="stage.checking">${h('stage.checking')}</span><span class="when-booked"><span data-i18n="stage.s3">${h('stage.s3')}</span> · ${esc(bookedDay)}</span></p>
-      </div>
-
-      <div class="chip-round chip-lime c-phone" aria-hidden="true"><span class="ring"></span><span class="ring ring-2"></span>${lucide('phone', 'h-7 w-7', 2.25)}</div>
-
-      <div class="chip-pill chip-coral c-sent"><span class="count-badge count-badge-light">2</span>${xf('stage.sent', { n: 2 }, 'span', 'font-semibold')}</div>
-
-      <div class="c-toasts">
-        <div class="toast" data-wa="client"><span class="toast-icon">${wa('h-4 w-4')}</span><div class="min-w-0"><p class="toast-to" data-i18n="stage.toClient">${h('stage.toClient')}</p><p class="toast-text" data-wa-call="dentist" data-wa-kind="client">${esc(heroMsgs.client)}</p></div></div>
-        <div class="toast" data-wa="owner"><span class="toast-icon">${wa('h-4 w-4')}</span><div class="min-w-0"><p class="toast-to" data-i18n="stage.toOwner">${h('stage.toOwner')}</p><p class="toast-text" data-wa-call="dentist" data-wa-kind="owner">${esc(heroMsgs.owner)}</p></div></div>
-      </div>
-
-      <p class="c-side" aria-hidden="true"><span data-i18n="hero.side1">${h('hero.side1')}</span><br><span data-i18n="hero.side2">${h('hero.side2')}</span><br><span class="text-lime" data-i18n="hero.side3">${h('hero.side3')}</span></p>
-
-      <div class="c-controls">
-        <button type="button" class="round-btn" data-stage-toggle aria-label="${h('stage.pause')}"><span data-icon="pause">${pause('h-3 w-3')}</span><span data-icon="play" hidden>${play('ml-0.5 h-3 w-3')}</span></button>
-        <div class="min-w-0 flex-1">
-          <p class="flex items-center justify-between text-xs font-medium text-white/70"><span data-status-text data-i18n="stage.incoming">${h('stage.incoming')}</span><span class="text-white/50">${esc(hero.name)}</span></p>
-          <div class="call-progress mt-2" aria-hidden="true"><span data-stage-progress></span></div>
-          <ol class="steps">
-${STEPS.map(([key, at], i) => `            <li class="step" data-step="${i + 1}" data-at="${at}"><span class="step-dot">${check('h-2.5 w-2.5')}</span><span data-i18n="${key}">${h(key)}</span></li>`).join('\n')}
-          </ol>
-        </div>
-      </div>
-      <audio id="stage-audio" preload="none"></audio>
-    </div>
-
     <div class="hero-copy">
       <p class="hero-kicker" data-i18n="hero.kicker">${h('hero.kicker')}</p>
       <h1 id="hero-title" class="hero-title"><span data-i18n="hero.t1">${h('hero.t1')}</span> <span data-i18n="hero.t2">${h('hero.t2')}</span> <span class="text-lime" data-i18n="hero.t3">${h('hero.t3')}</span></h1>
+    </div>
+
+    <!-- THE SCENE: a real recorded call, played as it happened. Three cards: the call, the diary, the WhatsApp. -->
+    <div id="stage" class="scene" data-call="dentist" data-duration="${hero.duration}" data-book="${bookT}" data-check="${checkT}" data-sent="${sentT}" data-src="${hero.file}" data-diary="none" role="region" aria-label="${h('stage.label')}" data-i18n-attr="aria-label:stage.label">
+      <div class="card3 card3-l">
+        <p class="card3-h"><span class="live-dot"></span><span data-status-text data-i18n="stage.incoming">${h('stage.incoming')}</span><span class="ml-auto tabular-nums opacity-60" data-stage-clock>0:00</span></p>
+        <p class="cap-label" data-cap-who data-i18n="${first.who === 'ai' ? 'stage.ai' : 'stage.caller'}">${h(first.who === 'ai' ? 'stage.ai' : 'stage.caller')}</p>
+        <div class="bubble-box"><p class="bubble-text" data-cap-text>${esc(first.text)}</p></div>
+        <div class="call-bar">
+          <button type="button" class="round-btn" data-stage-toggle aria-label="${h('stage.pause')}"><span data-icon="pause">${pause('h-3 w-3')}</span><span data-icon="play" hidden>${play('ml-0.5 h-3 w-3')}</span></button>
+          <div class="call-progress" aria-hidden="true"><span data-stage-progress></span></div>
+          <button type="button" class="round-btn round-btn-ghost" data-stage-sound aria-label="${h('stage.play')}" data-i18n-attr="aria-label:stage.play">${lucide('volume-2', 'h-4 w-4', 2.25)}</button>
+        </div>
+        <audio id="stage-audio" preload="none"></audio>
+      </div>
+
+      <div class="card3 card3-m slot-target">
+        <p class="card3-h">${lucide('calendar-days', 'h-4 w-4', 2.25)}<span data-i18n="stage.diary">${h('stage.diary')}</span><span class="ml-auto opacity-70">${esc(bookedDay)}</span></p>
+        <p class="big-time tabular-nums"><span class="when-wait">--:--</span><span class="when-booked">${esc(heroBooking.time)}</span></p>
+        <p class="text-[0.9375rem] font-semibold"><span class="when-none">${esc(hero.name)}</span><span class="when-checked" data-i18n="stage.checking">${h('stage.checking')}</span><span class="when-booked"><span data-i18n="stage.s3">${h('stage.s3')}</span> · ${esc(heroBooking.name)}</span></p>
+      </div>
+
+      <div class="card3 card3-r">
+        <p class="card3-h">${wa('h-4 w-4')}<span data-i18n="stage.toOwner">${h('stage.toOwner')}</span></p>
+        <p class="wa-wait" aria-hidden="true"><i></i><i></i><i></i></p>
+        <p class="wa-msg" data-wa="owner"><span data-wa-call="dentist" data-wa-kind="owner">${esc(heroMsgs.owner)}</span></p>
+      </div>
+    </div>
+
+    <div class="hero-cta">
+      ${x('hero.sub', 'p', 'hero-sub')}
       <div class="hero-actions">
-        <a href="#start" class="btn btn-lime btn-lg"><span data-i18n="hero.cta">${h('hero.cta')}</span>${lucide('arrow-right', 'h-5 w-5', 2.25)}</a>
+        <a href="#start" class="btn btn-lime btn-lg" data-i18n="hero.cta">${h('hero.cta')}</a>
         <button type="button" class="btn btn-white btn-lg" data-stage-sound>${lucide('volume-2', 'h-5 w-5', 2)}<span data-i18n="hero.listen">${h('hero.listen')}</span></button>
       </div>
-      <ul class="hero-points">
-${['hero.p1', 'hero.p2', 'hero.p3'].map((k) => `        <li>${check('h-4 w-4 text-lime')}<span data-i18n="${k}">${h(k)}</span></li>`).join('\n')}
-      </ul>
-    </div>
-    <div class="hero-foot">
-      ${x('stage.recording', 'p', '')}
-      <p class="font-semibold text-coral" data-stage-error hidden data-i18n="stage.error">${h('stage.error')}</p>
+      <p class="hero-foot"><span data-i18n="stage.recording">${h('stage.recording')}</span> <span class="font-semibold text-coral" data-stage-error hidden data-i18n="stage.error">${h('stage.error')}</span></p>
     </div>
   </div>
 </section>`;
 
-  // ---------------------------------------------------------------- Works for: a running strip
-  const WORKS = [['works.1', 'smile'], ['works.2', 'stethoscope'], ['works.3', 'activity'], ['works.4', 'scissors'], ['works.5', 'bed-double'], ['works.6', 'wrench'], ['works.7', 'zap'], ['works.8', 'paw-print']];
-  const strip = (hidden) => `<ul class="marquee-row"${hidden ? ' aria-hidden="true"' : ''}>${WORKS.map(([key, icon]) => `<li>${lucide(icon, 'h-7 w-7', 1.75)}<span data-i18n="${key}">${h(key)}</span></li>`).join('')}</ul>`;
-  const works = `
-<section class="marquee" aria-label="${h('works.title')}" data-i18n-attr="aria-label:works.title">
-  <div class="marquee-track">${strip(false)}${strip(true)}</div>
-</section>`;
+  const WORKS = ['works.1', 'works.2', 'works.3', 'works.4', 'works.5', 'works.6', 'works.7', 'works.8'];
 
-  // ---------------------------------------------------------------- Ring to booked: giant type, circles that light up in real time
-  const TIMELINE = [['how.t1', 0, 'phone-incoming', 'lime'], ['how.t2', first.t, 'audio-lines', 'blue'], ['how.t3', checkT, 'calendar-search', 'coral'], ['how.t4', bookT, 'calendar-check', 'green'], ['how.t5', sentT, 'message-circle', 'lime']];
+  // ---------------------------------------------------------------- Ring to booked: giant type, five steps that light up once
+  const TIMELINE = [['how.t1', 0, 'phone-incoming'], ['how.t2', first.t, 'audio-lines'], ['how.t3', checkT, 'calendar-search'], ['how.t4', bookT, 'calendar-check'], ['how.t5', sentT, 'message-circle']];
   const how = `
 <section id="how" class="section how" aria-labelledby="how-title">
-  <div class="wrap relative">
+  <div class="wrap">
     <h2 id="how-title" class="mega" data-reveal>${xf('how.title', { s: Math.round(bookT) })}</h2>
     ${x('how.sub', 'p', 'lead text-center')}
     <ol class="orbit" data-timeline data-total="${sentT}">
-${TIMELINE.map(([key, at, icon, tone], i) => `      <li class="tl-node o-${i + 1}" data-t="${round1(at)}"><span class="tl-dot chip-${tone}">${lucide(icon, 'h-6 w-6', 2)}</span><span class="tl-time tabular-nums">${xf('how.sec', { s: round1(at) })}</span><span class="tl-label" data-i18n="${key}">${h(key)}</span></li>`).join('\n')}
+${TIMELINE.map(([key, at, icon]) => `      <li class="tl-node" data-t="${round1(at)}"><span class="tl-dot">${lucide(icon, 'h-5 w-5', 2)}</span><span class="tl-time tabular-nums">${xf('how.sec', { s: round1(at) })}</span><span class="tl-label" data-i18n="${key}">${h(key)}</span></li>`).join('\n')}
     </ol>
   </div>
 </section>`;
 
-  // ---------------------------------------------------------------- What it does: four colour cards that move
-  const viz = {
-    1: `<div class="viz viz-ring"><span class="vr-ring"></span><span class="vr-ring vr-2"></span><span class="vr-phone">${lucide('phone-call', 'h-6 w-6', 2)}</span></div>`,
-    2: `<div class="viz viz-diary"><span class="vd-row"><b>07:30</b><i></i></span><span class="vd-row vd-target"><b>08:00</b><i><em>Aisha</em></i></span><span class="vd-row"><b>08:30</b><i></i></span></div>`,
-    3: `<div class="viz viz-wa"><span class="vw-bubble"><span class="vw-dots"><i></i><i></i><i></i></span><span class="vw-text" data-i18n="feat.wa">${h('feat.wa')}</span></span></div>`,
-    4: `<div class="viz viz-transfer"><span class="vt-node vt-ai">${lucide('bot', 'h-5 w-5', 2)}</span><span class="vt-line"><i></i></span><span class="vt-node vt-owner">${lucide('user-round', 'h-5 w-5', 2)}</span><span class="vt-name" data-i18n="feat.owner">${h('feat.owner')}</span></div>`,
-  };
-  const TONES = { 1: 'blue', 2: 'green', 3: 'lime', 4: 'coral' };
+  // ---------------------------------------------------------------- What it does: four quiet cards
+  const FEAT_ICON = { 1: 'phone-call', 2: 'calendar-check', 3: 'message-circle', 4: 'phone-forwarded' };
   const features = `
 <section id="features" class="section pt-4" aria-labelledby="feat-title">
   <div class="wrap">
@@ -211,13 +153,14 @@ ${TIMELINE.map(([key, at, icon, tone], i) => `      <li class="tl-node o-${i + 1
       <h2 id="feat-title" class="h2" data-i18n="feat.title">${h('feat.title')}</h2>
     </div>
     <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-${[1, 2, 3, 4].map((n) => `      <li class="tile chip-${TONES[n]}" data-reveal style="--d:${(n - 1) * 70}ms">
-        ${viz[n]}
+${[1, 2, 3, 4].map((n) => `      <li class="tile" data-reveal style="--d:${(n - 1) * 70}ms">
+        <span class="tile-icon">${lucide(FEAT_ICON[n], 'h-6 w-6', 2)}</span>
         <h3 class="tile-title" data-i18n="feat.${n}.title">${h(`feat.${n}.title`)}</h3>
         ${x(`feat.${n}.text`, 'p', 'tile-text')}
         ${n === 4 ? `<a href="#calls" class="tile-link" data-play-rec="plumber">${play('h-2.5 w-2.5')}<span data-i18n="feat.4.listen">${h('feat.4.listen')}</span></a>` : ''}
       </li>`).join('\n')}
     </ul>
+    <p class="works" data-reveal><span class="font-semibold text-ink" data-i18n="works.title">${h('works.title')}</span>${WORKS.map((key) => ` <span data-i18n="${key}">${h(key)}</span>`).join('')}</p>
   </div>
 </section>`;
 
@@ -227,7 +170,6 @@ ${[1, 2, 3, 4].map((n) => `      <li class="tile chip-${TONES[n]}" data-reveal s
     const ev = normaliseEvents(c.events);
     const booking = ev.find((e) => e.type === 'booking');
     const peaks = c.peaks || Array.from({ length: 72 }, () => 0.4);
-    const callerName = booking ? booking.name : ((ev.find((e) => e.type === 'transfer') || {}).name || 'Caller');
     return `      <article class="rec-card" data-rec="${c.id}" data-src="${c.file}" data-duration="${c.duration}" data-reveal>
         <div class="rec-top">
           <div class="min-w-0 flex-1">
@@ -242,7 +184,6 @@ ${[1, 2, 3, 4].map((n) => `      <li class="tile chip-${TONES[n]}" data-reveal s
         </div>
         <p class="rec-sub" aria-hidden="true"><span class="rec-who" data-i18n="${c.lines[0].who === 'ai' ? 'stage.ai' : 'stage.caller'}">${h(c.lines[0].who === 'ai' ? 'stage.ai' : 'stage.caller')}</span><span class="rec-line">${esc(c.lines[0].text)}</span></p>
         <div class="rec-controls">
-          <span class="flex -space-x-2"><span class="ava ava-coral">${initials(callerName)}</span><span class="ava ava-ink">${lucide('bot', 'h-4 w-4', 2)}</span></span>
           <span class="rec-tag">${lucide(booking ? 'calendar-check' : 'phone-forwarded', 'h-3.5 w-3.5', 2.25)}<span data-i18n="${booking ? 'calls.booked' : 'calls.through'}">${h(booking ? 'calls.booked' : 'calls.through')}</span></span>
           <span class="rec-time tabular-nums">${clock(c.duration)}</span>
           <button type="button" class="rec-play" aria-pressed="false"><span data-icon="play">${play('ml-0.5 h-3.5 w-3.5')}</span><span data-icon="pause" hidden>${pause('h-3.5 w-3.5')}</span><span class="sr-only" data-rec-verb data-i18n="calls.play">${h('calls.play')}</span></button>
@@ -264,14 +205,8 @@ ${c.lines.map((line) => `            <li class="cap cap-${line.who}" data-t="${l
     </div>
   </div>
   <div class="scenic scenic-hills">
-    <p class="notice-pill" data-reveal><span class="live-dot"></span><span data-i18n="calls.badge">${h('calls.badge')}</span></p>
     <div id="rec-list" class="scenic-grid">
 ${CALLS.map(recCard).join('\n')}
-      <a href="#try" class="glass-card" data-reveal>
-        <span class="glass-plus">${lucide('plus', 'h-6 w-6', 2)}</span>
-        <span class="mt-3 font-display text-xl font-medium" data-i18n="calls.try">${h('calls.try')}</span>
-        <span class="text-sm opacity-80" data-i18n="calls.trySub">${h('calls.trySub')}</span>
-      </a>
     </div>
     <audio id="rec-audio" preload="none"></audio>
   </div>
@@ -392,7 +327,6 @@ ${['price.mb.1', 'price.mb.2', 'price.mb.3'].map(item).join('\n')}
         <a href="#" class="btn btn-ink mt-auto w-full" data-wa-link target="_blank" rel="noopener">${brand(siWhatsapp, 'h-4 w-4', 'currentColor')}<span data-i18n="price.mb.cta">${h('price.mb.cta')}</span></a>
       </div>
     </div>
-    <p class="sky-line" data-reveal>${lucide('sparkles', 'h-4 w-4 flex-none', 2)}<span data-i18n="price.line">${h('price.line')}</span></p>
     <p class="sky-small" data-reveal><span data-i18n="price.small">${h('price.small')}</span> <span data-vat></span></p>
   </div>
 </section>`;
@@ -430,7 +364,7 @@ ${FAQ.map((n) => `      <div class="faq-item" data-open="false">
         <h2 id="start-title" class="h2 text-white" data-i18n="start.title">${h('start.title')}</h2>
         ${x('start.sub', 'p', 'hero-sub mt-4')}
         <ul class="hero-points mt-7 flex-col !items-start">
-${['hero.p1', 'hero.p2', 'hero.p3'].map((k) => `          <li>${check('h-4 w-4 text-brand-hero')}<span data-i18n="${k}">${h(k)}</span></li>`).join('\n')}
+${['hero.p1', 'hero.p2', 'hero.p3'].map((k) => `          <li>${check('h-4 w-4 text-lime')}<span data-i18n="${k}">${h(k)}</span></li>`).join('\n')}
         </ul>
       </div>
       <div class="form-card" data-reveal style="--d:70ms">
@@ -457,7 +391,7 @@ ${field('email', 'start.email', 'type="email" inputmode="email" autocomplete="em
             </fieldset>
           </div>
           <input type="hidden" name="plan" value="">
-          <button type="submit" class="btn btn-brand btn-lg mt-6 w-full" data-i18n="start.submit">${h('start.submit')}</button>
+          <button type="submit" class="btn btn-ink btn-lg mt-6 w-full" data-i18n="start.submit">${h('start.submit')}</button>
           <p class="mt-4 flex items-start gap-2.5 text-sm text-body"><span class="mt-0.5 flex-none">${wa('h-5 w-5')}</span><span data-i18n="start.note">${h('start.note')}</span></p>
           <p class="mt-2 text-xs text-muted" data-ph="whatsapp"><span class="ph-tag">Placeholder</span> <span class="ml-1">WhatsApp: <span data-text="whatsapp">+27 00 000 0000</span></span></p>
         </form>
@@ -574,7 +508,6 @@ ${header}
 
 <main id="main">
 ${heroSection}
-${works}
 ${how}
 ${features}
 ${calls}
