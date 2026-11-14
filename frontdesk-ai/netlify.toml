@@ -1,0 +1,31 @@
+# Netlify hosts the website only. The voice backend runs on Railway.
+# In Netlify set "Base directory" to: frontdesk-ai
+# In Netlify set the variable PUBLIC_API_BASE to your Railway address (see README).
+[build]
+  command = "npm ci && npm run build"
+  publish = "web/dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "microphone=(self), camera=(), geolocation=()"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
