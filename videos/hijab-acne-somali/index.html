@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="so" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Hijab Acne</title>
+    <script src="assets/js/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Dancing Script"; src: url("assets/fonts/dancing-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-900.woff2") format("woff2"); font-weight: 900; }
+      @font-face { font-family: "Lora"; src: url("assets/fonts/lora-700.woff2") format("woff2"); font-weight: 700; }
+      @font-face { font-family: "Lora"; src: url("assets/fonts/lora-600i.woff2") format("woff2"); font-weight: 600; font-style: italic; }
+      :root {
+        --paper: #fbf7f0;
+        --sand: #efe4d2;
+        --sand2: #f6eee1;
+        --gold: #c9a24b;
+        --gold2: #e3c173;
+        --brown: #4a2e1a;
+        --brown2: #8a5a36;
+        --blue: #2f6fd0;
+        --navy: #1c3f86;
+        --terra: #b8452f;
+        --skin: #8d5a3b;
+        --sticker: drop-shadow(6px 0 0 #fff) drop-shadow(-6px 0 0 #fff) drop-shadow(0 6px 0 #fff) drop-shadow(0 -6px 0 #fff) drop-shadow(0 14px 14px rgba(74, 46, 26, 0.22));
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Lora", serif; color: var(--brown); background: var(--paper); }
+
+      /* persistent heritage theme: warm paper, woven diamond lattice, patterned band */
+      #bg { position: absolute; inset: 0; background: radial-gradient(1000px 900px at 50% 30%, #ffffff 0%, var(--paper) 55%, var(--sand2) 100%); }
+      #weave { position: absolute; inset: 0; opacity: 0.55;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><path d='M60 6 L114 60 L60 114 L6 60 Z' fill='none' stroke='%23e3c173' stroke-width='2' opacity='.45'/><path d='M60 48 L72 60 L60 72 L48 60 Z' fill='%23c9a24b' opacity='.28'/></svg>");
+        background-size: 120px 120px; }
+      #band { position: absolute; left: 0; top: 0; width: 1080px; height: 30px;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='30'><rect width='60' height='30' fill='%231c3f86'/><path d='M0 30 L15 6 L30 30Z' fill='%23c9a24b'/><path d='M30 30 L45 6 L60 30Z' fill='%23b8452f'/><path d='M15 0 L30 18 L45 0Z' fill='%23fbf7f0'/></svg>");
+        background-size: 60px 30px; }
+      #brand { position: absolute; left: 60px; top: 66px; display: flex; align-items: center; gap: 14px; font-family: "Cinzel"; font-weight: 700; font-size: 28px; letter-spacing: 0.16em; color: var(--brown); }
+      #brand svg { display: block; }
+      #prog { position: absolute; left: 60px; top: 118px; width: 820px; height: 10px; border-radius: 6px; background: var(--sand); overflow: hidden; }
+      #prog-fill { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold2)); transform-origin: left center; }
+      #flash { position: absolute; inset: 0; background: var(--gold2); opacity: 0; pointer-events: none; }
+
+      /* scenes */
+      .clip { position: absolute; inset: 0; }
+      .stage { position: absolute; inset: 0; transform-origin: 470px 900px; }
+      .stk { filter: var(--sticker); }
+      .chip { position: absolute; left: 60px; top: 190px; height: 66px; padding: 0 26px; border-radius: 33px; background: #fff; border: 3px solid var(--gold); color: var(--brown);
+        font-family: "Cinzel"; font-weight: 900; font-size: 30px; letter-spacing: 0.12em; display: flex; align-items: center; gap: 14px; box-shadow: 0 8px 14px rgba(74, 46, 26, 0.15); }
+      .chip i { display: block; width: 14px; height: 14px; background: var(--gold); transform: rotate(45deg); }
+      .chip.alt { background: var(--blue); border-color: #fff; color: #fff; }
+      .chip.alt i { background: #fff; }
+      .headline { position: absolute; left: 60px; top: 285px; width: 860px; font-family: "Cinzel"; font-weight: 900; font-size: 88px; line-height: 1.08; text-transform: uppercase; color: var(--brown); }
+      .headline .hl { display: block; overflow: hidden; padding-bottom: 8px; }
+      .headline .hw { display: inline-block; }
+      .headline .y { font-family: "Dancing Script"; font-weight: 700; font-size: 1.62em; line-height: 0.95; text-transform: none; color: var(--blue); }
+      .headline .sm { font-size: 62px; letter-spacing: 0.04em; color: var(--brown2); }
+      .visual { position: absolute; left: 40px; top: 690px; width: 880px; height: 640px; }
+      .center { display: flex; align-items: center; justify-content: center; }
+
+      .lab { display: flex; align-items: center; gap: 22px; height: 70px; white-space: nowrap; padding: 0 28px; border-radius: 38px; background: #fff; border: 3px solid var(--gold2); box-shadow: 0 10px 16px rgba(74, 46, 26, 0.13);
+        font-family: "Cinzel"; font-weight: 900; font-size: 40px; text-transform: uppercase; color: var(--brown); }
+      .lab i { display: block; width: 38px; height: 38px; border-radius: 50%; }
+      .tag { position: absolute; }
+      .hface { position: absolute; width: 440px; height: 536px; }
+      .card2 { position: absolute; top: 30px; width: 400px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+      .card2 .disc { position: relative; width: 340px; height: 340px; border-radius: 50%; background: #fff; box-shadow: 0 14px 20px rgba(74, 46, 26, 0.16); overflow: hidden; }
+      .card2 .disc svg { position: absolute; }
+      .ban { position: absolute; inset: 0; width: 340px; height: 340px; }
+      .tick { position: absolute; right: 16px; bottom: 16px; width: 80px; height: 80px; border-radius: 50%; background: var(--blue); border: 6px solid #fff; display: flex; align-items: center; justify-content: center; }
+      .tick svg { position: static !important; }
+      .disc2 { position: absolute; border-radius: 50%; background: #fff; box-shadow: 0 14px 20px rgba(74, 46, 26, 0.16); }
+
+      .card3 { position: absolute; top: 0; width: 250px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+      .disc3 { position: relative; width: 230px; height: 230px; border-radius: 50%; background: #fff; box-shadow: 0 14px 20px rgba(74, 46, 26, 0.16); overflow: hidden; }
+      .disc3 svg { position: absolute; left: 0; top: 0; width: 230px; height: 230px; }
+      .disc2 svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+
+      /* 1 breakouts where the hijab touches? */
+      #q-face { left: 20px; top: 30px; width: 460px; height: 560px; }
+      #q-mark { position: absolute; left: 600px; top: 60px; width: 180px; height: 180px; border-radius: 50%; background: var(--blue); color: #fff; font-family: "Dancing Script"; font-weight: 700; font-size: 140px; }
+      #q-tag { left: 300px; top: 565px; }
+
+      /* 2 sweat, oil, rubbing clog pores */
+      #c-1 { left: 15px; } #c-2 { left: 312px; } #c-3 { left: 610px; }
+      #c-pore { position: absolute; left: 90px; top: 350px; width: 700px; height: 289px; }
+
+      /* 3 friction and pressure acne */
+      #nm-face { left: 10px; top: 20px; }
+      #nm-d1 { left: 560px; top: 0; width: 220px; height: 220px; }
+      #nm-d2 { left: 560px; top: 300px; width: 220px; height: 220px; }
+      #nm-1 { left: 540px; top: 222px; } #nm-2 { left: 520px; top: 530px; }
+
+      /* 4 wash the underscarf */
+      #w-basin { position: absolute; left: 20px; top: 30px; width: 460px; height: 420px; }
+      #w-cal { position: absolute; left: 510px; top: 40px; width: 360px; height: 360px; }
+      #w-1 { left: 20px; top: 480px; } #w-2 { left: 300px; top: 565px; }
+
+      /* 5 breathable cotton */
+      #f-swatch { position: absolute; left: 20px; top: 20px; width: 440px; height: 420px; }
+      #f-cotton { position: absolute; left: 500px; top: 30px; width: 360px; height: 360px; }
+      #f-1 { left: 560px; top: 420px; } #f-2 { left: 240px; top: 560px; }
+
+      /* 6 never over wet hair or face */
+      #d-left { left: 10px; } #d-right { left: 470px; }
+
+      /* 7 gentle cleanse at night, hairline too */
+      #n-face { left: 10px; top: 40px; }
+      #n-moon { position: absolute; left: 470px; top: 0; width: 170px; height: 170px; }
+      #n-bottle { position: absolute; left: 630px; top: 20px; width: 230px; height: 537px; }
+      #n-1 { left: 20px; top: 480px; } #n-2 { left: 250px; top: 565px; }
+
+      /* 8 fragrance-free laundry soap */
+      #so-jug { position: absolute; left: 30px; top: 0; width: 400px; height: 540px; }
+      #so-disc { position: absolute; left: 480px; top: 40px; width: 380px; height: 380px; }
+      #so-1 { left: 520px; top: 450px; } #so-2 { left: 330px; top: 565px; }
+
+      /* 9 not too tight */
+      #t-left { left: 10px; } #t-right { left: 470px; }
+
+      /* 10 your hijab is beautiful */
+      #p-face { left: 10px; top: 30px; }
+      #p-disc { position: absolute; left: 480px; top: 30px; width: 380px; height: 380px; }
+      #p-1 { left: 540px; top: 450px; } #p-2 { left: 250px; top: 565px; }
+
+      /* 11 cta */
+      #pfp { position: absolute; left: 290px; top: 0; width: 300px; height: 300px; border-radius: 50%; background: #fff; border: 8px solid var(--gold); overflow: hidden; box-shadow: 0 14px 22px rgba(74, 46, 26, 0.2); }
+      #pfp svg { position: absolute; left: -40px; top: 6px; width: 380px; height: 463px; }
+      #brandname { position: absolute; left: 40px; top: 310px; width: 800px; text-align: center; font-family: "Dancing Script"; font-weight: 700; font-size: 96px; color: var(--blue); line-height: 1.1; }
+      #follow { position: absolute; left: 60px; top: 460px; width: 380px; height: 120px; border-radius: 60px; background: var(--blue); gap: 18px; color: #fff; font-family: "Cinzel"; font-weight: 900; font-size: 40px; }
+      #shareit { position: absolute; left: 470px; top: 460px; width: 360px; height: 120px; border-radius: 60px; background: #fff; border: 4px solid var(--gold); gap: 16px; color: var(--brown); font-family: "Cinzel"; font-weight: 900; font-size: 40px; }
+      #tiktok { display: block; flex: 0 0 72px; width: 72px; height: 72px; border-radius: 16px; box-shadow: 0 0 0 4px #fff; }
+
+      /* captions: word-by-word, on a white sticker label */
+      #caps { position: absolute; left: 60px; top: 1370px; width: 840px; height: 190px; }
+      .cap-line { position: absolute; left: 0; top: 0; width: 840px; text-align: center; opacity: 0; }
+      .cap-pill { display: inline-block; max-width: 840px; padding: 14px 30px 18px; border-radius: 30px; background: #fff; border: 3px solid var(--gold2); box-shadow: 0 10px 18px rgba(74, 46, 26, 0.16);
+        font-weight: 700; font-size: 60px; line-height: 1.15; }
+      .cw { display: inline-block; margin: 0 8px; color: var(--brown); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="42.5" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="weave"></div>
+      <div id="band"></div>
+      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <radialGradient id="skin-g" cx="40%" cy="35%"><stop offset="0" stop-color="#c99470" /><stop offset=".7" stop-color="#a86f4a" /><stop offset="1" stop-color="#8d5a3b" /></radialGradient>
+          <radialGradient id="zit-g" cx="45%" cy="40%"><stop offset="0" stop-color="#fff6e6" /><stop offset=".28" stop-color="#fff0d6" /><stop offset=".32" stop-color="#d9745a" /><stop offset="1" stop-color="#b8452f" /></radialGradient>
+          <radialGradient id="crater-g" cx="50%" cy="45%"><stop offset="0" stop-color="#5c3520" /><stop offset=".6" stop-color="#7a4a2f" /><stop offset=".85" stop-color="#9a6444" /><stop offset="1" stop-color="#c99470" /></radialGradient>
+          <radialGradient id="swell-g"><stop offset="0" stop-color="#b8452f" stop-opacity=".75" /><stop offset="1" stop-color="#b8452f" stop-opacity="0" /></radialGradient>
+          <filter id="soft"><feGaussianBlur stdDeviation="9" /></filter>
+        </defs>
+      </svg>
+      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <radialGradient id="u-skin" cx="46%" cy="36%" r="72%"><stop offset="0" stop-color="#c08a68" /><stop offset=".6" stop-color="#9d6646" /><stop offset="1" stop-color="#7a4b31" /></radialGradient>
+          <linearGradient id="u-hijab" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2d5bb0" /><stop offset=".55" stop-color="#1e428c" /><stop offset="1" stop-color="#15326c" /></linearGradient>
+          <radialGradient id="u-gem"><stop offset="0" stop-color="#8fc0ff" /><stop offset="1" stop-color="#2f6fd0" /></radialGradient>
+          <pattern id="u-weave" width="24" height="12" patternUnits="userSpaceOnUse"><rect width="24" height="12" fill="#c9a24b" /><path d="M0 12 L6 2 L12 12Z M12 12 L18 2 L24 12Z" fill="#ecd08c" /><path d="M6 0 L12 6 L18 0Z" fill="#b8452f" /></pattern>
+          <linearGradient id="gloss" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e9e4dc" /><stop offset=".22" stop-color="#ffffff" /><stop offset=".5" stop-color="#f7f3ec" /><stop offset="1" stop-color="#d9d1c4" /></linearGradient>
+          <linearGradient id="chrome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f6f9" /><stop offset=".45" stop-color="#b9c1cc" /><stop offset=".55" stop-color="#8e98a6" /><stop offset="1" stop-color="#dfe4ea" /></linearGradient>
+          <linearGradient id="goldlid" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a8822f" /><stop offset=".3" stop-color="#ecd08c" /><stop offset=".6" stop-color="#c9a24b" /><stop offset="1" stop-color="#8f6d22" /></linearGradient>
+          <linearGradient id="waterg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe0ff" stop-opacity=".95" /><stop offset="1" stop-color="#6fa4e8" stop-opacity=".75" /></linearGradient>
+          <radialGradient id="sponge-g" cx="40%" cy="35%"><stop offset="0" stop-color="#ffe17a" /><stop offset="1" stop-color="#e0a92c" /></radialGradient>
+          <radialGradient id="red-g"><stop offset="0" stop-color="#d9463a" stop-opacity=".6" /><stop offset="1" stop-color="#d9463a" stop-opacity="0" /></radialGradient>
+
+          <!-- Somali hijabi face (the tutorials' character), v2: larger face opening, slim forehead band.
+               Key points in this 460x560 box: eyes (175,237) (287,237) · mouth (230,324) · cheeks (185,275) (303,275) · forehead (230,150) · chin (230,380) -->
+          <symbol id="hface-art" viewBox="0 0 460 560">
+            <g transform="translate(-30 -64)">
+              <path d="M260 60 C394 60 446 158 446 272 C446 366 432 436 478 522 C510 586 466 652 384 668 L136 668 C54 652 10 586 42 522 C88 436 74 366 74 272 C74 158 126 60 260 60 Z" fill="url(#u-hijab)" />
+              <path d="M118 170 C142 108 196 86 256 84" fill="none" stroke="#4476cc" stroke-width="10" stroke-linecap="round" opacity=".5" />
+              <path d="M412 490 C438 546 444 594 414 640" fill="none" stroke="#12295a" stroke-width="10" stroke-linecap="round" opacity=".55" />
+              <path d="M108 490 C82 546 76 594 106 640" fill="none" stroke="#12295a" stroke-width="10" stroke-linecap="round" opacity=".55" />
+              <ellipse cx="260" cy="286" rx="136" ry="160" fill="#12295a" />
+              <ellipse cx="260" cy="290" rx="125" ry="148" fill="url(#u-skin)" />
+              <path d="M160 400 C190 446 330 446 360 400 C344 432 300 448 260 448 C220 448 176 432 160 400Z" fill="#6e412a" opacity=".3" />
+              <path d="M132 216 C144 112 376 112 388 216 C352 160 168 160 132 216 Z" fill="url(#u-hijab)" />
+              <path d="M136 208 C176 158 344 158 384 208" fill="none" stroke="url(#u-weave)" stroke-width="10" stroke-linecap="round" />
+              <path d="M140 350 C136 500 384 500 380 350 C398 520 122 520 140 350 Z" fill="url(#u-hijab)" />
+              <circle cx="260" cy="506" r="15" fill="#c9a24b" /><circle cx="260" cy="506" r="8" fill="url(#u-gem)" />
+              <g transform="translate(260 300) scale(1.14) translate(-260 -300)">
+                <g fill="none" stroke="#24150c" stroke-width="7" stroke-linecap="round"><path d="M192 250 Q214 236 238 244" /><path d="M282 244 Q306 236 328 250" /></g>
+                <path d="M192 280 Q214 263 238 280 Q214 292 192 280Z" fill="#fff8ef" /><circle cx="215" cy="279" r="11" fill="#3a2214" /><circle cx="215" cy="279" r="5" fill="#120a06" /><circle cx="219" cy="275" r="3.5" fill="#ffffff" /><path d="M189 281 Q213 258 240 278 L246 272" fill="none" stroke="#150c06" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M282 280 Q306 263 328 280 Q306 292 282 280Z" fill="#fff8ef" /><circle cx="305" cy="279" r="11" fill="#3a2214" /><circle cx="305" cy="279" r="5" fill="#120a06" /><circle cx="309" cy="275" r="3.5" fill="#ffffff" /><path d="M331 281 Q307 258 280 278 L274 272" fill="none" stroke="#150c06" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M258 288 L256 318" stroke="#d6a07f" stroke-width="5" stroke-linecap="round" opacity=".45" />
+                <path d="M246 328 Q252 338 260 336 Q268 338 274 328" fill="none" stroke="#6e412a" stroke-width="4" stroke-linecap="round" />
+                <ellipse cx="196" cy="334" rx="22" ry="12" fill="#e0707a" opacity=".25" /><ellipse cx="324" cy="334" rx="22" ry="12" fill="#e0707a" opacity=".25" />
+                <path d="M226 362 Q244 350 260 357 Q276 350 294 362 Q260 368 226 362Z" fill="#8e4440" />
+                <path d="M230 366 Q260 388 290 366 Q260 374 230 366Z" fill="#aa564e" />
+                <path d="M220 357 Q224 364 230 365 M290 365 Q296 364 300 357" fill="none" stroke="#6e3a30" stroke-width="3" stroke-linecap="round" />
+              </g>
+            </g>
+          </symbol>
+
+          <!-- realistic props -->
+          <symbol id="cleanser-real" viewBox="0 0 240 560">
+            <rect x="100" y="0" width="92" height="24" rx="9" fill="url(#chrome)" />
+            <rect x="108" y="20" width="22" height="58" fill="url(#chrome)" />
+            <rect x="80" y="70" width="80" height="42" rx="12" fill="url(#chrome)" />
+            <rect x="94" y="108" width="52" height="38" fill="#d9d1c4" />
+            <path d="M38 156 Q38 142 60 142 H180 Q202 142 202 156 V518 Q202 552 168 552 H72 Q38 552 38 518 Z" fill="url(#gloss)" />
+            <rect x="58" y="170" width="14" height="360" rx="7" fill="#ffffff" opacity=".85" />
+            <rect x="38" y="250" width="164" height="180" fill="#2f6fd0" />
+            <path d="M120 270 C128 286 138 294 138 306 C138 317 130 324 120 324 C110 324 102 317 102 306 C102 294 112 286 120 270Z" fill="#ffffff" />
+            <text x="120" y="366" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="24" fill="#ffffff">NADIIFIYE</text>
+            <text x="120" y="398" text-anchor="middle" font-family="Cinzel" font-weight="700" font-size="17" fill="#e3c173">JILICSAN · WEJIGA</text>
+            <path d="M60 470 H180 M60 490 H160" stroke="#c9a24b" stroke-width="4" />
+          </symbol>
+          <symbol id="jar-real" viewBox="0 0 330 300">
+            <ellipse cx="165" cy="284" rx="150" ry="14" fill="#4a2e1a" opacity=".15" />
+            <rect x="30" y="18" width="270" height="84" rx="24" fill="url(#goldlid)" />
+            <rect x="46" y="28" width="238" height="10" rx="5" fill="#fff4d0" opacity=".6" />
+            <rect x="20" y="96" width="290" height="186" rx="38" fill="url(#gloss)" />
+            <rect x="40" y="110" width="14" height="156" rx="7" fill="#ffffff" opacity=".9" />
+            <rect x="20" y="146" width="290" height="96" fill="#2f6fd0" />
+            <text x="165" y="206" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="42" fill="#ffffff">QOYAAN</text>
+            <path d="M150 260 L165 272 L180 260 L165 248 Z" fill="#b8452f" />
+          </symbol>
+          <symbol id="faucet-real" viewBox="0 0 360 460">
+            <rect x="40" y="20" width="260" height="46" rx="20" fill="url(#chrome)" />
+            <rect x="140" y="60" width="60" height="70" fill="url(#chrome)" />
+            <path d="M120 130 H300 Q330 130 330 160 V190 H290 V170 H120 Z" fill="url(#chrome)" />
+            <rect x="286" y="186" width="48" height="20" rx="6" fill="#8e98a6" />
+          </symbol>
+          <symbol id="sponge-real" viewBox="0 0 300 220">
+            <rect x="10" y="30" width="280" height="170" rx="34" fill="url(#sponge-g)" />
+            <rect x="10" y="30" width="280" height="54" rx="26" fill="#3f8f4a" />
+            <g fill="#b37f16" opacity=".55"><circle cx="60" cy="120" r="9" /><circle cx="100" cy="150" r="6" /><circle cx="140" cy="118" r="8" /><circle cx="190" cy="160" r="10" /><circle cx="230" cy="125" r="7" /><circle cx="250" cy="170" r="5" /><circle cx="80" cy="175" r="6" /><circle cx="170" cy="135" r="4" /></g>
+            <g stroke="#2d6b37" stroke-width="3" opacity=".7"><path d="M30 44 L44 64 M60 42 L72 66 M92 44 L104 64 M124 42 L136 66 M156 44 L168 64 M188 42 L200 66 M220 44 L232 64 M252 42 L264 66" /></g>
+          </symbol>
+          <symbol id="towel-real" viewBox="0 0 400 260">
+            <path d="M20 60 Q20 30 50 30 H350 Q380 30 380 60 V220 Q380 240 360 240 H40 Q20 240 20 220 Z" fill="#fffaf1" />
+            <path d="M20 60 Q20 30 50 30 H350 Q380 30 380 60 V96 H20 Z" fill="#f1e8d8" />
+            <rect x="20" y="176" width="360" height="30" fill="#2f6fd0" /><rect x="20" y="212" width="360" height="8" fill="#c9a24b" />
+            <g stroke="#e8ddcb" stroke-width="3"><path d="M40 118 H360 M40 136 H360 M40 154 H360" /></g>
+          </symbol>
+          <symbol id="feather-real" viewBox="0 0 200 320">
+            <path d="M100 20 C160 60 170 170 110 280 C60 200 40 90 100 20Z" fill="#fffaf1" stroke="#e3c173" stroke-width="4" />
+            <path d="M100 30 C112 120 108 220 104 310" fill="none" stroke="#c9a24b" stroke-width="5" stroke-linecap="round" />
+            <g stroke="#e8ddcb" stroke-width="3" fill="none"><path d="M106 80 L140 60 M106 120 L150 100 M106 160 L150 146 M104 200 L140 196 M104 110 L70 88 M104 150 L64 134 M104 190 L70 184" /></g>
+          </symbol>
+          <symbol id="weight-real" viewBox="0 0 240 240">
+            <path d="M80 70 Q80 26 120 26 Q160 26 160 70" fill="none" stroke="#3a2a20" stroke-width="22" stroke-linecap="round" />
+            <path d="M40 120 Q40 76 86 76 H154 Q200 76 200 120 L214 196 Q218 222 190 222 H50 Q22 222 26 196 Z" fill="#3a2a20" />
+            <path d="M60 110 Q70 92 96 90" stroke="#6a5446" stroke-width="10" stroke-linecap="round" fill="none" />
+            <text x="120" y="178" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="46" fill="#e3c173">KG</text>
+          </symbol>
+          <symbol id="hand-circle" viewBox="0 0 340 340">
+            <g fill="url(#u-skin)"><rect x="110" y="70" width="40" height="160" rx="20" /><rect x="156" y="50" width="40" height="176" rx="20" /><rect x="202" y="80" width="38" height="150" rx="19" /><path d="M104 190 H244 V250 C244 290 214 310 176 310 C136 310 104 290 104 256Z" /></g>
+            <g fill="#d4a080" opacity=".8"><ellipse cx="130" cy="84" rx="12" ry="10" /><ellipse cx="176" cy="64" rx="12" ry="10" /><ellipse cx="221" cy="94" rx="11" ry="10" /></g>
+          </symbol>
+        </defs>
+      </svg>
+      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <linearGradient id="tubeg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" /><stop offset=".5" stop-color="#f3efe8" /><stop offset="1" stop-color="#d8d0c2" /></linearGradient>
+          <symbol id="tret-real" viewBox="0 0 400 200">
+            <path d="M20 40 L300 60 Q330 62 330 100 Q330 138 300 140 L20 160 Q8 160 8 148 V52 Q8 40 20 40Z" fill="url(#tubeg)" />
+            <path d="M8 44 H26 V156 H8Z" fill="#d8d0c2" /><g stroke="#bfb5a4" stroke-width="3"><path d="M12 50 V150 M18 50 V150" /></g>
+            <path d="M60 58 L240 70 V130 L60 142 Z" fill="#b8452f" /><path d="M60 128 L240 118 V130 L60 142 Z" fill="#c9a24b" />
+            <text x="150" y="106" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="24" fill="#ffffff">TRETINOIN</text>
+            <rect x="326" y="78" width="60" height="44" rx="8" fill="#1c3f86" /><path d="M330 84 H382" stroke="#4476cc" stroke-width="4" />
+            <path d="M40 50 L280 66" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity=".9" />
+          </symbol>
+          <symbol id="spf-real" viewBox="0 0 260 560">
+            <rect x="80" y="20" width="100" height="70" rx="16" fill="#1c3f86" /><rect x="96" y="30" width="16" height="50" rx="8" fill="#4476cc" opacity=".6" />
+            <path d="M40 120 Q40 86 80 86 H180 Q220 86 220 120 V510 Q220 548 182 548 H78 Q40 548 40 510 Z" fill="url(#gloss)" />
+            <rect x="60" y="130" width="14" height="390" rx="7" fill="#ffffff" opacity=".85" />
+            <rect x="40" y="220" width="180" height="210" fill="#e3c173" />
+            <circle cx="130" cy="280" r="34" fill="#ffffff" /><g stroke="#ffffff" stroke-width="7" stroke-linecap="round"><path d="M130 232 v-10 M130 338 v10 M82 280 h-10 M178 280 h10" /></g>
+            <text x="130" y="372" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="34" fill="#1c3f86">SPF</text>
+            <text x="130" y="410" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="34" fill="#1c3f86">30+</text>
+          </symbol>
+          <symbol id="doc-badge" viewBox="0 0 380 380">
+            <circle cx="190" cy="190" r="180" fill="#ffffff" stroke="#c9a24b" stroke-width="8" /><path d="M160 80 H220 V160 H300 V220 H220 V300 H160 V220 H80 V160 H160Z" fill="#2f6fd0" /><path d="M60 110 Q40 200 110 250 Q160 280 190 330" fill="none" stroke="#4a2e1a" stroke-width="10" stroke-linecap="round" opacity=".85" /><circle cx="190" cy="336" r="16" fill="#c9a24b" stroke="#4a2e1a" stroke-width="6" />
+          </symbol>
+          <radialGradient id="capg" cx="35%" cy="30%"><stop offset="0" stop-color="#fff4d0" /><stop offset=".6" stop-color="#e3c173" /><stop offset="1" stop-color="#b8892e" /></radialGradient>
+        </defs>
+      </svg>
+
+      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <linearGradient id="pinklid" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c7708a" /><stop offset=".3" stop-color="#f4bfcd" /><stop offset=".6" stop-color="#e290a8" /><stop offset="1" stop-color="#b25a74" /></linearGradient>
+          <radialGradient id="hgdrop" cx="35%" cy="30%"><stop offset="0" stop-color="#ffffff" /><stop offset=".45" stop-color="#c3cad4" /><stop offset="1" stop-color="#6f7885" /></radialGradient>
+          <radialGradient id="kidg" cx="40%" cy="35%"><stop offset="0" stop-color="#d9786a" /><stop offset=".7" stop-color="#a8483e" /><stop offset="1" stop-color="#83332c" /></radialGradient>
+          <!-- a generic "whitening" cream jar: pink lid, glossy white body, loud claims, no ingredient list -->
+          <symbol id="whiten-real" viewBox="0 0 330 300">
+            <ellipse cx="165" cy="284" rx="150" ry="14" fill="#4a2e1a" opacity=".15" />
+            <rect x="30" y="18" width="270" height="84" rx="24" fill="url(#pinklid)" />
+            <rect x="46" y="28" width="238" height="10" rx="5" fill="#ffffff" opacity=".55" />
+            <rect x="20" y="96" width="290" height="186" rx="38" fill="url(#gloss)" />
+            <rect x="40" y="110" width="14" height="156" rx="7" fill="#ffffff" opacity=".9" />
+            <rect x="20" y="140" width="290" height="104" fill="#f7d3dc" />
+            <rect x="20" y="140" width="290" height="8" fill="#e290a8" /><rect x="20" y="236" width="290" height="8" fill="#e290a8" />
+            <text x="165" y="196" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="40" fill="#b25a74">CADEEYE</text>
+            <text x="165" y="228" text-anchor="middle" font-family="Cinzel" font-weight="700" font-size="20" fill="#8a5a36">7 MAALMOOD · SUPER</text>
+            <path d="M270 120 l6 14 14 6 -14 6 -6 14 -6 -14 -14 -6 14 -6z" fill="#e3c173" />
+          </symbol>
+          <symbol id="mag-real" viewBox="0 0 280 280">
+            <path d="M178 178 L256 256" stroke="#4a2e1a" stroke-width="34" stroke-linecap="round" />
+            <path d="M184 184 L250 250" stroke="#8a5a36" stroke-width="20" stroke-linecap="round" />
+            <circle cx="110" cy="110" r="92" fill="#e8f1ff" opacity=".55" />
+            <circle cx="110" cy="110" r="92" fill="none" stroke="url(#goldlid)" stroke-width="20" />
+            <path d="M60 80 Q80 50 116 44" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" opacity=".9" />
+          </symbol>
+          <symbol id="hazard" viewBox="0 0 100 90">
+            <path d="M50 6 L94 84 H6 Z" fill="#e3c173" stroke="#b8452f" stroke-width="8" stroke-linejoin="round" />
+            <rect x="45" y="30" width="10" height="30" rx="5" fill="#4a2e1a" /><circle cx="50" cy="71" r="6" fill="#4a2e1a" />
+          </symbol>
+        </defs>
+      </svg>
+
+      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <linearGradient id="amber" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a4f14" /><stop offset=".3" stop-color="#d0893a" /><stop offset=".6" stop-color="#b06a22" /><stop offset="1" stop-color="#6e3c0e" /></linearGradient>
+          <linearGradient id="navyg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#14306a" /><stop offset=".3" stop-color="#3a64b8" /><stop offset=".6" stop-color="#1c3f86" /><stop offset="1" stop-color="#102656" /></linearGradient>
+          <!-- serum dropper bottle -->
+          <symbol id="serum-real" viewBox="0 0 250 525">
+            <ellipse cx="125" cy="512" rx="96" ry="10" fill="#4a2e1a" opacity=".15" />
+            <path d="M100 20 Q100 0 125 0 Q150 0 150 20 V110 H100 Z" fill="#2a1a10" /><rect x="108" y="10" width="10" height="80" rx="5" fill="#ffffff" opacity=".2" />
+            <rect x="84" y="104" width="82" height="56" rx="8" fill="url(#goldlid)" />
+            <path d="M60 180 Q60 156 90 156 H160 Q190 156 190 180 V490 Q190 512 166 512 H84 Q60 512 60 490 Z" fill="url(#amber)" />
+            <rect x="72" y="176" width="12" height="310" rx="6" fill="#ffffff" opacity=".35" />
+            <rect x="60" y="250" width="130" height="190" fill="#fbf7f0" />
+            <text x="125" y="322" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="16" fill="#4a2e1a">NIACINAMIDE</text>
+            <text x="125" y="380" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="46" fill="#c9a24b">10%</text>
+            <text x="125" y="416" text-anchor="middle" font-family="Cinzel" font-weight="700" font-size="14" fill="#8a5a36">SERUM</text>
+          </symbol>
+          <!-- standing cream tube -->
+          <symbol id="tube-real" viewBox="0 0 250 525">
+            <ellipse cx="125" cy="512" rx="80" ry="10" fill="#4a2e1a" opacity=".15" />
+            <rect x="72" y="420" width="106" height="92" rx="14" fill="url(#navyg)" />
+            <path d="M40 30 H210 L190 420 H60 Z" fill="url(#tubeg)" />
+            <rect x="40" y="18" width="170" height="24" rx="4" fill="#d8d0c2" /><path d="M44 24 H206 M44 32 H206" stroke="#bfb5a4" stroke-width="2" />
+            <rect x="70" y="60" width="12" height="340" rx="6" fill="#ffffff" opacity=".9" />
+            <path d="M48 170 H202 L195 310 H55 Z" fill="#2f6fd0" />
+            <text x="125" y="228" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="26" fill="#ffffff">AZELAIC</text>
+            <text x="125" y="262" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="26" fill="#ffffff">ACID</text>
+            <text x="125" y="296" text-anchor="middle" font-family="Cinzel" font-weight="700" font-size="20" fill="#e3c173">15%</text>
+          </symbol>
+          <!-- pump bottle -->
+          <symbol id="pump-real" viewBox="0 0 250 525">
+            <ellipse cx="125" cy="512" rx="90" ry="10" fill="#4a2e1a" opacity=".15" />
+            <path d="M125 60 H200 V80 H140" fill="none" stroke="url(#goldlid)" stroke-width="16" stroke-linejoin="round" />
+            <rect x="96" y="40" width="58" height="40" rx="8" fill="url(#goldlid)" />
+            <rect x="110" y="80" width="30" height="60" fill="url(#goldlid)" />
+            <rect x="80" y="136" width="90" height="36" rx="8" fill="#c9a24b" />
+            <path d="M50 200 Q50 168 84 168 H166 Q200 168 200 200 V488 Q200 512 176 512 H74 Q50 512 50 488 Z" fill="url(#gloss)" />
+            <rect x="64" y="186" width="12" height="300" rx="6" fill="#ffffff" opacity=".9" />
+            <rect x="50" y="250" width="150" height="180" fill="#1c3f86" />
+            <text x="125" y="326" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="24" fill="#ffffff">RETINOID</text>
+            <text x="125" y="376" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="36" fill="#e3c173">0.1%</text>
+            <text x="125" y="410" text-anchor="middle" font-family="Cinzel" font-weight="700" font-size="14" fill="#ffffff">HABEENKII</text>
+          </symbol>
+          <symbol id="cloud" viewBox="0 0 240 140">
+            <path d="M50 130 Q10 130 10 96 Q10 64 46 62 Q54 20 100 20 Q140 20 154 54 Q166 44 184 46 Q222 50 226 90 Q230 130 190 130 Z" fill="#ffffff" stroke="#c9d5e6" stroke-width="6" />
+          </symbol>
+          <symbol id="scrub-real" viewBox="0 0 330 300">
+            <ellipse cx="165" cy="284" rx="150" ry="14" fill="#4a2e1a" opacity=".15" />
+            <rect x="30" y="18" width="270" height="84" rx="24" fill="#6b8f4a" />
+            <rect x="46" y="28" width="238" height="10" rx="5" fill="#ffffff" opacity=".4" />
+            <rect x="20" y="96" width="290" height="186" rx="38" fill="#c7a27a" />
+            <g fill="#8a5a36"><circle cx="60" cy="130" r="7" /><circle cx="100" cy="160" r="5" /><circle cx="250" cy="130" r="6" /><circle cx="280" cy="170" r="7" /><circle cx="70" cy="250" r="6" /><circle cx="260" cy="250" r="5" /><circle cx="140" cy="262" r="6" /><circle cx="200" cy="120" r="5" /></g>
+            <rect x="50" y="160" width="230" height="74" rx="10" fill="#fbf7f0" />
+            <text x="165" y="210" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="36" fill="#4a2e1a">XOQID</text>
+          </symbol>
+        </defs>
+      </svg>
+
+      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <linearGradient id="waterb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe3fb" /><stop offset="1" stop-color="#7fb0ea" /></linearGradient>
+          <linearGradient id="jugg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#dfe7f2" /><stop offset=".25" stop-color="#ffffff" /><stop offset=".6" stop-color="#f1f5fa" /><stop offset="1" stop-color="#c8d3e2" /></linearGradient>
+          <pattern id="knit" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#f7f1e6" /><path d="M0 8 H16 M8 0 V16" stroke="#e6d9c2" stroke-width="3" /></pattern>
+          <!-- navy tube underscarf (bonnet) -->
+          <symbol id="underscarf" viewBox="0 0 300 200">
+            <path d="M20 150 C20 60 80 16 150 16 C220 16 280 60 280 150 C240 176 60 176 20 150Z" fill="#1c3f86" />
+            <path d="M20 150 C60 176 240 176 280 150 L284 176 C240 202 60 202 16 176Z" fill="#14306a" />
+            <g stroke="#3a64b8" stroke-width="4" opacity=".6"><path d="M40 170 V190 M70 176 V196 M100 180 V199 M130 182 V200 M160 182 V200 M190 181 V199 M220 178 V197 M250 173 V192" /></g>
+            <path d="M60 80 C90 44 140 34 170 34" fill="none" stroke="#4476cc" stroke-width="10" stroke-linecap="round" opacity=".6" />
+          </symbol>
+          <!-- laundry detergent jug -->
+          <symbol id="jug-real" viewBox="0 0 400 540">
+            <ellipse cx="200" cy="528" rx="170" ry="12" fill="#4a2e1a" opacity=".15" />
+            <rect x="70" y="10" width="110" height="66" rx="14" fill="#2f6fd0" /><rect x="84" y="18" width="16" height="50" rx="8" fill="#6fa4e8" />
+            <path d="M40 150 Q40 80 110 76 H170 Q200 76 230 96 L330 150 Q370 170 370 220 V480 Q370 520 330 520 H80 Q40 520 40 480 Z" fill="url(#jugg)" />
+            <path d="M250 110 L330 156 Q356 172 356 204 V280 L300 280 V206 Q300 186 280 176 L240 154 Z" fill="#ffffff" stroke="#c8d3e2" stroke-width="6" />
+            <rect x="56" y="160" width="12" height="320" rx="6" fill="#ffffff" opacity=".9" />
+            <rect x="70" y="300" width="270" height="190" rx="20" fill="#2f6fd0" />
+            <text x="205" y="358" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="32" fill="#ffffff">SAABUUN</text>
+            <text x="205" y="400" text-anchor="middle" font-family="Cinzel" font-weight="700" font-size="22" fill="#e3c173">DHARKA</text>
+            <rect x="96" y="420" width="218" height="46" rx="23" fill="#ffffff" />
+            <text x="205" y="452" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="22" fill="#1c3f86">CARAF LA'AAN</text>
+          </symbol>
+          <symbol id="moon" viewBox="0 0 170 170">
+            <circle cx="85" cy="85" r="80" fill="#1c3f86" stroke="#ffffff" stroke-width="6" />
+            <path d="M104 34 A48 48 0 1 0 132 110 A38 38 0 1 1 104 34Z" fill="#e3c173" />
+            <path d="M50 48 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4z" fill="#ffffff" />
+          </symbol>
+        </defs>
+      </svg>
+
+      <!-- 1. BREAKOUTS WHERE THE HIJAB TOUCHES? -->
+      <section id="s-q" class="clip" data-start="0.000" data-duration="3.185" data-track-index="1">
+        <div class="stage">
+          <div class="chip alt"><i></i>SU'AAL<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Finan?</span></span><span class="hl sm"><span class="hw">meesha</span> <span class="hw">xijaabku</span> <span class="hw">taabto</span></span></div>
+          <div class="visual">
+            <svg class="hface stk" id="q-face" viewBox="0 0 460 560"><use href="#hface-art" width="460" height="560" /><path id="q-line" d="M112 250 C104 150 150 150 230 150 C310 150 356 150 348 250 C344 300 320 318 300 318 M112 250 C116 300 140 318 160 318" fill="none" stroke="#e3c173" stroke-width="7" stroke-dasharray="16 12" stroke-linecap="round" /><g id="q-zits"><circle cx="180" cy="170" r="10" fill="url(#zit-g)" /><circle cx="232" cy="166" r="9" fill="url(#zit-g)" /><circle cx="284" cy="172" r="10" fill="url(#zit-g)" /><circle cx="124" cy="236" r="9" fill="url(#zit-g)" /><circle cx="336" cy="236" r="9" fill="url(#zit-g)" /><circle cx="128" cy="274" r="10" fill="url(#zit-g)" /><circle cx="332" cy="272" r="10" fill="url(#zit-g)" /></g></svg>
+            <div id="q-mark" class="center stk">?</div>
+            <div class="lab tag" id="q-tag"><i style="background: var(--gold)"></i>Xariiqda xijaabka</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. SWEAT, OIL, RUBBING CLOG PORES -->
+      <section id="s-cause" class="clip" data-start="3.185" data-duration="3.924" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>SABABTA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Dhidid</span> <span class="hw y">+</span> <span class="hw y">saliid</span></span><span class="hl sm"><span class="hw">iyo</span> <span class="hw">xoqid</span></span></div>
+          <div class="visual">
+            <div class="card3" id="c-1"><div class="disc3"><svg viewBox="0 0 250 250"><circle cx="125" cy="125" r="125" fill="url(#u-skin)" /><g fill="#bfe0ff" stroke="#ffffff" stroke-width="4"><path d="M90 60 Q110 96 110 110 A20 20 0 0 1 70 110 Q70 96 90 60Z" /><path d="M160 100 Q180 136 180 150 A20 20 0 0 1 140 150 Q140 136 160 100Z" /><path d="M100 150 Q114 176 114 186 A14 14 0 0 1 86 186 Q86 176 100 150Z" /></g></svg></div><div class="lab"><i style="background: #7fb0ea"></i>Dhidid</div></div>
+            <div class="card3" id="c-2"><div class="disc3"><svg viewBox="0 0 250 250"><circle cx="125" cy="125" r="125" fill="#ffffff" /><path d="M125 40 Q176 118 176 150 A51 51 0 0 1 74 150 Q74 118 125 40Z" fill="#e3c173" /><ellipse cx="106" cy="140" rx="12" ry="22" fill="#fff4d0" opacity=".8" /></svg></div><div class="lab"><i style="background: var(--gold)"></i>Saliid</div></div>
+            <div class="card3" id="c-3"><div class="disc3"><svg viewBox="0 0 250 250"><circle cx="125" cy="125" r="125" fill="url(#u-hijab)" /><rect x="0" y="130" width="250" height="120" fill="url(#u-skin)" /><g id="c-rub" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M50 110 H200 M70 90 L50 110 L70 130 M180 90 L200 110 L180 130" /></g></svg></div><div class="lab"><i style="background: var(--navy)"></i>Xoqid</div></div>
+            <svg id="c-pore" class="stk" viewBox="0 0 800 330">
+              <rect x="0" y="60" width="800" height="270" rx="30" fill="#f2c9b3" />
+              <path d="M0 90 Q0 60 30 60 H330 Q360 60 368 40 Q400 -10 432 40 Q440 60 470 60 H770 Q800 60 800 90 V110 H0 Z" fill="#c98a62" />
+              <path d="M372 40 Q400 20 428 40 L440 200 Q470 250 440 290 Q400 320 360 290 Q330 250 360 200 Z" fill="#e8a98e" />
+              <path d="M384 48 Q400 36 416 48 L424 205 Q448 245 424 272 Q400 292 376 272 Q352 245 376 205 Z" fill="#f7e3c4" />
+              <g id="c-plug"><ellipse cx="400" cy="120" rx="18" ry="70" fill="#8a5a36" /><ellipse cx="400" cy="46" rx="22" ry="14" fill="#4a2e1a" /></g>
+              <g id="c-bump"><circle cx="400" cy="160" r="90" fill="url(#swell-g)" /></g>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. FRICTION AND PRESSURE ACNE -->
+      <section id="s-name" class="clip" data-start="7.109" data-duration="3.349" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>MAGACA<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Xoqid</span> <span class="hw y">+</span> <span class="hw y">cadaadis</span></span><span class="hl sm"><span class="hw">finanka</span></span></div>
+          <div class="visual">
+            <svg class="hface stk" id="nm-face" viewBox="0 0 460 560"><use href="#hface-art" width="460" height="560" /><g id="nm-push" fill="#b8452f"><path d="M20 250 L70 226 V240 H96 V260 H70 V274Z" /><path d="M440 250 L390 226 V240 H364 V260 H390 V274Z" /></g><g fill="url(#zit-g)"><circle cx="124" cy="236" r="9" /><circle cx="336" cy="236" r="9" /><circle cx="232" cy="166" r="9" /></g></svg>
+            <div class="disc2 stk" id="nm-d1"><svg viewBox="0 0 220 220"><circle cx="110" cy="110" r="110" fill="url(#u-hijab)" /><rect x="0" y="120" width="220" height="100" fill="url(#u-skin)" /><g fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"><path d="M40 100 H180 M58 82 L40 100 L58 118 M162 82 L180 100 L162 118" /></g></svg></div>
+            <div class="lab tag" id="nm-1"><i style="background: var(--navy)"></i>Xoqid</div>
+            <div class="disc2 stk" id="nm-d2"><svg viewBox="0 0 220 220"><circle cx="110" cy="110" r="110" fill="#ffffff" /><rect x="30" y="140" width="160" height="50" rx="14" fill="url(#u-skin)" /><g fill="#b8452f"><path d="M70 40 H90 V90 H104 L80 124 L56 90 H70Z" /><path d="M130 40 H150 V90 H164 L140 124 L116 90 H130Z" /></g></svg></div>
+            <div class="lab tag" id="nm-2"><i style="background: var(--terra)"></i>Cadaadis</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. WASH THE UNDERSCARF EVERY FEW DAYS -->
+      <section id="s-wash" class="clip" data-start="10.458" data-duration="3.619" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>TALLAABO 1<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Dhaq</span></span><span class="hl sm"><span class="hw">xijaabka</span> <span class="hw">hoose</span></span></div>
+          <div class="visual">
+            <svg id="w-basin" class="stk" viewBox="0 0 460 420">
+              <ellipse cx="230" cy="400" rx="190" ry="14" fill="#4a2e1a" opacity=".15" />
+              <path d="M20 170 H440 L400 380 Q396 396 380 396 H80 Q64 396 60 380 Z" fill="url(#chrome)" />
+              <ellipse cx="230" cy="172" rx="212" ry="34" fill="url(#waterb)" stroke="#dfe4ea" stroke-width="10" />
+              <g id="w-scarf"><use href="#underscarf" x="90" y="40" width="280" height="187" /></g>
+              <path d="M40 186 Q230 222 420 186 L420 196 Q230 232 40 196Z" fill="#7fb0ea" opacity=".8" />
+              <g id="w-bub" fill="#ffffff" stroke="#b9d4f2" stroke-width="3"><circle cx="80" cy="150" r="16" /><circle cx="120" cy="120" r="11" /><circle cx="360" cy="140" r="18" /><circle cx="400" cy="110" r="10" /><circle cx="230" cy="100" r="13" /><circle cx="300" cy="80" r="9" /><circle cx="160" cy="70" r="8" /></g>
+            </svg>
+            <svg id="w-cal" class="stk" viewBox="0 0 380 380"><rect x="20" y="30" width="340" height="330" rx="34" fill="#ffffff" /><rect x="20" y="30" width="340" height="80" rx="34" fill="#2f6fd0" /><rect x="20" y="80" width="340" height="30" fill="#2f6fd0" /><g fill="#efe4d2"><rect x="44" y="136" width="70" height="60" rx="10" /><rect x="155" y="136" width="70" height="60" rx="10" /><rect x="266" y="136" width="70" height="60" rx="10" /><rect x="44" y="216" width="70" height="60" rx="10" /><rect x="155" y="216" width="70" height="60" rx="10" /><rect x="266" y="216" width="70" height="60" rx="10" /><rect x="44" y="296" width="70" height="50" rx="10" /><rect x="155" y="296" width="70" height="50" rx="10" /><rect x="266" y="296" width="70" height="50" rx="10" /></g><g class="ck" fill="none" stroke="#2f6fd0" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M60 166 l12 12 24 -24" /><path d="M282 166 l12 12 24 -24" /><path d="M171 246 l12 12 24 -24" /><path d="M60 322 l12 12 24 -24" /><path d="M282 322 l12 12 24 -24" /></g></svg>
+            <div class="lab tag" id="w-1"><i style="background: var(--navy)"></i>Xijaabka hoose</div>
+            <div class="lab tag" id="w-2"><i style="background: var(--blue)"></i>Dhowr maalmood</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. BREATHABLE FABRIC LIKE COTTON -->
+      <section id="s-fabric" class="clip" data-start="14.077" data-duration="3.921" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>TALLAABO 2<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Suuf</span></span><span class="hl sm"><span class="hw">maro</span> <span class="hw">neefsata</span></span></div>
+          <div class="visual">
+            <svg id="f-swatch" class="stk" viewBox="0 0 440 420">
+              <path d="M30 40 Q220 10 410 40 L400 380 Q220 410 40 380 Z" fill="url(#knit)" stroke="#e3c173" stroke-width="6" />
+              <g id="f-air" fill="none" stroke="#6fa4e8" stroke-width="10" stroke-linecap="round"><path d="M-20 120 Q60 90 140 120 T300 120 T460 120" /><path d="M-20 210 Q60 180 140 210 T300 210 T460 210" /><path d="M-20 300 Q60 270 140 300 T300 300 T460 300" /></g>
+            </svg>
+            <svg id="f-cotton" class="stk" viewBox="0 0 360 360">
+              <circle cx="180" cy="180" r="170" fill="#ffffff" />
+              <path d="M180 250 L180 340" stroke="#8a5a36" stroke-width="12" stroke-linecap="round" />
+              <g fill="#8a5a36"><path d="M110 230 Q180 290 250 230 Q230 270 180 272 Q130 270 110 230Z" /></g>
+              <g fill="#fbf7f0" stroke="#e8ddcb" stroke-width="5"><circle cx="130" cy="170" r="56" /><circle cx="230" cy="170" r="56" /><circle cx="180" cy="120" r="60" /><circle cx="180" cy="200" r="50" /></g>
+              <g fill="none" stroke="#e8ddcb" stroke-width="4"><path d="M160 100 Q170 120 160 140" /><path d="M110 160 Q124 176 114 196" /><path d="M244 160 Q232 176 246 196" /></g>
+            </svg>
+            <div class="lab tag" id="f-1"><i style="background: var(--gold)"></i>Suuf</div>
+            <div class="lab tag" id="f-2"><i style="background: var(--terra)"></i>Xilliga kulaylka</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. NOT OVER WET HAIR OR A WET FACE -->
+      <section id="s-dry" class="clip" data-start="17.998" data-duration="3.662" data-track-index="1">
+        <div class="stage">
+          <div class="chip alt"><i></i>DIGNIIN<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Qoyan?</span></span><span class="hl sm"><span class="hw">ha</span> <span class="hw">xiran</span></span></div>
+          <div class="visual">
+            <div class="card2" id="d-left">
+              <div class="disc"><svg viewBox="0 0 340 340" style="left: 0; top: 0; width: 340px; height: 340px"><g transform="translate(40 14)"><use href="#hface-art" x="0" y="0" width="260" height="316" /></g><g id="d-drops" fill="#bfe0ff" stroke="#ffffff" stroke-width="3"><path d="M120 150 Q130 168 130 176 A10 10 0 0 1 110 176 Q110 168 120 150Z" /><path d="M214 160 Q224 178 224 186 A10 10 0 0 1 204 186 Q204 178 214 160Z" /><path d="M170 220 Q178 236 178 242 A8 8 0 0 1 162 242 Q162 236 170 220Z" /><path d="M60 110 Q72 132 72 142 A12 12 0 0 1 48 142 Q48 132 60 110Z" /><path d="M282 110 Q294 132 294 142 A12 12 0 0 1 270 142 Q270 132 282 110Z" /></g></svg><svg class="ban" id="d-ban" viewBox="0 0 340 340"><g fill="none" stroke="#b8452f" stroke-width="22"><circle cx="170" cy="170" r="150" /><path d="M64 64 L276 276" /></g></svg></div>
+              <div class="lab"><i style="background: #7fb0ea"></i>Qoyan</div>
+            </div>
+            <div class="card2" id="d-right">
+              <div class="disc"><svg viewBox="0 0 340 340" style="left: 0; top: 0; width: 340px; height: 340px"><g transform="translate(30 70) scale(.7)"><use href="#towel-real" width="400" height="260" /></g></svg><div class="tick"><svg width="42" height="32" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+              <div class="lab"><i style="background: var(--gold)"></i>Qalalan</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. GENTLY CLEANSE FACE AND HAIRLINE AT NIGHT -->
+      <section id="s-night" class="clip" data-start="21.660" data-duration="3.958" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>TALLAABO 3<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Habeenkii</span></span><span class="hl sm"><span class="hw">tartiib</span> <span class="hw">u</span> <span class="hw">nadiifi</span></span></div>
+          <div class="visual">
+            <svg class="hface stk" id="n-face" viewBox="0 0 460 560"><use href="#hface-art" width="460" height="560" /><path id="n-line" d="M110 200 C130 150 180 146 230 146 C280 146 330 150 350 200" fill="none" stroke="#6fa4e8" stroke-width="12" stroke-linecap="round" stroke-dasharray="360" /><g id="n-bub" fill="#ffffff" stroke="#b9d4f2" stroke-width="3" opacity=".95"><circle cx="160" cy="290" r="12" /><circle cx="186" cy="310" r="8" /><circle cx="300" cy="292" r="12" /><circle cx="276" cy="312" r="8" /><circle cx="232" cy="190" r="10" /></g></svg>
+            <svg id="n-moon" class="stk" viewBox="0 0 170 170"><use href="#moon" width="170" height="170" /></svg>
+            <svg id="n-bottle" class="stk" viewBox="0 0 240 560"><use href="#cleanser-real" width="240" height="560" /></svg>
+            <div class="lab tag" id="n-1"><i style="background: var(--blue)"></i>Tartiib</div>
+            <div class="lab tag" id="n-2"><i style="background: #6fa4e8"></i>Xariiqda timaha</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. SENSITIVE? FRAGRANCE-FREE LAUNDRY SOAP -->
+      <section id="s-soap" class="clip" data-start="25.618" data-duration="4.705" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>TALLAABO 4<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Caraf</span> <span class="hw y">la'aan</span></span><span class="hl sm"><span class="hw">saabuunta</span> <span class="hw">dharka</span></span></div>
+          <div class="visual">
+            <svg id="so-jug" class="stk" viewBox="0 0 400 540"><use href="#jug-real" width="400" height="540" /></svg>
+            <svg id="so-disc" class="stk" viewBox="0 0 380 380"><circle cx="190" cy="190" r="180" fill="#ffffff" /><g transform="translate(190 190)"><g fill="#f2b8c8"><ellipse cx="0" cy="-56" rx="34" ry="52" /><ellipse cx="0" cy="-56" rx="34" ry="52" transform="rotate(72)" /><ellipse cx="0" cy="-56" rx="34" ry="52" transform="rotate(144)" /><ellipse cx="0" cy="-56" rx="34" ry="52" transform="rotate(216)" /><ellipse cx="0" cy="-56" rx="34" ry="52" transform="rotate(288)" /></g><circle r="30" fill="#e3c173" /></g><g fill="none" stroke="#c9a0b4" stroke-width="6" stroke-linecap="round"><path d="M300 110 q14 -16 0 -32 q-14 -16 0 -32" /><path d="M330 150 q14 -16 0 -32 q-14 -16 0 -32" /></g><g id="so-ban" fill="none" stroke="#b8452f" stroke-width="22"><circle cx="190" cy="190" r="160" /><path d="M78 78 L302 302" /></g></svg>
+            <div class="lab tag" id="so-1"><i style="background: var(--terra)"></i>Xasaasi</div>
+            <div class="lab tag" id="so-2"><i style="background: var(--blue)"></i>Caraf la'aan</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. NOT TOO TIGHT -->
+      <section id="s-tight" class="clip" data-start="30.323" data-duration="3.560" data-track-index="1">
+        <div class="stage">
+          <div class="chip alt"><i></i>DIGNIIN<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Aad</span> <span class="hw y">u</span> <span class="hw y">adag</span></span><span class="hl sm"><span class="hw">ha</span> <span class="hw">u</span> <span class="hw">xirin</span></span></div>
+          <div class="visual">
+            <div class="card2" id="t-left">
+              <div class="disc"><svg viewBox="0 0 340 340" style="left: 0; top: 0; width: 340px; height: 340px"><g transform="translate(55 14) scale(.9 1)"><use href="#hface-art" x="0" y="0" width="260" height="316" /></g><g id="t-arr" fill="#b8452f"><path d="M10 170 L48 150 V162 H66 V178 H48 V190Z" /><path d="M330 170 L292 150 V162 H274 V178 H292 V190Z" /></g><g fill="url(#zit-g)"><circle cx="112" cy="150" r="7" /><circle cx="228" cy="150" r="7" /></g></svg><svg class="ban" id="t-ban" viewBox="0 0 340 340"><g fill="none" stroke="#b8452f" stroke-width="22"><circle cx="170" cy="170" r="150" /><path d="M64 64 L276 276" /></g></svg></div>
+              <div class="lab"><i style="background: var(--terra)"></i>Adag</div>
+            </div>
+            <div class="card2" id="t-right">
+              <div class="disc"><svg viewBox="0 0 340 340" style="left: 0; top: 0; width: 340px; height: 340px"><g transform="translate(40 14)"><use href="#hface-art" x="0" y="0" width="260" height="316" /></g></svg><div class="tick"><svg width="42" height="32" viewBox="0 0 38 30"><path d="M4 16 L14 26 L34 4" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div>
+              <div class="lab"><i style="background: var(--blue)"></i>Dabacsan</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 10. YOUR HIJAB IS BEAUTIFUL, YOUR SKIN DESERVES CARE -->
+      <section id="s-pride" class="clip" data-start="33.883" data-duration="4.059" data-track-index="1">
+        <div class="stage">
+          <div class="chip alt"><i></i>XUSUUS<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">Waa</span> <span class="hw y">qurux</span></span><span class="hl sm"><span class="hw">daryeel</span> <span class="hw">mudan</span></span></div>
+          <div class="visual">
+            <svg class="hface stk" id="p-face" viewBox="0 0 460 560"><use href="#hface-art" width="460" height="560" /><g id="p-spark" fill="#e3c173"><path d="M50 120 l10 24 24 10 -24 10 -10 24 -10 -24 -24 -10 24 -10z" /><path d="M400 80 l8 18 18 8 -18 8 -8 18 -8 -18 -18 -8 18 -8z" /><path d="M420 380 l10 24 24 10 -24 10 -10 24 -10 -24 -24 -10 24 -10z" /></g></svg>
+            <svg id="p-disc" class="stk" viewBox="0 0 380 380"><circle cx="190" cy="190" r="180" fill="#ffffff" /><path id="p-heart" d="M190 310 C100 246 70 200 70 160 C70 122 98 98 130 98 C158 98 180 114 190 136 C200 114 222 98 250 98 C282 98 310 122 310 160 C310 200 280 246 190 310Z" fill="#2f6fd0" /><path d="M190 160 l12 26 28 4 -20 20 5 28 -25 -13 -25 13 5 -28 -20 -20 28 -4z" fill="#e3c173" /></svg>
+            <div class="lab tag" id="p-1"><i style="background: var(--gold)"></i>Qurux</div>
+            <div class="lab tag" id="p-2"><i style="background: var(--blue)"></i>Daryeel mudan</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 11. SHARE + FOLLOW -->
+      <section id="s-cta" class="clip" data-start="37.942" data-duration="4.558" data-track-index="1">
+        <div class="stage">
+          <div class="chip"><i></i>LA WADAAG<i></i></div>
+          <div class="headline"><span class="hl"><span class="hw y">La</span> <span class="hw y">wadaag</span></span><span class="hl sm"><span class="hw">lana</span> <span class="hw">soco</span></span></div>
+          <div class="visual">
+            <div id="pfp"><svg viewBox="0 0 460 560"><use href="#hface-art" width="460" height="560" /></svg></div>
+            <div id="brandname">Skincare by Ubah</div>
+            <div id="follow" class="center stk"><svg id="tiktok" viewBox="0 0 48 48"><rect width="48" height="48" rx="11" fill="#000000" /><g transform="translate(7.8 7.8) scale(1.35)"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.650-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" fill="#25f4ee" transform="translate(-0.9 -0.9)" /><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.650-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" fill="#fe2c55" transform="translate(0.9 0.9)" /><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.650-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" fill="#ffffff" /></g></svg><span>LA SOCO</span></div>
+            <div id="shareit" class="center stk"><svg width="54" height="54" viewBox="0 0 64 64"><path d="M36 10 L58 30 L36 50 V38 C22 38 12 42 6 54 C8 34 18 24 36 22 Z" fill="#2f6fd0" /></svg><span>LA WADAAG</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- persistent chrome above scenes -->
+      <div id="brand"><svg width="30" height="28" viewBox="0 0 46 42"><path d="M23 40 C8 28 2 20 2 12 C2 6 7 2 12 2 C17 2 21 5 23 9 C25 5 29 2 34 2 C39 2 44 6 44 12 C44 20 38 28 23 40Z" fill="#2f6fd0" /></svg>SKINCARE BY UBAH</div>
+      <div id="prog"><span id="prog-fill"></span></div>
+      <div id="caps">
+        <div class="cap-line" id="cap-0"><span class="cap-pill"><span class="cw" id="cw-0-0">Ma</span><span class="cw" id="cw-0-1">ku</span><span class="cw" id="cw-0-2">soo</span></span></div>
+        <div class="cap-line" id="cap-1"><span class="cap-pill"><span class="cw" id="cw-1-0">baxaan</span><span class="cw" id="cw-1-1">finan</span><span class="cw" id="cw-1-2">meesha</span></span></div>
+        <div class="cap-line" id="cap-2"><span class="cap-pill"><span class="cw" id="cw-2-0">xijaabku</span><span class="cw" id="cw-2-1">taabto</span></span></div>
+        <div class="cap-line" id="cap-3"><span class="cap-pill"><span class="cw" id="cw-3-0">Dhidid</span></span></div>
+        <div class="cap-line" id="cap-4"><span class="cap-pill"><span class="cw" id="cw-4-0">saliid</span><span class="cw" id="cw-4-1">iyo</span><span class="cw" id="cw-4-2">xoqid</span></span></div>
+        <div class="cap-line" id="cap-5"><span class="cap-pill"><span class="cw" id="cw-5-0">joogto</span><span class="cw" id="cw-5-1">ah</span><span class="cw" id="cw-5-2">ayaa</span></span></div>
+        <div class="cap-line" id="cap-6"><span class="cap-pill"><span class="cw" id="cw-6-0">daloolada</span><span class="cw" id="cw-6-1">xiri</span><span class="cw" id="cw-6-2">kara</span></span></div>
+        <div class="cap-line" id="cap-7"><span class="cap-pill"><span class="cw" id="cw-7-0">Tan</span><span class="cw" id="cw-7-1">waxaa</span><span class="cw" id="cw-7-2">la</span></span></div>
+        <div class="cap-line" id="cap-8"><span class="cap-pill"><span class="cw" id="cw-8-0">yiraahdaa</span><span class="cw" id="cw-8-1">finanka</span><span class="cw" id="cw-8-2">xoqidda</span></span></div>
+        <div class="cap-line" id="cap-9"><span class="cap-pill"><span class="cw" id="cw-9-0">iyo</span><span class="cw" id="cw-9-1">cadaadiska</span></span></div>
+        <div class="cap-line" id="cap-10"><span class="cap-pill"><span class="cw" id="cw-10-0">Marka</span><span class="cw" id="cw-10-1">hore</span></span></div>
+        <div class="cap-line" id="cap-11"><span class="cap-pill"><span class="cw" id="cw-11-0">xijaabka</span><span class="cw" id="cw-11-1">hoose</span><span class="cw" id="cw-11-2">dhaq</span></span></div>
+        <div class="cap-line" id="cap-12"><span class="cap-pill"><span class="cw" id="cw-12-0">dhowrkii</span><span class="cw" id="cw-12-1">maalmoodba</span><span class="cw" id="cw-12-2">mar</span></span></div>
+        <div class="cap-line" id="cap-13"><span class="cap-pill"><span class="cw" id="cw-13-0">Dooro</span><span class="cw" id="cw-13-1">maro</span><span class="cw" id="cw-13-2">neefsata</span></span></div>
+        <div class="cap-line" id="cap-14"><span class="cap-pill"><span class="cw" id="cw-14-0">sida</span><span class="cw" id="cw-14-1">suufka</span></span></div>
+        <div class="cap-line" id="cap-15"><span class="cap-pill"><span class="cw" id="cw-15-0">gaar</span><span class="cw" id="cw-15-1">ahaan</span><span class="cw" id="cw-15-2">xilliga</span></span></div>
+        <div class="cap-line" id="cap-16"><span class="cap-pill"><span class="cw" id="cw-16-0">kulaylka</span></span></div>
+        <div class="cap-line" id="cap-17"><span class="cap-pill"><span class="cw" id="cw-17-0">Xijaabka</span><span class="cw" id="cw-17-1">ha</span><span class="cw" id="cw-17-2">ku</span></span></div>
+        <div class="cap-line" id="cap-18"><span class="cap-pill"><span class="cw" id="cw-18-0">xiran</span><span class="cw" id="cw-18-1">adigoo</span><span class="cw" id="cw-18-2">timaha</span></span></div>
+        <div class="cap-line" id="cap-19"><span class="cap-pill"><span class="cw" id="cw-19-0">ama</span><span class="cw" id="cw-19-1">wejigu</span><span class="cw" id="cw-19-2">qoyan</span></span></div>
+        <div class="cap-line" id="cap-20"><span class="cap-pill"><span class="cw" id="cw-20-0">yihiin</span></span></div>
+        <div class="cap-line" id="cap-21"><span class="cap-pill"><span class="cw" id="cw-21-0">Habeenkii</span><span class="cw" id="cw-21-1">si</span><span class="cw" id="cw-21-2">tartiib</span></span></div>
+        <div class="cap-line" id="cap-22"><span class="cap-pill"><span class="cw" id="cw-22-0">ah</span><span class="cw" id="cw-22-1">u</span><span class="cw" id="cw-22-2">nadiifi</span></span></div>
+        <div class="cap-line" id="cap-23"><span class="cap-pill"><span class="cw" id="cw-23-0">wejiga</span><span class="cw" id="cw-23-1">iyo</span><span class="cw" id="cw-23-2">xariiqda</span></span></div>
+        <div class="cap-line" id="cap-24"><span class="cap-pill"><span class="cw" id="cw-24-0">timaha</span></span></div>
+        <div class="cap-line" id="cap-25"><span class="cap-pill"><span class="cw" id="cw-25-0">Haddii</span><span class="cw" id="cw-25-1">maqaarkaagu</span><span class="cw" id="cw-25-2">xasaasi</span></span></div>
+        <div class="cap-line" id="cap-26"><span class="cap-pill"><span class="cw" id="cw-26-0">yahay</span></span></div>
+        <div class="cap-line" id="cap-27"><span class="cap-pill"><span class="cw" id="cw-27-0">dooro</span><span class="cw" id="cw-27-1">saabuunta</span><span class="cw" id="cw-27-2">dharka</span></span></div>
+        <div class="cap-line" id="cap-28"><span class="cap-pill"><span class="cw" id="cw-28-0">oo</span><span class="cw" id="cw-28-1">aan</span><span class="cw" id="cw-28-2">caraf</span></span></div>
+        <div class="cap-line" id="cap-29"><span class="cap-pill"><span class="cw" id="cw-29-0">lahayn</span></span></div>
+        <div class="cap-line" id="cap-30"><span class="cap-pill"><span class="cw" id="cw-30-0">Xijaabka</span><span class="cw" id="cw-30-1">ha</span><span class="cw" id="cw-30-2">u</span></span></div>
+        <div class="cap-line" id="cap-31"><span class="cap-pill"><span class="cw" id="cw-31-0">xirin</span><span class="cw" id="cw-31-1">si</span><span class="cw" id="cw-31-2">aad</span></span></div>
+        <div class="cap-line" id="cap-32"><span class="cap-pill"><span class="cw" id="cw-32-0">u</span><span class="cw" id="cw-32-1">adag</span><span class="cw" id="cw-32-2">oo</span></span></div>
+        <div class="cap-line" id="cap-33"><span class="cap-pill"><span class="cw" id="cw-33-0">wejiga</span><span class="cw" id="cw-33-1">cadaadiya</span></span></div>
+        <div class="cap-line" id="cap-34"><span class="cap-pill"><span class="cw" id="cw-34-0">Xijaabkaagu</span><span class="cw" id="cw-34-1">waa</span><span class="cw" id="cw-34-2">qurux</span></span></div>
+        <div class="cap-line" id="cap-35"><span class="cap-pill"><span class="cw" id="cw-35-0">maqaarkaaguna</span><span class="cw" id="cw-35-1">daryeel</span><span class="cw" id="cw-35-2">ayuu</span></span></div>
+        <div class="cap-line" id="cap-36"><span class="cap-pill"><span class="cw" id="cw-36-0">mudan</span><span class="cw" id="cw-36-1">yahay</span></span></div>
+        <div class="cap-line" id="cap-37"><span class="cap-pill"><span class="cw" id="cw-37-0">La</span><span class="cw" id="cw-37-1">wadaag</span><span class="cw" id="cw-37-2">qof</span></span></div>
+        <div class="cap-line" id="cap-38"><span class="cap-pill"><span class="cw" id="cw-38-0">u</span><span class="cw" id="cw-38-1">baahan</span><span class="cw" id="cw-38-2">taladan</span></span></div>
+        <div class="cap-line" id="cap-39"><span class="cap-pill"><span class="cw" id="cw-39-0">lana</span><span class="cw" id="cw-39-1">soco</span><span class="cw" id="cw-39-2">Skincare</span></span></div>
+        <div class="cap-line" id="cap-40"><span class="cap-pill"><span class="cw" id="cw-40-0">by</span><span class="cw" id="cw-40-1">Ubah</span></span></div>
+      </div>
+      <div id="flash"></div>
+
+    <audio id="vo" src="assets/audio/vo.mp3" data-start="0" data-duration="41.48" data-track-index="10" data-volume="1"></audio>
+    <audio id="bgm" src="assets/audio/bgm.mp3" data-start="0" data-duration="42.5" data-track-index="11" data-volume="0.22" data-fade-out="1.2"></audio>
+    <audio id="sfx-whoosh-1" src="assets/audio/whoosh.mp3" data-start="2.985" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-2" src="assets/audio/whoosh.mp3" data-start="6.909" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-3" src="assets/audio/whoosh.mp3" data-start="10.258" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-4" src="assets/audio/whoosh.mp3" data-start="13.877" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-5" src="assets/audio/whoosh.mp3" data-start="17.798" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-6" src="assets/audio/whoosh.mp3" data-start="21.460" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-7" src="assets/audio/whoosh.mp3" data-start="25.418" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-8" src="assets/audio/whoosh.mp3" data-start="30.123" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-9" src="assets/audio/whoosh.mp3" data-start="33.683" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-whoosh-10" src="assets/audio/whoosh.mp3" data-start="37.742" data-duration="0.45" data-track-index="12" data-volume="0.55"></audio>
+    <audio id="sfx-pop-0" src="assets/audio/pop.mp3" data-start="1.199" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-1" src="assets/audio/pop.mp3" data-start="3.285" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-2" src="assets/audio/pop.mp3" data-start="3.577" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-3" src="assets/audio/pop.mp3" data-start="4.221" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-4" src="assets/audio/pop.mp3" data-start="5.986" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-5" src="assets/audio/pop.mp3" data-start="8.717" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-6" src="assets/audio/pop.mp3" data-start="9.365" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-7" src="assets/audio/pop.mp3" data-start="12.341" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-8" src="assets/audio/pop.mp3" data-start="15.635" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-9" src="assets/audio/pop.mp3" data-start="17.029" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-10" src="assets/audio/pop.mp3" data-start="22.436" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-11" src="assets/audio/pop.mp3" data-start="24.225" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-12" src="assets/audio/pop.mp3" data-start="26.700" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-13" src="assets/audio/pop.mp3" data-start="29.221" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-pop-14" src="assets/audio/pop.mp3" data-start="32.795" data-duration="0.12" data-track-index="13" data-volume="0.7"></audio>
+    <audio id="sfx-ding-0" src="assets/audio/ding.mp3" data-start="1.831" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    <audio id="sfx-ding-1" src="assets/audio/ding.mp3" data-start="12.152" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    <audio id="sfx-ding-2" src="assets/audio/ding.mp3" data-start="14.842" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    <audio id="sfx-ding-3" src="assets/audio/ding.mp3" data-start="20.538" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    <audio id="sfx-ding-4" src="assets/audio/ding.mp3" data-start="27.637" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    <audio id="sfx-ding-5" src="assets/audio/ding.mp3" data-start="31.942" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    <audio id="sfx-ding-6" src="assets/audio/ding.mp3" data-start="34.859" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    <audio id="sfx-ding-7" src="assets/audio/ding.mp3" data-start="40.145" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+    </div>
+    <script>
+      const D = {"total": 42.5, "scenes": [{"id": "q", "start": 0.0, "dur": 3.185}, {"id": "cause", "start": 3.185, "dur": 3.924}, {"id": "name", "start": 7.109, "dur": 3.349}, {"id": "wash", "start": 10.458, "dur": 3.619}, {"id": "fabric", "start": 14.077, "dur": 3.921}, {"id": "dry", "start": 17.998, "dur": 3.662}, {"id": "night", "start": 21.66, "dur": 3.958}, {"id": "soap", "start": 25.618, "dur": 4.705}, {"id": "tight", "start": 30.323, "dur": 3.56}, {"id": "pride", "start": 33.883, "dur": 4.059}, {"id": "cta", "start": 37.942, "dur": 4.558}], "beats": {"finan": 1.199, "hijab": 1.831, "sweat": 3.285, "oil": 3.577, "rub": 4.221, "clog": 5.986, "fr": 8.717, "pr": 9.365, "scarf": 11.215, "wash": 12.152, "days": 12.341, "breathe": 14.842, "cotton": 15.635, "heat": 17.029, "hair": 19.525, "wet": 20.538, "gentle": 22.436, "clean": 23.093, "line": 24.225, "sens": 26.7, "choose": 27.637, "free": 29.221, "tight": 31.942, "press": 32.795, "pretty": 34.859, "care": 36.109, "share": 38.213, "follow": 40.145, "brand": 40.48}, "caps": [{"s": 0.3, "e": 0.853, "w": [{"t": "Ma", "s": 0.3}, {"t": "ku", "s": 0.464}, {"t": "soo", "s": 0.628}]}, {"s": 0.853, "e": 1.831, "w": [{"t": "baxaan", "s": 0.853}, {"t": "finan", "s": 1.199}, {"t": "meesha", "s": 1.485}]}, {"s": 1.831, "e": 3.145, "w": [{"t": "xijaabku", "s": 1.831}, {"t": "taabto", "s": 2.299}]}, {"s": 3.285, "e": 3.577, "w": [{"t": "Dhidid", "s": 3.285}]}, {"s": 3.577, "e": 4.512, "w": [{"t": "saliid", "s": 3.577}, {"t": "iyo", "s": 3.93}, {"t": "xoqid", "s": 4.221}]}, {"s": 4.512, "e": 5.385, "w": [{"t": "joogto", "s": 4.512}, {"t": "ah", "s": 4.865}, {"t": "ayaa", "s": 5.032}]}, {"s": 5.385, "e": 7.069, "w": [{"t": "daloolada", "s": 5.385}, {"t": "xiri", "s": 5.986}, {"t": "kara", "s": 6.277}]}, {"s": 7.209, "e": 7.84, "w": [{"t": "Tan", "s": 7.209}, {"t": "waxaa", "s": 7.362}, {"t": "la", "s": 7.687}]}, {"s": 7.84, "e": 9.098, "w": [{"t": "yiraahdaa", "s": 7.84}, {"t": "finanka", "s": 8.335}, {"t": "xoqidda", "s": 8.717}]}, {"s": 9.098, "e": 10.418, "w": [{"t": "iyo", "s": 9.098}, {"t": "cadaadiska", "s": 9.365}]}, {"s": 10.558, "e": 11.215, "w": [{"t": "Marka", "s": 10.558}, {"t": "hore", "s": 10.886}]}, {"s": 11.215, "e": 12.341, "w": [{"t": "xijaabka", "s": 11.215}, {"t": "hoose", "s": 11.753}, {"t": "dhaq", "s": 12.152}]}, {"s": 12.341, "e": 14.037, "w": [{"t": "dhowrkii", "s": 12.341}, {"t": "maalmoodba", "s": 12.739}, {"t": "mar", "s": 13.348}]}, {"s": 14.177, "e": 15.334, "w": [{"t": "Dooro", "s": 14.177}, {"t": "maro", "s": 14.541}, {"t": "neefsata", "s": 14.842}]}, {"s": 15.334, "e": 15.999, "w": [{"t": "sida", "s": 15.334}, {"t": "suufka", "s": 15.635}]}, {"s": 15.999, "e": 17.029, "w": [{"t": "gaar", "s": 15.999}, {"t": "ahaan", "s": 16.236}, {"t": "xilliga", "s": 16.601}]}, {"s": 17.029, "e": 17.958, "w": [{"t": "kulaylka", "s": 17.029}]}, {"s": 18.098, "e": 18.831, "w": [{"t": "Xijaabka", "s": 18.098}, {"t": "ha", "s": 18.529}, {"t": "ku", "s": 18.68}]}, {"s": 18.831, "e": 19.9, "w": [{"t": "xiran", "s": 18.831}, {"t": "adigoo", "s": 19.094}, {"t": "timaha", "s": 19.525}]}, {"s": 19.9, "e": 20.801, "w": [{"t": "ama", "s": 19.9}, {"t": "wejigu", "s": 20.163}, {"t": "qoyan", "s": 20.538}]}, {"s": 20.801, "e": 21.62, "w": [{"t": "yihiin", "s": 20.801}]}, {"s": 21.76, "e": 22.773, "w": [{"t": "Habeenkii", "s": 21.76}, {"t": "si", "s": 22.276}, {"t": "tartiib", "s": 22.436}]}, {"s": 22.773, "e": 23.55, "w": [{"t": "ah", "s": 22.773}, {"t": "u", "s": 22.933}, {"t": "nadiifi", "s": 23.093}]}, {"s": 23.55, "e": 24.681, "w": [{"t": "wejiga", "s": 23.55}, {"t": "iyo", "s": 23.947}, {"t": "xariiqda", "s": 24.225}]}, {"s": 24.681, "e": 25.578, "w": [{"t": "timaha", "s": 24.681}]}, {"s": 25.718, "e": 27.161, "w": [{"t": "Haddii", "s": 25.718}, {"t": "maqaarkaagu", "s": 26.059}, {"t": "xasaasi", "s": 26.7}]}, {"s": 27.161, "e": 27.637, "w": [{"t": "yahay", "s": 27.161}]}, {"s": 27.637, "e": 28.779, "w": [{"t": "dooro", "s": 27.637}, {"t": "saabuunta", "s": 27.978}, {"t": "dharka", "s": 28.498}]}, {"s": 28.779, "e": 29.502, "w": [{"t": "oo", "s": 28.779}, {"t": "aan", "s": 29.0}, {"t": "caraf", "s": 29.221}]}, {"s": 29.502, "e": 30.283, "w": [{"t": "lahayn", "s": 29.502}]}, {"s": 30.423, "e": 31.163, "w": [{"t": "Xijaabka", "s": 30.423}, {"t": "ha", "s": 30.858}, {"t": "u", "s": 31.01}]}, {"s": 31.163, "e": 31.79, "w": [{"t": "xirin", "s": 31.163}, {"t": "si", "s": 31.428}, {"t": "aad", "s": 31.581}]}, {"s": 31.79, "e": 32.416, "w": [{"t": "u", "s": 31.79}, {"t": "adag", "s": 31.942}, {"t": "oo", "s": 32.208}]}, {"s": 32.416, "e": 33.843, "w": [{"t": "wejiga", "s": 32.416}, {"t": "cadaadiya", "s": 32.795}]}, {"s": 33.983, "e": 35.319, "w": [{"t": "Xijaabkaagu", "s": 33.983}, {"t": "waa", "s": 34.634}, {"t": "qurux", "s": 34.859}]}, {"s": 35.319, "e": 36.818, "w": [{"t": "maqaarkaaguna", "s": 35.319}, {"t": "daryeel", "s": 36.109}, {"t": "ayuu", "s": 36.463}]}, {"s": 36.818, "e": 37.902, "w": [{"t": "mudan", "s": 36.818}, {"t": "yahay", "s": 37.11}]}, {"s": 38.042, "e": 38.745, "w": [{"t": "La", "s": 38.042}, {"t": "wadaag", "s": 38.213}, {"t": "qof", "s": 38.574}]}, {"s": 38.745, "e": 39.81, "w": [{"t": "u", "s": 38.745}, {"t": "baahan", "s": 38.915}, {"t": "taladan", "s": 39.276}]}, {"s": 39.81, "e": 40.958, "w": [{"t": "lana", "s": 39.81}, {"t": "soco", "s": 40.145}, {"t": "Skincare", "s": 40.48}]}, {"s": 40.958, "e": 41.842, "w": [{"t": "by", "s": 40.958}, {"t": "Ubah", "s": 41.008}]}]};
+      const tl = gsap.timeline({ paused: true });
+      const S = {};
+      D.scenes.forEach((s) => (S[s.id] = s));
+      const B = D.beats;
+      const q = (sel) => document.querySelector(sel);
+      const pop = (sel, t, from = 0.3) => tl.fromTo(sel, { scale: from, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2.4)" }, t);
+      const ban = (sel, t) => tl.fromTo(sel, { opacity: 0, scale: 1.5, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.25, ease: "power4.in" }, t);
+
+      // persistent theme motion: the woven lattice and patterned band drift slowly, progress fills
+      tl.fromTo("#weave", { backgroundPosition: "0px 0px" }, { backgroundPosition: "0px 220px", duration: D.total, ease: "none" }, 0);
+      tl.fromTo("#band", { backgroundPosition: "0px 0px" }, { backgroundPosition: "220px 0px", duration: D.total, ease: "none" }, 0);
+      tl.fromTo("#prog-fill", { scaleX: 0 }, { scaleX: 1, duration: D.total, ease: "none" }, 0);
+
+      // every scene: hard cut + gold flash, punch-in landing, a mid-scene jump-cut zoom
+      D.scenes.forEach((s, i) => {
+        const el = q("#s-" + s.id);
+        const stage = el.querySelector(".stage");
+        const dir = i % 2 ? -1 : 1;
+        tl.fromTo(stage, { scale: 1.16, x: 90 * dir }, { scale: 1, x: 0, duration: 0.38, ease: "power3.out" }, s.start);
+        const jump = s.start + s.dur * 0.56;
+        tl.set(stage, { scale: 1.07 }, jump);
+        tl.to(stage, { scale: 1.1, duration: s.dur * 0.44 - 0.02, ease: "none" }, jump + 0.01);
+        if (i > 0) {
+          tl.set("#flash", { opacity: 0.55 }, s.start);
+          tl.to("#flash", { opacity: 0, duration: 0.16, ease: "power2.out" }, s.start + 0.001);
+        }
+        tl.fromTo(el.querySelector(".chip"), { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(3)" }, s.start + 0.05);
+        tl.fromTo(el.querySelectorAll(".hw"), { yPercent: 105 }, { yPercent: 0, duration: 0.42, stagger: 0.06, ease: "power4.out" }, s.start + 0.08);
+      });
+
+      // 1 breakouts where the hijab touches?
+      pop("#q-face", S.q.start + 0.1);
+      tl.fromTo("#q-zits circle", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.22, stagger: 0.06, ease: "back.out(3)" }, B.finan);
+      tl.fromTo("#q-line", { opacity: 0, strokeDashoffset: 0 }, { opacity: 1, strokeDashoffset: -56, duration: 1, ease: "none" }, B.hijab - 0.1);
+      tl.fromTo("#q-mark", { scale: 0, rotation: -30 }, { scale: 1, rotation: 8, duration: 0.35, ease: "back.out(3)" }, B.finan + 0.2);
+      pop("#q-tag", B.hijab + 0.1);
+
+      // 2 sweat, oil and constant rubbing can clog pores
+      pop("#c-1", B.sweat - 0.1);
+      pop("#c-2", B.oil - 0.1);
+      pop("#c-3", B.rub - 0.1);
+      tl.fromTo("#c-rub", { x: -14 }, { x: 14, duration: 0.12, yoyo: true, repeat: 5, ease: "power1.inOut" }, B.rub + 0.2);
+      tl.fromTo("#c-pore", { y: 300, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B.clog - 0.7);
+      tl.set(["#c-plug", "#c-bump"], { opacity: 0 }, S.cause.start);
+      tl.fromTo("#c-plug", { opacity: 0, y: -60 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, B.clog);
+      tl.fromTo("#c-bump", { opacity: 0 }, { opacity: 1, duration: 0.4 }, B.clog + 0.3);
+
+      // 3 it's called friction and pressure acne
+      pop("#nm-face", S.name.start + 0.1);
+      pop("#nm-d1", B.fr - 0.1);
+      pop("#nm-1", B.fr + 0.1);
+      pop("#nm-d2", B.pr - 0.2);
+      pop("#nm-2", B.pr);
+      tl.fromTo("#nm-push path:first-child", { x: -30 }, { x: 0, duration: 0.2, yoyo: true, repeat: 3, ease: "power1.inOut" }, B.pr);
+      tl.fromTo("#nm-push path:last-child", { x: 30 }, { x: 0, duration: 0.2, yoyo: true, repeat: 3, ease: "power1.inOut" }, B.pr);
+
+      // 4 wash the underscarf every few days
+      pop("#w-basin", S.wash.start + 0.1);
+      tl.fromTo("#w-scarf", { y: -140 }, { y: 20, duration: 0.5, ease: "power2.in" }, B.wash - 0.3);
+      tl.fromTo("#w-bub circle", { y: 40, scale: 0, transformOrigin: "50% 50%" }, { y: 0, scale: 1, duration: 0.35, stagger: 0.06, ease: "back.out(2)" }, B.wash + 0.1);
+      pop("#w-1", B.scarf);
+      pop("#w-cal", B.days - 0.3);
+      tl.fromTo("#w-cal .ck path", { opacity: 0 }, { opacity: 1, duration: 0.12, stagger: 0.15 }, B.days);
+      pop("#w-2", B.days + 0.3);
+
+      // 5 breathable fabric like cotton, especially in the heat
+      pop("#f-swatch", S.fabric.start + 0.1);
+      tl.fromTo("#f-air path", { x: -300, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, stagger: 0.12, ease: "power2.out" }, B.breathe - 0.1);
+      pop("#f-cotton", B.cotton - 0.2);
+      pop("#f-1", B.cotton + 0.1);
+      pop("#f-2", B.heat - 0.1);
+
+      // 6 never tie it over wet hair or a wet face
+      pop("#d-left", S.dry.start + 0.1);
+      tl.fromTo("#d-drops path", { y: -30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, stagger: 0.06 }, B.hair - 0.2);
+      ban("#d-ban", B.wet);
+      pop("#d-right", B.wet + 0.2);
+
+      // 7 at night, gently cleanse the face and hairline
+      pop("#n-face", S.night.start + 0.1);
+      pop("#n-moon", S.night.start + 0.3);
+      tl.fromTo("#n-bottle", { y: 600 }, { y: 0, duration: 0.45, ease: "back.out(1.4)" }, B.clean - 0.4);
+      pop("#n-1", B.gentle);
+      tl.fromTo("#n-bub circle", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.25, stagger: 0.06, ease: "back.out(3)" }, B.clean);
+      tl.fromTo("#n-line", { strokeDashoffset: 360, opacity: 1 }, { strokeDashoffset: 0, duration: 0.6, ease: "power2.out" }, B.line - 0.1);
+      pop("#n-2", B.line + 0.1);
+
+      // 8 sensitive skin: fragrance-free laundry soap
+      pop("#so-1", B.sens);
+      tl.fromTo("#so-jug", { y: 600 }, { y: 0, duration: 0.45, ease: "back.out(1.4)" }, B.choose - 0.2);
+      pop("#so-disc", B.choose + 0.3);
+      tl.fromTo("#so-ban", { opacity: 0, scale: 1.5, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.25, ease: "power4.in" }, B.free);
+      pop("#so-2", B.free + 0.1);
+
+      // 9 don't tie it so tight it presses the face
+      pop("#t-left", S.tight.start + 0.1);
+      tl.fromTo("#t-arr path:first-child", { x: -20 }, { x: 0, duration: 0.18, yoyo: true, repeat: 3 }, B.press - 0.3);
+      tl.fromTo("#t-arr path:last-child", { x: 20 }, { x: 0, duration: 0.18, yoyo: true, repeat: 3 }, B.press - 0.3);
+      ban("#t-ban", B.tight);
+      pop("#t-right", B.press + 0.1);
+
+      // 10 your hijab is beautiful; your skin deserves care
+      pop("#p-face", S.pride.start + 0.1);
+      tl.fromTo("#p-spark path", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.3, stagger: 0.1, ease: "back.out(3)" }, B.pretty);
+      pop("#p-1", B.pretty);
+      pop("#p-disc", B.care - 0.3);
+      tl.fromTo("#p-heart", { scale: 1, transformOrigin: "50% 50%" }, { scale: 1.1, duration: 0.25, yoyo: true, repeat: 3, ease: "power1.inOut" }, B.care + 0.1);
+      pop("#p-2", B.care + 0.1);
+
+      // 11 share, then follow Skincare by Ubah
+      pop("#pfp", S.cta.start + 0.1);
+      tl.fromTo("#shareit", { y: 240, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "back.out(2)" }, B.share - 0.1);
+      tl.fromTo("#follow", { y: 240, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "back.out(2)" }, B.follow - 0.1);
+      tl.fromTo("#tiktok", { scale: 0, rotation: -30 }, { scale: 1, rotation: 0, duration: 0.4, ease: "back.out(3)" }, B.follow + 0.05);
+      pop("#brandname", B.brand - 0.1, 0.6);
+
+      // captions: word-by-word karaoke in Somali (active word in Somali blue)
+      D.caps.forEach((g, gi) => {
+        const line = "#cap-" + gi;
+        tl.set(line, { opacity: 1 }, g.s);
+        tl.fromTo(line, { scale: 0.86 }, { scale: 1, duration: 0.12, ease: "back.out(3)", immediateRender: false }, g.s);
+        tl.set(line, { opacity: 0 }, g.e);
+        g.w.forEach((w, wi) => {
+          const id = "#cw-" + gi + "-" + wi;
+          tl.set(id, { color: "#2f6fd0" }, w.s);
+          if (wi + 1 < g.w.length) tl.set(id, { color: "#4a2e1a" }, g.w[wi + 1].s);
+        });
+      });
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

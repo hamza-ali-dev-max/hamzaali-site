@@ -1,0 +1,372 @@
+{
+ "scenes": [
+  {
+   "id": "q",
+   "text": "Kareemka jirka ma wejiga ayaad marisaa?",
+   "s": 0.3,
+   "e": 2.324
+  },
+  {
+   "id": "careful",
+   "text": "Ka taxaddar kareemka culus ama cadarka leh.",
+   "s": 3.014,
+   "e": 5.09
+  },
+  {
+   "id": "react",
+   "text": "Dadka qaarkood wuxuu ku keeni karaa finan ama cuncun.",
+   "s": 5.78,
+   "e": 8.587
+  },
+  {
+   "id": "choose",
+   "text": "Dooro kareem wejiga ku habboon, oo aan caraf lahayn, dalooladana aan xirin.",
+   "s": 9.277,
+   "e": 13.449
+  },
+  {
+   "id": "notbad",
+   "text": "Kareem kasta oo jirka loogu talagalay ma xuma; waxa muhiimka ahi waa inuu maqaarkaaga ku habboon yahay.",
+   "s": 14.139,
+   "e": 19.586
+  },
+  {
+   "id": "cta",
+   "text": "Maqaarkaaga daryeel, summaddana akhri!",
+   "s": 20.276,
+   "e": 22.278
+  }
+ ],
+ "words": [
+  {
+   "scene": "q",
+   "w": "Kareemka",
+   "s": 0.3,
+   "e": 0.743
+  },
+  {
+   "scene": "q",
+   "w": "jirka",
+   "s": 0.743,
+   "e": 1.013
+  },
+  {
+   "scene": "q",
+   "w": "ma",
+   "s": 1.013,
+   "e": 1.168
+  },
+  {
+   "scene": "q",
+   "w": "wejiga",
+   "s": 1.168,
+   "e": 1.554
+  },
+  {
+   "scene": "q",
+   "w": "ayaad",
+   "s": 1.554,
+   "e": 1.881
+  },
+  {
+   "scene": "q",
+   "w": "marisaa?",
+   "s": 1.881,
+   "e": 2.324
+  },
+  {
+   "scene": "careful",
+   "w": "Ka",
+   "s": 3.014,
+   "e": 3.17
+  },
+  {
+   "scene": "careful",
+   "w": "taxaddar",
+   "s": 3.17,
+   "e": 3.558
+  },
+  {
+   "scene": "careful",
+   "w": "kareemka",
+   "s": 3.558,
+   "e": 4.003
+  },
+  {
+   "scene": "careful",
+   "w": "culus",
+   "s": 4.003,
+   "e": 4.275
+  },
+  {
+   "scene": "careful",
+   "w": "ama",
+   "s": 4.275,
+   "e": 4.546
+  },
+  {
+   "scene": "careful",
+   "w": "cadarka",
+   "s": 4.546,
+   "e": 4.934
+  },
+  {
+   "scene": "careful",
+   "w": "leh.",
+   "s": 4.934,
+   "e": 5.09
+  },
+  {
+   "scene": "react",
+   "w": "Dadka",
+   "s": 5.78,
+   "e": 6.071
+  },
+  {
+   "scene": "react",
+   "w": "qaarkood",
+   "s": 6.071,
+   "e": 6.486
+  },
+  {
+   "scene": "react",
+   "w": "wuxuu",
+   "s": 6.486,
+   "e": 6.839
+  },
+  {
+   "scene": "react",
+   "w": "ku",
+   "s": 6.839,
+   "e": 7.007
+  },
+  {
+   "scene": "react",
+   "w": "keeni",
+   "s": 7.007,
+   "e": 7.36
+  },
+  {
+   "scene": "react",
+   "w": "karaa",
+   "s": 7.36,
+   "e": 7.713
+  },
+  {
+   "scene": "react",
+   "w": "finan",
+   "s": 7.713,
+   "e": 8.004
+  },
+  {
+   "scene": "react",
+   "w": "ama",
+   "s": 8.004,
+   "e": 8.295
+  },
+  {
+   "scene": "react",
+   "w": "cuncun.",
+   "s": 8.295,
+   "e": 8.587
+  },
+  {
+   "scene": "choose",
+   "w": "Dooro",
+   "s": 9.277,
+   "e": 9.624
+  },
+  {
+   "scene": "choose",
+   "w": "kareem",
+   "s": 9.624,
+   "e": 9.972
+  },
+  {
+   "scene": "choose",
+   "w": "wejiga",
+   "s": 9.972,
+   "e": 10.38
+  },
+  {
+   "scene": "choose",
+   "w": "ku",
+   "s": 10.38,
+   "e": 10.545
+  },
+  {
+   "scene": "choose",
+   "w": "habboon,",
+   "s": 10.545,
+   "e": 10.892
+  },
+  {
+   "scene": "choose",
+   "w": "oo",
+   "s": 11.108,
+   "e": 11.338
+  },
+  {
+   "scene": "choose",
+   "w": "aan",
+   "s": 11.338,
+   "e": 11.569
+  },
+  {
+   "scene": "choose",
+   "w": "caraf",
+   "s": 11.569,
+   "e": 11.862
+  },
+  {
+   "scene": "choose",
+   "w": "lahayn,",
+   "s": 11.862,
+   "e": 12.155
+  },
+  {
+   "scene": "choose",
+   "w": "dalooladana",
+   "s": 12.34,
+   "e": 12.986
+  },
+  {
+   "scene": "choose",
+   "w": "aan",
+   "s": 12.986,
+   "e": 13.19
+  },
+  {
+   "scene": "choose",
+   "w": "xirin.",
+   "s": 13.19,
+   "e": 13.449
+  },
+  {
+   "scene": "notbad",
+   "w": "Kareem",
+   "s": 14.139,
+   "e": 14.481
+  },
+  {
+   "scene": "notbad",
+   "w": "kasta",
+   "s": 14.481,
+   "e": 14.762
+  },
+  {
+   "scene": "notbad",
+   "w": "oo",
+   "s": 14.762,
+   "e": 14.984
+  },
+  {
+   "scene": "notbad",
+   "w": "jirka",
+   "s": 14.984,
+   "e": 15.266
+  },
+  {
+   "scene": "notbad",
+   "w": "loogu",
+   "s": 15.266,
+   "e": 15.607
+  },
+  {
+   "scene": "notbad",
+   "w": "talagalay",
+   "s": 15.607,
+   "e": 16.129
+  },
+  {
+   "scene": "notbad",
+   "w": "ma",
+   "s": 16.129,
+   "e": 16.29
+  },
+  {
+   "scene": "notbad",
+   "w": "xuma;",
+   "s": 16.29,
+   "e": 16.572
+  },
+  {
+   "scene": "notbad",
+   "w": "waxa",
+   "s": 16.572,
+   "e": 16.854
+  },
+  {
+   "scene": "notbad",
+   "w": "muhiimka",
+   "s": 16.854,
+   "e": 17.315
+  },
+  {
+   "scene": "notbad",
+   "w": "ahi",
+   "s": 17.315,
+   "e": 17.597
+  },
+  {
+   "scene": "notbad",
+   "w": "waa",
+   "s": 17.597,
+   "e": 17.818
+  },
+  {
+   "scene": "notbad",
+   "w": "inuu",
+   "s": 17.818,
+   "e": 18.16
+  },
+  {
+   "scene": "notbad",
+   "w": "maqaarkaaga",
+   "s": 18.16,
+   "e": 18.801
+  },
+  {
+   "scene": "notbad",
+   "w": "ku",
+   "s": 18.801,
+   "e": 18.963
+  },
+  {
+   "scene": "notbad",
+   "w": "habboon",
+   "s": 18.963,
+   "e": 19.304
+  },
+  {
+   "scene": "notbad",
+   "w": "yahay.",
+   "s": 19.304,
+   "e": 19.586
+  },
+  {
+   "scene": "cta",
+   "w": "Maqaarkaaga",
+   "s": 20.276,
+   "e": 20.995
+  },
+  {
+   "scene": "cta",
+   "w": "daryeel,",
+   "s": 20.995,
+   "e": 21.378
+  },
+  {
+   "scene": "cta",
+   "w": "summaddana",
+   "s": 21.378,
+   "e": 21.962
+  },
+  {
+   "scene": "cta",
+   "w": "akhri!",
+   "s": 21.962,
+   "e": 22.278
+  }
+ ]
+}

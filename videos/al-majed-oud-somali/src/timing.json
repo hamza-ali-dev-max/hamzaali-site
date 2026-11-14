@@ -1,0 +1,582 @@
+{
+ "scenes": [
+  {
+   "id": "hook",
+   "text": "Udgoon Carabeed oo dhab ah, gurigaaga u keen!",
+   "s": 0.3,
+   "e": 2.775
+  },
+  {
+   "id": "what",
+   "text": "Kani waa Al Majed Oud, jajab qori cuud ah oo lagu qooyay saliid udgoon.",
+   "s": 3.415,
+   "e": 7.353
+  },
+  {
+   "id": "made",
+   "text": "Waxaa lagu sameeyay Riyaad, Sacuudiga, waxaana ku jira quraarad qurxoon oo dabool alwaax iyo dahab leh.",
+   "s": 7.993,
+   "e": 13.582
+  },
+  {
+   "id": "how",
+   "text": "Gabal yar dul dhig dhuxul kulul ama dabqaad koronto.",
+   "s": 14.222,
+   "e": 16.985
+  },
+  {
+   "id": "when",
+   "text": "Ku shid ka hor inta martidu imaan, maalinta Jimcaha, ciidaha iyo aroosyada.",
+   "s": 17.625,
+   "e": 21.653
+  },
+  {
+   "id": "air",
+   "text": "Qolka hawo sii, wax yarna waa ku filan, udgoonku wuu sii jiraa.",
+   "s": 22.293,
+   "e": 25.909
+  },
+  {
+   "id": "safe",
+   "text": "Dharka meel fog ka udgoomi, indhaha iyo carruurtana ka fogee.",
+   "s": 26.549,
+   "e": 29.711
+  },
+  {
+   "id": "cta",
+   "text": "Al Majed Oud, udgoonka gurigaaga. Hadda raadso!",
+   "s": 30.351,
+   "e": 33.427
+  }
+ ],
+ "words": [
+  {
+   "scene": "hook",
+   "w": "Udgoon",
+   "s": 0.3,
+   "e": 0.658
+  },
+  {
+   "scene": "hook",
+   "w": "Carabeed",
+   "s": 0.658,
+   "e": 1.143
+  },
+  {
+   "scene": "hook",
+   "w": "oo",
+   "s": 1.143,
+   "e": 1.375
+  },
+  {
+   "scene": "hook",
+   "w": "dhab",
+   "s": 1.375,
+   "e": 1.545
+  },
+  {
+   "scene": "hook",
+   "w": "ah,",
+   "s": 1.545,
+   "e": 1.715
+  },
+  {
+   "scene": "hook",
+   "w": "gurigaaga",
+   "s": 1.931,
+   "e": 2.44
+  },
+  {
+   "scene": "hook",
+   "w": "u",
+   "s": 2.44,
+   "e": 2.581
+  },
+  {
+   "scene": "hook",
+   "w": "keen!",
+   "s": 2.581,
+   "e": 2.775
+  },
+  {
+   "scene": "what",
+   "w": "Kani",
+   "s": 3.415,
+   "e": 3.687
+  },
+  {
+   "scene": "what",
+   "w": "waa",
+   "s": 3.687,
+   "e": 3.9
+  },
+  {
+   "scene": "what",
+   "w": "Al",
+   "s": 3.9,
+   "e": 4.056
+  },
+  {
+   "scene": "what",
+   "w": "Majed",
+   "s": 4.056,
+   "e": 4.327
+  },
+  {
+   "scene": "what",
+   "w": "Oud,",
+   "s": 4.327,
+   "e": 4.54
+  },
+  {
+   "scene": "what",
+   "w": "jajab",
+   "s": 4.708,
+   "e": 5.009
+  },
+  {
+   "scene": "what",
+   "w": "qori",
+   "s": 5.009,
+   "e": 5.31
+  },
+  {
+   "scene": "what",
+   "w": "cuud",
+   "s": 5.31,
+   "e": 5.547
+  },
+  {
+   "scene": "what",
+   "w": "ah",
+   "s": 5.547,
+   "e": 5.72
+  },
+  {
+   "scene": "what",
+   "w": "oo",
+   "s": 5.72,
+   "e": 5.957
+  },
+  {
+   "scene": "what",
+   "w": "lagu",
+   "s": 5.957,
+   "e": 6.258
+  },
+  {
+   "scene": "what",
+   "w": "qooyay",
+   "s": 6.258,
+   "e": 6.623
+  },
+  {
+   "scene": "what",
+   "w": "saliid",
+   "s": 6.623,
+   "e": 6.988
+  },
+  {
+   "scene": "what",
+   "w": "udgoon.",
+   "s": 6.988,
+   "e": 7.353
+  },
+  {
+   "scene": "made",
+   "w": "Waxaa",
+   "s": 7.993,
+   "e": 8.687
+  },
+  {
+   "scene": "made",
+   "w": "lagu",
+   "s": 8.687,
+   "e": 9.259
+  },
+  {
+   "scene": "made",
+   "w": "sameeyay",
+   "s": 9.259,
+   "e": 10.196
+  },
+  {
+   "scene": "made",
+   "w": "Riyaad,",
+   "s": 10.196,
+   "e": 10.89
+  },
+  {
+   "scene": "made",
+   "w": "Sacuudiga,",
+   "s": 10.998,
+   "e": 11.853
+  },
+  {
+   "scene": "made",
+   "w": "waxaana",
+   "s": 11.98,
+   "e": 12.202
+  },
+  {
+   "scene": "made",
+   "w": "ku",
+   "s": 12.202,
+   "e": 12.279
+  },
+  {
+   "scene": "made",
+   "w": "jira",
+   "s": 12.279,
+   "e": 12.414
+  },
+  {
+   "scene": "made",
+   "w": "quraarad",
+   "s": 12.414,
+   "e": 12.636
+  },
+  {
+   "scene": "made",
+   "w": "qurxoon",
+   "s": 12.636,
+   "e": 12.8
+  },
+  {
+   "scene": "made",
+   "w": "oo",
+   "s": 12.8,
+   "e": 12.906
+  },
+  {
+   "scene": "made",
+   "w": "dabool",
+   "s": 12.906,
+   "e": 13.07
+  },
+  {
+   "scene": "made",
+   "w": "alwaax",
+   "s": 13.07,
+   "e": 13.234
+  },
+  {
+   "scene": "made",
+   "w": "iyo",
+   "s": 13.234,
+   "e": 13.369
+  },
+  {
+   "scene": "made",
+   "w": "dahab",
+   "s": 13.369,
+   "e": 13.504
+  },
+  {
+   "scene": "made",
+   "w": "leh.",
+   "s": 13.504,
+   "e": 13.582
+  },
+  {
+   "scene": "how",
+   "w": "Gabal",
+   "s": 14.222,
+   "e": 14.552
+  },
+  {
+   "scene": "how",
+   "w": "yar",
+   "s": 14.552,
+   "e": 14.742
+  },
+  {
+   "scene": "how",
+   "w": "dul",
+   "s": 14.742,
+   "e": 14.932
+  },
+  {
+   "scene": "how",
+   "w": "dhig",
+   "s": 14.932,
+   "e": 15.121
+  },
+  {
+   "scene": "how",
+   "w": "dhuxul",
+   "s": 15.121,
+   "e": 15.452
+  },
+  {
+   "scene": "how",
+   "w": "kulul",
+   "s": 15.452,
+   "e": 15.782
+  },
+  {
+   "scene": "how",
+   "w": "ama",
+   "s": 15.782,
+   "e": 16.113
+  },
+  {
+   "scene": "how",
+   "w": "dabqaad",
+   "s": 16.113,
+   "e": 16.513
+  },
+  {
+   "scene": "how",
+   "w": "koronto.",
+   "s": 16.513,
+   "e": 16.985
+  },
+  {
+   "scene": "when",
+   "w": "Ku",
+   "s": 17.625,
+   "e": 17.791
+  },
+  {
+   "scene": "when",
+   "w": "shid",
+   "s": 17.791,
+   "e": 17.957
+  },
+  {
+   "scene": "when",
+   "w": "ka",
+   "s": 17.957,
+   "e": 18.124
+  },
+  {
+   "scene": "when",
+   "w": "hor",
+   "s": 18.124,
+   "e": 18.29
+  },
+  {
+   "scene": "when",
+   "w": "inta",
+   "s": 18.29,
+   "e": 18.58
+  },
+  {
+   "scene": "when",
+   "w": "martidu",
+   "s": 18.58,
+   "e": 18.993
+  },
+  {
+   "scene": "when",
+   "w": "imaan,",
+   "s": 18.993,
+   "e": 19.344
+  },
+  {
+   "scene": "when",
+   "w": "maalinta",
+   "s": 19.448,
+   "e": 19.955
+  },
+  {
+   "scene": "when",
+   "w": "Jimcaha,",
+   "s": 19.955,
+   "e": 20.396
+  },
+  {
+   "scene": "when",
+   "w": "ciidaha",
+   "s": 20.529,
+   "e": 20.92
+  },
+  {
+   "scene": "when",
+   "w": "iyo",
+   "s": 20.92,
+   "e": 21.159
+  },
+  {
+   "scene": "when",
+   "w": "aroosyada.",
+   "s": 21.159,
+   "e": 21.653
+  },
+  {
+   "scene": "air",
+   "w": "Qolka",
+   "s": 22.293,
+   "e": 22.617
+  },
+  {
+   "scene": "air",
+   "w": "hawo",
+   "s": 22.617,
+   "e": 22.942
+  },
+  {
+   "scene": "air",
+   "w": "sii,",
+   "s": 22.942,
+   "e": 23.197
+  },
+  {
+   "scene": "air",
+   "w": "wax",
+   "s": 23.197,
+   "e": 23.383
+  },
+  {
+   "scene": "air",
+   "w": "yarna",
+   "s": 23.383,
+   "e": 23.708
+  },
+  {
+   "scene": "air",
+   "w": "waa",
+   "s": 23.708,
+   "e": 23.963
+  },
+  {
+   "scene": "air",
+   "w": "ku",
+   "s": 23.963,
+   "e": 24.149
+  },
+  {
+   "scene": "air",
+   "w": "filan,",
+   "s": 24.149,
+   "e": 24.474
+  },
+  {
+   "scene": "air",
+   "w": "udgoonku",
+   "s": 24.474,
+   "e": 25.005
+  },
+  {
+   "scene": "air",
+   "w": "wuu",
+   "s": 25.005,
+   "e": 25.261
+  },
+  {
+   "scene": "air",
+   "w": "sii",
+   "s": 25.261,
+   "e": 25.516
+  },
+  {
+   "scene": "air",
+   "w": "jiraa.",
+   "s": 25.516,
+   "e": 25.909
+  },
+  {
+   "scene": "safe",
+   "w": "Dharka",
+   "s": 26.549,
+   "e": 26.841
+  },
+  {
+   "scene": "safe",
+   "w": "meel",
+   "s": 26.841,
+   "e": 27.07
+  },
+  {
+   "scene": "safe",
+   "w": "fog",
+   "s": 27.07,
+   "e": 27.237
+  },
+  {
+   "scene": "safe",
+   "w": "ka",
+   "s": 27.237,
+   "e": 27.405
+  },
+  {
+   "scene": "safe",
+   "w": "udgoomi,",
+   "s": 27.405,
+   "e": 27.882
+  },
+  {
+   "scene": "safe",
+   "w": "indhaha",
+   "s": 27.882,
+   "e": 28.297
+  },
+  {
+   "scene": "safe",
+   "w": "iyo",
+   "s": 28.297,
+   "e": 28.589
+  },
+  {
+   "scene": "safe",
+   "w": "carruurtana",
+   "s": 28.589,
+   "e": 29.19
+  },
+  {
+   "scene": "safe",
+   "w": "ka",
+   "s": 29.19,
+   "e": 29.357
+  },
+  {
+   "scene": "safe",
+   "w": "fogee.",
+   "s": 29.357,
+   "e": 29.711
+  },
+  {
+   "scene": "cta",
+   "w": "Al",
+   "s": 30.351,
+   "e": 30.528
+  },
+  {
+   "scene": "cta",
+   "w": "Majed",
+   "s": 30.528,
+   "e": 30.836
+  },
+  {
+   "scene": "cta",
+   "w": "Oud,",
+   "s": 30.836,
+   "e": 31.079
+  },
+  {
+   "scene": "cta",
+   "w": "udgoonka",
+   "s": 31.079,
+   "e": 31.584
+  },
+  {
+   "scene": "cta",
+   "w": "gurigaaga.",
+   "s": 31.584,
+   "e": 32.221
+  },
+  {
+   "scene": "cta",
+   "w": "Hadda",
+   "s": 32.761,
+   "e": 33.062
+  },
+  {
+   "scene": "cta",
+   "w": "raadso!",
+   "s": 33.062,
+   "e": 33.427
+  }
+ ]
+}

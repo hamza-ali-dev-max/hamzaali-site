@@ -1,0 +1,26 @@
+{
+ "key": "rom1",
+ "voice": "sagal",
+ "model": "eleven_v4",
+ "total": 19.0,
+ "segments": [
+  {
+   "name": "hook",
+   "text": "Gabdhahow, cadar ubax ah oo iftiin leh ma raadinaysaan? Kan eega!",
+   "start": 0.35,
+   "end": 5.47
+  },
+  {
+   "name": "notes",
+   "text": "Romance 1: ubaxa liinta, jasmine, tuberose iyo amber diiran.",
+   "start": 5.92,
+   "end": 11.72
+  },
+  {
+   "name": "cta",
+   "text": "Waxaad ka heli kartaan Falarosa Luxury, Surrey. Nala soo xiriira!",
+   "start": 13.62,
+   "end": 18.5
+  }
+ ]
+}

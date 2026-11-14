@@ -1,0 +1,26 @@
+{
+ "key": "kash",
+ "voice": "sagal",
+ "model": "eleven_v4",
+ "total": 18.94,
+ "segments": [
+  {
+   "name": "hook",
+   "text": "Haddii aad jeceshihiin misk jilicsan, kan waa inaad aragtaan!",
+   "start": 0.35,
+   "end": 4.5
+  },
+  {
+   "name": "notes",
+   "text": "Kashmir Musk oo ka socda Arabian Oud: pear, jasmine, misk iyo patchouli.",
+   "start": 4.95,
+   "end": 11.63
+  },
+  {
+   "name": "cta",
+   "text": "Waxaad ka heli kartaan Falarosa Luxury, Surrey. Nala soo xiriira!",
+   "start": 13.53,
+   "end": 18.44
+  }
+ ]
+}

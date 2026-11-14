@@ -1,0 +1,9 @@
+<symbol id="emblem" viewBox="0 0 120 140">
+            <g fill="none" stroke="url(#lxgold)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M60 132 C22 108 18 70 44 48 C56 38 60 26 54 12" />
+              <path d="M60 132 C98 108 102 70 76 48 C64 38 60 26 66 12" />
+              <path d="M60 114 C44 102 44 80 60 70 C76 80 76 102 60 114 Z" />
+              <path d="M60 70 V54 M52 62 Q60 56 68 62" />
+            </g>
+            <path d="M60 0 L67 9 L60 18 L53 9 Z" fill="url(#lxgold)" />
+          </symbol>
