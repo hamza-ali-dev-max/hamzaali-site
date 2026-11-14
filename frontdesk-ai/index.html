@@ -88,110 +88,59 @@
 
 <section id="hero" class="hero-shell" aria-labelledby="hero-title">
   <div class="hero">
-    <!-- THE SCENE: a real recorded call, played as it happened. Timings come from src/calls.json. -->
-    <div id="stage" class="scene" data-call="dentist" data-duration="47" data-book="36.1" data-check="18.2" data-sent="38.6" data-src="audio/call-dentist.mp3" data-diary="none" role="region" aria-label="A real call to our demo receptionist, played as it happened" data-i18n-attr="aria-label:stage.label">
-      <div class="chip-card chip-blue c-missed" aria-hidden="true">
-        <p class="text-[0.9375rem] font-medium" data-i18n="stage.missed">missed calls</p>
-        <p class="mt-1 font-display text-5xl font-semibold leading-none">0</p>
-        <div class="mt-4 flex items-center justify-between"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 2 16 8 22 8"/><line x1="22" x2="16" y1="2" y2="8"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="flex -space-x-1.5"><span class="ava ava-sm ava-coral">AJ</span><span class="ava ava-sm ava-lime">LS</span><span class="ava ava-sm ava-green">PV</span></span></div>
-      </div>
-
-      <div class="chip-pill chip-lime c-caller">
-        <span class="ava ava-coral">AJ</span>
-        <span class="font-display text-lg font-semibold">082 ••• 3108</span>
-        <span class="count-badge tabular-nums" data-stage-clock>0:00</span>
-      </div>
-
-      <div class="chip-round chip-coral c-chat" aria-hidden="true"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></svg><span class="count-badge" data-wa-count>0</span></div>
-
-      <div class="bubble bubble-dark c-callerline" data-cap="caller">
-        <span class="ava ava-coral">AJ</span>
-        <div class="min-w-0 flex-1">
-          <p class="bubble-name" data-i18n="stage.caller">Caller</p>
-          <div class="bubble-box"><p class="bubble-text" data-cap-text>Hi. I cracked a tooth at supper and it is quite sore. Can someone see me tomorrow morning?</p></div>
-        </div>
-      </div>
-
-      <div class="wave-pill c-wave">
-        <div class="wave" data-wave aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i><i style="--i:7"></i><i style="--i:8"></i><i style="--i:9"></i><i style="--i:10"></i><i style="--i:11"></i><i style="--i:12"></i><i style="--i:13"></i><i style="--i:14"></i><i style="--i:15"></i><i style="--i:16"></i><i style="--i:17"></i><i style="--i:18"></i><i style="--i:19"></i><i style="--i:20"></i><i style="--i:21"></i><i style="--i:22"></i><i style="--i:23"></i><i style="--i:24"></i><i style="--i:25"></i><i style="--i:26"></i><i style="--i:27"></i><i style="--i:28"></i><i style="--i:29"></i></div>
-        <button type="button" class="wave-btn" data-stage-sound aria-label="Play with sound" data-i18n-attr="aria-label:stage.play"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></svg></button>
-      </div>
-
-      <div class="bubble bubble-blue c-ailine" data-cap="ai">
-        <span class="ava ava-ink"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span>
-        <div class="min-w-0 flex-1">
-          <p class="bubble-name" data-i18n="stage.ai">Front Desk AI</p>
-          <div class="bubble-box"><p class="bubble-text" data-cap-text>Good evening, you've reached Milkwood Dental, I'm the practice's AI assistant.</p></div>
-        </div>
-      </div>
-
-      <div class="chip-card chip-green c-booking slot-target">
-        <span class="flex items-center justify-between"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/></svg><svg class="h-5 w-5 booked-only" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg></span>
-        <p class="mt-3 font-display text-5xl font-semibold leading-none tabular-nums"><span class="when-none">--:--</span><span class="when-time">08:00</span></p>
-        <p class="mt-1.5 text-sm font-semibold"><span class="when-none" data-i18n="stage.diary">Diary</span><span class="when-checked" data-i18n="stage.checking">checking diary</span><span class="when-booked"><span data-i18n="stage.s3">Booked</span> · Wed 18 Nov</span></p>
-      </div>
-
-      <div class="chip-round chip-lime c-phone" aria-hidden="true"><span class="ring"></span><span class="ring ring-2"></span><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-
-      <div class="chip-pill chip-coral c-sent"><span class="count-badge count-badge-light">2</span><span class="font-semibold" data-i18n="stage.sent" data-fill="{&quot;n&quot;:2}">2 WhatsApps sent</span></div>
-
-      <div class="c-toasts">
-        <div class="toast" data-wa="client"><span class="toast-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></span><div class="min-w-0"><p class="toast-to" data-i18n="stage.toClient">To the client</p><p class="toast-text" data-wa-call="dentist" data-wa-kind="client">Milkwood Dental: Hi Aisha, you're booked for Wed 18 Nov at 08:00 with Dr Naidoo. Reply C to cancel.</p></div></div>
-        <div class="toast" data-wa="owner"><span class="toast-icon"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></span><div class="min-w-0"><p class="toast-to" data-i18n="stage.toOwner">To you</p><p class="toast-text" data-wa-call="dentist" data-wa-kind="owner">New booking: Aisha Jacobs, Cracked tooth, emergency visit. Wed 18 Nov at 08:00 with Dr Naidoo. Called at 19:02.</p></div></div>
-      </div>
-
-      <p class="c-side" aria-hidden="true"><span data-i18n="hero.side1">books the client,</span><br><span data-i18n="hero.side2">WhatsApps you,</span><br><span class="text-lime" data-i18n="hero.side3">misses nothing</span></p>
-
-      <div class="c-controls">
-        <button type="button" class="round-btn" data-stage-toggle aria-label="Pause"><span data-icon="pause"><svg class="h-3 w-3" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 0h3.5v12H1zM7.5 0H11v12H7.5z"/></svg></span><span data-icon="play" hidden><svg class="ml-0.5 h-3 w-3" viewBox="0 0 10 12" fill="currentColor" aria-hidden="true"><path d="M0 0v12l10-6z"/></svg></span></button>
-        <div class="min-w-0 flex-1">
-          <p class="flex items-center justify-between text-xs font-medium text-white/70"><span data-status-text data-i18n="stage.incoming">Incoming call</span><span class="text-white/50">Milkwood Dental</span></p>
-          <div class="call-progress mt-2" aria-hidden="true"><span data-stage-progress></span></div>
-          <ol class="steps">
-            <li class="step" data-step="1" data-at="1.5"><span class="step-dot"><svg class="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span data-i18n="stage.s1">Answered</span></li>
-            <li class="step" data-step="2" data-at="18.2"><span class="step-dot"><svg class="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span data-i18n="stage.s2">Diary checked</span></li>
-            <li class="step" data-step="3" data-at="36.1"><span class="step-dot"><svg class="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span data-i18n="stage.s3">Booked</span></li>
-            <li class="step" data-step="4" data-at="38.6"><span class="step-dot"><svg class="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span data-i18n="stage.s4">WhatsApp sent</span></li>
-          </ol>
-        </div>
-      </div>
-      <audio id="stage-audio" preload="none"></audio>
-    </div>
-
     <div class="hero-copy">
       <p class="hero-kicker" data-i18n="hero.kicker">AI receptionist for South African businesses</p>
       <h1 id="hero-title" class="hero-title"><span data-i18n="hero.t1">When you can't</span> <span data-i18n="hero.t2">pick up,</span> <span class="text-lime" data-i18n="hero.t3">we answer.</span></h1>
+    </div>
+
+    <!-- THE SCENE: a real recorded call, played as it happened. Three cards: the call, the diary, the WhatsApp. -->
+    <div id="stage" class="scene" data-call="dentist" data-duration="47" data-book="36.1" data-check="18.2" data-sent="38.6" data-src="audio/call-dentist.mp3" data-diary="none" role="region" aria-label="A real call to our demo receptionist, played as it happened" data-i18n-attr="aria-label:stage.label">
+      <div class="card3 card3-l">
+        <p class="card3-h"><span class="live-dot"></span><span data-status-text data-i18n="stage.incoming">Incoming call</span><span class="ml-auto tabular-nums opacity-60" data-stage-clock>0:00</span></p>
+        <p class="cap-label" data-cap-who data-i18n="stage.ai">Front Desk AI</p>
+        <div class="bubble-box"><p class="bubble-text" data-cap-text>Good evening, you've reached Milkwood Dental, I'm the practice's AI assistant.</p></div>
+        <div class="call-bar">
+          <button type="button" class="round-btn" data-stage-toggle aria-label="Pause"><span data-icon="pause"><svg class="h-3 w-3" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 0h3.5v12H1zM7.5 0H11v12H7.5z"/></svg></span><span data-icon="play" hidden><svg class="ml-0.5 h-3 w-3" viewBox="0 0 10 12" fill="currentColor" aria-hidden="true"><path d="M0 0v12l10-6z"/></svg></span></button>
+          <div class="call-progress" aria-hidden="true"><span data-stage-progress></span></div>
+          <button type="button" class="round-btn round-btn-ghost" data-stage-sound aria-label="Play with sound" data-i18n-attr="aria-label:stage.play"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></svg></button>
+        </div>
+        <audio id="stage-audio" preload="none"></audio>
+      </div>
+
+      <div class="card3 card3-m slot-target">
+        <p class="card3-h"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg><span data-i18n="stage.diary">Diary</span><span class="ml-auto opacity-70">Wed 18 Nov</span></p>
+        <p class="big-time tabular-nums"><span class="when-wait">--:--</span><span class="when-booked">08:00</span></p>
+        <p class="text-[0.9375rem] font-semibold"><span class="when-none">Milkwood Dental</span><span class="when-checked" data-i18n="stage.checking">checking diary</span><span class="when-booked"><span data-i18n="stage.s3">Booked</span> · Aisha Jacobs</span></p>
+      </div>
+
+      <div class="card3 card3-r">
+        <p class="card3-h"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><span data-i18n="stage.toOwner">To you</span></p>
+        <p class="wa-wait" aria-hidden="true"><i></i><i></i><i></i></p>
+        <p class="wa-msg" data-wa="owner"><span data-wa-call="dentist" data-wa-kind="owner">New booking: Aisha Jacobs, Cracked tooth, emergency visit. Wed 18 Nov at 08:00 with Dr Naidoo. Called at 19:02.</span></p>
+      </div>
+    </div>
+
+    <div class="hero-cta">
+      <p class="hero-sub" data-i18n="hero.sub">It answers, books the client into your diary and WhatsApps you the details. You keep your number.</p>
       <div class="hero-actions">
-        <a href="#start" class="btn btn-lime btn-lg"><span data-i18n="hero.cta">Start 14-day free trial</span><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="#start" class="btn btn-lime btn-lg" data-i18n="hero.cta">Start 14-day free trial</a>
         <button type="button" class="btn btn-white btn-lg" data-stage-sound><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></svg><span data-i18n="hero.listen">Hear a real call</span></button>
       </div>
-      <ul class="hero-points">
-        <li><svg class="h-4 w-4 text-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.p1">No setup fee</span></li>
-        <li><svg class="h-4 w-4 text-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.p2">14 days free</span></li>
-        <li><svg class="h-4 w-4 text-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.p3">Keep your number</span></li>
-      </ul>
-    </div>
-    <div class="hero-foot">
-      <p data-i18n="stage.recording">Real recording. The practice and caller are made up.</p>
-      <p class="font-semibold text-coral" data-stage-error hidden data-i18n="stage.error">The recording could not play. Try again, or read the transcript.</p>
+      <p class="hero-foot"><span data-i18n="stage.recording">Real recording. The practice and caller are made up.</span> <span class="font-semibold text-coral" data-stage-error hidden data-i18n="stage.error">The recording could not play. Try again, or read the transcript.</span></p>
     </div>
   </div>
 </section>
 
-<section class="marquee" aria-label="Works for" data-i18n-attr="aria-label:works.title">
-  <div class="marquee-track"><ul class="marquee-row"><li><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg><span data-i18n="works.1">Dentists</span></li><li><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 2v2"/><path d="M5 2v2"/><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"/><path d="M8 15a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="10" r="2"/></svg><span data-i18n="works.2">Doctors</span></li><li><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg><span data-i18n="works.3">Physios</span></li><li><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></svg><span data-i18n="works.4">Salons and spas</span></li><li><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M12 4v6"/><path d="M2 18h20"/></svg><span data-i18n="works.5">Guesthouses</span></li><li><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg><span data-i18n="works.6">Plumbers</span></li><li><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg><span data-i18n="works.7">Electricians</span></li><li><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg><span data-i18n="works.8">Vets</span></li></ul><ul class="marquee-row" aria-hidden="true"><li><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg><span data-i18n="works.1">Dentists</span></li><li><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 2v2"/><path d="M5 2v2"/><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"/><path d="M8 15a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="10" r="2"/></svg><span data-i18n="works.2">Doctors</span></li><li><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg><span data-i18n="works.3">Physios</span></li><li><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></svg><span data-i18n="works.4">Salons and spas</span></li><li><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M12 4v6"/><path d="M2 18h20"/></svg><span data-i18n="works.5">Guesthouses</span></li><li><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg><span data-i18n="works.6">Plumbers</span></li><li><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg><span data-i18n="works.7">Electricians</span></li><li><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg><span data-i18n="works.8">Vets</span></li></ul></div>
-</section>
-
 <section id="how" class="section how" aria-labelledby="how-title">
-  <div class="wrap relative">
+  <div class="wrap">
     <h2 id="how-title" class="mega" data-reveal><span data-i18n="how.title" data-fill="{&quot;s&quot;:36}">Ring to booked in 36 seconds.</span></h2>
     <p class="lead text-center" data-i18n="how.sub">The real timings from the call above.</p>
     <ol class="orbit" data-timeline data-total="38.6">
-      <li class="tl-node o-1" data-t="0"><span class="tl-dot chip-lime"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 2 16 8 22 8"/><line x1="22" x2="16" y1="2" y2="8"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span class="tl-time tabular-nums"><span data-i18n="how.sec" data-fill="{&quot;s&quot;:0}">0s</span></span><span class="tl-label" data-i18n="how.t1">Phone rings</span></li>
-      <li class="tl-node o-2" data-t="1.5"><span class="tl-dot chip-blue"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 10v3"/><path d="M6 6v11"/><path d="M10 3v18"/><path d="M14 8v7"/><path d="M18 5v13"/><path d="M22 10v3"/></svg></span><span class="tl-time tabular-nums"><span data-i18n="how.sec" data-fill="{&quot;s&quot;:1.5}">1.5s</span></span><span class="tl-label" data-i18n="how.t2">Answers</span></li>
-      <li class="tl-node o-3" data-t="18.2"><span class="tl-dot chip-coral"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 2v4"/><path d="M21 11.75V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7.25"/><path d="m22 22-1.875-1.875"/><path d="M3 10h18"/><path d="M8 2v4"/><circle cx="18" cy="18" r="3"/></svg></span><span class="tl-time tabular-nums"><span data-i18n="how.sec" data-fill="{&quot;s&quot;:18.2}">18.2s</span></span><span class="tl-label" data-i18n="how.t3">Checks the diary</span></li>
-      <li class="tl-node o-4" data-t="36.1"><span class="tl-dot chip-green"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg></span><span class="tl-time tabular-nums"><span data-i18n="how.sec" data-fill="{&quot;s&quot;:36.1}">36.1s</span></span><span class="tl-label" data-i18n="how.t4">Books the slot</span></li>
-      <li class="tl-node o-5" data-t="38.6"><span class="tl-dot chip-lime"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span><span class="tl-time tabular-nums"><span data-i18n="how.sec" data-fill="{&quot;s&quot;:38.6}">38.6s</span></span><span class="tl-label" data-i18n="how.t5">WhatsApps you both</span></li>
+      <li class="tl-node" data-t="0"><span class="tl-dot"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 2 16 8 22 8"/><line x1="22" x2="16" y1="2" y2="8"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span class="tl-time tabular-nums"><span data-i18n="how.sec" data-fill="{&quot;s&quot;:0}">0s</span></span><span class="tl-label" data-i18n="how.t1">Phone rings</span></li>
+      <li class="tl-node" data-t="1.5"><span class="tl-dot"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 10v3"/><path d="M6 6v11"/><path d="M10 3v18"/><path d="M14 8v7"/><path d="M18 5v13"/><path d="M22 10v3"/></svg></span><span class="tl-time tabular-nums"><span data-i18n="how.sec" data-fill="{&quot;s&quot;:1.5}">1.5s</span></span><span class="tl-label" data-i18n="how.t2">Answers</span></li>
+      <li class="tl-node" data-t="18.2"><span class="tl-dot"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 2v4"/><path d="M21 11.75V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7.25"/><path d="m22 22-1.875-1.875"/><path d="M3 10h18"/><path d="M8 2v4"/><circle cx="18" cy="18" r="3"/></svg></span><span class="tl-time tabular-nums"><span data-i18n="how.sec" data-fill="{&quot;s&quot;:18.2}">18.2s</span></span><span class="tl-label" data-i18n="how.t3">Checks the diary</span></li>
+      <li class="tl-node" data-t="36.1"><span class="tl-dot"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg></span><span class="tl-time tabular-nums"><span data-i18n="how.sec" data-fill="{&quot;s&quot;:36.1}">36.1s</span></span><span class="tl-label" data-i18n="how.t4">Books the slot</span></li>
+      <li class="tl-node" data-t="38.6"><span class="tl-dot"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span><span class="tl-time tabular-nums"><span data-i18n="how.sec" data-fill="{&quot;s&quot;:38.6}">38.6s</span></span><span class="tl-label" data-i18n="how.t5">WhatsApps you both</span></li>
     </ol>
   </div>
 </section>
@@ -202,31 +151,32 @@
       <h2 id="feat-title" class="h2" data-i18n="feat.title">Every call ends with something done.</h2>
     </div>
     <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      <li class="tile chip-blue" data-reveal style="--d:0ms">
-        <div class="viz viz-ring"><span class="vr-ring"></span><span class="vr-ring vr-2"></span><span class="vr-phone"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/><path d="M14.05 2a9 9 0 0 1 8 7.94"/><path d="M14.05 6A5 5 0 0 1 18 10"/></svg></span></div>
+      <li class="tile" data-reveal style="--d:0ms">
+        <span class="tile-icon"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/><path d="M14.05 2a9 9 0 0 1 8 7.94"/><path d="M14.05 6A5 5 0 0 1 18 10"/></svg></span>
         <h3 class="tile-title" data-i18n="feat.1.title">Answers on the first ring</h3>
         <p class="tile-text" data-i18n="feat.1.text">Nights, weekends, lunch. It says it's an AI.</p>
         
       </li>
-      <li class="tile chip-green" data-reveal style="--d:70ms">
-        <div class="viz viz-diary"><span class="vd-row"><b>07:30</b><i></i></span><span class="vd-row vd-target"><b>08:00</b><i><em>Aisha</em></i></span><span class="vd-row"><b>08:30</b><i></i></span></div>
+      <li class="tile" data-reveal style="--d:70ms">
+        <span class="tile-icon"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg></span>
         <h3 class="tile-title" data-i18n="feat.2.title">Books real open times</h3>
         <p class="tile-text" data-i18n="feat.2.text">Straight into your diary. No double bookings.</p>
         
       </li>
-      <li class="tile chip-lime" data-reveal style="--d:140ms">
-        <div class="viz viz-wa"><span class="vw-bubble"><span class="vw-dots"><i></i><i></i><i></i></span><span class="vw-text" data-i18n="feat.wa">New booking: Aisha, 08:00</span></span></div>
+      <li class="tile" data-reveal style="--d:140ms">
+        <span class="tile-icon"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span>
         <h3 class="tile-title" data-i18n="feat.3.title">WhatsApps you every call</h3>
         <p class="tile-text" data-i18n="feat.3.text">Name, number, reason. Your client gets a confirmation.</p>
         
       </li>
-      <li class="tile chip-coral" data-reveal style="--d:210ms">
-        <div class="viz viz-transfer"><span class="vt-node vt-ai"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span><span class="vt-line"><i></i></span><span class="vt-node vt-owner"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></span><span class="vt-name" data-i18n="feat.owner">Thabo</span></div>
+      <li class="tile" data-reveal style="--d:210ms">
+        <span class="tile-icon"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 2 22 6 18 10"/><line x1="14" x2="22" y1="6" y2="6"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
         <h3 class="tile-title" data-i18n="feat.4.title">Puts urgent calls through</h3>
         <p class="tile-text" data-i18n="feat.4.text">It takes a name and number first, in case the line drops.</p>
         <a href="#calls" class="tile-link" data-play-rec="plumber"><svg class="h-2.5 w-2.5" viewBox="0 0 10 12" fill="currentColor" aria-hidden="true"><path d="M0 0v12l10-6z"/></svg><span data-i18n="feat.4.listen">Hear it happen</span></a>
       </li>
     </ul>
+    <p class="works" data-reveal><span class="font-semibold text-ink" data-i18n="works.title">Works for</span> <span data-i18n="works.1">Dentists</span> <span data-i18n="works.2">Doctors</span> <span data-i18n="works.3">Physios</span> <span data-i18n="works.4">Salons and spas</span> <span data-i18n="works.5">Guesthouses</span> <span data-i18n="works.6">Plumbers</span> <span data-i18n="works.7">Electricians</span> <span data-i18n="works.8">Vets</span></p>
   </div>
 </section>
 
@@ -238,7 +188,6 @@
     </div>
   </div>
   <div class="scenic scenic-hills">
-    <p class="notice-pill" data-reveal><span class="live-dot"></span><span data-i18n="calls.badge">3 real calls. Tap one to listen.</span></p>
     <div id="rec-list" class="scenic-grid">
       <article class="rec-card" data-rec="dentist" data-src="audio/call-dentist.mp3" data-duration="47" data-reveal>
         <div class="rec-top">
@@ -254,7 +203,6 @@
         </div>
         <p class="rec-sub" aria-hidden="true"><span class="rec-who" data-i18n="stage.ai">Front Desk AI</span><span class="rec-line">Good evening, you've reached Milkwood Dental, I'm the practice's AI assistant.</span></p>
         <div class="rec-controls">
-          <span class="flex -space-x-2"><span class="ava ava-coral">AJ</span><span class="ava ava-ink"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span></span>
           <span class="rec-tag"><svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg><span data-i18n="calls.booked">Booked</span></span>
           <span class="rec-time tabular-nums">0:47</span>
           <button type="button" class="rec-play" aria-pressed="false"><span data-icon="play"><svg class="ml-0.5 h-3.5 w-3.5" viewBox="0 0 10 12" fill="currentColor" aria-hidden="true"><path d="M0 0v12l10-6z"/></svg></span><span data-icon="pause" hidden><svg class="h-3.5 w-3.5" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 0h3.5v12H1zM7.5 0H11v12H7.5z"/></svg></span><span class="sr-only" data-rec-verb data-i18n="calls.play">Play</span></button>
@@ -288,7 +236,6 @@
         </div>
         <p class="rec-sub" aria-hidden="true"><span class="rec-who" data-i18n="stage.ai">Front Desk AI</span><span class="rec-line">Studio Lumi, you're through to the AI assistant. How can I help?</span></p>
         <div class="rec-controls">
-          <span class="flex -space-x-2"><span class="ava ava-coral">LS</span><span class="ava ava-ink"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span></span>
           <span class="rec-tag"><svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg><span data-i18n="calls.booked">Booked</span></span>
           <span class="rec-time tabular-nums">0:46</span>
           <button type="button" class="rec-play" aria-pressed="false"><span data-icon="play"><svg class="ml-0.5 h-3.5 w-3.5" viewBox="0 0 10 12" fill="currentColor" aria-hidden="true"><path d="M0 0v12l10-6z"/></svg></span><span data-icon="pause" hidden><svg class="h-3.5 w-3.5" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 0h3.5v12H1zM7.5 0H11v12H7.5z"/></svg></span><span class="sr-only" data-rec-verb data-i18n="calls.play">Play</span></button>
@@ -322,7 +269,6 @@
         </div>
         <p class="rec-sub" aria-hidden="true"><span class="rec-who" data-i18n="stage.ai">Front Desk AI</span><span class="rec-line">Khoza Plumbing, this is the AI assistant speaking. How can I help you tonight?</span></p>
         <div class="rec-controls">
-          <span class="flex -space-x-2"><span class="ava ava-coral">PV</span><span class="ava ava-ink"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span></span>
           <span class="rec-tag"><svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 2 22 6 18 10"/><line x1="14" x2="22" y1="6" y2="6"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span data-i18n="calls.through">Put through</span></span>
           <span class="rec-time tabular-nums">0:39</span>
           <button type="button" class="rec-play" aria-pressed="false"><span data-icon="play"><svg class="ml-0.5 h-3.5 w-3.5" viewBox="0 0 10 12" fill="currentColor" aria-hidden="true"><path d="M0 0v12l10-6z"/></svg></span><span data-icon="pause" hidden><svg class="h-3.5 w-3.5" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 0h3.5v12H1zM7.5 0H11v12H7.5z"/></svg></span><span class="sr-only" data-rec-verb data-i18n="calls.play">Play</span></button>
@@ -339,11 +285,6 @@
           </ol>
         </details>
       </article>
-      <a href="#try" class="glass-card" data-reveal>
-        <span class="glass-plus"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
-        <span class="mt-3 font-display text-xl font-medium" data-i18n="calls.try">Talk to it yourself</span>
-        <span class="text-sm opacity-80" data-i18n="calls.trySub">Live, in your browser</span>
-      </a>
     </div>
     <audio id="rec-audio" preload="none"></audio>
   </div>
@@ -467,7 +408,6 @@
         <a href="#" class="btn btn-ink mt-auto w-full" data-wa-link target="_blank" rel="noopener"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><span data-i18n="price.mb.cta">Ask us on WhatsApp</span></a>
       </div>
     </div>
-    <p class="sky-line" data-reveal><svg class="h-4 w-4 flex-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg><span data-i18n="price.line">R67 a day. One extra booking a week pays for it.</span></p>
     <p class="sky-small" data-reveal><span data-i18n="price.small">Fair use: 150 minutes on After Hours, 500 on Front Desk. Extra minutes R2.50. We WhatsApp you at 80% and never cut you off. Spam and hang-ups under 10 seconds don't count.</span> <span data-vat></span></p>
   </div>
 </section>
@@ -511,9 +451,9 @@
         <h2 id="start-title" class="h2 text-white" data-i18n="start.title">Try it free for 14 days</h2>
         <p class="hero-sub mt-4" data-i18n="start.sub">On your own number, after hours only if you like. No card, no contract. We set it up with you.</p>
         <ul class="hero-points mt-7 flex-col !items-start">
-          <li><svg class="h-4 w-4 text-brand-hero" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.p1">No setup fee</span></li>
-          <li><svg class="h-4 w-4 text-brand-hero" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.p2">14 days free</span></li>
-          <li><svg class="h-4 w-4 text-brand-hero" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.p3">Keep your number</span></li>
+          <li><svg class="h-4 w-4 text-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.p1">No setup fee</span></li>
+          <li><svg class="h-4 w-4 text-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.p2">14 days free</span></li>
+          <li><svg class="h-4 w-4 text-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.p3">Keep your number</span></li>
         </ul>
       </div>
       <div class="form-card" data-reveal style="--d:70ms">
@@ -563,7 +503,7 @@
             </fieldset>
           </div>
           <input type="hidden" name="plan" value="">
-          <button type="submit" class="btn btn-brand btn-lg mt-6 w-full" data-i18n="start.submit">Start my free trial</button>
+          <button type="submit" class="btn btn-ink btn-lg mt-6 w-full" data-i18n="start.submit">Start my free trial</button>
           <p class="mt-4 flex items-start gap-2.5 text-sm text-body"><span class="mt-0.5 flex-none"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></span><span data-i18n="start.note">This opens WhatsApp with your details filled in. Press send and we'll be in touch.</span></p>
           <p class="mt-2 text-xs text-muted" data-ph="whatsapp"><span class="ph-tag">Placeholder</span> <span class="ml-1">WhatsApp: <span data-text="whatsapp">+27 00 000 0000</span></span></p>
         </form>
