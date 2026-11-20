@@ -1,0 +1,564 @@
+{
+ "scenes": [
+  {
+   "id": "l1",
+   "text": "Ma rabtaa udgoon ku siiya kalsooni iyo haybad?",
+   "s": 0.3,
+   "e": 2.892
+  },
+  {
+   "id": "l2",
+   "text": "Kani waa Spicy Oud, Proud Dose, oo ka socda Ibraq.",
+   "s": 3.532,
+   "e": 6.858
+  },
+  {
+   "id": "l3",
+   "text": "Waa cadar tayo sare leh, toddobaatan iyo shan mililitir, ragga iyo dumarkaba.",
+   "s": 7.498,
+   "e": 12.353
+  },
+  {
+   "id": "l4",
+   "text": "Wuxuu ku bilaabmaa cuud iyo ubax cad.",
+   "s": 12.993,
+   "e": 15.023
+  },
+  {
+   "id": "l5",
+   "text": "Wadnihiisu waa karamel, cambar iyo xawaash.",
+   "s": 15.663,
+   "e": 18.368
+  },
+  {
+   "id": "l6",
+   "text": "Salkiisuna waa jasmine, vetiver, misk iyo cuud.",
+   "s": 19.008,
+   "e": 22.292
+  },
+  {
+   "id": "l7",
+   "text": "Waa udgoon diirran oo xoog leh, oo maalinta oo dhan kula socda.",
+   "s": 22.932,
+   "e": 26.808
+  },
+  {
+   "id": "l8",
+   "text": "Waxaad ka heli kartaa Falarosa Luxury, Surrey, BC, Kanada.",
+   "s": 27.448,
+   "e": 31.573
+  },
+  {
+   "id": "l9",
+   "text": "Nagala soo xiriir lambarka ku qoran bogga.",
+   "s": 32.213,
+   "e": 34.403
+  },
+  {
+   "id": "l10",
+   "text": "Spicy Oud, Ibraq. Hadda dalbo!",
+   "s": 35.043,
+   "e": 37.792
+  }
+ ],
+ "words": [
+  {
+   "scene": "l1",
+   "w": "Ma",
+   "s": 0.3,
+   "e": 0.477
+  },
+  {
+   "scene": "l1",
+   "w": "rabtaa",
+   "s": 0.477,
+   "e": 0.85
+  },
+  {
+   "scene": "l1",
+   "w": "udgoon",
+   "s": 0.85,
+   "e": 1.223
+  },
+  {
+   "scene": "l1",
+   "w": "ku",
+   "s": 1.223,
+   "e": 1.4
+  },
+  {
+   "scene": "l1",
+   "w": "siiya",
+   "s": 1.4,
+   "e": 1.773
+  },
+  {
+   "scene": "l1",
+   "w": "kalsooni",
+   "s": 1.773,
+   "e": 2.277
+  },
+  {
+   "scene": "l1",
+   "w": "iyo",
+   "s": 2.277,
+   "e": 2.584
+  },
+  {
+   "scene": "l1",
+   "w": "haybad?",
+   "s": 2.584,
+   "e": 2.892
+  },
+  {
+   "scene": "l2",
+   "w": "Kani",
+   "s": 3.532,
+   "e": 3.965
+  },
+  {
+   "scene": "l2",
+   "w": "waa",
+   "s": 3.965,
+   "e": 4.305
+  },
+  {
+   "scene": "l2",
+   "w": "Spicy",
+   "s": 4.305,
+   "e": 4.554
+  },
+  {
+   "scene": "l2",
+   "w": "Oud,",
+   "s": 4.554,
+   "e": 4.894
+  },
+  {
+   "scene": "l2",
+   "w": "Proud",
+   "s": 5.023,
+   "e": 5.157
+  },
+  {
+   "scene": "l2",
+   "w": "Dose,",
+   "s": 5.157,
+   "e": 5.328
+  },
+  {
+   "scene": "l2",
+   "w": "oo",
+   "s": 5.43,
+   "e": 5.764
+  },
+  {
+   "scene": "l2",
+   "w": "ka",
+   "s": 5.764,
+   "e": 6.008
+  },
+  {
+   "scene": "l2",
+   "w": "socda",
+   "s": 6.008,
+   "e": 6.433
+  },
+  {
+   "scene": "l2",
+   "w": "Ibraq.",
+   "s": 6.433,
+   "e": 6.858
+  },
+  {
+   "scene": "l3",
+   "w": "Waa",
+   "s": 7.498,
+   "e": 7.733
+  },
+  {
+   "scene": "l3",
+   "w": "cadar",
+   "s": 7.733,
+   "e": 8.033
+  },
+  {
+   "scene": "l3",
+   "w": "tayo",
+   "s": 8.033,
+   "e": 8.333
+  },
+  {
+   "scene": "l3",
+   "w": "sare",
+   "s": 8.333,
+   "e": 8.632
+  },
+  {
+   "scene": "l3",
+   "w": "leh,",
+   "s": 8.632,
+   "e": 8.804
+  },
+  {
+   "scene": "l3",
+   "w": "toddobaatan",
+   "s": 9.182,
+   "e": 9.813
+  },
+  {
+   "scene": "l3",
+   "w": "iyo",
+   "s": 9.813,
+   "e": 10.119
+  },
+  {
+   "scene": "l3",
+   "w": "shan",
+   "s": 10.119,
+   "e": 10.295
+  },
+  {
+   "scene": "l3",
+   "w": "mililitir,",
+   "s": 10.295,
+   "e": 10.861
+  },
+  {
+   "scene": "l3",
+   "w": "ragga",
+   "s": 11.286,
+   "e": 11.563
+  },
+  {
+   "scene": "l3",
+   "w": "iyo",
+   "s": 11.563,
+   "e": 11.84
+  },
+  {
+   "scene": "l3",
+   "w": "dumarkaba.",
+   "s": 11.84,
+   "e": 12.353
+  },
+  {
+   "scene": "l4",
+   "w": "Wuxuu",
+   "s": 12.993,
+   "e": 13.345
+  },
+  {
+   "scene": "l4",
+   "w": "ku",
+   "s": 13.345,
+   "e": 13.512
+  },
+  {
+   "scene": "l4",
+   "w": "bilaabmaa",
+   "s": 13.512,
+   "e": 14.048
+  },
+  {
+   "scene": "l4",
+   "w": "cuud",
+   "s": 14.048,
+   "e": 14.276
+  },
+  {
+   "scene": "l4",
+   "w": "iyo",
+   "s": 14.276,
+   "e": 14.566
+  },
+  {
+   "scene": "l4",
+   "w": "ubax",
+   "s": 14.566,
+   "e": 14.856
+  },
+  {
+   "scene": "l4",
+   "w": "cad.",
+   "s": 14.856,
+   "e": 15.023
+  },
+  {
+   "scene": "l5",
+   "w": "Wadnihiisu",
+   "s": 15.663,
+   "e": 16.344
+  },
+  {
+   "scene": "l5",
+   "w": "waa",
+   "s": 16.344,
+   "e": 16.604
+  },
+  {
+   "scene": "l5",
+   "w": "karamel,",
+   "s": 16.604,
+   "e": 17.075
+  },
+  {
+   "scene": "l5",
+   "w": "cambar",
+   "s": 17.212,
+   "e": 17.571
+  },
+  {
+   "scene": "l5",
+   "w": "iyo",
+   "s": 17.571,
+   "e": 17.931
+  },
+  {
+   "scene": "l5",
+   "w": "xawaash.",
+   "s": 17.931,
+   "e": 18.368
+  },
+  {
+   "scene": "l6",
+   "w": "Salkiisuna",
+   "s": 19.008,
+   "e": 19.848
+  },
+  {
+   "scene": "l6",
+   "w": "waa",
+   "s": 19.848,
+   "e": 20.169
+  },
+  {
+   "scene": "l6",
+   "w": "jasmine,",
+   "s": 20.169,
+   "e": 20.75
+  },
+  {
+   "scene": "l6",
+   "w": "vetiver,",
+   "s": 20.75,
+   "e": 21.33
+  },
+  {
+   "scene": "l6",
+   "w": "misk",
+   "s": 21.33,
+   "e": 21.564
+  },
+  {
+   "scene": "l6",
+   "w": "iyo",
+   "s": 21.564,
+   "e": 21.971
+  },
+  {
+   "scene": "l6",
+   "w": "cuud.",
+   "s": 21.971,
+   "e": 22.292
+  },
+  {
+   "scene": "l7",
+   "w": "Waa",
+   "s": 22.932,
+   "e": 23.195
+  },
+  {
+   "scene": "l7",
+   "w": "udgoon",
+   "s": 23.195,
+   "e": 23.601
+  },
+  {
+   "scene": "l7",
+   "w": "diirran",
+   "s": 23.601,
+   "e": 24.007
+  },
+  {
+   "scene": "l7",
+   "w": "oo",
+   "s": 24.007,
+   "e": 24.27
+  },
+  {
+   "scene": "l7",
+   "w": "xoog",
+   "s": 24.27,
+   "e": 24.534
+  },
+  {
+   "scene": "l7",
+   "w": "leh,",
+   "s": 24.534,
+   "e": 24.726
+  },
+  {
+   "scene": "l7",
+   "w": "oo",
+   "s": 25.117,
+   "e": 25.347
+  },
+  {
+   "scene": "l7",
+   "w": "maalinta",
+   "s": 25.347,
+   "e": 25.826
+  },
+  {
+   "scene": "l7",
+   "w": "oo",
+   "s": 25.826,
+   "e": 26.056
+  },
+  {
+   "scene": "l7",
+   "w": "dhan",
+   "s": 26.056,
+   "e": 26.224
+  },
+  {
+   "scene": "l7",
+   "w": "kula",
+   "s": 26.224,
+   "e": 26.516
+  },
+  {
+   "scene": "l7",
+   "w": "socda.",
+   "s": 26.516,
+   "e": 26.808
+  },
+  {
+   "scene": "l8",
+   "w": "Waxaad",
+   "s": 27.448,
+   "e": 27.841
+  },
+  {
+   "scene": "l8",
+   "w": "ka",
+   "s": 27.841,
+   "e": 28.027
+  },
+  {
+   "scene": "l8",
+   "w": "heli",
+   "s": 28.027,
+   "e": 28.35
+  },
+  {
+   "scene": "l8",
+   "w": "kartaa",
+   "s": 28.35,
+   "e": 28.742
+  },
+  {
+   "scene": "l8",
+   "w": "Falarosa",
+   "s": 28.742,
+   "e": 29.341
+  },
+  {
+   "scene": "l8",
+   "w": "Luxury,",
+   "s": 29.341,
+   "e": 29.665
+  },
+  {
+   "scene": "l8",
+   "w": "Surrey,",
+   "s": 30.027,
+   "e": 30.392
+  },
+  {
+   "scene": "l8",
+   "w": "BC,",
+   "s": 30.552,
+   "e": 31.031
+  },
+  {
+   "scene": "l8",
+   "w": "Kanada.",
+   "s": 31.177,
+   "e": 31.573
+  },
+  {
+   "scene": "l9",
+   "w": "Nagala",
+   "s": 32.213,
+   "e": 32.634
+  },
+  {
+   "scene": "l9",
+   "w": "soo",
+   "s": 32.634,
+   "e": 32.866
+  },
+  {
+   "scene": "l9",
+   "w": "xiriir",
+   "s": 32.866,
+   "e": 33.223
+  },
+  {
+   "scene": "l9",
+   "w": "lambarka",
+   "s": 33.223,
+   "e": 33.644
+  },
+  {
+   "scene": "l9",
+   "w": "ku",
+   "s": 33.644,
+   "e": 33.813
+  },
+  {
+   "scene": "l9",
+   "w": "qoran",
+   "s": 33.813,
+   "e": 34.108
+  },
+  {
+   "scene": "l9",
+   "w": "bogga.",
+   "s": 34.108,
+   "e": 34.403
+  },
+  {
+   "scene": "l10",
+   "w": "Spicy",
+   "s": 35.043,
+   "e": 35.338
+  },
+  {
+   "scene": "l10",
+   "w": "Oud,",
+   "s": 35.338,
+   "e": 35.741
+  },
+  {
+   "scene": "l10",
+   "w": "Ibraq.",
+   "s": 35.741,
+   "e": 36.254
+  },
+  {
+   "scene": "l10",
+   "w": "Hadda",
+   "s": 36.794,
+   "e": 37.293
+  },
+  {
+   "scene": "l10",
+   "w": "dalbo!",
+   "s": 37.293,
+   "e": 37.792
+  }
+ ]
+}

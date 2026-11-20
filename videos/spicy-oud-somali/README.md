@@ -1,0 +1,6 @@
+# Spicy Oud: Somali product ad for Falarosa Luxury
+
+- Script: `somali-vo.txt`, one sentence per line. Audio: `assets/audio/ubax.mp3` (so-SO-UbaxNeural, read from a phonetic copy of the script so the brand and note names sound Somali); the captions keep the real spellings.
+- Photos: official IBRAQ product photos in `assets/photos/` (sources in `SOURCES.md`).
+- **Final video:** `renders/spicy-oud-somali.mp4`. It is 39s, 1080×1920, in the Falarosa Luxury style (black marble, gold serif type, original Falarosa emblem) with word-by-word Somali captions. Scenes: a hook about confidence and presence, IBRAQ Spicy Oud (Proud Dose), 75 ml Eau de Parfum for men and women, top notes (oud, white flowers), heart notes (caramel, amber, spices), base notes (jasmine, vetiver, musk, oud), warm and strong all day, Falarosa Luxury in Surrey BC, contact with +1 (672) 952-9114, and a HADDA DALBO end card.
+- Rebuild: `python3 src/align_external.py assets/audio/ubax.mp3 src/script-somali.json assets/audio/vo.mp3 src/timing.json 0.55 0.45 0.3 1.0`, then `python3 src/build.py`, then `npx hyperframes render`. `src/adgen.py` generated `src/template.html.tmpl` and the beats in `src/build.py` (key `spicy`).

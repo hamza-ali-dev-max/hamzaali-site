@@ -1,0 +1,600 @@
+{
+ "scenes": [
+  {
+   "id": "q",
+   "text": "Goormaa kuugu dambaysay inaad dhaqdo burushyada makeup-kaaga?",
+   "s": 0.3,
+   "e": 3.459
+  },
+  {
+   "id": "time",
+   "text": "Haddii aadan xasuusan, waa waqtigii aad nadiifin lahayd!",
+   "s": 4.099,
+   "e": 7.024
+  },
+  {
+   "id": "buildup",
+   "text": "Burushyada waxaa ku urura haraaga makeup-ka, saliid iyo bakteeriya.",
+   "s": 7.664,
+   "e": 11.262
+  },
+  {
+   "id": "often",
+   "text": "Dhaq toddobadii ilaa tobankii maalmoodba mar.",
+   "s": 11.902,
+   "e": 14.148
+  },
+  {
+   "id": "shampoo",
+   "text": "Isticmaal biyo diirran iyo shaambo jilicsan, adigoo nadiifinaya timaha burushka.",
+   "s": 14.788,
+   "e": 19.103
+  },
+  {
+   "id": "rinse",
+   "text": "Si fiican u raaci ilaa biyuhu nadiif noqdaan.",
+   "s": 19.743,
+   "e": 22.233
+  },
+  {
+   "id": "towel",
+   "text": "Biyaha dheeraadka ah kaga saar tuwaal nadiif ah.",
+   "s": 22.873,
+   "e": 25.294
+  },
+  {
+   "id": "flat",
+   "text": "Jiifi burushyada si ay u qalalaan, hana taagin iyagoo qoyan.",
+   "s": 25.934,
+   "e": 29.318
+  },
+  {
+   "id": "noshare",
+   "text": "Qof kale ha la wadaagin burushyadaada.",
+   "s": 29.958,
+   "e": 31.82
+  },
+  {
+   "id": "clean",
+   "text": "Daryeelka wejigu wuxuu ka bilaabmaa qalab nadiif ah!",
+   "s": 32.46,
+   "e": 35.213
+  },
+  {
+   "id": "cta",
+   "text": "La wadaag saaxiibtaa, lana soco Skincare by Ubah.",
+   "s": 35.853,
+   "e": 38.556
+  }
+ ],
+ "words": [
+  {
+   "scene": "q",
+   "w": "Goormaa",
+   "s": 0.3,
+   "e": 0.733
+  },
+  {
+   "scene": "q",
+   "w": "kuugu",
+   "s": 0.733,
+   "e": 1.101
+  },
+  {
+   "scene": "q",
+   "w": "dambaysay",
+   "s": 1.101,
+   "e": 1.534
+  },
+  {
+   "scene": "q",
+   "w": "inaad",
+   "s": 1.534,
+   "e": 1.902
+  },
+  {
+   "scene": "q",
+   "w": "dhaqdo",
+   "s": 1.902,
+   "e": 2.206
+  },
+  {
+   "scene": "q",
+   "w": "burushyada",
+   "s": 2.206,
+   "e": 2.768
+  },
+  {
+   "scene": "q",
+   "w": "makeup-kaaga?",
+   "s": 2.768,
+   "e": 3.459
+  },
+  {
+   "scene": "time",
+   "w": "Haddii",
+   "s": 4.099,
+   "e": 4.457
+  },
+  {
+   "scene": "time",
+   "w": "aadan",
+   "s": 4.457,
+   "e": 4.815
+  },
+  {
+   "scene": "time",
+   "w": "xasuusan,",
+   "s": 4.815,
+   "e": 5.298
+  },
+  {
+   "scene": "time",
+   "w": "waa",
+   "s": 5.298,
+   "e": 5.53
+  },
+  {
+   "scene": "time",
+   "w": "waqtigii",
+   "s": 5.53,
+   "e": 6.014
+  },
+  {
+   "scene": "time",
+   "w": "aad",
+   "s": 6.014,
+   "e": 6.246
+  },
+  {
+   "scene": "time",
+   "w": "nadiifin",
+   "s": 6.246,
+   "e": 6.729
+  },
+  {
+   "scene": "time",
+   "w": "lahayd!",
+   "s": 6.729,
+   "e": 7.024
+  },
+  {
+   "scene": "buildup",
+   "w": "Burushyada",
+   "s": 7.664,
+   "e": 8.132
+  },
+  {
+   "scene": "buildup",
+   "w": "waxaa",
+   "s": 8.132,
+   "e": 8.439
+  },
+  {
+   "scene": "buildup",
+   "w": "ku",
+   "s": 8.439,
+   "e": 8.584
+  },
+  {
+   "scene": "buildup",
+   "w": "urura",
+   "s": 8.584,
+   "e": 8.944
+  },
+  {
+   "scene": "buildup",
+   "w": "haraaga",
+   "s": 8.944,
+   "e": 9.358
+  },
+  {
+   "scene": "buildup",
+   "w": "makeup-ka,",
+   "s": 9.358,
+   "e": 9.772
+  },
+  {
+   "scene": "buildup",
+   "w": "saliid",
+   "s": 9.881,
+   "e": 10.273
+  },
+  {
+   "scene": "buildup",
+   "w": "iyo",
+   "s": 10.273,
+   "e": 10.596
+  },
+  {
+   "scene": "buildup",
+   "w": "bakteeriya.",
+   "s": 10.596,
+   "e": 11.262
+  },
+  {
+   "scene": "often",
+   "w": "Dhaq",
+   "s": 11.902,
+   "e": 12.065
+  },
+  {
+   "scene": "often",
+   "w": "toddobadii",
+   "s": 12.065,
+   "e": 12.651
+  },
+  {
+   "scene": "often",
+   "w": "ilaa",
+   "s": 12.651,
+   "e": 12.995
+  },
+  {
+   "scene": "often",
+   "w": "tobankii",
+   "s": 12.995,
+   "e": 13.46
+  },
+  {
+   "scene": "often",
+   "w": "maalmoodba",
+   "s": 13.46,
+   "e": 13.985
+  },
+  {
+   "scene": "often",
+   "w": "mar.",
+   "s": 13.985,
+   "e": 14.148
+  },
+  {
+   "scene": "shampoo",
+   "w": "Isticmaal",
+   "s": 14.788,
+   "e": 15.292
+  },
+  {
+   "scene": "shampoo",
+   "w": "biyo",
+   "s": 15.292,
+   "e": 15.6
+  },
+  {
+   "scene": "shampoo",
+   "w": "diirran",
+   "s": 15.6,
+   "e": 15.973
+  },
+  {
+   "scene": "shampoo",
+   "w": "iyo",
+   "s": 15.973,
+   "e": 16.28
+  },
+  {
+   "scene": "shampoo",
+   "w": "shaambo",
+   "s": 16.28,
+   "e": 16.653
+  },
+  {
+   "scene": "shampoo",
+   "w": "jilicsan,",
+   "s": 16.653,
+   "e": 17.092
+  },
+  {
+   "scene": "shampoo",
+   "w": "adigoo",
+   "s": 17.24,
+   "e": 17.678
+  },
+  {
+   "scene": "shampoo",
+   "w": "nadiifinaya",
+   "s": 17.678,
+   "e": 18.342
+  },
+  {
+   "scene": "shampoo",
+   "w": "timaha",
+   "s": 18.342,
+   "e": 18.722
+  },
+  {
+   "scene": "shampoo",
+   "w": "burushka.",
+   "s": 18.722,
+   "e": 19.103
+  },
+  {
+   "scene": "rinse",
+   "w": "Si",
+   "s": 19.743,
+   "e": 19.908
+  },
+  {
+   "scene": "rinse",
+   "w": "fiican",
+   "s": 19.908,
+   "e": 20.258
+  },
+  {
+   "scene": "rinse",
+   "w": "u",
+   "s": 20.258,
+   "e": 20.424
+  },
+  {
+   "scene": "rinse",
+   "w": "raaci",
+   "s": 20.424,
+   "e": 20.773
+  },
+  {
+   "scene": "rinse",
+   "w": "ilaa",
+   "s": 20.773,
+   "e": 21.123
+  },
+  {
+   "scene": "rinse",
+   "w": "biyuhu",
+   "s": 21.123,
+   "e": 21.534
+  },
+  {
+   "scene": "rinse",
+   "w": "nadiif",
+   "s": 21.534,
+   "e": 21.884
+  },
+  {
+   "scene": "rinse",
+   "w": "noqdaan.",
+   "s": 21.884,
+   "e": 22.233
+  },
+  {
+   "scene": "towel",
+   "w": "Biyaha",
+   "s": 22.873,
+   "e": 23.273
+  },
+  {
+   "scene": "towel",
+   "w": "dheeraadka",
+   "s": 23.273,
+   "e": 23.791
+  },
+  {
+   "scene": "towel",
+   "w": "ah",
+   "s": 23.791,
+   "e": 23.952
+  },
+  {
+   "scene": "towel",
+   "w": "kaga",
+   "s": 23.952,
+   "e": 24.233
+  },
+  {
+   "scene": "towel",
+   "w": "saar",
+   "s": 24.233,
+   "e": 24.453
+  },
+  {
+   "scene": "towel",
+   "w": "tuwaal",
+   "s": 24.453,
+   "e": 24.793
+  },
+  {
+   "scene": "towel",
+   "w": "nadiif",
+   "s": 24.793,
+   "e": 25.133
+  },
+  {
+   "scene": "towel",
+   "w": "ah.",
+   "s": 25.133,
+   "e": 25.294
+  },
+  {
+   "scene": "flat",
+   "w": "Jiifi",
+   "s": 25.934,
+   "e": 26.298
+  },
+  {
+   "scene": "flat",
+   "w": "burushyada",
+   "s": 26.298,
+   "e": 26.853
+  },
+  {
+   "scene": "flat",
+   "w": "si",
+   "s": 26.853,
+   "e": 27.026
+  },
+  {
+   "scene": "flat",
+   "w": "ay",
+   "s": 27.026,
+   "e": 27.198
+  },
+  {
+   "scene": "flat",
+   "w": "u",
+   "s": 27.198,
+   "e": 27.371
+  },
+  {
+   "scene": "flat",
+   "w": "qalalaan,",
+   "s": 27.371,
+   "e": 27.862
+  },
+  {
+   "scene": "flat",
+   "w": "hana",
+   "s": 27.862,
+   "e": 28.162
+  },
+  {
+   "scene": "flat",
+   "w": "taagin",
+   "s": 28.162,
+   "e": 28.526
+  },
+  {
+   "scene": "flat",
+   "w": "iyagoo",
+   "s": 28.526,
+   "e": 29.018
+  },
+  {
+   "scene": "flat",
+   "w": "qoyan.",
+   "s": 29.018,
+   "e": 29.318
+  },
+  {
+   "scene": "noshare",
+   "w": "Qof",
+   "s": 29.958,
+   "e": 30.114
+  },
+  {
+   "scene": "noshare",
+   "w": "kale",
+   "s": 30.114,
+   "e": 30.386
+  },
+  {
+   "scene": "noshare",
+   "w": "ha",
+   "s": 30.386,
+   "e": 30.542
+  },
+  {
+   "scene": "noshare",
+   "w": "la",
+   "s": 30.542,
+   "e": 30.698
+  },
+  {
+   "scene": "noshare",
+   "w": "wadaagin",
+   "s": 30.698,
+   "e": 31.144
+  },
+  {
+   "scene": "noshare",
+   "w": "burushyadaada.",
+   "s": 31.144,
+   "e": 31.82
+  },
+  {
+   "scene": "clean",
+   "w": "Daryeelka",
+   "s": 32.46,
+   "e": 32.936
+  },
+  {
+   "scene": "clean",
+   "w": "wejigu",
+   "s": 32.936,
+   "e": 33.349
+  },
+  {
+   "scene": "clean",
+   "w": "wuxuu",
+   "s": 33.349,
+   "e": 33.701
+  },
+  {
+   "scene": "clean",
+   "w": "ka",
+   "s": 33.701,
+   "e": 33.867
+  },
+  {
+   "scene": "clean",
+   "w": "bilaabmaa",
+   "s": 33.867,
+   "e": 34.404
+  },
+  {
+   "scene": "clean",
+   "w": "qalab",
+   "s": 34.404,
+   "e": 34.694
+  },
+  {
+   "scene": "clean",
+   "w": "nadiif",
+   "s": 34.694,
+   "e": 35.046
+  },
+  {
+   "scene": "clean",
+   "w": "ah!",
+   "s": 35.046,
+   "e": 35.213
+  },
+  {
+   "scene": "cta",
+   "w": "La",
+   "s": 35.853,
+   "e": 35.979
+  },
+  {
+   "scene": "cta",
+   "w": "wadaag",
+   "s": 35.979,
+   "e": 36.244
+  },
+  {
+   "scene": "cta",
+   "w": "saaxiibtaa,",
+   "s": 36.244,
+   "e": 36.696
+  },
+  {
+   "scene": "cta",
+   "w": "lana",
+   "s": 36.804,
+   "e": 37.187
+  },
+  {
+   "scene": "cta",
+   "w": "soco",
+   "s": 37.187,
+   "e": 37.57
+  },
+  {
+   "scene": "cta",
+   "w": "Skincare",
+   "s": 37.57,
+   "e": 38.116
+  },
+  {
+   "scene": "cta",
+   "w": "by",
+   "s": 38.116,
+   "e": 38.173
+  },
+  {
+   "scene": "cta",
+   "w": "Ubah.",
+   "s": 38.173,
+   "e": 38.556
+  }
+ ]
+}

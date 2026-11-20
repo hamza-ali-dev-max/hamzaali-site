@@ -1,0 +1,6 @@
+# Rose Noir: Somali product ad for Falarosa Luxury
+
+- Script: `src/somali-vo.txt`, one sentence per line. Audio: `assets/audio/muuse.mp3` (so-SO-MuuseNeural).
+- Photos: official product photos in `assets/photos/` (sources in `SOURCES.md`); `*-cut.png` / `*-crop.png` are background-removed cutouts and detail crops made from them.
+- **Final video:** `renders/rose-noir-somali.mp4`. It is 38.5s, 1080×1920, in the Falarosa Luxury style (black marble, gold serif type, original Falarosa emblem) with word-by-word Somali captions. Scenes: Rose Noir by Ahmed Al Maghribi, a scented body gel that melts into the skin, its top, heart and base notes, 30 ml for men and women, how to use it after a shower, Falarosa Luxury in Surrey BC, contact with the phone number, and a HADDA DALBO end card.
+- Rebuild: `python3 src/align_external.py assets/audio/muuse.mp3 src/script-somali.json assets/audio/vo.mp3 src/timing.json 0.55 0.45 0.3 1.0`, then `python3 src/build.py`, then `npx hyperframes render`. `src/adgen.py` generated `src/template.html.tmpl` and the beats in `src/build.py` for all five perfume ads.
