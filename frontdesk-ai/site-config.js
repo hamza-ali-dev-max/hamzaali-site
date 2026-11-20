@@ -7,6 +7,9 @@ window.FRONT_DESK_CONFIG = {
   phone: "+27 00 000 0000",         // PLACEHOLDER: contact phone number
   whatsapp: "+27 00 000 0000",      // PLACEHOLDER: WhatsApp number that receives demo requests
 
+  // The live demo line that visitors can call. Voice only. Shown in the header and in the "Talk to it yourself" section.
+  demoLine: "+27872500978",
+
   // Where the voice demo backend lives. Leave empty when the backend serves this site itself
   // (Docker or "npm start"). On Netlify or Vercel this is filled in at build time from PUBLIC_API_BASE.
   apiBase: "",
